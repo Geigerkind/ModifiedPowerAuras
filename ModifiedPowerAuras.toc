@@ -1,0 +1,13 @@
+## Interface: 10900
+## Title: Modified Power Auras |cFFFF8080-Shino-|r
+## Title-deDE: Modified Power Auras |cFFFF8080-Shino-|r
+## Title-enGB: Modified Power Auras |cFFFF8080-Shino-|r
+## Notes: Modified Power Auras is an advanced version of the original Power Auras from Sinesther. 
+## Notes-deDE: Modified Power Auras ist eine erweitetere Version von Power Auras von Sinesther.
+## Notes-enGB: Modified Power Auras is an advanced version of the original Power Auras from Sinesther. 
+## Author: Shino <Synced> - Kronos
+## SavedVariables:
+## SavedVariablesPerCharacter: MPOWA_SAVE
+## Version: 0.1
+ModifiedPowerAuras.xml
+

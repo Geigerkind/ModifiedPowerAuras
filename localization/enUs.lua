@@ -1,0 +1,8 @@
+MPOWA_MAINFRAME_HEAD = "Modified Power Auras"
+MPOWA_VERSION = "v0.1"
+
+MPOWA_BUTTON_EDIT = "Edit Aura"
+MPOWA_BUTTON_ADD = "Add Aura"
+MPOWA_BUTTON_REMOVE = "Remove Aura"
+MPOWA_BUTTON_PROFILE = "Profiles"
+MPOWA_BUTTON_CLOSE = "Close"

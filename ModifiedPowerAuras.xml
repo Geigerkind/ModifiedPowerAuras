@@ -1,0 +1,261 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+    ..\..\..\FrameXML\UI.xsd">
+	
+	---------------------------------------------LOCALIZATION AND INITIALIZATION---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	<Script file="Interface\AddOns\ModifiedPowerAuras\localization\enUS.lua" />
+	<Script file="Interface\AddOns\ModifiedPowerAuras\ModifiedPowerAuras.lua" />
+	
+	---------------------------------------------TEMPLATES AND GENERAL---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	<Button name="MPowa_MainFrameButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="100" y="32" />
+		</Size>
+		<Layers>
+			<Layer>
+				<FontString name="$parent_Text" inherits="GameFontNormalSmall">
+					<Size>
+						<AbsDimension x="100" y="32" />
+					</Size>
+					<Anchors>
+						<Anchor point="CENTER">
+							<Offset>
+								<AbsDimension x="0" y="5" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
+		<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
+		<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
+	</Button>
+	<Button name="MPowa_ContainerBuffButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="36" y="36" />
+		</Size>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parent_Icon">
+					<Size>
+						<AbsDimension x="36" y="36" />
+					</Size>
+				</Texture>
+				<FontString name="$parent_Count" inherits="NumberFontNormal">
+					<Size>
+						<AbsDimension x="36" y="36" />
+					</Size>
+					<Anchors>
+						<Anchor point="CENTER" />
+					</Anchors>
+				</FontString>
+			</Layer>
+			<Layer level="OVERLAY">
+				<Texture name="$parent_Border" file="Interface\BUTTONS\UI-Debuff-Border.tga">
+					<Size>
+						<AbsDimension x="36" y="36" />
+					</Size>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnClick>
+				MPowa_SelectAura(this)
+			</OnClick>
+		</Scripts>
+	</Button>
+	
+	---------------------------------------------MINIMAP BUTTON---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	---------------------------------------------MAINFRAME---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	<Frame name="MPowa_MainFrame" movable="true" parent="UIParent" frameStrata="HIGH" hidden="true" enableMouse="true" enableKeyboard="true">
+		<Size>
+			<AbsDimension x="321" y="400" />
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER" relativeTo="UIParent" />
+        </Anchors>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="11" right="12" top="12" bottom="11" />
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32" />
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32" />
+			</EdgeSize>
+        </Backdrop>
+		<Layers>
+			<Layer>
+				<Texture file="Interface\DialogFrame\UI-DialogBox-Header">
+					<Size>
+						<AbsDimension x="225" y="32" />
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="8" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0.2" right="0.8" top="0" bottom="0.6" />
+				</Texture>	
+				<FontString name="$parent_HEAD" inherits="GameFontNormalSmall">
+					<Size>
+						<AbsDimension x="225" y="0" />
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="-3" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnMouseDown>
+				this:StartMoving()
+			</OnMouseDown>
+			<OnMouseUp>
+				this:StopMovingOrSizing()
+			</OnMouseUp>
+			<OnEvent>
+				MPowa_OnEvent(event)
+			</OnEvent>
+			<OnLoad>
+				this:RegisterEvent("ADDON_LOADED")
+				MPowa_OnLoad()
+				this:SetClampedToScreen(true)
+				getglobal(this:GetName().."_HEAD"):SetText(MPOWA_MAINFRAME_HEAD.." "..MPOWA_VERSION)
+			</OnLoad>
+		</Scripts>
+		<Frames>
+			<Button name="MPowa_CloseButton">
+				<Size>
+					<AbsDimension x="30" y="30"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="$parent" relativePoint="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-8" y="-8"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						MPowa_MainFrame:Hide()
+						PlaySound("igMainMenuOptionCheckBoxOff")
+					</OnClick>
+					<OnEnter>
+						GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
+						GameTooltip:SetText(MPOWA_BUTTON_CLOSE, nil, nil, nil, nil, 1)
+						GameTooltip:Show()
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide()
+					</OnLeave>
+				</Scripts>
+				<NormalTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Up"/>
+				<PushedTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Down"/>
+				<HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD"/>
+			</Button>
+			<Button name="MPowa_AddButton" inherits="MPowa_MainFrameButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent">
+						<Offset>
+							<AbsDimension x="40" y="-35" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						MPowa_AddAura()
+					</OnClick>
+					<OnLoad>
+						getglobal(this:GetName().."_Text"):SetText(MPOWA_BUTTON_ADD)
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Button name="MPowa_EditButton" inherits="MPowa_MainFrameButtonTemplate">
+				<Anchors>
+					<Anchor point="TOP" relativeTo="MPowa_AddButton" relativePoint="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						getglobal(this:GetName().."_Text"):SetText(MPOWA_BUTTON_EDIT)
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Button name="MPowa_RemoveButton" inherits="MPowa_MainFrameButtonTemplate">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="MPowa_AddButton" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="45" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						MPowa_Remove()
+					</OnClick>
+					<OnLoad>
+						getglobal(this:GetName().."_Text"):SetText(MPOWA_BUTTON_REMOVE)
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Button name="MPowa_ProfileButton" inherits="MPowa_MainFrameButtonTemplate">
+				<Anchors>
+					<Anchor point="TOP" relativeTo="MPowa_RemoveButton" relativePoint="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						getglobal(this:GetName().."_Text"):SetText(MPOWA_BUTTON_PROFILE)
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Frame name="MPowa_ButtonContainer">
+				<Size>
+					<AbsDimension x="300" y="300" />
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativeTo="$parent">
+						<Offset>
+							<AbsDimension x="-10" y="5" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\ButtonContainer.tga">
+							<Size>
+								<AbsDimension x="300" y="300" />
+							</Size>
+							<Anchors>
+								<Anchor point="CENTER" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+			</Frame>
+		</Frames>
+	</Frame>
+	
+	---------------------------------------------CONFIGURATION FRAME---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+</Ui>
