@@ -50,14 +50,19 @@ function MPowa_OnEvent(event)
 		CUR_MAX = MPowa_getNumUsed()
 		
 		for i=1, CUR_MAX do
+			if MPOWA_SAVE[i].enemytarget == nil then MPOWA_SAVE[i].enemytarget = false end
 			MPowa_CreateIcons(i)
 		end
 		
 		LOADED = true
-	elseif event == "PLAYER_AURAS_CHANGED" then
-		MPowa_HideAllIcons()
-		MPowa_SearchAuras()
+	else
+		MPowa_Update()
 	end
+end
+
+function MPowa_Update()
+	MPowa_HideAllIcons()
+	MPowa_SearchAuras()
 end
 
 function MPowa_CreateSave(i)
@@ -81,6 +86,8 @@ function MPowa_CreateSave(i)
 		inverse = false,
 		used = false,
 		test = false,
+		cooldown = false,
+		enemytarget = false,
 	}
 end
 
@@ -145,12 +152,13 @@ function MPowa_Remove()
 		table.remove(MPOWA_SAVE, SELECTED)
 		MPowa_CreateSave(49)
 		CUR_MAX = CUR_MAX - 1
-		MPowa_Reposition()
 		if SELECTED == CUR_EDIT then
 			MPowa_ConfigFrame:Hide()
 		end
+		getglobal("TextureFrame"..SELECTED):Hide()
 		SELECTED = 1
 		getglobal("ConfigButton"..SELECTED.."_Border"):Show()
+		MPowa_Reposition()
 	end
 end
 
@@ -197,21 +205,52 @@ end
 
 function MPowa_Edit()
 	if ConfigButton1 then
+		MPowa_ConfigFrame:Hide()
 		CUR_EDIT = SELECTED
 		getglobal("MPowa_ConfigFrame_Container_1_Icon_Texture"):SetTexture(MPOWA_SAVE[CUR_EDIT].texture)
 		getglobal("MPowa_ConfigFrame_Container_1_Slider_Opacity"):SetValue(MPOWA_SAVE[CUR_EDIT].alpha)
 		getglobal("MPowa_ConfigFrame_Container_1_Slider_OpacityText"):SetText(MPOWA_SLIDER_OPACITY.." "..MPOWA_SAVE[CUR_EDIT].alpha)
+		
+		getglobal("MPowa_ConfigFrame_Container_1_Slider_PosX"):SetMinMaxValues(MPowa_GetMinValues(MPOWA_SAVE[CUR_EDIT].x),MPowa_GetMaxValues(MPOWA_SAVE[CUR_EDIT].x))
 		getglobal("MPowa_ConfigFrame_Container_1_Slider_PosX"):SetValue(MPOWA_SAVE[CUR_EDIT].x)
 		getglobal("MPowa_ConfigFrame_Container_1_Slider_PosXText"):SetText(MPOWA_SLIDER_POSX.." "..MPOWA_SAVE[CUR_EDIT].x)
+		getglobal("MPowa_ConfigFrame_Container_1_Slider_PosXLow"):SetText(MPowa_GetMinValues(MPOWA_SAVE[CUR_EDIT].x))
+		getglobal("MPowa_ConfigFrame_Container_1_Slider_PosXHigh"):SetText(MPowa_GetMaxValues(MPOWA_SAVE[CUR_EDIT].x))
+		
+		getglobal("MPowa_ConfigFrame_Container_1_Slider_PosY"):SetMinMaxValues(MPowa_GetMinValues(MPOWA_SAVE[CUR_EDIT].y),MPowa_GetMaxValues(MPOWA_SAVE[CUR_EDIT].y))
 		getglobal("MPowa_ConfigFrame_Container_1_Slider_PosY"):SetValue(MPOWA_SAVE[CUR_EDIT].y)
 		getglobal("MPowa_ConfigFrame_Container_1_Slider_PosYText"):SetText(MPOWA_SLIDER_POSY.." "..MPOWA_SAVE[CUR_EDIT].y)
-		getglobal("MPowa_ConfigFrame_Container_1_Slider_Size"):SetValue(MPOWA_SAVE[CUR_EDIT].size)
+		getglobal("MPowa_ConfigFrame_Container_1_Slider_PosYLow"):SetText(MPowa_GetMinValues(MPOWA_SAVE[CUR_EDIT].y))
+		getglobal("MPowa_ConfigFrame_Container_1_Slider_PosYHigh"):SetText(MPowa_GetMaxValues(MPOWA_SAVE[CUR_EDIT].y))
+		
+		getglobal("MPowa_ConfigFrame_Container_1_Slider_Size"):SetValue(tonumber(MPOWA_SAVE[CUR_EDIT].size))
 		getglobal("MPowa_ConfigFrame_Container_1_Slider_SizeText"):SetText(MPOWA_SLIDER_SIZE.." "..MPOWA_SAVE[CUR_EDIT].size)
 		getglobal("MPowa_ConfigFrame_Container_1_2_Editbox"):SetText(MPOWA_SAVE[CUR_EDIT].buffname)
+		getglobal("MPowa_ConfigFrame_Container_1_2_Editbox_Stacks"):SetText(">=0")
 		getglobal("MPowa_ConfigFrame_Container_1_2_Checkbutton_Debuff"):SetChecked(MPOWA_SAVE[CUR_EDIT].isdebuff)
 		getglobal("MPowa_ConfigFrame_Container_1_2_Checkbutton_ShowIfNotActive"):SetChecked(MPOWA_SAVE[CUR_EDIT].inverse)
 		getglobal("MPowa_ConfigFrame_Container_1_2_Checkbutton_Timer"):SetChecked(MPOWA_SAVE[CUR_EDIT].timer)
+		getglobal("MPowa_ConfigFrame_Container_1_2_Checkbutton_ShowCooldowns"):SetChecked(MPOWA_SAVE[CUR_EDIT].cooldown)
+		getglobal("MPowa_ConfigFrame_Container_1_2_Checkbutton_EnemyTarget"):SetChecked(MPOWA_SAVE[CUR_EDIT].enemytarget)
 		MPowa_ConfigFrame:Show()
+	end
+end
+
+function MPowa_GetMaxValues(val)
+	val = tonumber(val)
+	if val > 0 then
+		return 100*ceil(val/100)+50
+	else
+		return -(100*ceil(-1*(val)/100)-100)
+	end
+end
+
+function MPowa_GetMinValues(val)
+	val = tonumber(val)
+	if val > 0 then
+		return 100*ceil(val/100)-50
+	else
+		return -(100*ceil(-1*(val)/100))
 	end
 end
 
@@ -234,87 +273,172 @@ function MPowa_HideAllIcons()
 end
 
 function MPowa_SearchAuras()
+	-- To enable to show cooldowns
+	for p=1, CUR_MAX do
+		if MPOWA_SAVE[p].cooldown or MPOWA_SAVE[p].inverse then
+			if MPOWA_SAVE[p].test or TEST_ALL then MPOWA_SAVE[p].test = false; TEST_ALL = false end
+				MPowa_TextureFrame_Update(99, getglobal("TextureFrame"..p))
+		end
+	end
+	
+	-- Rest
 	local i = 0
 	while true do
+		local buff
+		local debuff
+		-- HELPFUL
 		GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
-		GameTooltip:SetPlayerBuff(GetPlayerBuff(i, "HELPFUL"))
-		local buff = GameTooltipTextLeft1:GetText()
-		GameTooltip:Hide()
-		if (buff == nil) then break end
 		for p=1, CUR_MAX do
-			if strfind(strlower(MPOWA_SAVE[p].buffname), strlower(buff)) then
-				if MPOWA_SAVE[p].test then MPOWA_SAVE[p].test = false end
-				getglobal("TextureFrame"..p).count = getglobal("TextureFrame"..p).count + 1
-				MPowa_TextureFrame_Update(i, getglobal("TextureFrame"..p))
-				break
+			buff = nil
+			if MPOWA_SAVE[p].enemytarget then
+				GameTooltip:SetUnitBuff("target", i+1)
+				buff = GameTooltipTextLeft1:GetText()
+			else
+				GameTooltip:SetPlayerBuff(GetPlayerBuff(i, "HELPFUL"))
+				buff = GameTooltipTextLeft1:GetText()
+			end
+			if (buff ~= nil) then
+				--DEFAULT_CHAT_FRAME:AddMessage(buff.." I: "..i.." P: "..p)
+				if strfind(strlower(MPOWA_SAVE[p].buffname), strlower(buff)) and (not MPOWA_SAVE[p].isdebuff) then
+					if MPOWA_SAVE[p].test or TEST_ALL then MPOWA_SAVE[p].test = false; TEST_ALL = false end
+					getglobal("TextureFrame"..p).count = getglobal("TextureFrame"..p).count + 1
+					MPowa_TextureFrame_Update(i, getglobal("TextureFrame"..p))
+					if MPOWA_SAVE[p].inverse then
+						getglobal("TextureFrame"..p):Hide()
+					end
+					--DEFAULT_CHAT_FRAME:AddMessage(buff.." I: "..i.." P: "..p)
+					break
+				end
 			end
 		end
+		-- HARMFUL
+		for p=1, CUR_MAX do
+			debuff = nil
+			GameTooltip:ClearLines()
+			if MPOWA_SAVE[p].enemytarget then
+				GameTooltip:SetUnitDebuff("target", i+1)
+				debuff = GameTooltipTextLeft1:GetText()
+			else
+				GameTooltip:SetPlayerBuff(GetPlayerBuff(i, "HARMFUL"))
+				debuff = GameTooltipTextLeft1:GetText()
+			end
+			if (debuff ~= nil) then
+				if strfind(strlower(MPOWA_SAVE[p].buffname), strlower(debuff)) and MPOWA_SAVE[p].isdebuff then
+					if MPOWA_SAVE[p].test or TEST_ALL then MPOWA_SAVE[p].test = false; TEST_ALL = false end
+					getglobal("TextureFrame"..p).count = getglobal("TextureFrame"..p).count + 1
+					MPowa_TextureFrame_Update(i, getglobal("TextureFrame"..p))
+					if MPOWA_SAVE[p].inverse then
+						getglobal("TextureFrame"..p):Hide()
+					end
+					break
+				end
+			end
+		end
+		GameTooltip:Hide()
+		if (buff == nil) and (debuff == nil) then break end
 		i = i + 1
 	end
 end
 
 function MPowa_TextureFrame_Update(bi, button)
-	local buffIndex = GetPlayerBuff(bi, "HELPFUL")
-	local texture = GetPlayerBuffTexture(buffIndex)
-	local Icon = getglobal(button:GetName().."_Icon")
-	local Count = getglobal(button:GetName().."_Count")
-	
-	-- Correctly saving the texture
-	if MPOWA_SAVE[button:GetID()].texture == "Interface\\AddOns\\ModifiedPowerAuras\\images\\dummy.tga" and texture then
-		MPOWA_SAVE[button:GetID()].texture = texture
-		for i=1, CUR_MAX do
-			MPowa_ApplyAttributesToButton(i, getglobal("ConfigButton"..i))
+	local buffIndex
+	if MPOWA_SAVE[button:GetID()].isdebuff then
+		if MPOWA_SAVE[button:GetID()].enemytarget then
+			buffIndex = 0
+		else
+			buffIndex = GetPlayerBuff(bi, "HARMFUL")
 		end
-		if button:GetID() == CUR_EDIT then
-			getglobal("MPowa_ConfigFrame_Container_1_Icon_Texture"):SetTexture(MPOWA_SAVE[CUR_EDIT].texture)
-		end
-	end
-	
-	Icon:SetTexture(MPOWA_SAVE[button:GetID()].texture)
-	
-	-- Enabling Count for certain buffs and Holy Strength
-	local buffApplications = GetPlayerBuffApplications(buffIndex)
-	
-	if button.count > 1 or buffApplications > 1 then
-		Count:SetText(buffApplications)
-		if button.count > 1 then
-			Count:SetText(button.count)
-		end
-		Count:Show()
 	else
-		Count:Hide()
+		if MPOWA_SAVE[button:GetID()].enemytarget then
+			buffIndex = 0
+		else
+			buffIndex = GetPlayerBuff(bi, "HELPFUL")
+		end
 	end
-	
-	button.bi = bi
-	
-	button:Show()
+	if (buffIndex > -1) or bi == 99 then
+		local texture
+		if MPOWA_SAVE[button:GetID()].enemytarget then
+			local a,b,c = nil
+			if MPOWA_SAVE[button:GetID()].isdebuff then
+				a, b, c = UnitDebuff("target", bi+1)
+			else
+				a, b = UnitBuff("target", bi+1)
+			end
+			texture = a
+		else
+			texture = GetPlayerBuffTexture(buffIndex)
+		end
+		local Icon = getglobal(button:GetName().."_Icon")
+		local Count = getglobal(button:GetName().."_Count")
+		
+		-- Correctly saving the texture
+		if MPOWA_SAVE[button:GetID()].texture == "Interface\\AddOns\\ModifiedPowerAuras\\images\\dummy.tga" and texture then
+			MPOWA_SAVE[button:GetID()].texture = texture
+			for i=1, CUR_MAX do
+				MPowa_ApplyAttributesToButton(i, getglobal("ConfigButton"..i))
+			end
+			if button:GetID() == CUR_EDIT then
+				getglobal("MPowa_ConfigFrame_Container_1_Icon_Texture"):SetTexture(MPOWA_SAVE[CUR_EDIT].texture)
+			end
+		end
+		
+		--Icon:SetTexture(MPOWA_SAVE[button:GetID()].texture)
+		Icon:SetTexture(texture)
+		
+		-- Enabling Count for certain buffs and Holy Strength
+		local buffApplications = GetPlayerBuffApplications(buffIndex)
+		
+		if button.count > 1 or buffApplications > 1 then
+			Count:SetText(buffApplications)
+			if button.count > 1 then
+				Count:SetText(button.count)
+			end
+			Count:Show()
+		else
+			Count:Hide()
+		end
+		
+		button.bi = bi
+		
+		button:Show()
+	end
 end
 
 function MPowa_TextureFrame_OnUpdate(elapsed, button)
-	local Duration = getglobal(button:GetName().."_Timer")
-	if (not MPOWA_SAVE[button:GetID()].test and (not TEST_ALL)) then
-		local timeLeft = GetPlayerBuffTimeLeft(GetPlayerBuff(button.bi, "HELPFUL"))
-		Duration:SetText(floor(timeLeft))
-		
-		-- Get Spellcooldown
-		local start, duration, enabled = GetSpellCooldown(MPowa_GetSpellSlot(MPOWA_SAVE[button:GetID()].buffname), "spell")
-		
-		if start > 0 and duration > 0 and enabled then
-			Duration:SetText(GetTime()-start)
-			Duration:Show()
+	if MPOWA_SAVE[button:GetID()].timer then
+		local Duration = getglobal(button:GetName().."_Timer")
+		if (not MPOWA_SAVE[button:GetID()].test and (not TEST_ALL)) then
+			if MPOWA_SAVE[button:GetID()].cooldown then
+				local start, duration = MPowa_GetSpellCooldown(MPOWA_SAVE[button:GetID()].buffname)
+				if start > 0 and duration > 0 then
+					Duration:SetText(duration-(GetTime()-start))
+					Duration:Show()
+				else
+					button:Hide()
+					Duration:Hide()
+				end
+			else
+				local buffIndex
+				local timeLeft
+				if MPOWA_SAVE[button:GetID()].enemytarget then
+					timeLeft = 0
+				else
+					if MPOWA_SAVE[button:GetID()].isdebuff then
+						buffIndex = GetPlayerBuff(button.bi, "HARMFUL")
+					else
+						buffIndex = GetPlayerBuff(button.bi, "HELPFUL")
+					end
+					timeLeft = GetPlayerBuffTimeLeft(buffIndex)
+				end
+				if timeLeft == 0 then Duration:Hide() else Duration:Show() end
+				if MPOWA_SAVE[button:GetID()].timer then
+					Duration:SetText(string.format("%.2f", timeLeft))
+				else
+					Duration:SetText(string.format("%.0f", timeLeft))
+				end
+			end	
 		else
-			Duration:SetText("")
-			Duration:Hide()
-		end
-		
-	else
-		Duration:SetText(random(1,23)+random(1,60)/100)
-		local start, duration = MPowa_GetSpellCooldown(MPOWA_SAVE[button:GetID()].buffname)
-		if start > 0 and duration > 0 then
-			Duration:SetText(duration-(GetTime()-start))
-			Duration:Show()
-		else
-			Duration:Hide()
+			Duration:SetText(random(1,23)+random(1,60)/100)
 		end
 	end
 end
@@ -371,7 +495,7 @@ function MPowa_ApplyConfig(i)
 end
 
 function MPowa_SliderChange(var, obj, text)
-	MPOWA_SAVE[CUR_EDIT][var] = string.format("%.1f", obj:GetValue())
+	MPOWA_SAVE[CUR_EDIT][var] = string.format("%.2f", obj:GetValue())
 	getglobal(obj:GetName().."Text"):SetText(text.." "..MPOWA_SAVE[CUR_EDIT][var])
 	MPowa_ApplyConfig(CUR_EDIT)
 end
@@ -384,4 +508,13 @@ function MPowa_Editbox_Name(obj)
 		getglobal("MPowa_ConfigFrame_Container_1_Icon_Texture"):SetTexture(MPOWA_SAVE[CUR_EDIT].texture)
 		getglobal("ConfigButton"..CUR_EDIT.."_Icon"):SetTexture(MPOWA_SAVE[CUR_EDIT].texture)
 	end
+end
+
+function MPowa_Checkbutton(var)
+	if MPOWA_SAVE[CUR_EDIT][var] then
+		MPOWA_SAVE[CUR_EDIT][var] = false
+	else
+		MPOWA_SAVE[CUR_EDIT][var] = true
+	end
+	MPowa_Update()
 end
