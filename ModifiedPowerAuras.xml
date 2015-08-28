@@ -183,6 +183,44 @@
 			<AbsInset left="0" right="0" top="0" bottom="0"/>
 		</HitRectInsets>
 	</CheckButton>
+	<Button name="MPowa_ScrollFrameButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="265" y="40" />
+		</Size>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parent_BG">
+					<Size>
+						<AbsDimension x="255" y="32" />
+					</Size>
+					<Anchors>
+						<Anchor point="TOPRIGHT" />
+					</Anchors>
+					<Color r="0" g="0" b="0" a="0.5" />
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK">
+				<Texture name="$parent_Icon" file="Interface\AddOns\ModifiedPowerAuras\images\dummy">
+					<Size>
+						<AbsDimension x="32" y="32" />
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT" />
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<FontString name="$parent_Name">
+					<Size>
+						<AbsDimension x="233" y="32" />
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parent_Icon" relativePoint="RIGHT" />
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+	</Button>
 	
 	---------------------------------------------MINIMAP BUTTON---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
@@ -328,6 +366,9 @@
 					<OnLoad>
 						getglobal(this:GetName().."_Text"):SetText(MPOWA_BUTTON_PROFILE)
 					</OnLoad>
+					<OnClick>
+						MPowa_EditProfile()
+					</OnClick>
 				</Scripts>
 			</Button>
 			<Button name="MPowa_TestAllButton" inherits="MPowa_MainFrameButtonTemplate">
@@ -719,7 +760,7 @@
 							</EditBox>
 							<EditBox name="$parent_Editbox_Stacks" autoFocus="false" inherits="InputBoxTemplate">
 								<Size>
-									<AbsDimension x="70" y="16"/>
+									<AbsDimension x="65" y="16"/>
 								</Size>
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="$parent_Editbox" relativePoint="BOTTOMLEFT">
@@ -734,6 +775,54 @@
 										this:SetMaxLetters(200)
 										this.aide = MPOWA_EDITBOX_STACKS_TOOLTIP
 										getglobal(this:GetName().."Text"):SetText(MPOWA_EDITBOX_STACKS_NAME)
+									</OnLoad>
+									<OnEnterPressed>
+										this:ClearFocus()
+									</OnEnterPressed>
+									<OnTextChanged>
+									</OnTextChanged>
+									<OnEnter>
+										GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
+										GameTooltip:SetText(this.aide, nil, nil, nil, nil, 1)
+									</OnEnter>
+									<OnLeave>
+										GameTooltip:Hide()
+									</OnLeave>
+								</Scripts>
+								<Layers>
+									<Layer level="OVERLAY">
+										<FontString name="$parentText" inherits="GameFontNormalSmall" justifyH="LEFT" text="">
+											<Size>
+												<AbsDimension x="120" y="20"/>
+											</Size>
+											<Anchors>
+												<Anchor point="BOTTOMLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+													<Offset>
+														<AbsDimension x="0" y="0"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+								</Layers>
+							</EditBox>
+							<EditBox name="$parent_Editbox_DebuffDuration" autoFocus="false" inherits="InputBoxTemplate">
+								<Size>
+									<AbsDimension x="65" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="LEFT" relativeTo="$parent_Editbox_Stacks" relativePoint="RIGHT">
+										<Offset>
+											<AbsDimension x="10" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<FontString inherits="ChatFontNormal" bytes="200"/>
+								<Scripts>
+									<OnLoad>
+										this:SetMaxLetters(200)
+										this.aide = MPOWA_EDITBOX_DEBUFFDURATION_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_EDITBOX_DEBUFFDURATION)
 									</OnLoad>
 									<OnEnterPressed>
 										this:ClearFocus()
@@ -833,7 +922,7 @@
 										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_ENEMYTARGET);
 									</OnLoad>
 									<OnClick>
-										MPowa_Checkbutton("target")
+										MPowa_Checkbutton("enemytarget")
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -1263,6 +1352,206 @@
 							</Button>
 						</Frames>
 					</Frame>
+					<Frame name="$parent_3" hidden="true" inherits="MPowa_ContainerTemplate">
+						<Size>
+							<AbsDimension x="290" y="180" />
+						</Size>
+						<Frames>
+							<CheckButton name="$parent_Checkbutton_BeginSound" inherits="MPowa_CheckTemplate">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+										<Offset>
+											<AbsDimension x="10" y="-10" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = MPOWA_CHECKBUTTON_BEGINSOUND_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_BEGINSOUND);
+									</OnLoad>
+									<OnClick>
+										MPowa_Checkbutton("inverse")
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<Slider name="$parent_Slider_BeginSound" inherits="MPowa_SliderTemplate">
+								<Size>
+									<AbsDimension x="270" y="16" />
+								</Size>
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parent_Checkbutton_BeginSound" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-15" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = MPOWA_SLIDER_BEGINSOUND_TOOLTIP
+										this:SetMinMaxValues(1,20)
+										this:SetValue(1)
+										this:SetValueStep(1)
+										getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_BEGINSOUND)
+										getglobal(this:GetName().."Low"):SetText("1")
+										getglobal(this:GetName().."High"):SetText("20")
+									</OnLoad>
+									<OnValueChanged>
+										if LOADED then
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
+							<CheckButton name="$parent_Checkbutton_EndSound" inherits="MPowa_CheckTemplate">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parent_Slider_BeginSound" relativePoint="TOPLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-50" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = MPOWA_CHECKBUTTON_ENDSOUND_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_ENDSOUND);
+									</OnLoad>
+									<OnClick>
+										MPowa_Checkbutton("inverse")
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<Slider name="$parent_Slider_EndSound" inherits="MPowa_SliderTemplate">
+								<Size>
+									<AbsDimension x="270" y="16" />
+								</Size>
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parent_Checkbutton_EndSound" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-15" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = MPOWA_SLIDER_ENDSOUND_TOOLTIP
+										this:SetMinMaxValues(1,20)
+										this:SetValue(1)
+										this:SetValueStep(1)
+										getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_ENDSOUND)
+										getglobal(this:GetName().."Low"):SetText("1")
+										getglobal(this:GetName().."High"):SetText("20")
+									</OnLoad>
+									<OnValueChanged>
+										if LOADED then
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
+						</Frames>
+					</Frame>
+					<Frame name="$parent_4" inherits="MPowa_ContainerTemplate" hidden="true">
+						<Size>
+							<AbsDimension x="290" y="110" />
+						</Size>
+						<Frames>
+							<Slider name="$parent_Slider_SecAnim1" inherits="MPowa_SliderTemplate">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+										<Offset>
+											<AbsDimension x="15" y="-25" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = MPOWA_SLIDER_SECANIM_TOOLTIP
+										this:SetMinMaxValues(1,20)
+										this:SetValue(1)
+										this:SetValueStep(1)
+										getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_SECANIM)
+										getglobal(this:GetName().."Low"):SetText("1")
+										getglobal(this:GetName().."High"):SetText("20")
+									</OnLoad>
+									<OnValueChanged>
+										if LOADED then
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
+							<Slider name="$parent_Slider_SecAnim2" inherits="MPowa_SliderTemplate">
+								<Anchors>
+									<Anchor point="LEFT" relativeTo="$parent_Slider_SecAnim1" relativePoint="RIGHT">
+										<Offset>
+											<AbsDimension x="20" y="0" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = MPOWA_SLIDER_SECANIM_TOOLTIP
+										this:SetMinMaxValues(1,20)
+										this:SetValue(1)
+										this:SetValueStep(1)
+										getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_SECANIM)
+										getglobal(this:GetName().."Low"):SetText("1")
+										getglobal(this:GetName().."High"):SetText("20")
+									</OnLoad>
+									<OnValueChanged>
+										if LOADED then
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
+							<Slider name="$parent_Slider_AnimSpeed" inherits="MPowa_SliderTemplate">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parent_Slider_SecAnim1" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-30" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = MPOWA_SLIDER_ANIMSPEED_TOOLTIP
+										this:SetMinMaxValues(1,20)
+										this:SetValue(1)
+										this:SetValueStep(1)
+										getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_ANIMSPEED)
+										getglobal(this:GetName().."Low"):SetText("1")
+										getglobal(this:GetName().."High"):SetText("20")
+									</OnLoad>
+									<OnValueChanged>
+										if LOADED then
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
+							<Slider name="$parent_Slider_AnimDuration" inherits="MPowa_SliderTemplate">
+								<Anchors>
+									<Anchor point="LEFT" relativeTo="$parent_Slider_AnimSpeed" relativePoint="RIGHT">
+										<Offset>
+											<AbsDimension x="20" y="0" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = MPOWA_SLIDER_ANIMDURATION_TOOLTIP
+										this:SetMinMaxValues(1,20)
+										this:SetValue(1)
+										this:SetValueStep(1)
+										getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_ANIMDURATION)
+										getglobal(this:GetName().."Low"):SetText("1")
+										getglobal(this:GetName().."High"):SetText("20")
+									</OnLoad>
+									<OnValueChanged>
+										if LOADED then
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
+						</Frames>
+					</Frame>
 				</Frames>
 			</Frame>
 			<Button name="$parent_Tab1" inherits="TabButtonTemplate">
@@ -1281,6 +1570,8 @@
 						PanelTemplates_DeselectTab(MPowa_ConfigFrame_Tab4)
 						MPowa_ConfigFrame_Container_2:Hide()
 						MPowa_ConfigFrame_Container_2_2:Hide()
+						MPowa_ConfigFrame_Container_3:Hide()
+						MPowa_ConfigFrame_Container_4:Hide()
 						MPowa_ConfigFrame_Container_1:Show()
 						MPowa_ConfigFrame_Container_1_2:Show()
 					</OnClick>
@@ -1308,6 +1599,8 @@
 						PanelTemplates_DeselectTab(MPowa_ConfigFrame_Tab4)
 						MPowa_ConfigFrame_Container_1:Hide()
 						MPowa_ConfigFrame_Container_1_2:Hide()
+						MPowa_ConfigFrame_Container_3:Hide()
+						MPowa_ConfigFrame_Container_4:Hide()
 						MPowa_ConfigFrame_Container_2:Show()
 						MPowa_ConfigFrame_Container_2_2:Show()
 					</OnClick>
@@ -1335,8 +1628,10 @@
 						PanelTemplates_DeselectTab(MPowa_ConfigFrame_Tab2)
 						MPowa_ConfigFrame_Container_1:Hide()
 						MPowa_ConfigFrame_Container_1_2:Hide()
-						MPowa_ConfigFrame_Container_2:Show()
-						MPowa_ConfigFrame_Container_2_2:Show()
+						MPowa_ConfigFrame_Container_2:Hide()
+						MPowa_ConfigFrame_Container_2_2:Hide()
+						MPowa_ConfigFrame_Container_3:Show()
+						MPowa_ConfigFrame_Container_4:Hide()
 					</OnClick>
 					<OnLoad>
 						getglobal(this:GetName().."Text"):SetText(MPOWA_CONFIGFRAME_SOUND_EDITOR)
@@ -1362,8 +1657,10 @@
 						PanelTemplates_DeselectTab(MPowa_ConfigFrame_Tab3)
 						MPowa_ConfigFrame_Container_1:Hide()
 						MPowa_ConfigFrame_Container_1_2:Hide()
-						MPowa_ConfigFrame_Container_2:Show()
-						MPowa_ConfigFrame_Container_2_2:Show()
+						MPowa_ConfigFrame_Container_2:Hide()
+						MPowa_ConfigFrame_Container_2_2:Hide()
+						MPowa_ConfigFrame_Container_3:Hide()
+						MPowa_ConfigFrame_Container_4:Show()
 					</OnClick>
 					<OnLoad>
 						getglobal(this:GetName().."Text"):SetText(MPOWA_CONFIGFRAME_ANIMATION_EDITOR)
@@ -1373,6 +1670,172 @@
 					</OnLoad>
 				</Scripts>
 			</Button>
+		</Frames>
+	</Frame>
+	
+	---------------------------------------------PROFILE FRAME---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	<Frame name="MPowa_ProfileFrame" movable="true" parent="MPowa_MainFrame" frameStrata="HIGH" hidden="true" enableMouse="true" enableKeyboard="true">
+		<Size>
+			<AbsDimension x="321" y="430" />
+		</Size>
+		<Anchors>
+			<Anchor point="LEFT" relativeTo="MPowa_MainFrame" relativePoint="RIGHT" />
+        </Anchors>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="11" right="12" top="12" bottom="11" />
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32" />
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32" />
+			</EdgeSize>
+        </Backdrop>
+		<Layers>
+			<Layer>
+				<Texture file="Interface\DialogFrame\UI-DialogBox-Header">
+					<Size>
+						<AbsDimension x="225" y="32" />
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="8" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0.2" right="0.8" top="0" bottom="0.6" />
+				</Texture>	
+				<FontString name="$parent_HEAD" inherits="GameFontNormalSmall">
+					<Size>
+						<AbsDimension x="225" y="0" />
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="-3" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				getglobal(this:GetName().."_HEAD"):SetText(MPOWA_PROFILEFRAME_NAME)
+			</OnLoad>
+		</Scripts>
+		<Frames>
+			<Button name="$parent_CloseButton" inherits="MPowa_CloseButtonTemplate">
+				<Scripts>
+					<OnClick>
+						MPowa_ProfileFrame:Hide()
+						PlaySound("igMainMenuOptionCheckBoxOff")
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="$parent_Import" inherits="MPowa_MainFrameButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="40" y="-35" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						MPowa_TestAll()
+					</OnClick>
+					<OnLoad>
+						getglobal(this:GetName().."_Text"):SetText(MPOWA_BUTTON_IMPORT)
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Button name="$parent_Save" inherits="MPowa_MainFrameButtonTemplate">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parent_Import" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="45" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						MPowa_TestAll()
+					</OnClick>
+					<OnLoad>
+						getglobal(this:GetName().."_Text"):SetText(MPOWA_BUTTON_SAVE)
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Button name="$parent_Remove" inherits="MPowa_MainFrameButtonTemplate">
+				<Anchors>
+					<Anchor point="TOP" relativeTo="$parent_Save" relativePoint="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						MPowa_TestAll()
+					</OnClick>
+					<OnLoad>
+						getglobal(this:GetName().."_Text"):SetText(MPOWA_BUTTON_REMOVE)
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Frame name="$parent_ScrollFrame" inherits="FauxScrollFrameTemplate">
+				<Size>
+					<AbsDimension x="265" y="285" />
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMLEFT" relativeTo="$parent">
+						<Offset>
+							<AbsDimension x="20" y="15" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Frames>
+					<Button name="$parent_Button1" inherits="MPowa_ScrollFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT" />
+						</Anchors>
+					</Button>
+					<Button name="$parent_Button2" inherits="MPowa_ScrollFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent_Button1" relativePoint="BOTTOMLEFT" />
+						</Anchors>
+					</Button>
+					<Button name="$parent_Button3" inherits="MPowa_ScrollFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent_Button2" relativePoint="BOTTOMLEFT" />
+						</Anchors>
+					</Button>
+					<Button name="$parent_Button4" inherits="MPowa_ScrollFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent_Button3" relativePoint="BOTTOMLEFT" />
+						</Anchors>
+					</Button>
+					<Button name="$parent_Button5" inherits="MPowa_ScrollFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent_Button4" relativePoint="BOTTOMLEFT" />
+						</Anchors>
+					</Button>
+					<Button name="$parent_Button6" inherits="MPowa_ScrollFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent_Button5" relativePoint="BOTTOMLEFT" />
+						</Anchors>
+					</Button>
+					<Button name="$parent_Button7" inherits="MPowa_ScrollFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent_Button6" relativePoint="BOTTOMLEFT" />
+						</Anchors>
+					</Button>
+				</Frames>
+			</Frame>
 		</Frames>
 	</Frame>
 	

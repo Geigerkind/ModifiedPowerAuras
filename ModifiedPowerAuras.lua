@@ -28,13 +28,13 @@ function MPowa_Show()
 		for i=1, CUR_MAX do
 			MPowa_CreateButton(i)
 		end
-		if CUR_MAX > 0 then
-			getglobal("ConfigButton1_Border"):Show()
-		end
 		INITIALIZED = true
 	end
 	for i=1, CUR_MAX do
 		MPowa_ApplyAttributesToButton(i, getglobal("ConfigButton"..i))
+	end
+	if CUR_MAX > 0 then
+		getglobal("ConfigButton"..SELECTED.."_Border"):Show()
 	end
 	MPowa_MainFrame:Show()
 end
@@ -51,10 +51,17 @@ function MPowa_OnEvent(event)
 		
 		for i=1, CUR_MAX do
 			if MPOWA_SAVE[i].enemytarget == nil then MPOWA_SAVE[i].enemytarget = false end
+			if MPOWA_SAVE[i].friendlytarget == nil then MPOWA_SAVE[i].friendlytarget = false end
+			if MPOWA_SAVE[i].stacks == nil then MPOWA_SAVE[i].stacks = ">=0" end
+			if MPOWA_SAVE[i].edebuffduration == nil then MPOWA_SAVE[i].edebuffduration = 0 end
 			MPowa_CreateIcons(i)
 		end
 		
 		LOADED = true
+	elseif event == "UNIT_AURA" then
+		if arg1 == "target" then
+			MPowa_Update()
+		end
 	else
 		MPowa_Update()
 	end
@@ -88,6 +95,9 @@ function MPowa_CreateSave(i)
 		test = false,
 		cooldown = false,
 		enemytarget = false,
+		friendlytarget = false,
+		stacks = ">=0",
+		edebuffduration = 0,
 	}
 end
 
@@ -100,6 +110,14 @@ function MPowa_getNumUsed()
 				return 49
 			end
 		end
+	end
+end
+
+function MPowa_EditProfile()
+	if MPowa_ProfileFrame:IsVisible() then
+		MPowa_ProfileFrame:Hide()
+	else
+		MPowa_ProfileFrame:Show()
 	end
 end
 
@@ -226,7 +244,7 @@ function MPowa_Edit()
 		getglobal("MPowa_ConfigFrame_Container_1_Slider_Size"):SetValue(tonumber(MPOWA_SAVE[CUR_EDIT].size))
 		getglobal("MPowa_ConfigFrame_Container_1_Slider_SizeText"):SetText(MPOWA_SLIDER_SIZE.." "..MPOWA_SAVE[CUR_EDIT].size)
 		getglobal("MPowa_ConfigFrame_Container_1_2_Editbox"):SetText(MPOWA_SAVE[CUR_EDIT].buffname)
-		getglobal("MPowa_ConfigFrame_Container_1_2_Editbox_Stacks"):SetText(">=0")
+		getglobal("MPowa_ConfigFrame_Container_1_2_Editbox_Stacks"):SetText(MPOWA_SAVE[CUR_EDIT].stacks)
 		getglobal("MPowa_ConfigFrame_Container_1_2_Checkbutton_Debuff"):SetChecked(MPOWA_SAVE[CUR_EDIT].isdebuff)
 		getglobal("MPowa_ConfigFrame_Container_1_2_Checkbutton_ShowIfNotActive"):SetChecked(MPOWA_SAVE[CUR_EDIT].inverse)
 		getglobal("MPowa_ConfigFrame_Container_1_2_Checkbutton_Timer"):SetChecked(MPOWA_SAVE[CUR_EDIT].timer)
