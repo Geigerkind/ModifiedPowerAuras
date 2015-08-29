@@ -183,6 +183,13 @@
 			<AbsInset left="0" right="0" top="0" bottom="0"/>
 		</HitRectInsets>
 	</CheckButton>
+	<CheckButton name="MPowaTernarySelectorTemplate" inherits="MPowa_CheckTemplate" virtual="true">
+		<Scripts>
+			<OnClick>
+				MPowa_Ternary_OnClick(this, this.var)
+			</OnClick>
+		</Scripts>
+	</CheckButton>
 	<Button name="MPowa_ScrollFrameButtonTemplate" virtual="true">
 		<Size>
 			<AbsDimension x="265" y="40" />
@@ -779,8 +786,9 @@
 									<OnEnterPressed>
 										this:ClearFocus()
 									</OnEnterPressed>
-									<OnTextChanged>
-									</OnTextChanged>
+									<OnEditFocusLost>
+										MPowa_Editbox_Stacks(this)
+									</OnEditFocusLost>
 									<OnEnter>
 										GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
 										GameTooltip:SetText(this.aide, nil, nil, nil, nil, 1)
@@ -828,6 +836,7 @@
 										this:ClearFocus()
 									</OnEnterPressed>
 									<OnTextChanged>
+										MPowa_Editbox_Duration(this)
 									</OnTextChanged>
 									<OnEnter>
 										GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
@@ -923,6 +932,11 @@
 									</OnLoad>
 									<OnClick>
 										MPowa_Checkbutton("enemytarget")
+										if MPowa_ConfigFrame_Container_1_2_Checkbutton_Debuff:GetChecked() or MPowa_ConfigFrame_Container_1_2_Checkbutton_EnemyTarget:GetChecked() or MPowa_ConfigFrame_Container_1_2_Checkbutton_FriendlyTarget:GetChecked() then
+											MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Show()
+										else
+											MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Hide()
+										end
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -940,7 +954,12 @@
 										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_FRIENDLYTARGET);
 									</OnLoad>
 									<OnClick>
-										MPowa_Checkbutton("target")
+										MPowa_Checkbutton("friendlytarget")
+										if MPowa_ConfigFrame_Container_1_2_Checkbutton_Debuff:GetChecked() or MPowa_ConfigFrame_Container_1_2_Checkbutton_EnemyTarget:GetChecked() or MPowa_ConfigFrame_Container_1_2_Checkbutton_FriendlyTarget:GetChecked() then
+											MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Show()
+										else
+											MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Hide()
+										end
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -959,10 +978,15 @@
 									</OnLoad>
 									<OnClick>
 										MPowa_Checkbutton("isdebuff")
+										if MPowa_ConfigFrame_Container_1_2_Checkbutton_Debuff:GetChecked() or MPowa_ConfigFrame_Container_1_2_Checkbutton_EnemyTarget:GetChecked() or MPowa_ConfigFrame_Container_1_2_Checkbutton_FriendlyTarget:GetChecked() then
+											MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Show()
+										else
+											MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Hide()
+										end
 									</OnClick>
 								</Scripts>
 							</CheckButton>
-							<CheckButton name="$parent_Checkbutton_Alive" inherits="MPowa_CheckTemplate">
+							<CheckButton name="$parent_Checkbutton_Alive" inherits="MPowaTernarySelectorTemplate">
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="$parent_Checkbutton_Debuff" relativePoint="BOTTOMLEFT">
 										<Offset>
@@ -972,15 +996,13 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
+										this.var = "alive"
 										this.tooltipText = MPOWA_CHECKBUTTON_ALIVE_TOOLTIP
 										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_ALIVE);
 									</OnLoad>
-									<OnClick>
-										MPowa_Checkbutton("target")
-									</OnClick>
 								</Scripts>
 							</CheckButton>
-							<CheckButton name="$parent_Checkbutton_Mounted" inherits="MPowa_CheckTemplate">
+							<CheckButton name="$parent_Checkbutton_Mounted" inherits="MPowaTernarySelectorTemplate">
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="$parent_Checkbutton_Alive" relativePoint="BOTTOMLEFT">
 										<Offset>
@@ -990,15 +1012,13 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
+										this.var = "mounted"
 										this.tooltipText = MPOWA_CHECKBUTTON_MOUNTED_TOOLTIP
 										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_MOUNTED);
 									</OnLoad>
-									<OnClick>
-										MPowa_Checkbutton("target")
-									</OnClick>
 								</Scripts>
 							</CheckButton>
-							<CheckButton name="$parent_Checkbutton_InCombat" inherits="MPowa_CheckTemplate">
+							<CheckButton name="$parent_Checkbutton_InCombat" inherits="MPowaTernarySelectorTemplate">
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="$parent_Checkbutton_Mounted" relativePoint="BOTTOMLEFT">
 										<Offset>
@@ -1008,15 +1028,13 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
+										this.var = "incombat"
 										this.tooltipText = MPOWA_CHECKBUTTON_INCOMBAT_TOOLTIP
 										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_INCOMBAT);
 									</OnLoad>
-									<OnClick>
-										MPowa_Checkbutton("target")
-									</OnClick>
 								</Scripts>
 							</CheckButton>
-							<CheckButton name="$parent_Checkbutton_InParty" inherits="MPowa_CheckTemplate">
+							<CheckButton name="$parent_Checkbutton_InParty" inherits="MPowaTernarySelectorTemplate">
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="$parent_Checkbutton_InCombat" relativePoint="BOTTOMLEFT">
 										<Offset>
@@ -1026,15 +1044,13 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
+										this.var = "inparty"
 										this.tooltipText = MPOWA_CHECKBUTTON_INPARTY_TOOLTIP
 										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_INPARTY);
 									</OnLoad>
-									<OnClick>
-										MPowa_Checkbutton("target")
-									</OnClick>
 								</Scripts>
 							</CheckButton>
-							<CheckButton name="$parent_Checkbutton_InRaid" inherits="MPowa_CheckTemplate">
+							<CheckButton name="$parent_Checkbutton_InRaid" inherits="MPowaTernarySelectorTemplate">
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="$parent_Checkbutton_InParty" relativePoint="BOTTOMLEFT">
 										<Offset>
@@ -1044,15 +1060,13 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
+										this.var = "inraid"
 										this.tooltipText = MPOWA_CHECKBUTTON_INRAID_TOOLTIP
 										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_INRAID);
 									</OnLoad>
-									<OnClick>
-										MPowa_Checkbutton("target")
-									</OnClick>
 								</Scripts>
 							</CheckButton>
-							<CheckButton name="$parent_Checkbutton_IsBattleground" inherits="MPowa_CheckTemplate">
+							<CheckButton name="$parent_Checkbutton_InBattleground" inherits="MPowaTernarySelectorTemplate">
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="$parent_Checkbutton_InRaid" relativePoint="BOTTOMLEFT">
 										<Offset>
@@ -1062,12 +1076,10 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
+										this.var = "inbattleground"
 										this.tooltipText = MPOWA_CHECKBUTTON_ISBATTLEGROUND_TOOLTIP
 										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_ISBATTLEGROUND);
 									</OnLoad>
-									<OnClick>
-										MPowa_Checkbutton("target")
-									</OnClick>
 								</Scripts>
 							</CheckButton>
 						</Frames>
