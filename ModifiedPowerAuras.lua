@@ -10,6 +10,67 @@ local CUR_EDIT = 1
 local TEST_ALL = false
 local ISMOUNTED = false
 local INBATTLEGROUND = false
+local SOUND = {}
+SOUND = {
+	[0] = "None",
+	[1] = "LEVELUP",
+	[2] = "LOOTWINDOWCOINSOUND",
+	[3] = "MapPing",
+	[4] = "HumanExploration",
+	[5] = "QUESTADDED",
+	[6] = "QUESTCOMPLETED",
+	[7] = "WriteQuest",
+	[8] = "Fishing Reel in",
+	[9] = "igPVPUpdate",
+	[10] = "ReadyCheck",
+	[11] = "RaidWarning",
+	[12] = "AuctionWindowOpen",
+	[13] = "AuctionWindowClose",
+	[14] = "TellMessage",
+	[15] = "igBackPackOpen",
+	[16] = "aggro.ogg",
+	[17] = "bam.ogg",
+	[18] = "cat2.ogg",
+	[19] = "cookie.ogg",
+	[20] = "moan.ogg",
+	[21] = "phone.ogg",
+	[22] = "shot.ogg",
+	[23] = "sonar.ogg",
+	[24] = "splash.ogg",
+	[25] = "wilhelm.ogg",
+	[26] = "huh_1.ogg",
+	[27] = "bear_polar.ogg",
+	[28] = "bigkiss.ogg",
+	[29] = "BITE.ogg",
+	[30] = "PUNCH.ogg",
+	[31] = "burp4.ogg",
+	[32] = "chimes.ogg",
+	[33] = "Gasp.ogg",
+	[34] = "hic3.ogg",
+	[35] = "hurricane.ogg",
+	[35] = "hyena.ogg",
+	[36] = "Squeakypig.ogg",
+	[37] = "panther1.ogg",
+	[38] = "rainroof.ogg",
+	[39] = "snakeatt.ogg",
+	[40] = "sneeze.ogg",
+	[41] = "thunder.ogg",
+	[42] = "wickedmalelaugh1.ogg",
+	[43] = "wlaugh.ogg",
+	[44] = "wolf5.ogg",
+	[45] = "swordecho.ogg",	
+	[46] = "throwknife.ogg",
+	[47] = "yeehaw.ogg",
+	[48] = "Fireball.ogg", 
+	[49] = "rocket.ogg", 
+	[50] = "Arrow_Swoosh.ogg", 
+	[51] = "ESPARK1.ogg", 
+	[52] = "chant4.ogg", 
+	[53] = "chant2.ogg", 
+	[54] = "shipswhistle.ogg", 
+	[55] = "kaching.ogg", 
+	[56] = "heartbeat.ogg",
+};
 
 -- Functions
 
@@ -62,6 +123,19 @@ function MPowa_OnEvent(event)
 			if MPOWA_SAVE[i].inparty == nil then MPOWA_SAVE[i].inparty = 0 end
 			if MPOWA_SAVE[i].inraid == nil then MPOWA_SAVE[i].inraid = 0 end
 			if MPOWA_SAVE[i].inbattleground == nil then MPOWA_SAVE[i].inbattleground = 0 end
+			if MPOWA_SAVE[i].fontalpha == nil then MPOWA_SAVE[i].fontalpha = 1 end
+			if MPOWA_SAVE[i].fontoffsetx == nil then MPOWA_SAVE[i].fontoffsetx = 0 end
+			if MPOWA_SAVE[i].fontoffsety == nil then MPOWA_SAVE[i].fontoffsety = 0 end
+			if MPOWA_SAVE[i].fontsize == nil then MPOWA_SAVE[i].fontsize = 1.5 end
+			if MPOWA_SAVE[i].hundredth == nil then MPOWA_SAVE[i].hundredth = false end
+			if MPOWA_SAVE[i].usefontcolor == nil then MPOWA_SAVE[i].usefontcolor = false end
+			if MPOWA_SAVE[i].fontcolor_r == nil then MPOWA_SAVE[i].fontcolor_r = 1 end
+			if MPOWA_SAVE[i].fontcolor_g == nil then MPOWA_SAVE[i].fontcolor_g = 1 end
+			if MPOWA_SAVE[i].fontcolor_b == nil then MPOWA_SAVE[i].fontcolor_b = 1 end
+			if MPOWA_SAVE[i].usebeginsound == nil then MPOWA_SAVE[i].usebeginsound = false end
+			if MPOWA_SAVE[i].useendsound == nil then MPOWA_SAVE[i].useendsound = false end
+			if MPOWA_SAVE[i].beginsound == nil then MPOWA_SAVE[i].beginsound = 1 end
+			if MPOWA_SAVE[i].endsound == nil then MPOWA_SAVE[i].endsound = 1 end
 			MPowa_CreateIcons(i)
 		end
 		
@@ -112,6 +186,19 @@ function MPowa_CreateSave(i)
 		inparty = 0,
 		inraid = 0,
 		inbattleground = 0,
+		fontalpha = 1,
+		fontoffsetx = 0,
+		fontoffsety = 0,
+		fontsize = 1.5,
+		hundredth = false,
+		usefontcolor = false,
+		fontcolor_r = 1,
+		fontcolor_g = 1,
+		fontcolor_b = 1,
+		usebeginsound = false,
+		beginsound = 1,
+		useendsound = false,
+		endsound = 1,
 	}
 end
 
@@ -255,8 +342,24 @@ function MPowa_Edit()
 		getglobal("MPowa_ConfigFrame_Container_1_Slider_PosYLow"):SetText(MPowa_GetMinValues(MPOWA_SAVE[CUR_EDIT].y))
 		getglobal("MPowa_ConfigFrame_Container_1_Slider_PosYHigh"):SetText(MPowa_GetMaxValues(MPOWA_SAVE[CUR_EDIT].y))
 		
+		getglobal("MPowa_ConfigFrame_Container_2_Slider_PosX"):SetMinMaxValues(MPowa_GetMinValues(MPOWA_SAVE[CUR_EDIT].fontoffsetx),MPowa_GetMaxValues(MPOWA_SAVE[CUR_EDIT].fontoffsetx))
+		getglobal("MPowa_ConfigFrame_Container_2_Slider_PosX"):SetValue(MPOWA_SAVE[CUR_EDIT].fontoffsetx)
+		getglobal("MPowa_ConfigFrame_Container_2_Slider_PosXText"):SetText(MPOWA_SLIDER_POSX.." "..MPOWA_SAVE[CUR_EDIT].fontoffsetx)
+		getglobal("MPowa_ConfigFrame_Container_2_Slider_PosXLow"):SetText(MPowa_GetMinValues(MPOWA_SAVE[CUR_EDIT].fontoffsetx))
+		getglobal("MPowa_ConfigFrame_Container_2_Slider_PosXHigh"):SetText(MPowa_GetMaxValues(MPOWA_SAVE[CUR_EDIT].fontoffsetx))
+		
+		getglobal("MPowa_ConfigFrame_Container_2_Slider_PosY"):SetMinMaxValues(MPowa_GetMinValues(MPOWA_SAVE[CUR_EDIT].fontoffsety),MPowa_GetMaxValues(MPOWA_SAVE[CUR_EDIT].fontoffsety))
+		getglobal("MPowa_ConfigFrame_Container_2_Slider_PosY"):SetValue(MPOWA_SAVE[CUR_EDIT].fontoffsety)
+		getglobal("MPowa_ConfigFrame_Container_2_Slider_PosYText"):SetText(MPOWA_SLIDER_POSY.." "..MPOWA_SAVE[CUR_EDIT].fontoffsety)
+		getglobal("MPowa_ConfigFrame_Container_2_Slider_PosYLow"):SetText(MPowa_GetMinValues(MPOWA_SAVE[CUR_EDIT].fontoffsety))
+		getglobal("MPowa_ConfigFrame_Container_2_Slider_PosYHigh"):SetText(MPowa_GetMaxValues(MPOWA_SAVE[CUR_EDIT].fontoffsety))
+		
 		getglobal("MPowa_ConfigFrame_Container_1_Slider_Size"):SetValue(tonumber(MPOWA_SAVE[CUR_EDIT].size))
 		getglobal("MPowa_ConfigFrame_Container_1_Slider_SizeText"):SetText(MPOWA_SLIDER_SIZE.." "..MPOWA_SAVE[CUR_EDIT].size)
+		getglobal("MPowa_ConfigFrame_Container_2_Slider_Size"):SetValue(tonumber(MPOWA_SAVE[CUR_EDIT].fontsize))
+		getglobal("MPowa_ConfigFrame_Container_2_Slider_SizeText"):SetText(MPOWA_SLIDER_SIZE.." "..MPOWA_SAVE[CUR_EDIT].fontsize)
+		getglobal("MPowa_ConfigFrame_Container_2_Slider_Opacity"):SetValue(tonumber(MPOWA_SAVE[CUR_EDIT].fontalpha))
+		getglobal("MPowa_ConfigFrame_Container_2_Slider_OpacityText"):SetText(MPOWA_SLIDER_OPACITY.." "..MPOWA_SAVE[CUR_EDIT].fontalpha)
 		getglobal("MPowa_ConfigFrame_Container_1_2_Editbox"):SetText(MPOWA_SAVE[CUR_EDIT].buffname)
 		getglobal("MPowa_ConfigFrame_Container_1_2_Editbox_Stacks"):SetText(MPOWA_SAVE[CUR_EDIT].stacks)
 		getglobal("MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration"):SetText(MPOWA_SAVE[CUR_EDIT].targetduration)
@@ -266,6 +369,18 @@ function MPowa_Edit()
 		getglobal("MPowa_ConfigFrame_Container_1_2_Checkbutton_ShowCooldowns"):SetChecked(MPOWA_SAVE[CUR_EDIT].cooldown)
 		getglobal("MPowa_ConfigFrame_Container_1_2_Checkbutton_EnemyTarget"):SetChecked(MPOWA_SAVE[CUR_EDIT].enemytarget)
 		getglobal("MPowa_ConfigFrame_Container_1_2_Checkbutton_FriendlyTarget"):SetChecked(MPOWA_SAVE[CUR_EDIT].friendlytarget)
+		getglobal("MPowa_ConfigFrame_Container_2_2_Checkbutton_Hundreds"):SetChecked(MPOWA_SAVE[CUR_EDIT].hundredth)
+		getglobal("MPowa_ConfigFrame_Container_2_2_Checkbutton_Color"):SetChecked(MPOWA_SAVE[CUR_EDIT].usefontcolor)
+		getglobal("MPowa_ConfigFrame_Container_2_2_ColorpickerNormalTexture"):SetVertexColor(MPOWA_SAVE[CUR_EDIT].fontcolor_r, MPOWA_SAVE[CUR_EDIT].fontcolor_g, MPOWA_SAVE[CUR_EDIT].fontcolor_b)
+		getglobal("MPowa_ConfigFrame_Container_2_2_Colorpicker_SwatchBg").r = MPOWA_SAVE[CUR_EDIT].fontcolor_r
+		getglobal("MPowa_ConfigFrame_Container_2_2_Colorpicker_SwatchBg").g = MPOWA_SAVE[CUR_EDIT].fontcolor_g
+		getglobal("MPowa_ConfigFrame_Container_2_2_Colorpicker_SwatchBg").b = MPOWA_SAVE[CUR_EDIT].fontcolor_b
+		getglobal("MPowa_ConfigFrame_Container_3_Slider_BeginSound"):SetValue(MPOWA_SAVE[CUR_EDIT].beginsound)
+		getglobal("MPowa_ConfigFrame_Container_3_Slider_BeginSoundText"):SetText(MPOWA_SLIDER_BEGINSOUND..SOUND[MPOWA_SAVE[CUR_EDIT].beginsound])
+		getglobal("MPowa_ConfigFrame_Container_3_Slider_EndSound"):SetValue(MPOWA_SAVE[CUR_EDIT].endsound)
+		getglobal("MPowa_ConfigFrame_Container_3_Slider_EndSoundText"):SetText(MPOWA_SLIDER_BEGINSOUND..SOUND[MPOWA_SAVE[CUR_EDIT].endsound])
+		getglobal("MPowa_ConfigFrame_Container_3_Checkbutton_BeginSound"):SetChecked(MPOWA_SAVE[CUR_EDIT].usebeginsound)
+		getglobal("MPowa_ConfigFrame_Container_3_Checkbutton_EndSound"):SetChecked(MPOWA_SAVE[CUR_EDIT].useendsound)
 		if MPOWA_SAVE[CUR_EDIT].isdebuff or MPOWA_SAVE[CUR_EDIT].enemytarget or MPOWA_SAVE[CUR_EDIT].friendlytarget then
 			getglobal("MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration"):Show()
 		else
@@ -343,11 +458,27 @@ end
 
 function MPowa_HideAllIcons()
 	for i=1, CUR_MAX do
-		if (not MPOWA_SAVE[i].test) then
-			getglobal("TextureFrame"..i):Hide()
+		local button = getglobal("TextureFrame"..i)
+		button.bi = nil
+		button.count = 0
+		if button:IsVisible() then
+			button.removed = GetTime()
+		else
+			button.removed = 0
 		end
-		getglobal("TextureFrame"..i).bi = nil
-		getglobal("TextureFrame"..i).count = 0
+		if (not MPOWA_SAVE[i].test) then
+			button:Hide()
+		end
+		if button.timeLeft ~= nil then
+			if (button.timeLeft < 0.5) and MPOWA_SAVE[button:GetID()].useendsound then
+				if MPOWA_SAVE[button:GetID()].endsound < 16 then
+					PlaySound(SOUND[MPOWA_SAVE[button:GetID()].endsound], "master")
+				else
+					PlaySoundFile("Interface\\AddOns\\ModifiedPowerAuras\\Sounds\\"..SOUND[MPOWA_SAVE[button:GetID()].endsound], "master")
+				end
+			end
+			button.timeLeft = nil
+		end
 	end
 end
 
@@ -359,7 +490,7 @@ function MPowa_SearchAuras()
 	-- To enable to show cooldowns
 	for p=1, CUR_MAX do
 		if MPOWA_SAVE[p].cooldown or MPOWA_SAVE[p].inverse then
-			if MPOWA_SAVE[p].test or TEST_ALL then MPOWA_SAVE[p].test = false; TEST_ALL = false end
+			if MPOWA_SAVE[p].test or TEST_ALL then MPOWA_SAVE[p].test = false TEST_ALL = false end
 				MPowa_TextureFrame_Update(99, getglobal("TextureFrame"..p))
 		end
 	end
@@ -384,7 +515,7 @@ function MPowa_SearchAuras()
 			if (buff ~= nil) then
 				--DEFAULT_CHAT_FRAME:AddMessage(buff.." I: "..i.." P: "..p)
 				if strfind(strlower(MPOWA_SAVE[p].buffname), strlower(buff)) and (not MPOWA_SAVE[p].isdebuff) then
-					if MPOWA_SAVE[p].test or TEST_ALL then MPOWA_SAVE[p].test = false; TEST_ALL = false end
+					if MPOWA_SAVE[p].test or TEST_ALL then MPOWA_SAVE[p].test = false TEST_ALL = false end
 					getglobal("TextureFrame"..p).count = getglobal("TextureFrame"..p).count + 1
 					MPowa_TextureFrame_Update(i, getglobal("TextureFrame"..p))
 					if MPOWA_SAVE[p].inverse then
@@ -408,7 +539,7 @@ function MPowa_SearchAuras()
 			end
 			if (debuff ~= nil) then
 				if strfind(strlower(MPOWA_SAVE[p].buffname), strlower(debuff)) and MPOWA_SAVE[p].isdebuff then
-					if MPOWA_SAVE[p].test or TEST_ALL then MPOWA_SAVE[p].test = false; TEST_ALL = false end
+					if MPOWA_SAVE[p].test or TEST_ALL then MPOWA_SAVE[p].test = false TEST_ALL = false end
 					getglobal("TextureFrame"..p).count = getglobal("TextureFrame"..p).count + 1
 					MPowa_TextureFrame_Update(i, getglobal("TextureFrame"..p))
 					if MPOWA_SAVE[p].inverse then
@@ -506,6 +637,14 @@ function MPowa_TextureFrame_Update(bi, button)
 				
 				button.bi = bi
 				
+				if (button.removed+0.5 < GetTime()) and MPOWA_SAVE[button:GetID()].usebeginsound then
+					if MPOWA_SAVE[button:GetID()].beginsound < 16 then
+						PlaySound(SOUND[MPOWA_SAVE[button:GetID()].beginsound], "master")
+					else
+						PlaySoundFile("Interface\\AddOns\\ModifiedPowerAuras\\Sounds\\"..SOUND[MPOWA_SAVE[button:GetID()].beginsound], "master")
+					end
+				end
+				
 				button:Show()
 			end
 		end
@@ -585,15 +724,20 @@ function MPowa_TextureFrame_OnUpdate(elapsed, button)
 					end
 					timeLeft = GetPlayerBuffTimeLeft(buffIndex)
 				end
-				if MPOWA_SAVE[button:GetID()].timer and timeLeft > 0 then
+				if MPOWA_SAVE[button:GetID()].hundredth and timeLeft > 0 then
 					Duration:SetText(string.format("%.2f", timeLeft))
-				elseif (not MPOWA_SAVE[button:GetID()].timer) and timeLeft > 0 then
+				elseif (not MPOWA_SAVE[button:GetID()].hundredth) and timeLeft > 0 then
 					Duration:SetText(string.format("%.0f", timeLeft))
 				end
 				if timeLeft == 0 and (not MPOWA_SAVE[button:GetID()].enemytarget) and (not MPOWA_SAVE[button:GetID()].friendlytarget) then Duration:SetText("") end
+				button.timeLeft = timeLeft
 			end	
 		else
-			Duration:SetText(random(1,23)+random(1,60)/100)
+			if MPOWA_SAVE[button:GetID()].hundredth then
+				Duration:SetText(string.format("%.2f", (random(1,23)+random(1,60)/100)))
+			else
+				Duration:SetText(string.format("%.0f", (random(1,23)+random(1,60)/100)))
+			end
 		end
 	end
 end
@@ -643,10 +787,18 @@ end
 
 function MPowa_ApplyConfig(i)
 	local frame = getglobal("TextureFrame"..i)
+	local duration = getglobal("TextureFrame"..i.."_Timer")
 	frame:SetAlpha(MPOWA_SAVE[i].alpha)
 	frame:ClearAllPoints()
 	frame:SetPoint("CENTER", UIParent, "CENTER", MPOWA_SAVE[i].x, MPOWA_SAVE[i].y)
 	frame:SetScale(MPOWA_SAVE[i].size)
+	duration:SetFont("Fonts\\FRIZQT__.ttf", MPOWA_SAVE[i].fontsize*12, "OUTLINE")
+	duration:SetAlpha(MPOWA_SAVE[i].fontalpha)
+	duration:ClearAllPoints()
+	duration:SetPoint("CENTER", frame, "CENTER", MPOWA_SAVE[i].fontoffsetx, MPOWA_SAVE[i].fontoffsety)
+	if MPOWA_SAVE[i].usefontcolor then
+		duration:SetTextColor(MPOWA_SAVE[i].fontcolor_r,MPOWA_SAVE[i].fontcolor_g,MPOWA_SAVE[i].fontcolor_b,MPOWA_SAVE[i].fontalpha)
+	end
 end
 
 function MPowa_SliderChange(var, obj, text)
@@ -689,8 +841,8 @@ end
 
 function MPowa_TernarySetState(button, value)
 	local label = getglobal(button:GetName().."Text")
-	button:Enable();
-	label:SetTextColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
+	button:Enable()
+	label:SetTextColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b)
 
 	if value==0 then
 		button:SetCheckedTexture("Interface\\Buttons\\UI-CheckBox-Check")
@@ -706,13 +858,91 @@ end
 
 function MPowa_Ternary_OnClick(obj, var)
 	if (MPOWA_SAVE[CUR_EDIT][var]==0) then
-		MPOWA_SAVE[CUR_EDIT][var] = true; -- Ignore => On
+		MPOWA_SAVE[CUR_EDIT][var] = true -- Ignore => On
 	elseif (MPOWA_SAVE[CUR_EDIT][var]==true) then
-		MPOWA_SAVE[CUR_EDIT][var] = false; -- On => Off
+		MPOWA_SAVE[CUR_EDIT][var] = false -- On => Off
 	else
-		MPOWA_SAVE[CUR_EDIT][var] = 0; -- Off => Ignore
+		MPOWA_SAVE[CUR_EDIT][var] = 0 -- Off => Ignore
 	end	
 
 	MPowa_TernarySetState(obj, MPOWA_SAVE[CUR_EDIT][var])
 	MPowa_Update()
+end
+
+function MPowa_OptionsFrame_SetColor()
+	local r,g,b = ColorPickerFrame:GetColorRGB()
+	local swatch,frame
+	swatch = getglobal("MPowa_ConfigFrame_Container_2_2_ColorpickerNormalTexture") -- juste le visuel
+	frame = getglobal("MPowa_ConfigFrame_Container_2_2_Colorpicker_SwatchBg")      -- enregistre la couleur
+	swatch:SetVertexColor(r,g,b)
+	frame.r = r
+	frame.g = g
+	frame.b = b
+
+	MPOWA_SAVE[CUR_EDIT].fontcolor_r = r
+	MPOWA_SAVE[CUR_EDIT].fontcolor_g = g
+	MPOWA_SAVE[CUR_EDIT].fontcolor_b = b
+	
+	if MPOWA_SAVE[CUR_EDIT].usefontcolor then
+		getglobal("TextureFrame"..CUR_EDIT.."_Timer"):SetTextColor(r,g,b,MPOWA_SAVE[CUR_EDIT].fontalpha)
+	else
+		getglobal("TextureFrame"..CUR_EDIT.."_Timer"):SetTextColor(1,1,1,MPOWA_SAVE[CUR_EDIT].fontalpha)
+	end
+end
+
+function MPowa_OptionsFrame_CancelColor()
+	local r = ColorPickerFrame.previousValues.r
+	local g = ColorPickerFrame.previousValues.g
+	local b = ColorPickerFrame.previousValues.b
+	local swatch,frame
+	swatch = getglobal("MPowa_ConfigFrame_Container_2_2_ColorpickerNormalTexture") -- juste le visuel
+	frame = getglobal("MPowa_ConfigFrame_Container_2_2_Colorpicker_SwatchBg")      -- enregistre la couleur
+	swatch:SetVertexColor(r,g,b)
+	frame.r = r
+	frame.g = g
+	frame.b = b
+	
+	if MPOWA_SAVE[CUR_EDIT].usefontcolor then
+		getglobal("TextureFrame"..CUR_EDIT.."_Timer"):SetTextColor(r,g,b,MPOWA_SAVE[CUR_EDIT].fontalpha)
+	else
+		getglobal("TextureFrame"..CUR_EDIT.."_Timer"):SetTextColor(1,1,1,MPOWA_SAVE[CUR_EDIT].fontalpha)
+	end
+end
+
+function MPowa_OpenColorPicker()
+	CloseMenus()
+	
+	button = getglobal("MPowa_ConfigFrame_Container_2_2_Colorpicker_SwatchBg")
+
+	ColorPickerFrame.func = MPowa_OptionsFrame_SetColor -- button.swatchFunc
+	ColorPickerFrame:SetColorRGB(button.r, button.g, button.b)
+	ColorPickerFrame.previousValues = {r = button.r, g = button.g, b = button.b, opacity = button.opacity}
+	ColorPickerFrame.cancelFunc = MPowa_OptionsFrame_CancelColor
+
+	ColorPickerFrame:SetPoint("TOPLEFT", MPowa_ConfigFrame_Container_2_2_Colorpicker, "TOPRIGHT", 0, 0)
+
+	ColorPickerFrame:Show()
+end
+
+function MPowa_Checkbutton_USEFONTCOLOR()
+	if MPOWA_SAVE[CUR_EDIT].usefontcolor then
+		MPOWA_SAVE[CUR_EDIT].usefontcolor = false
+		getglobal("TextureFrame"..CUR_EDIT.."_Timer"):SetTextColor(1,1,1,MPOWA_SAVE[CUR_EDIT].usefontcolor)
+	else
+		MPOWA_SAVE[CUR_EDIT].usefontcolor = true
+		getglobal("TextureFrame"..CUR_EDIT.."_Timer"):SetTextColor(MPOWA_SAVE[CUR_EDIT].fontcolor_r,MPOWA_SAVE[CUR_EDIT].fontcolor_g,MPOWA_SAVE[CUR_EDIT].fontcolor_b,MPOWA_SAVE[CUR_EDIT].usefontcolor)
+	end
+end
+
+function MPowa_SoundSliderChange(obj, var)
+	local oldvar = MPOWA_SAVE[CUR_EDIT][var]
+	MPOWA_SAVE[CUR_EDIT][var] = obj:GetValue()
+	getglobal(obj:GetName().."Text"):SetText(MPOWA_SLIDER_BEGINSOUND..SOUND[MPOWA_SAVE[CUR_EDIT][var]])
+	if MPOWA_SAVE[CUR_EDIT][var] ~= oldvar then
+		if MPOWA_SAVE[CUR_EDIT][var] < 16 then
+			PlaySound(SOUND[MPOWA_SAVE[CUR_EDIT][var]], "master")
+		else
+			PlaySoundFile("Interface\\AddOns\\ModifiedPowerAuras\\Sounds\\"..SOUND[MPOWA_SAVE[CUR_EDIT][var]], "master")
+		end
+	end
 end

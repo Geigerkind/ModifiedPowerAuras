@@ -874,7 +874,7 @@
 								<Scripts>
 									<OnLoad>
 										this.tooltipText = MPOWA_CHECKBUTTON_SHOWIFNOTACTIVE_TOOLTIP
-										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_SHOWIFNOTACTIVE);
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_SHOWIFNOTACTIVE)
 									</OnLoad>
 									<OnClick>
 										MPowa_Checkbutton("inverse")
@@ -892,7 +892,7 @@
 								<Scripts>
 									<OnLoad>
 										this.tooltipText = MPOWA_CHECKBUTTON_SHOWCOOLDOWN_TOOLTIP
-										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_SHOWCOOLDOWN);
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_SHOWCOOLDOWN)
 									</OnLoad>
 									<OnClick>
 										MPowa_Checkbutton("cooldown")
@@ -910,7 +910,7 @@
 								<Scripts>
 									<OnLoad>
 										this.tooltipText = MPOWA_CHECKBUTTON_TIMER_TOOLTIP
-										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_TIMER);
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_TIMER)
 									</OnLoad>
 									<OnClick>
 										MPowa_Checkbutton("timer")
@@ -928,7 +928,7 @@
 								<Scripts>
 									<OnLoad>
 										this.tooltipText = MPOWA_CHECKBUTTON_ENEMYTARGET_TOOLTIP
-										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_ENEMYTARGET);
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_ENEMYTARGET)
 									</OnLoad>
 									<OnClick>
 										MPowa_Checkbutton("enemytarget")
@@ -951,7 +951,7 @@
 								<Scripts>
 									<OnLoad>
 										this.tooltipText = MPOWA_CHECKBUTTON_FRIENDLYTARGET_TOOLTIP
-										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_FRIENDLYTARGET);
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_FRIENDLYTARGET)
 									</OnLoad>
 									<OnClick>
 										MPowa_Checkbutton("friendlytarget")
@@ -974,7 +974,7 @@
 								<Scripts>
 									<OnLoad>
 										this.tooltipText = MPOWA_CHECKBUTTON_DEBUFF_TOOLTIP
-										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_DEBUFF);
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_DEBUFF)
 									</OnLoad>
 									<OnClick>
 										MPowa_Checkbutton("isdebuff")
@@ -998,7 +998,7 @@
 									<OnLoad>
 										this.var = "alive"
 										this.tooltipText = MPOWA_CHECKBUTTON_ALIVE_TOOLTIP
-										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_ALIVE);
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_ALIVE)
 									</OnLoad>
 								</Scripts>
 							</CheckButton>
@@ -1014,7 +1014,7 @@
 									<OnLoad>
 										this.var = "mounted"
 										this.tooltipText = MPOWA_CHECKBUTTON_MOUNTED_TOOLTIP
-										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_MOUNTED);
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_MOUNTED)
 									</OnLoad>
 								</Scripts>
 							</CheckButton>
@@ -1030,7 +1030,7 @@
 									<OnLoad>
 										this.var = "incombat"
 										this.tooltipText = MPOWA_CHECKBUTTON_INCOMBAT_TOOLTIP
-										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_INCOMBAT);
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_INCOMBAT)
 									</OnLoad>
 								</Scripts>
 							</CheckButton>
@@ -1046,7 +1046,7 @@
 									<OnLoad>
 										this.var = "inparty"
 										this.tooltipText = MPOWA_CHECKBUTTON_INPARTY_TOOLTIP
-										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_INPARTY);
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_INPARTY)
 									</OnLoad>
 								</Scripts>
 							</CheckButton>
@@ -1062,7 +1062,7 @@
 									<OnLoad>
 										this.var = "inraid"
 										this.tooltipText = MPOWA_CHECKBUTTON_INRAID_TOOLTIP
-										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_INRAID);
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_INRAID)
 									</OnLoad>
 								</Scripts>
 							</CheckButton>
@@ -1078,7 +1078,7 @@
 									<OnLoad>
 										this.var = "inbattleground"
 										this.tooltipText = MPOWA_CHECKBUTTON_ISBATTLEGROUND_TOOLTIP
-										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_ISBATTLEGROUND);
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_ISBATTLEGROUND)
 									</OnLoad>
 								</Scripts>
 							</CheckButton>
@@ -1133,7 +1133,7 @@
 									</OnLoad>
 									<OnValueChanged>
 										if LOADED then
-											MPowa_SliderChange("alpha", this, MPOWA_SLIDER_OPACITY)
+											MPowa_SliderChange("fontalpha", this, MPOWA_SLIDER_OPACITY)
 										end
 									</OnValueChanged>
 								</Scripts>
@@ -1158,35 +1158,35 @@
 									</OnLoad>
 									<OnValueChanged>
 										if LOADED and MPowa_ConfigFrame:IsVisible() then
-											MPowa_SliderChange("x", this, MPOWA_SLIDER_POSX)
+											MPowa_SliderChange("fontoffsetx", this, MPOWA_SLIDER_POSX)
 
 											local min, max = this:GetMinMaxValues()
 											local value = this:GetValue()
-											if value == min and SLIDER_POSX_MIN then
+											if value == min and SLIDER_OFFSETX_MIN then
 												if value ~= -600 then
 													this:SetMinMaxValues(min-50,max-50)
 													getglobal(this:GetName().."Low"):SetText(min-50)
 													getglobal(this:GetName().."High"):SetText(max-50)
-													SLIDER_POSX_MIN = false
+													SLIDER_OFFSETX_MIN = false
 												end
 											elseif value == max then
-												if value ~= 600 and SLIDER_POSX_MAX then
+												if value ~= 600 and SLIDER_OFFSETX_MAX then
 													this:SetMinMaxValues(min+50,max+50)
 													getglobal(this:GetName().."Low"):SetText(min+50)
 													getglobal(this:GetName().."High"):SetText(max+50)
-													SLIDER_POSX_MAX = false
+													SLIDER_OFFSETX_MAX = false
 												end
 											end
 											if value == (max - 25) then
-												SLIDER_POSX_MAX = true
+												SLIDER_OFFSETX_MAX = true
 											elseif value == (min + 25) then
-												SLIDER_POSX_MIN = true
+												SLIDER_OFFSETX_MIN = true
 											end
 										end
 									</OnValueChanged>
 									<OnMouseUp>
-										SLIDER_POSX_MIN = true
-										SLIDER_POSX_MAX = true
+										SLIDER_OFFSETX_MIN = true
+										SLIDER_OFFSETX_MAX = true
 									</OnMouseUp>
 								</Scripts>
 							</Slider>
@@ -1210,35 +1210,35 @@
 									</OnLoad>
 									<OnValueChanged>
 										if LOADED and MPowa_ConfigFrame:IsVisible() then
-											MPowa_SliderChange("y", this, MPOWA_SLIDER_POSY)
+											MPowa_SliderChange("fontoffsety", this, MPOWA_SLIDER_POSY)
 									
 											local min, max = this:GetMinMaxValues()
 											local value = this:GetValue()
-											if value == min and SLIDER_POSY_MIN then
+											if value == min and SLIDER_OFFSETY_MIN then
 												if value ~= -600 then
 													this:SetMinMaxValues(min-50,max-50)
 													getglobal(this:GetName().."Low"):SetText(min-50)
 													getglobal(this:GetName().."High"):SetText(max-50)
-													SLIDER_POSY_MIN = false
+													SLIDER_OFFSETY_MIN = false
 												end
 											elseif value == max then
-												if value ~= 600 and SLIDER_POSY_MAX then
+												if value ~= 600 and SLIDER_OFFSETY_MAX then
 													this:SetMinMaxValues(min+50,max+50)
 													getglobal(this:GetName().."Low"):SetText(min+50)
 													getglobal(this:GetName().."High"):SetText(max+50)
-													SLIDER_POSY_MAX = false
+													SLIDER_OFFSETY_MAX = false
 												end
 											end
 											if value == (max - 25) then
-												SLIDER_POSY_MAX = true
+												SLIDER_OFFSETY_MAX = true
 											elseif value == (min + 25) then
-												SLIDER_POSY_MIN = true
+												SLIDER_OFFSETY_MIN = true
 											end
 										end
 									</OnValueChanged>
 									<OnMouseUp>
-										SLIDER_POSY_MIN = true
-										SLIDER_POSY_MAX = true
+										SLIDER_OFFSETY_MIN = true
+										SLIDER_OFFSETY_MAX = true
 									</OnMouseUp>
 								</Scripts>
 							</Slider>
@@ -1262,7 +1262,7 @@
 									</OnLoad>
 									<OnValueChanged>
 										if LOADED then
-											MPowa_SliderChange("size", this, MPOWA_SLIDER_SIZE)
+											MPowa_SliderChange("fontsize", this, MPOWA_SLIDER_SIZE)
 										end
 									</OnValueChanged>
 								</Scripts>
@@ -1288,10 +1288,10 @@
 								<Scripts>
 									<OnLoad>
 										this.tooltipText = MPOWA_CHECKBUTTON_HUNDREDS_TOOLTIP
-										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_HUNDREDS);
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_HUNDREDS)
 									</OnLoad>
 									<OnClick>
-										MPowa_Checkbutton("inverse")
+										MPowa_Checkbutton("hundredth")
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -1306,10 +1306,10 @@
 								<Scripts>
 									<OnLoad>
 										this.tooltipText = MPOWA_CHECKBUTTON_COLOR_TOOLTIP
-										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_COLOR);
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_COLOR)
 									</OnLoad>
 									<OnClick>
-										MPowa_Checkbutton("inverse")
+										MPowa_Checkbutton_USEFONTCOLOR()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -1343,21 +1343,21 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
-										getglobal(this:GetName().."_SwatchBg").r = 1.0;
-										getglobal(this:GetName().."_SwatchBg").g = 1.0;
-										getglobal(this:GetName().."_SwatchBg").b = 1.0;
+										getglobal(this:GetName().."_SwatchBg").r = 1.0
+										getglobal(this:GetName().."_SwatchBg").g = 1.0
+										getglobal(this:GetName().."_SwatchBg").b = 1.0
 									</OnLoad>
 									<OnClick>
-										Powa_OpenColorPicker();
+										MPowa_OpenColorPicker()
 									</OnClick>
 									<OnEnter>
-										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
-										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
+										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b)
+										GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
+										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1)
 									</OnEnter>
 									<OnLeave>
-										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
-										GameTooltip:Hide();
+										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b)
+										GameTooltip:Hide()
 									</OnLeave>
 								</Scripts>
 								<NormalTexture name="$parentNormalTexture" file="Interface\ChatFrame\ChatFrameColorSwatch"/>
@@ -1380,10 +1380,10 @@
 								<Scripts>
 									<OnLoad>
 										this.tooltipText = MPOWA_CHECKBUTTON_BEGINSOUND_TOOLTIP
-										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_BEGINSOUND);
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_BEGINSOUND)
 									</OnLoad>
 									<OnClick>
-										MPowa_Checkbutton("inverse")
+										MPowa_Checkbutton("usebeginsound")
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -1401,15 +1401,16 @@
 								<Scripts>
 									<OnLoad>
 										this.aide = MPOWA_SLIDER_BEGINSOUND_TOOLTIP
-										this:SetMinMaxValues(1,20)
+										this:SetMinMaxValues(1,56)
 										this:SetValue(1)
 										this:SetValueStep(1)
 										getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_BEGINSOUND)
 										getglobal(this:GetName().."Low"):SetText("1")
-										getglobal(this:GetName().."High"):SetText("20")
+										getglobal(this:GetName().."High"):SetText("56")
 									</OnLoad>
 									<OnValueChanged>
 										if LOADED then
+											MPowa_SoundSliderChange(this, "beginsound")
 										end
 									</OnValueChanged>
 								</Scripts>
@@ -1425,10 +1426,10 @@
 								<Scripts>
 									<OnLoad>
 										this.tooltipText = MPOWA_CHECKBUTTON_ENDSOUND_TOOLTIP
-										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_ENDSOUND);
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_ENDSOUND)
 									</OnLoad>
 									<OnClick>
-										MPowa_Checkbutton("inverse")
+										MPowa_Checkbutton("useendsound")
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -1446,15 +1447,16 @@
 								<Scripts>
 									<OnLoad>
 										this.aide = MPOWA_SLIDER_ENDSOUND_TOOLTIP
-										this:SetMinMaxValues(1,20)
+										this:SetMinMaxValues(1,56)
 										this:SetValue(1)
 										this:SetValueStep(1)
 										getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_ENDSOUND)
 										getglobal(this:GetName().."Low"):SetText("1")
-										getglobal(this:GetName().."High"):SetText("20")
+										getglobal(this:GetName().."High"):SetText("56")
 									</OnLoad>
 									<OnValueChanged>
 										if LOADED then
+											MPowa_SoundSliderChange(this, "endsound")
 										end
 									</OnValueChanged>
 								</Scripts>
