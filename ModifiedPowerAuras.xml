@@ -566,6 +566,31 @@
 										</Texture>
 									</Layer>
 								</Layers>
+								<Frames>
+									<Button name="$parent_Add">
+										<Size>
+											<AbsDimension x="20" y="20" />
+										</Size>
+										<Anchors>
+											<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+												<Offset>
+													<AbsDimension x="0" y="1" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+										<Scripts>
+											<OnClick>
+												if MPowa_IconFrame:IsVisible() then
+													MPowa_IconFrame:Hide()
+												else
+													MPowa_IconFrame:Show()
+												end
+											</OnClick>
+										</Scripts>
+										<NormalTexture file="Interface\Buttons\UI-PlusButton-Up"/>
+										<PushedTexture file="Interface\Buttons\UI-PlusButton-Down"/>
+									</Button>
+								</Frames>
 							</Frame>
 							<Slider name="$parent_Slider_Opacity" inherits="MPowa_SliderTemplate">
 								<Anchors>
@@ -1480,106 +1505,173 @@
 					</Frame>
 					<Frame name="$parent_4" inherits="MPowa_ContainerTemplate" hidden="true">
 						<Size>
-							<AbsDimension x="290" y="110" />
+							<AbsDimension x="290" y="90" />
 						</Size>
-						<Frames>
-							<Slider name="$parent_Slider_SecAnim1" inherits="MPowa_SliderTemplate">
-								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
-										<Offset>
-											<AbsDimension x="15" y="-25" />
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										this.aide = MPOWA_SLIDER_SECANIM_TOOLTIP
-										this:SetMinMaxValues(1,20)
-										this:SetValue(1)
-										this:SetValueStep(1)
-										getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_SECANIM)
-										getglobal(this:GetName().."Low"):SetText("1")
-										getglobal(this:GetName().."High"):SetText("20")
-									</OnLoad>
-									<OnValueChanged>
-										if MPOWA_LOADED then
-										end
-									</OnValueChanged>
-								</Scripts>
-							</Slider>
-							<Slider name="$parent_Slider_SecAnim2" inherits="MPowa_SliderTemplate">
-								<Anchors>
-									<Anchor point="LEFT" relativeTo="$parent_Slider_SecAnim1" relativePoint="RIGHT">
-										<Offset>
-											<AbsDimension x="20" y="0" />
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										this.aide = MPOWA_SLIDER_SECANIM_TOOLTIP
-										this:SetMinMaxValues(1,20)
-										this:SetValue(1)
-										this:SetValueStep(1)
-										getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_SECANIM)
-										getglobal(this:GetName().."Low"):SetText("1")
-										getglobal(this:GetName().."High"):SetText("20")
-									</OnLoad>
-									<OnValueChanged>
-										if MPOWA_LOADED then
-										end
-									</OnValueChanged>
-								</Scripts>
-							</Slider>
-							<Slider name="$parent_Slider_AnimSpeed" inherits="MPowa_SliderTemplate">
-								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="$parent_Slider_SecAnim1" relativePoint="BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x="0" y="-30" />
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										this.aide = MPOWA_SLIDER_ANIMSPEED_TOOLTIP
-										this:SetMinMaxValues(1,20)
-										this:SetValue(1)
-										this:SetValueStep(1)
-										getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_ANIMSPEED)
-										getglobal(this:GetName().."Low"):SetText("1")
-										getglobal(this:GetName().."High"):SetText("20")
-									</OnLoad>
-									<OnValueChanged>
-										if MPOWA_LOADED then
-										end
-									</OnValueChanged>
-								</Scripts>
-							</Slider>
-							<Slider name="$parent_Slider_AnimDuration" inherits="MPowa_SliderTemplate">
-								<Anchors>
-									<Anchor point="LEFT" relativeTo="$parent_Slider_AnimSpeed" relativePoint="RIGHT">
-										<Offset>
-											<AbsDimension x="20" y="0" />
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										this.aide = MPOWA_SLIDER_ANIMDURATION_TOOLTIP
-										this:SetMinMaxValues(1,20)
-										this:SetValue(1)
-										this:SetValueStep(1)
-										getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_ANIMDURATION)
-										getglobal(this:GetName().."Low"):SetText("1")
-										getglobal(this:GetName().."High"):SetText("20")
-									</OnLoad>
-									<OnValueChanged>
-										if MPOWA_LOADED then
-										end
-									</OnValueChanged>
-								</Scripts>
-							</Slider>
-						</Frames>
+						<Layers>
+							<Layer>
+								<FontString name="$parent_Text" inherits="GameFontDisable" justifyH="LEFT">
+									<Size>
+										<AbsDimension x="270" y="80" />
+									</Size>
+									<Anchors>
+										<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+											<Offset>
+												<AbsDimension x="10" y="-5" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Text"):SetText(MPOWA_TEXT_ABOUT_MPOWA)
+							</OnLoad>
+						</Scripts>
+					</Frame>
+					<Frame name="$parent_4_2" inherits="MPowa_ContainerTemplate" hidden="true">
+						<Size>
+							<AbsDimension x="290" y="80" />
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent_4" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-25" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer>
+								<FontString name="$parent_Title" inherits="GameFontNormal" justifyH="LEFT">
+									<Size>
+										<AbsDimension x="270" y="20" />
+									</Size>
+									<Anchors>
+										<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+											<Offset>
+												<AbsDimension x="5" y="16" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+							<Layer>
+								<FontString name="$parent_Text" inherits="GameFontDisable" justifyH="LEFT">
+									<Size>
+										<AbsDimension x="270" y="70" />
+									</Size>
+									<Anchors>
+										<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+											<Offset>
+												<AbsDimension x="10" y="-5" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Title"):SetText(MPOWA_TEXT_CREATOR_TITLE)
+								getglobal(this:GetName().."_Text"):SetText(MPOWA_TEXT_CREATOR)
+							</OnLoad>
+						</Scripts>
+					</Frame>
+					<Frame name="$parent_4_3" inherits="MPowa_ContainerTemplate" hidden="true">
+						<Size>
+							<AbsDimension x="290" y="40" />
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent_4_2" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-25" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer>
+								<FontString name="$parent_Title" inherits="GameFontNormal" justifyH="LEFT">
+									<Size>
+										<AbsDimension x="270" y="20" />
+									</Size>
+									<Anchors>
+										<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+											<Offset>
+												<AbsDimension x="5" y="16" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+							<Layer>
+								<FontString name="$parent_Text" inherits="GameFontDisable" justifyH="LEFT">
+									<Size>
+										<AbsDimension x="270" y="30" />
+									</Size>
+									<Anchors>
+										<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+											<Offset>
+												<AbsDimension x="10" y="-5" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Title"):SetText(MPOWA_TEXT_SPECIALTHANKS_TITLE)
+								getglobal(this:GetName().."_Text"):SetText(MPOWA_TEXT_SPECIALTHANKS)
+							</OnLoad>
+						</Scripts>
+					</Frame>
+					<Frame name="$parent_4_4" inherits="MPowa_ContainerTemplate" hidden="true">
+						<Size>
+							<AbsDimension x="290" y="65" />
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent_4_3" relativePoint="BOTTOMLEFT">
+								<Offset>
+									<AbsDimension x="0" y="-25" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Layers>
+							<Layer>
+								<FontString name="$parent_Title" inherits="GameFontNormal" justifyH="LEFT">
+									<Size>
+										<AbsDimension x="270" y="20" />
+									</Size>
+									<Anchors>
+										<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+											<Offset>
+												<AbsDimension x="5" y="16" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+							<Layer>
+								<FontString name="$parent_Text" inherits="GameFontDisable" justifyH="LEFT" justifyV="TOP">
+									<Size>
+										<AbsDimension x="270" y="45" />
+									</Size>
+									<Anchors>
+										<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+											<Offset>
+												<AbsDimension x="10" y="-10" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Title"):SetText(MPOWA_TEXT_SUPPORTING_TITLE)
+								getglobal(this:GetName().."_Text"):SetText(MPOWA_TEXT_SUPPORTING)
+							</OnLoad>
+						</Scripts>
 					</Frame>
 				</Frames>
 			</Frame>
@@ -1601,6 +1693,9 @@
 						MPowa_ConfigFrame_Container_2_2:Hide()
 						MPowa_ConfigFrame_Container_3:Hide()
 						MPowa_ConfigFrame_Container_4:Hide()
+						MPowa_ConfigFrame_Container_4_2:Hide()
+						MPowa_ConfigFrame_Container_4_3:Hide()
+						MPowa_ConfigFrame_Container_4_4:Hide()
 						MPowa_ConfigFrame_Container_1:Show()
 						MPowa_ConfigFrame_Container_1_2:Show()
 					</OnClick>
@@ -1630,6 +1725,9 @@
 						MPowa_ConfigFrame_Container_1_2:Hide()
 						MPowa_ConfigFrame_Container_3:Hide()
 						MPowa_ConfigFrame_Container_4:Hide()
+						MPowa_ConfigFrame_Container_4_2:Hide()
+						MPowa_ConfigFrame_Container_4_3:Hide()
+						MPowa_ConfigFrame_Container_4_4:Hide()
 						MPowa_ConfigFrame_Container_2:Show()
 						MPowa_ConfigFrame_Container_2_2:Show()
 					</OnClick>
@@ -1661,6 +1759,9 @@
 						MPowa_ConfigFrame_Container_2_2:Hide()
 						MPowa_ConfigFrame_Container_3:Show()
 						MPowa_ConfigFrame_Container_4:Hide()
+						MPowa_ConfigFrame_Container_4_2:Hide()
+						MPowa_ConfigFrame_Container_4_3:Hide()
+						MPowa_ConfigFrame_Container_4_4:Hide()
 					</OnClick>
 					<OnLoad>
 						getglobal(this:GetName().."Text"):SetText(MPOWA_CONFIGFRAME_SOUND_EDITOR)
@@ -1690,15 +1791,76 @@
 						MPowa_ConfigFrame_Container_2_2:Hide()
 						MPowa_ConfigFrame_Container_3:Hide()
 						MPowa_ConfigFrame_Container_4:Show()
+						MPowa_ConfigFrame_Container_4_2:Show()
+						MPowa_ConfigFrame_Container_4_3:Show()
+						MPowa_ConfigFrame_Container_4_4:Show()
 					</OnClick>
 					<OnLoad>
-						getglobal(this:GetName().."Text"):SetText(MPOWA_CONFIGFRAME_ANIMATION_EDITOR)
+						getglobal(this:GetName().."Text"):SetText(MPOWA_CONFIGFRAME_ABOUT)
 						PanelTemplates_DeselectTab(this)
 						PanelTemplates_TabResize(0, this)
 						getglobal(this:GetName().."HighlightTexture"):SetWidth(this:GetTextWidth() + 31)
 					</OnLoad>
 				</Scripts>
 			</Button>
+		</Frames>
+	</Frame>
+	
+	---------------------------------------------ICON FRAME---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	<Frame name="MPowa_IconFrame" movable="true" parent="MPowa_ConfigFrame" frameStrata="HIGH" hidden="true" enableMouse="true" enableKeyboard="true">
+		<Size>
+			<AbsDimension x="321" y="430" />
+		</Size>
+		<Anchors>
+			<Anchor point="RIGHT" relativeTo="MPowa_ConfigFrame" relativePoint="LEFT" />
+        </Anchors>
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="11" right="12" top="12" bottom="11" />
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32" />
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32" />
+			</EdgeSize>
+        </Backdrop>
+		<Layers>
+			<Layer>
+				<Texture file="Interface\DialogFrame\UI-DialogBox-Header">
+					<Size>
+						<AbsDimension x="225" y="32" />
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="8" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0.2" right="0.8" top="0" bottom="0.6" />
+				</Texture>	
+				<FontString name="$parent_HEAD" inherits="GameFontNormalSmall">
+					<Size>
+						<AbsDimension x="225" y="0" />
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="-3" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				getglobal(this:GetName().."_HEAD"):SetText(MPOWA_ICONFRAME_NAME)
+			</OnLoad>
+		</Scripts>
+		<Frames>
 		</Frames>
 	</Frame>
 	
