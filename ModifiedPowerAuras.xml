@@ -217,16 +217,29 @@
 				</Texture>
 			</Layer>
 			<Layer level="OVERLAY">
-				<FontString name="$parent_Name">
+				<FontString name="$parent_Name" inherits="GameFontNormal" justifyH="LEFT">
 					<Size>
-						<AbsDimension x="233" y="32" />
+						<AbsDimension x="228" y="32" />
 					</Size>
 					<Anchors>
-						<Anchor point="LEFT" relativeTo="$parent_Icon" relativePoint="RIGHT" />
+						<Anchor point="LEFT" relativeTo="$parent_Icon" relativePoint="RIGHT">
+							<Offset>
+								<AbsDimension x="5" y="0" /> 
+							</Offset>
+						</Anchor>
 					</Anchors>
 				</FontString>
 			</Layer>
 		</Layers>
+		<Scripts>
+			<OnClick>
+				MPOWA_PROFILE_SELECTED = this.line
+				for i=1,7 do
+					getglobal("MPowa_ProfileFrame_ScrollFrame_Button"..i.."_BG"):SetAlpha(1)
+				end
+				getglobal(this:GetName().."_BG"):SetAlpha(0.5)
+			</OnClick>
+		</Scripts>
 	</Button>
 	
 	---------------------------------------------MINIMAP BUTTON---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -571,7 +584,7 @@
 										getglobal(this:GetName().."High"):SetText("1.0")
 									</OnLoad>
 									<OnValueChanged>
-										if LOADED then
+										if MPOWA_LOADED then
 											MPowa_SliderChange("alpha", this, MPOWA_SLIDER_OPACITY)
 										end
 									</OnValueChanged>
@@ -596,7 +609,7 @@
 										getglobal(this:GetName().."High"):SetText(600)
 									</OnLoad>
 									<OnValueChanged>
-										if LOADED and MPowa_ConfigFrame:IsVisible() then
+										if MPOWA_LOADED and MPowa_ConfigFrame:IsVisible() then
 											MPowa_SliderChange("x", this, MPOWA_SLIDER_POSX)
 
 											local min, max = this:GetMinMaxValues()
@@ -648,7 +661,7 @@
 										getglobal(this:GetName().."High"):SetText("600")
 									</OnLoad>
 									<OnValueChanged>
-										if LOADED and MPowa_ConfigFrame:IsVisible() then
+										if MPOWA_LOADED and MPowa_ConfigFrame:IsVisible() then
 											MPowa_SliderChange("y", this, MPOWA_SLIDER_POSY)
 									
 											local min, max = this:GetMinMaxValues()
@@ -700,7 +713,7 @@
 										getglobal(this:GetName().."High"):SetText("2.0")
 									</OnLoad>
 									<OnValueChanged>
-										if LOADED then
+										if MPOWA_LOADED then
 											MPowa_SliderChange("size", this, MPOWA_SLIDER_SIZE)
 										end
 									</OnValueChanged>
@@ -1132,7 +1145,7 @@
 										getglobal(this:GetName().."High"):SetText("1.0")
 									</OnLoad>
 									<OnValueChanged>
-										if LOADED then
+										if MPOWA_LOADED then
 											MPowa_SliderChange("fontalpha", this, MPOWA_SLIDER_OPACITY)
 										end
 									</OnValueChanged>
@@ -1157,7 +1170,7 @@
 										getglobal(this:GetName().."High"):SetText(600)
 									</OnLoad>
 									<OnValueChanged>
-										if LOADED and MPowa_ConfigFrame:IsVisible() then
+										if MPOWA_LOADED and MPowa_ConfigFrame:IsVisible() then
 											MPowa_SliderChange("fontoffsetx", this, MPOWA_SLIDER_POSX)
 
 											local min, max = this:GetMinMaxValues()
@@ -1209,7 +1222,7 @@
 										getglobal(this:GetName().."High"):SetText("600")
 									</OnLoad>
 									<OnValueChanged>
-										if LOADED and MPowa_ConfigFrame:IsVisible() then
+										if MPOWA_LOADED and MPowa_ConfigFrame:IsVisible() then
 											MPowa_SliderChange("fontoffsety", this, MPOWA_SLIDER_POSY)
 									
 											local min, max = this:GetMinMaxValues()
@@ -1261,7 +1274,7 @@
 										getglobal(this:GetName().."High"):SetText("2.0")
 									</OnLoad>
 									<OnValueChanged>
-										if LOADED then
+										if MPOWA_LOADED then
 											MPowa_SliderChange("fontsize", this, MPOWA_SLIDER_SIZE)
 										end
 									</OnValueChanged>
@@ -1409,7 +1422,7 @@
 										getglobal(this:GetName().."High"):SetText("56")
 									</OnLoad>
 									<OnValueChanged>
-										if LOADED then
+										if MPOWA_LOADED then
 											MPowa_SoundSliderChange(this, "beginsound")
 										end
 									</OnValueChanged>
@@ -1455,7 +1468,7 @@
 										getglobal(this:GetName().."High"):SetText("56")
 									</OnLoad>
 									<OnValueChanged>
-										if LOADED then
+										if MPOWA_LOADED then
 											MPowa_SoundSliderChange(this, "endsound")
 										end
 									</OnValueChanged>
@@ -1487,7 +1500,7 @@
 										getglobal(this:GetName().."High"):SetText("20")
 									</OnLoad>
 									<OnValueChanged>
-										if LOADED then
+										if MPOWA_LOADED then
 										end
 									</OnValueChanged>
 								</Scripts>
@@ -1511,7 +1524,7 @@
 										getglobal(this:GetName().."High"):SetText("20")
 									</OnLoad>
 									<OnValueChanged>
-										if LOADED then
+										if MPOWA_LOADED then
 										end
 									</OnValueChanged>
 								</Scripts>
@@ -1535,7 +1548,7 @@
 										getglobal(this:GetName().."High"):SetText("20")
 									</OnLoad>
 									<OnValueChanged>
-										if LOADED then
+										if MPOWA_LOADED then
 										end
 									</OnValueChanged>
 								</Scripts>
@@ -1559,7 +1572,7 @@
 										getglobal(this:GetName().."High"):SetText("20")
 									</OnLoad>
 									<OnValueChanged>
-										if LOADED then
+										if MPOWA_LOADED then
 										end
 									</OnValueChanged>
 								</Scripts>
@@ -1740,6 +1753,9 @@
 			<OnLoad>
 				getglobal(this:GetName().."_HEAD"):SetText(MPOWA_PROFILEFRAME_NAME)
 			</OnLoad>
+			<OnShow>
+				MPowa_ScrollFrame_Update()
+			</OnShow>
 		</Scripts>
 		<Frames>
 			<Button name="$parent_CloseButton" inherits="MPowa_CloseButtonTemplate">
@@ -1760,7 +1776,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						MPowa_TestAll()
+						MPowa_Import()
 					</OnClick>
 					<OnLoad>
 						getglobal(this:GetName().."_Text"):SetText(MPOWA_BUTTON_IMPORT)
@@ -1777,7 +1793,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						MPowa_TestAll()
+						MPowa_ProfileSave()
 					</OnClick>
 					<OnLoad>
 						getglobal(this:GetName().."_Text"):SetText(MPOWA_BUTTON_SAVE)
@@ -1794,14 +1810,14 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						MPowa_TestAll()
+						MPowa_ProfileRemove()
 					</OnClick>
 					<OnLoad>
 						getglobal(this:GetName().."_Text"):SetText(MPOWA_BUTTON_REMOVE)
 					</OnLoad>
 				</Scripts>
 			</Button>
-			<Frame name="$parent_ScrollFrame" inherits="FauxScrollFrameTemplate">
+			<ScrollFrame name="$parent_ScrollFrame" inherits="FauxScrollFrameTemplate">
 				<Size>
 					<AbsDimension x="265" y="285" />
 				</Size>
@@ -1812,44 +1828,52 @@
 						</Offset>
 					</Anchor>
 				</Anchors>
-				<Frames>
-					<Button name="$parent_Button1" inherits="MPowa_ScrollFrameButtonTemplate">
-						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT" />
-						</Anchors>
-					</Button>
-					<Button name="$parent_Button2" inherits="MPowa_ScrollFrameButtonTemplate">
-						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="$parent_Button1" relativePoint="BOTTOMLEFT" />
-						</Anchors>
-					</Button>
-					<Button name="$parent_Button3" inherits="MPowa_ScrollFrameButtonTemplate">
-						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="$parent_Button2" relativePoint="BOTTOMLEFT" />
-						</Anchors>
-					</Button>
-					<Button name="$parent_Button4" inherits="MPowa_ScrollFrameButtonTemplate">
-						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="$parent_Button3" relativePoint="BOTTOMLEFT" />
-						</Anchors>
-					</Button>
-					<Button name="$parent_Button5" inherits="MPowa_ScrollFrameButtonTemplate">
-						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="$parent_Button4" relativePoint="BOTTOMLEFT" />
-						</Anchors>
-					</Button>
-					<Button name="$parent_Button6" inherits="MPowa_ScrollFrameButtonTemplate">
-						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="$parent_Button5" relativePoint="BOTTOMLEFT" />
-						</Anchors>
-					</Button>
-					<Button name="$parent_Button7" inherits="MPowa_ScrollFrameButtonTemplate">
-						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="$parent_Button6" relativePoint="BOTTOMLEFT" />
-						</Anchors>
-					</Button>
-				</Frames>
-			</Frame>
+				<Scripts>
+					<OnVerticalScroll>
+						FauxScrollFrame_OnVerticalScroll(40, MPowa_ScrollFrame_Update) 
+					</OnVerticalScroll>
+					<OnShow>
+						MPOWA_PROFILE_SELECTED = 1
+						getglobal(this:GetName().."_Button1_BG"):SetAlpha(0.5)
+						MPowa_ScrollFrame_Update()
+					</OnShow>
+				</Scripts>
+			</ScrollFrame>
+			<Button name="$parent_ScrollFrame_Button1" inherits="MPowa_ScrollFrameButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent_ScrollFrame" relativePoint="TOPLEFT" />
+				</Anchors>
+			</Button>
+			<Button name="$parent_ScrollFrame_Button2" inherits="MPowa_ScrollFrameButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent_ScrollFrame_Button1" relativePoint="BOTTOMLEFT" />
+				</Anchors>
+			</Button>
+			<Button name="$parent_ScrollFrame_Button3" inherits="MPowa_ScrollFrameButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent_ScrollFrame_Button2" relativePoint="BOTTOMLEFT" />
+				</Anchors>
+			</Button>
+			<Button name="$parent_ScrollFrame_Button4" inherits="MPowa_ScrollFrameButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent_ScrollFrame_Button3" relativePoint="BOTTOMLEFT" />
+				</Anchors>
+			</Button>
+			<Button name="$parent_ScrollFrame_Button5" inherits="MPowa_ScrollFrameButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent_ScrollFrame_Button4" relativePoint="BOTTOMLEFT" />
+				</Anchors>
+			</Button>
+			<Button name="$parent_ScrollFrame_Button6" inherits="MPowa_ScrollFrameButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent_ScrollFrame_Button5" relativePoint="BOTTOMLEFT" />
+				</Anchors>
+			</Button>
+			<Button name="$parent_ScrollFrame_Button7" inherits="MPowa_ScrollFrameButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent_ScrollFrame_Button6" relativePoint="BOTTOMLEFT" />
+				</Anchors>
+			</Button>
 		</Frames>
 	</Frame>
 	

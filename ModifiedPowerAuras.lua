@@ -1,5 +1,6 @@
 -- Global Variables
-LOADED = false
+MPOWA_LOADED = false
+MPOWA_PROFILE_SELECTED = 1
 
 -- Local Variables
 local CUR_MAX = 1
@@ -87,7 +88,7 @@ function MPowa_OnLoad()
 end
 
 function MPowa_Show()
-	if LOADED and (not INITIALIZED) then
+	if MPOWA_LOADED and (not INITIALIZED) then
 		for i=1, CUR_MAX do
 			MPowa_CreateButton(i)
 		end
@@ -110,36 +111,16 @@ function MPowa_OnEvent(event)
 				MPowa_CreateSave(i)
 			end
 		end
+		if MPOWA_PROFILE == nil then
+			MPOWA_PROFILE = {}
+		end
 		CUR_MAX = MPowa_getNumUsed()
 		
 		for i=1, CUR_MAX do
-			if MPOWA_SAVE[i].enemytarget == nil then MPOWA_SAVE[i].enemytarget = false end
-			if MPOWA_SAVE[i].friendlytarget == nil then MPOWA_SAVE[i].friendlytarget = false end
-			if MPOWA_SAVE[i].stacks == nil then MPOWA_SAVE[i].stacks = ">=0" end
-			if MPOWA_SAVE[i].targetduration == nil then MPOWA_SAVE[i].targetduration = 0 end
-			if MPOWA_SAVE[i].alive == nil then MPOWA_SAVE[i].alive = 0 end
-			if MPOWA_SAVE[i].mounted == nil then MPOWA_SAVE[i].mounted = 0 end
-			if MPOWA_SAVE[i].incombat == nil then MPOWA_SAVE[i].incombat = 0 end
-			if MPOWA_SAVE[i].inparty == nil then MPOWA_SAVE[i].inparty = 0 end
-			if MPOWA_SAVE[i].inraid == nil then MPOWA_SAVE[i].inraid = 0 end
-			if MPOWA_SAVE[i].inbattleground == nil then MPOWA_SAVE[i].inbattleground = 0 end
-			if MPOWA_SAVE[i].fontalpha == nil then MPOWA_SAVE[i].fontalpha = 1 end
-			if MPOWA_SAVE[i].fontoffsetx == nil then MPOWA_SAVE[i].fontoffsetx = 0 end
-			if MPOWA_SAVE[i].fontoffsety == nil then MPOWA_SAVE[i].fontoffsety = 0 end
-			if MPOWA_SAVE[i].fontsize == nil then MPOWA_SAVE[i].fontsize = 1.5 end
-			if MPOWA_SAVE[i].hundredth == nil then MPOWA_SAVE[i].hundredth = false end
-			if MPOWA_SAVE[i].usefontcolor == nil then MPOWA_SAVE[i].usefontcolor = false end
-			if MPOWA_SAVE[i].fontcolor_r == nil then MPOWA_SAVE[i].fontcolor_r = 1 end
-			if MPOWA_SAVE[i].fontcolor_g == nil then MPOWA_SAVE[i].fontcolor_g = 1 end
-			if MPOWA_SAVE[i].fontcolor_b == nil then MPOWA_SAVE[i].fontcolor_b = 1 end
-			if MPOWA_SAVE[i].usebeginsound == nil then MPOWA_SAVE[i].usebeginsound = false end
-			if MPOWA_SAVE[i].useendsound == nil then MPOWA_SAVE[i].useendsound = false end
-			if MPOWA_SAVE[i].beginsound == nil then MPOWA_SAVE[i].beginsound = 1 end
-			if MPOWA_SAVE[i].endsound == nil then MPOWA_SAVE[i].endsound = 1 end
 			MPowa_CreateIcons(i)
 		end
 		
-		LOADED = true
+		MPOWA_LOADED = true
 	elseif event == "UNIT_AURA" then
 		if arg1 == "target" then
 			MPowa_Update()
@@ -685,8 +666,8 @@ function MPowa_IsStacks(count, id)
 end
 
 function MPowa_TextureFrame_OnUpdate(elapsed, button)
+	local Duration = getglobal(button:GetName().."_Timer")
 	if MPOWA_SAVE[button:GetID()].timer then
-		local Duration = getglobal(button:GetName().."_Timer")
 		if (not MPOWA_SAVE[button:GetID()].test and (not TEST_ALL)) then
 			if MPOWA_SAVE[button:GetID()].cooldown then
 				local start, duration = MPowa_GetSpellCooldown(MPOWA_SAVE[button:GetID()].buffname)
@@ -707,6 +688,7 @@ function MPowa_TextureFrame_OnUpdate(elapsed, button)
 						button.tdurationstart = GetTime()
 					end
 					if ((button.tdurationstart+button.tduration) >= GetTime()) and button.tduration ~= 0 then
+						Duration:Show()
 						if MPOWA_SAVE[button:GetID()].timer then
 							Duration:SetText(string.format("%.2f", (-GetTime()+button.tduration+button.tdurationstart)))
 						else
@@ -724,6 +706,7 @@ function MPowa_TextureFrame_OnUpdate(elapsed, button)
 					end
 					timeLeft = GetPlayerBuffTimeLeft(buffIndex)
 				end
+				Duration:Show()
 				if MPOWA_SAVE[button:GetID()].hundredth and timeLeft > 0 then
 					Duration:SetText(string.format("%.2f", timeLeft))
 				elseif (not MPOWA_SAVE[button:GetID()].hundredth) and timeLeft > 0 then
@@ -733,12 +716,15 @@ function MPowa_TextureFrame_OnUpdate(elapsed, button)
 				button.timeLeft = timeLeft
 			end	
 		else
+			Duration:Show()
 			if MPOWA_SAVE[button:GetID()].hundredth then
 				Duration:SetText(string.format("%.2f", (random(1,23)+random(1,60)/100)))
 			else
 				Duration:SetText(string.format("%.0f", (random(1,23)+random(1,60)/100)))
 			end
 		end
+	else
+		Duration:Hide()
 	end
 end
 
@@ -831,7 +817,8 @@ function MPowa_Checkbutton(var)
 	else
 		MPOWA_SAVE[CUR_EDIT][var] = true
 	end
-	MPowa_Update()
+	getglobal("TextureFrame"..CUR_EDIT):Hide()
+	getglobal("TextureFrame"..CUR_EDIT):Show()
 end
 
 function MPowa_Editbox_Duration(obj)
@@ -866,7 +853,8 @@ function MPowa_Ternary_OnClick(obj, var)
 	end	
 
 	MPowa_TernarySetState(obj, MPOWA_SAVE[CUR_EDIT][var])
-	MPowa_Update()
+	getglobal("TextureFrame"..CUR_EDIT):Hide()
+	getglobal("TextureFrame"..CUR_EDIT):Show()
 end
 
 function MPowa_OptionsFrame_SetColor()
@@ -943,6 +931,53 @@ function MPowa_SoundSliderChange(obj, var)
 			PlaySound(SOUND[MPOWA_SAVE[CUR_EDIT][var]], "master")
 		else
 			PlaySoundFile("Interface\\AddOns\\ModifiedPowerAuras\\Sounds\\"..SOUND[MPOWA_SAVE[CUR_EDIT][var]], "master")
+		end
+	end
+end
+
+function MPowa_ProfileSave()
+	table.insert(MPOWA_PROFILE, MPOWA_SAVE[SELECTED])
+	MPowa_ScrollFrame_Update()
+end
+
+function MPowa_ProfileRemove()
+	if MPOWA_PROFILE[MPOWA_PROFILE_SELECTED] ~= nil then
+		table.remove(MPOWA_PROFILE, MPOWA_PROFILE_SELECTED)
+		MPOWA_PROFILE_SELECTED = 1
+		MPowa_ScrollFrame_Update()
+	end
+end
+
+function MPowa_Import()
+	if MPOWA_PROFILE[MPOWA_PROFILE_SELECTED] ~= nil then
+		table.remove(MPOWA_SAVE, CUR_MAX+1)
+		table.insert(MPOWA_SAVE, CUR_MAX+1, MPOWA_PROFILE[MPOWA_PROFILE_SELECTED])
+		MPowa_AddAura()
+	end
+end
+
+function MPowa_GetTableLength(T)
+	local count = 0
+	for _ in pairs(T) do 
+		count = count + 1 
+	end 
+	return count
+end
+
+function MPowa_ScrollFrame_Update()
+	local line -- 1 through 5 of our window to scroll
+	local lineplusoffset -- an index into our data calculated from the scroll offset
+	local FRAME = MPowa_ProfileFrame_ScrollFrame
+	FauxScrollFrame_Update(FRAME,MPowa_GetTableLength(MPOWA_PROFILE),7,40)
+	for line=1,7 do
+		lineplusoffset = line + FauxScrollFrame_GetOffset(FRAME)
+		if MPOWA_PROFILE[lineplusoffset] ~= nil then
+			getglobal("MPowa_ProfileFrame_ScrollFrame_Button"..line.."_Name"):SetText(MPOWA_PROFILE[lineplusoffset].buffname)
+			getglobal("MPowa_ProfileFrame_ScrollFrame_Button"..line.."_Icon"):SetTexture(MPOWA_PROFILE[lineplusoffset].texture)
+			getglobal("MPowa_ProfileFrame_ScrollFrame_Button"..line).line = lineplusoffset
+			getglobal("MPowa_ProfileFrame_ScrollFrame_Button"..line):Show()
+		else
+			getglobal("MPowa_ProfileFrame_ScrollFrame_Button"..line):Hide()
 		end
 	end
 end
