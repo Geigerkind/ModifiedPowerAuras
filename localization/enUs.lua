@@ -77,3 +77,6 @@ MPOWA_CHECKBUTTON_BEGINSOUND = "Play sound if aura is applied"
 MPOWA_CHECKBUTTON_BEGINSOUND_TOOLTIP = "Check this to play a sound when an aura is applied."
 MPOWA_CHECKBUTTON_ENDSOUND = "Play sound if aura fades"
 MPOWA_CHECKBUTTON_ENDSOUND_TOOLTIP = "Check this to play a sound when an aura fades."
+
+MPOWA_SCRIPT_MOUNT_100 = "Increases speed by 100"
+MPOWA_SCRIPT_MOUNT_60 = "Increases speed by 60"

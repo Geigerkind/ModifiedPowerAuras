@@ -6,6 +6,7 @@
 	---------------------------------------------LOCALIZATION AND INITIALIZATION---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
 	<Script file="Interface\AddOns\ModifiedPowerAuras\localization\enUS.lua" />
+	<Script file="Interface\AddOns\ModifiedPowerAuras\ModifiedPowerAurasOptions.lua" />
 	<Script file="Interface\AddOns\ModifiedPowerAuras\ModifiedPowerAuras.lua" />
 	
 	---------------------------------------------ICON TEMPLATE---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -52,7 +53,7 @@
 		</Layers>
 		<Scripts>
 			<OnUpdate>
-				MPowa_TextureFrame_OnUpdate(elapsed, this)
+				MPowa_TextureFrame_OnUpdate(arg1, this)
 			</OnUpdate>
 		</Scripts>
 	</Frame>
@@ -301,6 +302,7 @@
 				this:StopMovingOrSizing()
 			</OnMouseUp>
 			<OnEvent>
+				MPowa_Options_OnEvent(event)
 				MPowa_OnEvent(event)
 			</OnEvent>
 			<OnLoad>
@@ -945,7 +947,7 @@
 									</OnLoad>
 									<OnClick>
 										MPowa_Checkbutton("enemytarget")
-										if MPowa_ConfigFrame_Container_1_2_Checkbutton_Debuff:GetChecked() or MPowa_ConfigFrame_Container_1_2_Checkbutton_EnemyTarget:GetChecked() or MPowa_ConfigFrame_Container_1_2_Checkbutton_FriendlyTarget:GetChecked() then
+										if MPowa_ConfigFrame_Container_1_2_Checkbutton_EnemyTarget:GetChecked() or MPowa_ConfigFrame_Container_1_2_Checkbutton_FriendlyTarget:GetChecked() then
 											MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Show()
 										else
 											MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Hide()
@@ -968,7 +970,7 @@
 									</OnLoad>
 									<OnClick>
 										MPowa_Checkbutton("friendlytarget")
-										if MPowa_ConfigFrame_Container_1_2_Checkbutton_Debuff:GetChecked() or MPowa_ConfigFrame_Container_1_2_Checkbutton_EnemyTarget:GetChecked() or MPowa_ConfigFrame_Container_1_2_Checkbutton_FriendlyTarget:GetChecked() then
+										if MPowa_ConfigFrame_Container_1_2_Checkbutton_EnemyTarget:GetChecked() or MPowa_ConfigFrame_Container_1_2_Checkbutton_FriendlyTarget:GetChecked() then
 											MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Show()
 										else
 											MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Hide()
@@ -991,7 +993,7 @@
 									</OnLoad>
 									<OnClick>
 										MPowa_Checkbutton("isdebuff")
-										if MPowa_ConfigFrame_Container_1_2_Checkbutton_Debuff:GetChecked() or MPowa_ConfigFrame_Container_1_2_Checkbutton_EnemyTarget:GetChecked() or MPowa_ConfigFrame_Container_1_2_Checkbutton_FriendlyTarget:GetChecked() then
+										if MPowa_ConfigFrame_Container_1_2_Checkbutton_EnemyTarget:GetChecked() or MPowa_ConfigFrame_Container_1_2_Checkbutton_FriendlyTarget:GetChecked() then
 											MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Show()
 										else
 											MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Hide()
