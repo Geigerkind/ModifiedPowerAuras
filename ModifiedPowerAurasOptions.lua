@@ -95,9 +95,9 @@ function MPowa_Options_OnEvent(event)
 		if MPOWA_PROFILE == nil then
 			MPOWA_PROFILE = {}
 		end
-		CUR_MAX = MPowa_getNumUsed()
+		MPOWA_CUR_MAX = MPowa_getNumUsed()
 		
-		for i=1, CUR_MAX do
+		for i=1, MPOWA_CUR_MAX  do
 			MPowa_CreateIcons(i)
 		end
 		
@@ -107,15 +107,15 @@ end
 
 function MPowa_Show()
 	if MPOWA_LOADED and (not INITIALIZED) then
-		for i=1, CUR_MAX do
+		for i=1, MPOWA_CUR_MAX  do
 			MPowa_CreateButton(i)
 		end
 		INITIALIZED = true
 	end
-	for i=1, CUR_MAX do
+	for i=1, MPOWA_CUR_MAX  do
 		MPowa_ApplyAttributesToButton(i, getglobal("ConfigButton"..i))
 	end
-	if CUR_MAX > 0 then
+	if MPOWA_CUR_MAX > 0 then
 		getglobal("ConfigButton"..SELECTED.."_Border"):Show()
 	end
 	MPowa_MainFrame:Show()
@@ -205,24 +205,24 @@ function MPowa_ApplyAttributesToButton(i, button)
 end
 
 function MPowa_AddAura()
-	if CUR_MAX < 49 then
-		CUR_MAX = MPOWA_CUR_MAX + 1
-		if getglobal("ConfigButton"..CUR_MAX) ~= nil then
-			MPowa_ApplyAttributesToButton(CUR_MAX,getglobal("ConfigButton"..CUR_MAX))
-			MPowa_ApplyConfig(CUR_MAX)
+	if MPOWA_CUR_MAX  < 49 then
+		MPOWA_CUR_MAX = MPOWA_CUR_MAX + 1
+		if getglobal("ConfigButton"..MPOWA_CUR_MAX) ~= nil then
+			MPowa_ApplyAttributesToButton(CUR_MAX,getglobal("ConfigButton"..MPOWA_CUR_MAX))
+			MPowa_ApplyConfig(MPOWA_CUR_MAX)
 		else
-			MPowa_CreateButton(CUR_MAX)
-			MPowa_CreateIcons(CUR_MAX)
+			MPowa_CreateButton(MPOWA_CUR_MAX)
+			MPowa_CreateIcons(MPOWA_CUR_MAX)
 		end
 		MPOWA_SAVE[MPOWA_CUR_MAX].used = true
 		MPowa_DeselectAll()
-		getglobal("ConfigButton"..CUR_MAX.."_Border"):Show()
+		getglobal("ConfigButton"..MPOWA_CUR_MAX.."_Border"):Show()
 		SELECTED = MPOWA_CUR_MAX
 	end
 end
 
 function MPowa_DeselectAll()
-	for i=1, CUR_MAX do
+	for i=1, MPOWA_CUR_MAX  do
 		getglobal("ConfigButton"..i.."_Border"):Hide()
 	end
 end
@@ -237,7 +237,7 @@ function MPowa_Remove()
 	if ConfigButton1 then
 		table.remove(MPOWA_SAVE, SELECTED)
 		MPowa_CreateSave(49)
-		CUR_MAX = MPOWA_CUR_MAX - 1
+		MPOWA_CUR_MAX = MPOWA_CUR_MAX - 1
 		if SELECTED == CUR_EDIT then
 			MPowa_ConfigFrame:Hide()
 		end
@@ -249,10 +249,10 @@ function MPowa_Remove()
 end
 
 function MPowa_Reposition()
-	for i=1, CUR_MAX+1 do
+	for i=1, MPOWA_CUR_MAX +1 do
 		getglobal("ConfigButton"..i):Hide()
 	end
-	for i=1, CUR_MAX do
+	for i=1, MPOWA_CUR_MAX  do
 		MPowa_ApplyAttributesToButton(i,getglobal("ConfigButton"..i))
 	end
 end
@@ -261,14 +261,14 @@ function MPowa_TestAll()
 	if ConfigButton1 then
 		if MPOWA_TEST_ALL then
 			MPOWA_TEST_ALL = false
-			for i=1, CUR_MAX do
+			for i=1, MPOWA_CUR_MAX  do
 				if getglobal("TextureFrame"..i).bi == nil then
 					getglobal("TextureFrame"..i):Hide()
 				end
 			end
 		else
 			MPOWA_TEST_ALL = true
-			for i=1, CUR_MAX do
+			for i=1, MPOWA_CUR_MAX  do
 				getglobal("TextureFrame"..i):Show()
 			end
 		end
@@ -401,6 +401,7 @@ function MPowa_Editbox_Stacks(obj)
 	local oldcon = MPOWA_SAVE[CUR_EDIT].stacks
 	MPOWA_SAVE[CUR_EDIT].stacks = obj:GetText()
 	if oldcon ~= MPOWA_SAVE[CUR_EDIT].stacks then
+		MPowa_Target()
 		MPowa_Update()
 	end
 end
@@ -411,13 +412,15 @@ function MPowa_Checkbutton(var)
 	else
 		MPOWA_SAVE[CUR_EDIT][var] = true
 	end
-	getglobal("TextureFrame"..CUR_EDIT):Hide()
-	getglobal("TextureFrame"..CUR_EDIT):Show()
+	if MPOWA_SAVE[CUR_EDIT].test or MPOWA_TEST_ALL then
+		getglobal("TextureFrame"..CUR_EDIT):Hide()
+		getglobal("TextureFrame"..CUR_EDIT):Show()
+	end
 end
 
 function MPowa_Editbox_Duration(obj)
 	MPOWA_SAVE[CUR_EDIT].targetduration = tonumber(obj:GetText())
-	MPowa_Update()
+	MPowa_Target()
 end
 
 function MPowa_TernarySetState(button, value)
@@ -544,8 +547,8 @@ end
 
 function MPowa_Import()
 	if MPOWA_PROFILE[MPOWA_PROFILE_SELECTED] ~= nil then
-		table.remove(MPOWA_SAVE, CUR_MAX+1)
-		table.insert(MPOWA_SAVE, CUR_MAX+1, MPOWA_PROFILE[MPOWA_PROFILE_SELECTED])
+		table.remove(MPOWA_SAVE, MPOWA_CUR_MAX +1)
+		table.insert(MPOWA_SAVE, MPOWA_CUR_MAX +1, MPOWA_PROFILE[MPOWA_PROFILE_SELECTED])
 		MPowa_AddAura()
 	end
 end
