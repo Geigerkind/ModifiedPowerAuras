@@ -48,11 +48,11 @@ Everyone who contributes to this will be mentioned **in the About Tab** of the A
 
 ### How does it look like? ###
 
-**All frames opened (Profile/EditAura/IconFrame):**
+**All frames opened (Profile/EditAura/IconFrame):**  
 ![vUqDGgY.png](http://i.imgur.com/C0CABTb.jpg)
 
 
-**Auras on testmode:**
+**Auras on testmode:**  
 ![Testmode](http://i.imgur.com/0CZScUt.png)
 
 
