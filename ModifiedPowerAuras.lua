@@ -65,6 +65,12 @@ function MPowa_IsInBattleground()
 end
 
 function MPowa_Target()
+	-- Setting up conditions
+	local enemy
+	local englishFaction, _ = UnitFactionGroup("target")
+	local penglishFaction, _ = UnitFactionGroup("player")
+	if penglishFaction == "Alliance" then enemy = "Horde" else enemy = "Alliance" end
+
 	-- Hiding Icons for enemy debuffs
 	for i=1, MPOWA_CUR_MAX do
 		if MPOWA_SAVE[i].enemytarget or MPOWA_SAVE[i].friendlytarget then
@@ -83,7 +89,7 @@ function MPowa_Target()
 		local buff = GameTooltipTextLeft1:GetText()
 		if buff then
 			for p=1, MPOWA_CUR_MAX do
-				if strfind(strlower(MPOWA_SAVE[p].buffname), strlower(buff)) and (not MPOWA_SAVE[p].isdebuff) then
+				if strfind(strlower(MPOWA_SAVE[p].buffname), strlower(buff)) and (not MPOWA_SAVE[p].isdebuff) and ((MPOWA_SAVE[button:GetID()].enemytarget and englishFaction == enemy) or (MPOWA_SAVE[button:GetID()].friendlytarget and englishFaction ~= enemy)) then
 					if MPOWA_SAVE[p].test or MPOWA_TEST_ALL then MPOWA_SAVE[p].test = false; MPOWA_TEST_ALL = false end
 					getglobal("TextureFrame"..p).count = getglobal("TextureFrame"..p).count + 1
 					MPowa_TextureFrame_Update(i-1, getglobal("TextureFrame"..p))
@@ -100,7 +106,7 @@ function MPowa_Target()
 		local debuff = GameTooltipTextLeft1:GetText()
 		if (debuff) then
 			for p=1, MPOWA_CUR_MAX do
-				if strfind(strlower(MPOWA_SAVE[p].buffname), strlower(debuff)) and MPOWA_SAVE[p].isdebuff then
+				if strfind(strlower(MPOWA_SAVE[p].buffname), strlower(debuff)) and MPOWA_SAVE[p].isdebuff and ((MPOWA_SAVE[button:GetID()].enemytarget and englishFaction == enemy) or (MPOWA_SAVE[button:GetID()].friendlytarget and englishFaction ~= enemy)) then
 					if MPOWA_SAVE[p].test or MPOWA_TEST_ALL then MPOWA_SAVE[p].test = false; MPOWA_TEST_ALL = false end
 					getglobal("TextureFrame"..p).count = getglobal("TextureFrame"..p).count + 1
 					MPowa_TextureFrame_Update(i-1, getglobal("TextureFrame"..p))

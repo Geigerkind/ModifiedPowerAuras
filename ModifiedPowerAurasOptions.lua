@@ -71,6 +71,17 @@ local INITIALIZED = false
 local SELECTED = 1
 local CUR_EDIT = 1
 local SELECTEDICON = "Interface\\ICONS\\Ability_Warrior_BattleShout"
+local ICONARRAY = {}
+ICONARRAY["MPowa_IconFrame_ButtonContainer_Button"] = 21
+ICONARRAY["MPowa_IconFrame_ButtonContainer_2_Button"] = 20
+ICONARRAY["MPowa_IconFrame_ButtonContainer_3_Button"] = 24
+ICONARRAY["MPowa_IconFrame_ButtonContainer_4_Button"] = 21
+ICONARRAY["MPowa_IconFrame_ButtonContainer_5_Button"] = 35
+ICONARRAY["MPowa_IconFrame_ButtonContainer_6_Button"] = 36
+ICONARRAY["MPowa_IconFrame_ButtonContainer_7_Button"] = 30
+ICONARRAY["MPowa_IconFrame_ButtonContainer_8_Button"] = 35
+ICONARRAY["MPowa_IconFrame_ButtonContainer_9_Button"] = 27
+ICONARRAY["MPowa_IconFrame_ButtonContainer_10_Button"] = 37
 
 -- Functions
 
@@ -405,9 +416,13 @@ function MPowa_Checkbutton(var)
 	else
 		MPOWA_SAVE[CUR_EDIT][var] = true
 	end
-	getglobal("TextureFrame"..CUR_EDIT):Hide()
+	
 	if MPOWA_SAVE[CUR_EDIT].test or MPOWA_TEST_ALL then
+		getglobal("TextureFrame"..CUR_EDIT):Hide()
 		getglobal("TextureFrame"..CUR_EDIT):Show()
+	else
+		MPowa_Update()
+		MPowa_Target()
 	end
 end
 
@@ -574,8 +589,10 @@ end
 
 function MPowa_SelectIcon(obj)
 	SELECTEDICON = getglobal(obj:GetName().."_Icon"):GetTexture()
-	for i=1,21 do
-		getglobal(obj:GetParent():GetName().."_Button"..i.."_Border"):Hide()
+	for cat, p in pairs(ICONARRAY) do
+		for i=1,p do
+			getglobal(cat..i.."_Border"):Hide()
+		end
 	end
 	getglobal(obj:GetName().."_Border"):Show()
 end
@@ -583,6 +600,7 @@ end
 function MPowa_IconFrameOkay()
 	getglobal("MPowa_ConfigFrame_Container_1_Icon_Texture"):SetTexture(SELECTEDICON)
 	getglobal("ConfigButton"..CUR_EDIT.."_Icon"):SetTexture(SELECTEDICON)
+	getglobal("TextureFrame"..CUR_EDIT.."_Icon"):SetTexture(SELECTEDICON)
 	MPOWA_SAVE[CUR_EDIT].texture = SELECTEDICON
 	getglobal("MPowa_IconFrame"):Hide()
 end
