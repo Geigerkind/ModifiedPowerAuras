@@ -1,5 +1,5 @@
 MPOWA_MAINFRAME_HEAD = "Modified Power Auras"
-MPOWA_VERSION = "v0.1"
+MPOWA_VERSION = "v0.4"
 
 MPOWA_BUTTON_EDIT = "Edit Aura"
 MPOWA_BUTTON_ADD = "Add Aura"
@@ -84,4 +84,4 @@ MPOWA_TEXT_CREATOR = "Modified Power Auras was created by Shino (Albea) <Synced>
 MPOWA_TEXT_SPECIALTHANKS_TITLE = "Special thanks to: "
 MPOWA_TEXT_SPECIALTHANKS = "Sinesther - Originally it is his AddOn, I just happened to backport it vanilla."
 MPOWA_TEXT_SUPPORTING_TITLE = "Thanks for supporting!"
-MPOWA_TEXT_SUPPORTING = "Kriegtier <Synced> - Helped localizing the AddOn (enUs/enGB)"
+MPOWA_TEXT_SUPPORTING = "None yet"

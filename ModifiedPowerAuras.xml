@@ -6,6 +6,17 @@
 	---------------------------------------------LOCALIZATION AND INITIALIZATION---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
 	<Script file="Interface\AddOns\ModifiedPowerAuras\localization\enUS.lua" />
+	<Script file="Interface\AddOns\ModifiedPowerAuras\localization\enGB.lua" />
+	<Script file="Interface\AddOns\ModifiedPowerAuras\localization\deDE.lua" />
+	<Script file="Interface\AddOns\ModifiedPowerAuras\localization\esES.lua" />
+	<Script file="Interface\AddOns\ModifiedPowerAuras\localization\esMX.lua" />
+	<Script file="Interface\AddOns\ModifiedPowerAuras\localization\frFR.lua" />
+	<Script file="Interface\AddOns\ModifiedPowerAuras\localization\ruRU.lua" />
+	<Script file="Interface\AddOns\ModifiedPowerAuras\localization\koKR.lua" />
+	<Script file="Interface\AddOns\ModifiedPowerAuras\localization\ptBR.lua" />
+	<Script file="Interface\AddOns\ModifiedPowerAuras\localization\zhCN.lua" />
+	<Script file="Interface\AddOns\ModifiedPowerAuras\localization\zhTW.lua" />
+	<Script file="Interface\AddOns\ModifiedPowerAuras\localization\itIT.lua" />
 	<Script file="Interface\AddOns\ModifiedPowerAuras\ModifiedPowerAurasOptions.lua" />
 	<Script file="Interface\AddOns\ModifiedPowerAuras\ModifiedPowerAuras.lua" />
 	
