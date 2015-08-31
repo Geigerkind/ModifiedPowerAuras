@@ -6192,6 +6192,34 @@
 							</OnLoad>
 						</Scripts>
 					</Button>
+					<Button name="$parent_Button38" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button37" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_BlessingOfStrength")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button39" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button38" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_Wisp")
+							</OnLoad>
+						</Scripts>
+					</Button>
 				</Frames>
 			</Frame>
 			<Button name="$parent_Tab1" inherits="TabButtonTemplate">

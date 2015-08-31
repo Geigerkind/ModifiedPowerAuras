@@ -81,7 +81,7 @@ ICONARRAY["MPowa_IconFrame_ButtonContainer_6_Button"] = 36
 ICONARRAY["MPowa_IconFrame_ButtonContainer_7_Button"] = 30
 ICONARRAY["MPowa_IconFrame_ButtonContainer_8_Button"] = 35
 ICONARRAY["MPowa_IconFrame_ButtonContainer_9_Button"] = 27
-ICONARRAY["MPowa_IconFrame_ButtonContainer_10_Button"] = 37
+ICONARRAY["MPowa_IconFrame_ButtonContainer_10_Button"] = 39
 
 -- Functions
 
@@ -398,6 +398,15 @@ function MPowa_Editbox_Name(obj)
 		MPOWA_SAVE[CUR_EDIT].texture = "Interface\\AddOns\\ModifiedPowerAuras\\images\\dummy.tga"
 		getglobal("MPowa_ConfigFrame_Container_1_Icon_Texture"):SetTexture(MPOWA_SAVE[CUR_EDIT].texture)
 		getglobal("ConfigButton"..CUR_EDIT.."_Icon"):SetTexture(MPOWA_SAVE[CUR_EDIT].texture)
+		getglobal("TextureFrame"..CUR_EDIT.."_Icon"):SetTexture(MPOWA_SAVE[CUR_EDIT].texture)
+	end
+	
+	if MPOWA_SAVE[CUR_EDIT].test or MPOWA_TEST_ALL then
+		getglobal("TextureFrame"..CUR_EDIT):Hide()
+		getglobal("TextureFrame"..CUR_EDIT):Show()
+	else
+		MPowa_Update()
+		MPowa_Target()
 	end
 end
 
