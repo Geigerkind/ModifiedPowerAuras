@@ -16,15 +16,18 @@ Modified Power Auras is the advanced version of the AddOn Power Auras. It is a l
 * Show cooldown on trinkets or abilities
 * Customize your aura and its position on the whole screen
 * Use a lot new conditions to show/hide auras
+* Play a sound if a aura is applied or fades
 
 
 ### Installing Instructions ###
 
-
 * Download the AddOn [here](https://bitbucket.org/Albea/modifiedpowerauras/downloads)
 * Rename the unziped folder to "ModifiedPowerAuras"
 * Place the folder into your AddOn directory in your World of Warcraft folder
+* Start the game
+* Type in **/mpowa** to open the configuration frame
 * Enjoy
+
 
 ### Supporting ###
 
@@ -41,3 +44,82 @@ Following languages are still missing: Spanish(esEs), Spanish(Mexican)(esMX), Fr
 Everyone who contributes to this will be mentioned **in the About Tab** of the AddOn for an **permanent time**!
 
 ![vUqDGgY.png](http://i.imgur.com/j3dafbX.png)
+
+
+### How does it look like? ###
+
+**All frames opened (Profile/EditAura/IconFrame):**
+![vUqDGgY.png](http://i.imgur.com/C0CABTb.jpg)
+
+
+**Auras on testmode:**
+![Testmode](http://i.imgur.com/0CZScUt.png)
+
+
+### Changelog ###
+
+
+```
+#!
+v0.4:
+- Complete rewrote of the addon
+- Added interface (Main Interface, Edit Frame, Profile Frame, Icon Frame)
+- Added many conditions to configure the auras
+- Added customization to every aura frame
+- Added double proc support
+- Added aura application support
+- Added enemy target buff and debuff support
+- Added player target buff and debuff support
+- Added Soundfiles option if aura is applied or fades
+- Sorted Iconframe by classes + misc
+- Fixed all bugs from last version
+- Fixed Profile Editor
+
+v0.3:
+- New dummy texture
+- Fixed a bug which made the textures a bit funky. Textures are still funky if you have a debuff.
+
+v0.2:
+- Texture issue fixed
+
+v0.1:
+- Timer for each effect added
+- Icons added
+- Some performance updates
+```
+
+
+### Known Bugs ###
+
+```
+#!
+v0.4:
+- None
+
+v0.3:
+- Textures are a bit funky if you have a debuff.
+
+v0.2:
+- None
+
+v0.1:
+- If a debuff is applied the textures are messed up
+```
+
+
+### Ideas ###
+
+```
+#!
+Gazpy:
+- Add display for targets debuff -- DONE
+
+Iskatu:
+- Allow the number of stacks of a certain buff (or debuff?) to show on top of the timer. (For example warrior's enrage that starts with 12 stacks and has one stack consumed each hit, or proccs from weapons like bonereaver's edge, that can stack up to 3 times - the latter would be incredibly useful for me personally) -- DONE
+
+Rhena:
+- Make it show ability cooldowns as well and i will consider using this. -- DONE
+
+TaurenRogue
+- What i'd like to see is support for 2 x crusader buff -- DONE
+```
