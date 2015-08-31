@@ -70,6 +70,7 @@ local MAX_AURAS = 49
 local INITIALIZED = false
 local SELECTED = 1
 local CUR_EDIT = 1
+local SELECTEDICON = "Interface\\ICONS\\Ability_Warrior_BattleShout"
 
 -- Functions
 
@@ -200,7 +201,7 @@ function MPowa_AddAura()
 	if MPOWA_CUR_MAX  < 49 then
 		MPOWA_CUR_MAX = MPOWA_CUR_MAX + 1
 		if getglobal("ConfigButton"..MPOWA_CUR_MAX) ~= nil then
-			MPowa_ApplyAttributesToButton(CUR_MAX,getglobal("ConfigButton"..MPOWA_CUR_MAX))
+			MPowa_ApplyAttributesToButton(MPOWA_CUR_MAX,getglobal("ConfigButton"..MPOWA_CUR_MAX))
 			MPowa_ApplyConfig(MPOWA_CUR_MAX)
 		else
 			MPowa_CreateButton(MPOWA_CUR_MAX)
@@ -404,8 +405,8 @@ function MPowa_Checkbutton(var)
 	else
 		MPOWA_SAVE[CUR_EDIT][var] = true
 	end
+	getglobal("TextureFrame"..CUR_EDIT):Hide()
 	if MPOWA_SAVE[CUR_EDIT].test or MPOWA_TEST_ALL then
-		getglobal("TextureFrame"..CUR_EDIT):Hide()
 		getglobal("TextureFrame"..CUR_EDIT):Show()
 	end
 end
@@ -569,4 +570,19 @@ function MPowa_ScrollFrame_Update()
 			getglobal("MPowa_ProfileFrame_ScrollFrame_Button"..line):Hide()
 		end
 	end
+end
+
+function MPowa_SelectIcon(obj)
+	SELECTEDICON = getglobal(obj:GetName().."_Icon"):GetTexture()
+	for i=1,21 do
+		getglobal(obj:GetParent():GetName().."_Button"..i.."_Border"):Hide()
+	end
+	getglobal(obj:GetName().."_Border"):Show()
+end
+
+function MPowa_IconFrameOkay()
+	getglobal("MPowa_ConfigFrame_Container_1_Icon_Texture"):SetTexture(SELECTEDICON)
+	getglobal("ConfigButton"..CUR_EDIT.."_Icon"):SetTexture(SELECTEDICON)
+	MPOWA_SAVE[CUR_EDIT].texture = SELECTEDICON
+	getglobal("MPowa_IconFrame"):Hide()
 end

@@ -223,14 +223,18 @@ end
 
 function MPowa_TextureFrame_Update(bi, button)
 	if MPowa_TernaryReturn(button:GetID(), "alive", MPowa_ReverseBoolean(UnitIsDeadOrGhost("player"))) and MPowa_TernaryReturn(button:GetID(), "mounted", ISMOUNTED) and MPowa_TernaryReturn(button:GetID(), "incombat", UnitAffectingCombat("player")) and MPowa_TernaryReturn(button:GetID(), "inparty", MPowa_IsInParty()) and MPowa_TernaryReturn(button:GetID(), "inraid", UnitInRaid("player")) and MPowa_TernaryReturn(button:GetID(), "inbattleground", INBATTLEGROUND) then
+		local buffIndex, enemy
+		local englishFaction, _ = UnitFactionGroup("target")
+		local penglishFaction, _ = UnitFactionGroup("player")
+		if penglishFaction == "Alliance" then enemy = "Horde" else enemy = "Alliance" end
 		if MPOWA_SAVE[button:GetID()].isdebuff then
-			if MPOWA_SAVE[button:GetID()].enemytarget or MPOWA_SAVE[button:GetID()].friendlytarget then
+			if ((MPOWA_SAVE[button:GetID()].enemytarget and englishFaction == enemy) or (MPOWA_SAVE[button:GetID()].friendlytarget and englishFaction ~= enemy)) then
 				buffIndex = 0
 			else
 				buffIndex = GetPlayerBuff(bi, "HARMFUL")
 			end
 		else
-			if MPOWA_SAVE[button:GetID()].enemytarget or MPOWA_SAVE[button:GetID()].friendlytarget then
+			if ((MPOWA_SAVE[button:GetID()].enemytarget and englishFaction == enemy) or (MPOWA_SAVE[button:GetID()].friendlytarget and englishFaction ~= enemy)) then
 				buffIndex = 0
 			else
 				buffIndex = GetPlayerBuff(bi, "HELPFUL")

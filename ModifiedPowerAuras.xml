@@ -242,6 +242,32 @@
 			</OnClick>
 		</Scripts>
 	</Button>
+	<Button name="MPowa_IconFrameButtonTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="36" y="36" />
+		</Size>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parent_Icon">
+					<Size>
+						<AbsDimension x="36" y="36" />
+					</Size>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<Texture name="$parent_Border" file="Interface\BUTTONS\UI-Debuff-Border.tga" hidden="true">
+					<Size>
+						<AbsDimension x="36" y="36" />
+					</Size>
+				</Texture>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnClick>
+				MPowa_SelectIcon(this)
+			</OnClick>
+		</Scripts>
+	</Button>
 	
 	---------------------------------------------MINIMAP BUTTON---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
@@ -1861,6 +1887,4823 @@
 			</OnLoad>
 		</Scripts>
 		<Frames>
+			<Button name="$parent_CloseButton" inherits="MPowa_CloseButtonTemplate">
+				<Scripts>
+					<OnClick>
+						MPowa_IconFrame:Hide()
+						PlaySound("igMainMenuOptionCheckBoxOff")
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="$parent_Okay" inherits="MPowa_MainFrameButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativeTo="$parent">
+						<Offset>
+							<AbsDimension x="40" y="-50" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						MPowa_IconFrameOkay()
+					</OnClick>
+					<OnLoad>
+						getglobal(this:GetName().."_Text"):SetText(MPOWA_BUTTON_OKAY)
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Button name="$parent_Cancel" inherits="MPowa_MainFrameButtonTemplate">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parent_Okay" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="45" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						MPowa_IconFrame:Hide()
+					</OnClick>
+					<OnLoad>
+						getglobal(this:GetName().."_Text"):SetText(MPOWA_BUTTON_CANCEL)
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Frame name="$parent_ButtonContainer">
+				<Size>
+					<AbsDimension x="300" y="300" />
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativeTo="$parent">
+						<Offset>
+							<AbsDimension x="-10" y="5" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\ButtonContainer.tga">
+							<Size>
+								<AbsDimension x="300" y="300" />
+							</Size>
+							<Anchors>
+								<Anchor point="CENTER" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Frames>
+					<Button name="$parent_Button1" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+								<Offset>
+									<AbsDimension x="6" y="-11" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Border"):Show()
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Warrior_BattleShout")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button2" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button1" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Warrior_DefensiveStance")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button3" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button2" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Warrior_Disarm")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button4" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button3" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Warrior_OffensiveStance")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button5" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button4" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Warrior_PunishingBlow")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button6" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button5" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Warrior_SavageBlow")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button7" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button6" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Warrior_Sunder")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button8" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button1" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Warrior_ShieldWall")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button9" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button8" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Warrior_WarCry")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button10" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button9" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Racial_Avatar")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button11" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button10" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Racial_BloodRage")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button12" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button11" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_AncestralGuardian")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button13" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button12" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_ThunderClap")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button14" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button13" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Gouge")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button15" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button8" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_ShockWave")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button16" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button15" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_CriticalStrike")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button17" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button16" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Warrior_Challange")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button18" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button17" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_GolemThunderClap")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button19" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button18" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Reincarnation")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button20" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button19" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Defend")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button21" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button20" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Rogue_SliceDice")
+							</OnLoad>
+						</Scripts>
+					</Button>
+				</Frames>
+			</Frame>
+			<Frame name="$parent_ButtonContainer_2" hidden="true">
+				<Size>
+					<AbsDimension x="300" y="300" />
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativeTo="$parent">
+						<Offset>
+							<AbsDimension x="-10" y="5" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\ButtonContainer.tga">
+							<Size>
+								<AbsDimension x="300" y="300" />
+							</Size>
+							<Anchors>
+								<Anchor point="CENTER" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Frames>
+					<Button name="$parent_Button1" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+								<Offset>
+									<AbsDimension x="6" y="-11" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Sap")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button2" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button1" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Rogue_Sprint")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button3" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button2" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Rogue_SliceDice")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button4" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button3" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Rogue_Rupture")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button5" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button4" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Rogue_KidneyShot")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button6" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button5" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Rogue_Garrote")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button7" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button6" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Rogue_DualWeild")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button8" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button1" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Warrior_Riposte")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button9" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button8" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_ShadowWard")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button10" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button9" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Stealth")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button11" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button10" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Gouge")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button12" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button11" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Kick")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button13" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button12" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_ShadowWordDominate")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button14" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button13" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Warrior_PunishingBlow")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button15" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button8" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_CheapShot")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button16" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button15" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Vanish")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button17" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button16" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_MindSteal")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button18" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button17" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Ice_Lament")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button19" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button18" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\ABILITY_POISONSTING")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button20" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button19" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_NullifyDisease")
+							</OnLoad>
+						</Scripts>
+					</Button>
+				</Frames>
+			</Frame>
+			<Frame name="$parent_ButtonContainer_3" hidden="true">
+				<Size>
+					<AbsDimension x="300" y="300" />
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativeTo="$parent">
+						<Offset>
+							<AbsDimension x="-10" y="5" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\ButtonContainer.tga">
+							<Size>
+								<AbsDimension x="300" y="300" />
+							</Size>
+							<Anchors>
+								<Anchor point="CENTER" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Frames>
+					<Button name="$parent_Button1" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+								<Offset>
+									<AbsDimension x="6" y="-11" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_WordFortitude")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button2" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button1" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_UnsummonBuilding")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button3" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button2" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_PsychicScream")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button4" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button3" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_SiphonMana")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button5" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button4" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_PrayerofShadowProtection")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button6" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button5" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_PrayerofSpirit")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button7" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button6" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_PrayerOfFortitude")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button8" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button1" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_ShadowWordPain")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button9" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button8" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_PowerWordShield")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button10" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button9" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_Renew")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button11" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button10" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Magic_LesserInvisibilty")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button12" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button11" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_DeadofNight")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button13" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button12" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_InnerFire")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button14" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button13" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_FingerOfDeath")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button15" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button8" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_NullifyDisease")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button16" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button15" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_MindSooth")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button17" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button16" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_ElunesGrace")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button18" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button17" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_BlackPlague")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button19" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button18" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_Excorcism")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button20" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button19" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Slow")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button21" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button20" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_MindVision")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button22" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button15" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_RitualOfSacrifice")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button23" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button22" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_NullifyDisease")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button24" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button23" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_LayOnHands")
+							</OnLoad>
+						</Scripts>
+					</Button>
+				</Frames>
+			</Frame>
+			<Frame name="$parent_ButtonContainer_4" hidden="true">
+				<Size>
+					<AbsDimension x="300" y="300" />
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativeTo="$parent">
+						<Offset>
+							<AbsDimension x="-10" y="5" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\ButtonContainer.tga">
+							<Size>
+								<AbsDimension x="300" y="300" />
+							</Size>
+							<Anchors>
+								<Anchor point="CENTER" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Frames>
+					<Button name="$parent_Button1" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+								<Offset>
+									<AbsDimension x="6" y="-11" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Hunter_SniperShot")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button2" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button1" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Hunter_RunningShot")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button3" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button2" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Hunter_Quickshot")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button4" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button3" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Hunter_MendPet")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button5" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button4" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Hunter_CriticalShot")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button6" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button5" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Hunter_AspectOfTheMonkey")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button7" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button6" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Hunter_AimedShot")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button8" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button1" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Spear_02")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button9" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button8" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_RavenForm")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button10" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button9" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_ChainsOfIce")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button11" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button10" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_SelfDestruct")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button12" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button11" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_FlameShock")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button13" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button12" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_ProtectionformNature")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button14" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button13" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Rogue_Trip")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button15" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button8" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Mount_WhiteTiger")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button16" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button15" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Rogue_FeignDeath")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button17" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button16" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_GolemStormBolt")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button18" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button17" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_Flare")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button19" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button18" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_EyeOfTheOwl")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button20" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button19" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Mount_JungleTiger")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button21" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button20" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Web")
+							</OnLoad>
+						</Scripts>
+					</Button>
+				</Frames>
+			</Frame>
+			<Frame name="$parent_ButtonContainer_5" hidden="true">
+				<Size>
+					<AbsDimension x="300" y="300" />
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativeTo="$parent">
+						<Offset>
+							<AbsDimension x="-10" y="5" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\ButtonContainer.tga">
+							<Size>
+								<AbsDimension x="300" y="300" />
+							</Size>
+							<Anchors>
+								<Anchor point="CENTER" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Frames>
+					<Button name="$parent_Button1" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+								<Offset>
+									<AbsDimension x="6" y="-11" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Druid_TravelForm")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button2" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button1" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Druid_SupriseAttack")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button3" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button2" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Druid_Mangle")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button4" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button3" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Druid_Enrage")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button5" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button4" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Druid_Dash")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button6" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button5" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Druid_CatForm")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button7" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button6" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Druid_Bash")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button8" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button1" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Druid_AquaticForm")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button9" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button8" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Regeneration")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button10" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button9" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_RavenForm")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button11" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button10" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Racial_BearForm")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button12" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button11" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Rejuvenation")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button13" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button12" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_StarFall")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button14" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button13" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Thorns")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button15" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button8" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_StrangleVines")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button16" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button15" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\ABILITY_DRUID_DEMORALIZINGROAR")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button17" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button16" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Physical_Taunt")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button18" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button17" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_NaturesWrath")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button19" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button18" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_ResistNature")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button20" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button19" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_NullifyPoison")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button21" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button20" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_FaerieFire")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button22" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button15" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Sleep")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button23" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button22" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_GhoulFrenzy")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button24" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button23" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_InsectSwarm")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button25" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button24" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Hunter_Pet_Bear")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button26" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button25" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Tranquility")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button27" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button26" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Cyclone")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button28" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button27" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Hunter_BeastSoothe")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button29" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button22" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_RemoveCurse")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button30" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button29" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_BullRush")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button31" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button30" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Ambush")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button32" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button31" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Druid_FerociousBite")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button33" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button32" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_ForceOfNature")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button34" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button33" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Lightning")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button35" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button34" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_StoneClawTotem")
+							</OnLoad>
+						</Scripts>
+					</Button>
+				</Frames>
+			</Frame>
+			<Frame name="$parent_ButtonContainer_6" hidden="true">
+				<Size>
+					<AbsDimension x="300" y="300" />
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativeTo="$parent">
+						<Offset>
+							<AbsDimension x="-10" y="5" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\ButtonContainer.tga">
+							<Size>
+								<AbsDimension x="300" y="300" />
+							</Size>
+							<Anchors>
+								<Anchor point="CENTER" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Frames>
+					<Button name="$parent_Button1" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+								<Offset>
+									<AbsDimension x="6" y="-11" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_FlameBolt")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button2" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button1" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_FrostArmor02")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button3" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button2" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_MagicalSentry")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button4" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button3" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_FrostBolt02")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button5" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button4" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_FrostArmor")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button6" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button5" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_FireArmor")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button7" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button6" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_MeteorStorm")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button8" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button1" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_Incinerate")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button9" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button8" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_FreezingBreath")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button10" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button9" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_ChillingBlast")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button11" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button10" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_IceStorm")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button12" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button11" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_FrostWard")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button13" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button12" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_Glacier")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button14" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button13" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_ManaBurn")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button15" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button8" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_AbolishMagic")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button16" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button15" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_DetectLesserInvisibility")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button17" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button16" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_IceShock")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button18" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button17" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Lightning")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button19" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button18" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_EnchantArmor")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button20" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button19" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_SelfDestruct")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button21" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button20" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Polymorph")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button22" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button15" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_SoulBurn")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button23" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button22" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_Frost")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button24" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button23" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Magic_FeatherFall")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button25" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button24" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_Dizzy")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button26" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button25" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_FlashHeal")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button27" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button26" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_Fireball02")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button28" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button27" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Purge")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button29" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button22" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_Excorcism_02")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button30" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button29" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_MageArmor")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button31" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button30" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_SealOfFire")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button32" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button31" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Ice_Lament")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button33" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button32" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_ArcaneIntellect")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button34" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button33" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Polymorph_Cow")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button35" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button34" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Magic_PolymorphPig")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button36" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button29" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Hunter_Pet_Turtle")
+							</OnLoad>
+						</Scripts>
+					</Button>
+				</Frames>
+			</Frame>
+			<Frame name="$parent_ButtonContainer_7" hidden="true">
+				<Size>
+					<AbsDimension x="300" y="300" />
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativeTo="$parent">
+						<Offset>
+							<AbsDimension x="-10" y="5" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\ButtonContainer.tga">
+							<Size>
+								<AbsDimension x="300" y="300" />
+							</Size>
+							<Anchors>
+								<Anchor point="CENTER" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Frames>
+					<Button name="$parent_Button1" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+								<Offset>
+									<AbsDimension x="6" y="-11" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_Immolation")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button2" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button1" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_ShadowBolt")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button3" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button2" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_CurseOfSargeras")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button4" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button3" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Misc_Orb_04")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button5" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button4" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_AbominationExplosion")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button6" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button5" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_CurseOfMannoroth")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button7" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button6" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_BloodBoil")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button8" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button1" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_Possession")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button9" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button8" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_Haunting")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button10" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button9" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_GatherShadows")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button11" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button10" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_LifeDrain")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button12" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button11" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_LifeDrain02")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button13" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button12" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_AntiShadow")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button14" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button13" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_ScourgeBuild")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button15" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button8" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_SiphonMana")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button16" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button15" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_FireArmor")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button17" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button16" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_CurseOfTounges")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button18" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button17" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_MindSteal")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button19" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button18" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_Cripple")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button20" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button19" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_UnholyStrength")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button21" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button20" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_EnslaveDemon")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button22" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button15" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_Requiem")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button23" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button22" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_Incinerate")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button24" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button23" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_MindRot")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button25" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button24" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_DeathScream")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button26" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button25" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_AuraOfDarkness")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button27" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button26" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_DeathCoil")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button28" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button27" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_CurseOfAchimonde")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button29" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button22" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_ChillTouch")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button30" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button29" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_RagingScream")
+							</OnLoad>
+						</Scripts>
+					</Button>
+				</Frames>
+			</Frame>
+			<Frame name="$parent_ButtonContainer_8" hidden="true">
+				<Size>
+					<AbsDimension x="300" y="300" />
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativeTo="$parent">
+						<Offset>
+							<AbsDimension x="-10" y="5" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\ButtonContainer.tga">
+							<Size>
+								<AbsDimension x="300" y="300" />
+							</Size>
+							<Anchors>
+								<Anchor point="CENTER" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Frames>
+					<Button name="$parent_Button1" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+								<Offset>
+									<AbsDimension x="6" y="-11" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\SPELL_HOLY_DEVOTIONAURA")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button2" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button1" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_ThunderBolt")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button3" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button2" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_SealOfFury")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button4" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button3" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_HealingAura")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button5" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button4" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_GreaterBlessingofWisdom")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button6" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button5" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_GreaterBlessingofSanctuary")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button7" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button6" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_GreaterBlessingofSalvation")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button8" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button1" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_GreaterBlessingofLight")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button9" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button8" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Magic_GreaterBlessingofKings")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button10" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button9" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_GreaterBlessingofKings")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button11" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button10" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_FistOfJustice")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button12" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button11" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_RighteousFury")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button13" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button12" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_HolySmite")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button14" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button13" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_SealOfMight")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button15" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button8" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_LayOnHands")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button16" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button15" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_SealOfProtection")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button17" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button16" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_SealOfSacrifice")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button18" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button17" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_SealOfValor")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button19" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button18" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_SealOfSalvation")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button20" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button19" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_SealOfWisdom")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button21" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button20" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_AuraOfLight")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button22" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button15" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_PrayerOfHealing")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button23" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button22" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_LightningShield")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button24" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button23" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Magic_MageArmor")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button25" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button24" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Warrior_InnerRage")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button26" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button25" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_MindSooth")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button27" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button26" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_SealOfWrath")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button28" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button27" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_SealOfKings")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button29" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button22" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_TimeStop")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button30" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button29" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_BlessingOfProtection")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button31" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button30" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_MindVision")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button32" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button31" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_WizardMark")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button33" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button32" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_SealOfFire")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button34" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button33" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_RighteousnessAura")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button35" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button34" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_PrayerOfHealing02")
+							</OnLoad>
+						</Scripts>
+					</Button>
+				</Frames>
+			</Frame>
+			<Frame name="$parent_ButtonContainer_9" hidden="true">
+				<Size>
+					<AbsDimension x="300" y="300" />
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativeTo="$parent">
+						<Offset>
+							<AbsDimension x="-10" y="5" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\ButtonContainer.tga">
+							<Size>
+								<AbsDimension x="300" y="300" />
+							</Size>
+							<Anchors>
+								<Anchor point="CENTER" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Frames>
+					<Button name="$parent_Button1" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+								<Offset>
+									<AbsDimension x="6" y="-11" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_WispHeal")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button2" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button1" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_RavenForm")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button3" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button2" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_GhoulFrenzy")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button4" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button3" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_StoneClawTotem")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button5" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button4" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_StoneSkinTotem")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button6" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button5" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_StrengthOfEarthTotem02")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button7" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button6" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_LightningShield")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button8" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button1" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_FlameShock")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button9" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button8" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_EarthBindTotem")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button10" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button9" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_TremorTotem")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button11" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button10" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_SpiritWolf")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button12" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button11" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Spear_04")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button13" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button12" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_PoisonCleansingTotem")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button14" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button13" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_FrostResistanceTotem_01")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button15" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button8" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_ManaRegenTotem")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button16" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button15" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_FireResistanceTotem_01")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button17" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button16" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_GroundingTotem")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button18" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button17" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Cyclone")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button19" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button18" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_NatureResistanceTotem")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button20" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button19" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Windfury")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button21" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button20" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_RemoveCurse")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button22" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button15" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_EarthBind")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button23" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button22" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_DiseaseCleansingTotem")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button24" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button23" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_SummonWaterElemental")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button25" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button24" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_InvisibilityTotem")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button26" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button25" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_GuardianWard")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button27" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button26" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Brilliance")
+							</OnLoad>
+						</Scripts>
+					</Button>
+				</Frames>
+			</Frame>
+			<Frame name="$parent_ButtonContainer_10" hidden="true">
+				<Size>
+					<AbsDimension x="300" y="300" />
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativeTo="$parent">
+						<Offset>
+							<AbsDimension x="-10" y="5" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\ButtonContainer.tga">
+							<Size>
+								<AbsDimension x="300" y="300" />
+							</Size>
+							<Anchors>
+								<Anchor point="CENTER" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Frames>
+					<Button name="$parent_Button1" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+								<Offset>
+									<AbsDimension x="6" y="-11" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_AbolishMagic")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button2" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button1" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Potion_04")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button3" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button2" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Potion_62")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button4" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button3" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Sleep")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button5" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button4" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_RaiseDead")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button6" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button5" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\RACIAL_ORC_BERSERKERSTRENGTH")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button7" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button6" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\RACIAL_TROLL_BERSERK")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button8" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button1" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_WarStomp")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button9" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button8" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_FrostWard")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button10" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button9" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_SealOfFire")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button11" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button10" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_AntiShadow")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button12" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button11" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_MindVision")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button13" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button12" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Misc_Gem_Pearl_04")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button14" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button13" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Jewelry_Talisman_06")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button15" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button8" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_WispHeal")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button16" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button15" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Totem_WardOfDraining")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button17" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button16" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Misc_Gem_Pearl_05")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button18" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button17" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_SearingLight")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button19" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button18" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_SpiritArmor")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button20" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button19" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Magic_LesserInvisibilty")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button21" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button20" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Trinket_Naxxramas04")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button22" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button15" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Trinket_Naxxramas05")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button23" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button22" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Trinket_Naxxramas01")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button24" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button23" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Trinket_Naxxramas06")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button25" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button24" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Trinket_Naxxramas03")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button26" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button25" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_WizardMark")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button27" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button26" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Misc_AhnQirajTrinket_04")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button28" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button27" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Arcane_TeleportOrgrimmar")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button29" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button22" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_GrimWard")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button30" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button29" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Misc_AhnQirajTrinket_06")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button31" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button30" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Misc_EngGizmos_19")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button32" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button31" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\SPELL_HOLY_DEVOTIONAURA")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button33" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button32" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_Incinerate")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button34" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button33" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_Fireball")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button35" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button34" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_ChargeNegative")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button36" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button29" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_ChargePositive")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button37" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button36" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Misc_Head_Dragon_01")
+							</OnLoad>
+						</Scripts>
+					</Button>
+				</Frames>
+			</Frame>
+			<Button name="$parent_Tab1" inherits="TabButtonTemplate">
+				<Anchors>
+					<Anchor point="BOTTOMLEFT" relativeTo="$parent_ButtonContainer" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="-2" y="-5" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\warrior">
+							<Size>
+								<AbsDimension x="18" y="18" />
+							</Size>
+							<Anchors>
+								<Anchor point="BOTTOM" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						PanelTemplates_SelectTab(this)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab2)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab3)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab4)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab5)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab6)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab7)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab8)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab9)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab10)
+						MPowa_IconFrame_ButtonContainer:Show()
+						MPowa_IconFrame_ButtonContainer_2:Hide()
+						MPowa_IconFrame_ButtonContainer_3:Hide()
+						MPowa_IconFrame_ButtonContainer_4:Hide()
+						MPowa_IconFrame_ButtonContainer_5:Hide()
+						MPowa_IconFrame_ButtonContainer_6:Hide()
+						MPowa_IconFrame_ButtonContainer_7:Hide()
+						MPowa_IconFrame_ButtonContainer_8:Hide()
+						MPowa_IconFrame_ButtonContainer_9:Hide()
+						MPowa_IconFrame_ButtonContainer_10:Hide()
+					</OnClick>
+					<OnLoad>
+						getglobal(this:GetName().."Text"):SetText("")
+						PanelTemplates_SelectTab(this)
+						PanelTemplates_TabResize(0, this)
+						getglobal(this:GetName().."HighlightTexture"):SetWidth(this:GetTextWidth() + 31)
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Button name="$parent_Tab2" inherits="TabButtonTemplate">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parent_Tab1" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="-3.2" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\rogue">
+							<Size>
+								<AbsDimension x="18" y="18" />
+							</Size>
+							<Anchors>
+								<Anchor point="BOTTOM" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						PanelTemplates_SelectTab(this)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab1)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab3)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab4)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab5)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab6)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab7)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab8)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab9)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab10)
+						MPowa_IconFrame_ButtonContainer_2:Show()
+						MPowa_IconFrame_ButtonContainer:Hide()
+						MPowa_IconFrame_ButtonContainer_3:Hide()
+						MPowa_IconFrame_ButtonContainer_4:Hide()
+						MPowa_IconFrame_ButtonContainer_5:Hide()
+						MPowa_IconFrame_ButtonContainer_6:Hide()
+						MPowa_IconFrame_ButtonContainer_7:Hide()
+						MPowa_IconFrame_ButtonContainer_8:Hide()
+						MPowa_IconFrame_ButtonContainer_9:Hide()
+						MPowa_IconFrame_ButtonContainer_10:Hide()
+					</OnClick>
+					<OnLoad>
+						getglobal(this:GetName().."Text"):SetText("")
+						PanelTemplates_DeselectTab(this)
+						PanelTemplates_TabResize(0, this)
+						getglobal(this:GetName().."HighlightTexture"):SetWidth(this:GetTextWidth() + 31)
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Button name="$parent_Tab3" inherits="TabButtonTemplate">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parent_Tab2" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="-3.2" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\priest">
+							<Size>
+								<AbsDimension x="18" y="18" />
+							</Size>
+							<Anchors>
+								<Anchor point="BOTTOM" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						PanelTemplates_SelectTab(this)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab2)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab1)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab4)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab5)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab6)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab7)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab8)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab9)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab10)
+						MPowa_IconFrame_ButtonContainer_3:Show()
+						MPowa_IconFrame_ButtonContainer_2:Hide()
+						MPowa_IconFrame_ButtonContainer:Hide()
+						MPowa_IconFrame_ButtonContainer_4:Hide()
+						MPowa_IconFrame_ButtonContainer_5:Hide()
+						MPowa_IconFrame_ButtonContainer_6:Hide()
+						MPowa_IconFrame_ButtonContainer_7:Hide()
+						MPowa_IconFrame_ButtonContainer_8:Hide()
+						MPowa_IconFrame_ButtonContainer_9:Hide()
+						MPowa_IconFrame_ButtonContainer_10:Hide()
+					</OnClick>
+					<OnLoad>
+						getglobal(this:GetName().."Text"):SetText("")
+						PanelTemplates_DeselectTab(this)
+						PanelTemplates_TabResize(0, this)
+						getglobal(this:GetName().."HighlightTexture"):SetWidth(this:GetTextWidth() + 31)
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Button name="$parent_Tab4" inherits="TabButtonTemplate">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parent_Tab3" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="-3.2" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\hunter">
+							<Size>
+								<AbsDimension x="18" y="18" />
+							</Size>
+							<Anchors>
+								<Anchor point="BOTTOM" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						PanelTemplates_SelectTab(this)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab2)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab3)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab1)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab5)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab6)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab7)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab8)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab9)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab10)
+						MPowa_IconFrame_ButtonContainer_4:Show()
+						MPowa_IconFrame_ButtonContainer_2:Hide()
+						MPowa_IconFrame_ButtonContainer_3:Hide()
+						MPowa_IconFrame_ButtonContainer:Hide()
+						MPowa_IconFrame_ButtonContainer_5:Hide()
+						MPowa_IconFrame_ButtonContainer_6:Hide()
+						MPowa_IconFrame_ButtonContainer_7:Hide()
+						MPowa_IconFrame_ButtonContainer_8:Hide()
+						MPowa_IconFrame_ButtonContainer_9:Hide()
+						MPowa_IconFrame_ButtonContainer_10:Hide()
+					</OnClick>
+					<OnLoad>
+						getglobal(this:GetName().."Text"):SetText("")
+						PanelTemplates_DeselectTab(this)
+						PanelTemplates_TabResize(0, this)
+						getglobal(this:GetName().."HighlightTexture"):SetWidth(this:GetTextWidth() + 31)
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Button name="$parent_Tab5" inherits="TabButtonTemplate">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parent_Tab4" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="-3.2" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\druid">
+							<Size>
+								<AbsDimension x="18" y="18" />
+							</Size>
+							<Anchors>
+								<Anchor point="BOTTOM" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						PanelTemplates_SelectTab(this)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab2)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab3)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab4)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab1)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab6)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab7)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab8)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab9)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab10)
+						MPowa_IconFrame_ButtonContainer_5:Show()
+						MPowa_IconFrame_ButtonContainer_2:Hide()
+						MPowa_IconFrame_ButtonContainer_3:Hide()
+						MPowa_IconFrame_ButtonContainer_4:Hide()
+						MPowa_IconFrame_ButtonContainer:Hide()
+						MPowa_IconFrame_ButtonContainer_6:Hide()
+						MPowa_IconFrame_ButtonContainer_7:Hide()
+						MPowa_IconFrame_ButtonContainer_8:Hide()
+						MPowa_IconFrame_ButtonContainer_9:Hide()
+						MPowa_IconFrame_ButtonContainer_10:Hide()
+					</OnClick>
+					<OnLoad>
+						getglobal(this:GetName().."Text"):SetText("")
+						PanelTemplates_DeselectTab(this)
+						PanelTemplates_TabResize(0, this)
+						getglobal(this:GetName().."HighlightTexture"):SetWidth(this:GetTextWidth() + 31)
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Button name="$parent_Tab6" inherits="TabButtonTemplate">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parent_Tab5" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="-3.2" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\mage">
+							<Size>
+								<AbsDimension x="18" y="18" />
+							</Size>
+							<Anchors>
+								<Anchor point="BOTTOM" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						PanelTemplates_SelectTab(this)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab2)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab3)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab4)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab5)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab1)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab7)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab8)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab9)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab10)
+						MPowa_IconFrame_ButtonContainer_6:Show()
+						MPowa_IconFrame_ButtonContainer_2:Hide()
+						MPowa_IconFrame_ButtonContainer_3:Hide()
+						MPowa_IconFrame_ButtonContainer_4:Hide()
+						MPowa_IconFrame_ButtonContainer_5:Hide()
+						MPowa_IconFrame_ButtonContainer:Hide()
+						MPowa_IconFrame_ButtonContainer_7:Hide()
+						MPowa_IconFrame_ButtonContainer_8:Hide()
+						MPowa_IconFrame_ButtonContainer_9:Hide()
+						MPowa_IconFrame_ButtonContainer_10:Hide()
+					</OnClick>
+					<OnLoad>
+						getglobal(this:GetName().."Text"):SetText("")
+						PanelTemplates_DeselectTab(this)
+						PanelTemplates_TabResize(0, this)
+						getglobal(this:GetName().."HighlightTexture"):SetWidth(this:GetTextWidth() + 31)
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Button name="$parent_Tab7" inherits="TabButtonTemplate">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parent_Tab6" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="-3.2" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\warlock">
+							<Size>
+								<AbsDimension x="18" y="18" />
+							</Size>
+							<Anchors>
+								<Anchor point="BOTTOM" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						PanelTemplates_SelectTab(this)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab2)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab3)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab4)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab5)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab6)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab1)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab8)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab9)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab10)
+						MPowa_IconFrame_ButtonContainer_7:Show()
+						MPowa_IconFrame_ButtonContainer_2:Hide()
+						MPowa_IconFrame_ButtonContainer_3:Hide()
+						MPowa_IconFrame_ButtonContainer_4:Hide()
+						MPowa_IconFrame_ButtonContainer_5:Hide()
+						MPowa_IconFrame_ButtonContainer_6:Hide()
+						MPowa_IconFrame_ButtonContainer:Hide()
+						MPowa_IconFrame_ButtonContainer_8:Hide()
+						MPowa_IconFrame_ButtonContainer_9:Hide()
+						MPowa_IconFrame_ButtonContainer_10:Hide()
+					</OnClick>
+					<OnLoad>
+						getglobal(this:GetName().."Text"):SetText("")
+						PanelTemplates_DeselectTab(this)
+						PanelTemplates_TabResize(0, this)
+						getglobal(this:GetName().."HighlightTexture"):SetWidth(this:GetTextWidth() + 31)
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Button name="$parent_Tab8" inherits="TabButtonTemplate">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parent_Tab7" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="-3.2" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\paladin">
+							<Size>
+								<AbsDimension x="18" y="18" />
+							</Size>
+							<Anchors>
+								<Anchor point="BOTTOM" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						PanelTemplates_SelectTab(this)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab2)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab3)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab4)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab5)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab6)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab7)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab1)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab9)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab10)
+						MPowa_IconFrame_ButtonContainer_8:Show()
+						MPowa_IconFrame_ButtonContainer_2:Hide()
+						MPowa_IconFrame_ButtonContainer_3:Hide()
+						MPowa_IconFrame_ButtonContainer_4:Hide()
+						MPowa_IconFrame_ButtonContainer_5:Hide()
+						MPowa_IconFrame_ButtonContainer_6:Hide()
+						MPowa_IconFrame_ButtonContainer_7:Hide()
+						MPowa_IconFrame_ButtonContainer:Hide()
+						MPowa_IconFrame_ButtonContainer_9:Hide()
+						MPowa_IconFrame_ButtonContainer_10:Hide()
+					</OnClick>
+					<OnLoad>
+						getglobal(this:GetName().."Text"):SetText("")
+						PanelTemplates_DeselectTab(this)
+						PanelTemplates_TabResize(0, this)
+						getglobal(this:GetName().."HighlightTexture"):SetWidth(this:GetTextWidth() + 31)
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Button name="$parent_Tab9" inherits="TabButtonTemplate">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parent_Tab8" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="-3.2" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\shaman">
+							<Size>
+								<AbsDimension x="18" y="18" />
+							</Size>
+							<Anchors>
+								<Anchor point="BOTTOM" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						PanelTemplates_SelectTab(this)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab2)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab3)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab4)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab5)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab6)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab7)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab8)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab1)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab10)
+						MPowa_IconFrame_ButtonContainer_9:Show()
+						MPowa_IconFrame_ButtonContainer_2:Hide()
+						MPowa_IconFrame_ButtonContainer_3:Hide()
+						MPowa_IconFrame_ButtonContainer_4:Hide()
+						MPowa_IconFrame_ButtonContainer_5:Hide()
+						MPowa_IconFrame_ButtonContainer_6:Hide()
+						MPowa_IconFrame_ButtonContainer_7:Hide()
+						MPowa_IconFrame_ButtonContainer_8:Hide()
+						MPowa_IconFrame_ButtonContainer:Hide()
+						MPowa_IconFrame_ButtonContainer_10:Hide()
+					</OnClick>
+					<OnLoad>
+						getglobal(this:GetName().."Text"):SetText("")
+						PanelTemplates_DeselectTab(this)
+						PanelTemplates_TabResize(0, this)
+						getglobal(this:GetName().."HighlightTexture"):SetWidth(this:GetTextWidth() + 31)
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Button name="$parent_Tab10" inherits="TabButtonTemplate">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parent_Tab9" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="-3.2" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\hearthstone">
+							<Size>
+								<AbsDimension x="18" y="18" />
+							</Size>
+							<Anchors>
+								<Anchor point="BOTTOM" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						PanelTemplates_SelectTab(this)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab2)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab3)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab4)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab5)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab6)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab7)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab8)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab9)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab1)
+						MPowa_IconFrame_ButtonContainer_10:Show()
+						MPowa_IconFrame_ButtonContainer_2:Hide()
+						MPowa_IconFrame_ButtonContainer_3:Hide()
+						MPowa_IconFrame_ButtonContainer_4:Hide()
+						MPowa_IconFrame_ButtonContainer_5:Hide()
+						MPowa_IconFrame_ButtonContainer_6:Hide()
+						MPowa_IconFrame_ButtonContainer_7:Hide()
+						MPowa_IconFrame_ButtonContainer_8:Hide()
+						MPowa_IconFrame_ButtonContainer_9:Hide()
+						MPowa_IconFrame_ButtonContainer:Hide()
+					</OnClick>
+					<OnLoad>
+						getglobal(this:GetName().."Text"):SetText("")
+						PanelTemplates_DeselectTab(this)
+						PanelTemplates_TabResize(0, this)
+						getglobal(this:GetName().."HighlightTexture"):SetWidth(this:GetTextWidth() + 31)
+					</OnLoad>
+				</Scripts>
+			</Button>
 		</Frames>
 	</Frame>
 	
