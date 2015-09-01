@@ -379,6 +379,8 @@ function MPowa_TextureFrame_OnUpdate(elapsed, button)
 			if (not MPOWA_SAVE[button:GetID()].test and (not MPOWA_TEST_ALL)) then
 				if MPOWA_SAVE[button:GetID()].cooldown then
 					local start, duration = MPowa_GetSpellCooldown(MPOWA_SAVE[button:GetID()].buffname)
+					DEFAULT_CHAT_FRAME:AddMessage(MPOWA_SAVE[button:GetID()].buffname)
+					
 					if start > 0 and duration > 0 then
 						Duration:SetText(duration-(GetTime()-start))
 						Duration:Show()
@@ -441,7 +443,6 @@ end
 function MPowa_GetSpellCooldown(buff)
 	-- Get Spellcooldown
 	local start, duration, enabled = GetSpellCooldown(MPowa_GetSpellSlot(buff), "spell")
-	
 	-- Get Inventory Cooldown
 	if start == 0 and duration == 0 then
 		for i=1, 18 do
@@ -460,6 +461,8 @@ function MPowa_GetSpellCooldown(buff)
 							return start, duration
 						elseif p == 4 and u == GetContainerNumSlots(p) then
 							return start, duration
+						else
+							return 0,0
 						end
 					end
 				end
