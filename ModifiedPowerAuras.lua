@@ -379,10 +379,12 @@ function MPowa_TextureFrame_OnUpdate(elapsed, button)
 			if (not MPOWA_SAVE[button:GetID()].test and (not MPOWA_TEST_ALL)) then
 				if MPOWA_SAVE[button:GetID()].cooldown then
 					local start, duration = MPowa_GetSpellCooldown(MPOWA_SAVE[button:GetID()].buffname)
-					DEFAULT_CHAT_FRAME:AddMessage(MPOWA_SAVE[button:GetID()].buffname)
-					
 					if start > 0 and duration > 0 then
-						Duration:SetText(duration-(GetTime()-start))
+						if MPOWA_SAVE[button:GetID()].hundredth then
+							Duration:SetText(string.format("%.2f", duration-(GetTime()-start)))
+						else
+							Duration:SetText(string.format("%.0f", duration-(GetTime()-start)))
+						end
 						Duration:Show()
 					else
 						button:Hide()
