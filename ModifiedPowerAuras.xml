@@ -1430,7 +1430,7 @@
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b)
 										GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
-										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1)
+										GameTooltip:SetText(MPOWA_COLORPICKER_TOOLTIP, nil, nil, nil, nil, 1)
 									</OnEnter>
 									<OnLeave>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b)

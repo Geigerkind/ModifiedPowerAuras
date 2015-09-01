@@ -173,7 +173,7 @@ function MPowa_SearchAuras()
 		local buff = GameTooltipTextLeft1:GetText()
 		if buff then
 			for p=1, MPOWA_CUR_MAX do
-				if strfind(strlower(MPOWA_SAVE[p].buffname), strlower(buff)) and (not MPOWA_SAVE[p].isdebuff) then
+				if strfind(strlower(MPOWA_SAVE[p].buffname), strlower(buff)) and (not MPOWA_SAVE[p].isdebuff) and (not MPOWA_SAVE[p].raidgroupmember) then
 					if MPOWA_SAVE[p].test or MPOWA_TEST_ALL then MPOWA_SAVE[p].test = false MPOWA_TEST_ALL = false end
 					getglobal("TextureFrame"..p).count = getglobal("TextureFrame"..p).count + 1
 					MPowa_TextureFrame_Update(i, getglobal("TextureFrame"..p))
@@ -191,7 +191,7 @@ function MPowa_SearchAuras()
 		local debuff = GameTooltipTextLeft1:GetText()
 		if debuff then
 			for p=1, MPOWA_CUR_MAX do
-				if strfind(strlower(MPOWA_SAVE[p].buffname), strlower(debuff)) and MPOWA_SAVE[p].isdebuff then
+				if strfind(strlower(MPOWA_SAVE[p].buffname), strlower(debuff)) and MPOWA_SAVE[p].isdebuff and (not MPOWA_SAVE[p].raidgroupmember) then
 					if MPOWA_SAVE[p].test or MPOWA_TEST_ALL then MPOWA_SAVE[p].test = false MPOWA_TEST_ALL = false end
 					getglobal("TextureFrame"..p).count = getglobal("TextureFrame"..p).count + 1
 					MPowa_TextureFrame_Update(i, getglobal("TextureFrame"..p))
@@ -207,6 +207,39 @@ function MPowa_SearchAuras()
 		if (buff == nil) and (debuff == nil) then break end
 		i = i + 1
 	end
+	
+	--[[
+	for u=1,MPOWA_CUR_MAX do
+		if MPOWA_SAVE[u].raidgroupmember then
+			if UnitInRaid("player") then
+				for z=1, 40 do
+					GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+					local t = 1
+					while true do
+						GameTooltip:ClearLines()
+						GameTooltip:SetUnitBuff("raid"..z, t)
+						local tauraname = GameTooltipTextLeft1:GetText()
+						if (not tauraname) then break end
+						if strfind(strlower(MPOWA_SAVE[u].buffname), strlower(tauraname)) then
+							getglobal("TextureFrame"..u).count = getglobal("TextureFrame"..u).count + 1
+							MPowa_TextureFrame_Update(t, getglobal("TextureFrame"..u))
+							if MPOWA_SAVE[u].inverse then
+								getglobal("TextureFrame"..u):Hide()
+							end
+							break
+						end
+						t = t + 1
+					end
+					GameTooltip:Hide()
+				end
+			else
+				for z=1, 4 do
+				
+				end
+			end
+		end
+	end
+	--]]
 end
 
 function MPowa_TernaryReturn(id, var, real)

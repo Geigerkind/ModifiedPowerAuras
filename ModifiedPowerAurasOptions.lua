@@ -107,9 +107,11 @@ function MPowa_Options_OnEvent(event)
 		if MPOWA_PROFILE == nil then
 			MPOWA_PROFILE = {}
 		end
+		
 		MPOWA_CUR_MAX = MPowa_getNumUsed()
 		
 		for i=1, MPOWA_CUR_MAX  do
+			--if MPOWA_SAVE[i].raidgroupmember == nil then MPOWA_SAVE[i].raidgroupmember = false end
 			MPowa_CreateIcons(i)
 		end
 		
@@ -170,6 +172,7 @@ function MPowa_CreateSave(i)
 		beginsound = 1,
 		useendsound = false,
 		endsound = 1,
+		--raidgroupmember = false,
 	}
 end
 
@@ -340,6 +343,7 @@ function MPowa_Edit()
 		getglobal("MPowa_ConfigFrame_Container_1_2_Checkbutton_ShowCooldowns"):SetChecked(MPOWA_SAVE[CUR_EDIT].cooldown)
 		getglobal("MPowa_ConfigFrame_Container_1_2_Checkbutton_EnemyTarget"):SetChecked(MPOWA_SAVE[CUR_EDIT].enemytarget)
 		getglobal("MPowa_ConfigFrame_Container_1_2_Checkbutton_FriendlyTarget"):SetChecked(MPOWA_SAVE[CUR_EDIT].friendlytarget)
+		--getglobal("MPowa_ConfigFrame_Container_1_2_Checkbutton_RaidMember"):SetChecked(MPOWA_SAVE[CUR_EDIT].raidgroupmember)
 		getglobal("MPowa_ConfigFrame_Container_2_2_Checkbutton_Hundreds"):SetChecked(MPOWA_SAVE[CUR_EDIT].hundredth)
 		getglobal("MPowa_ConfigFrame_Container_2_2_Checkbutton_Color"):SetChecked(MPOWA_SAVE[CUR_EDIT].usefontcolor)
 		getglobal("MPowa_ConfigFrame_Container_2_2_ColorpickerNormalTexture"):SetVertexColor(MPOWA_SAVE[CUR_EDIT].fontcolor_r, MPOWA_SAVE[CUR_EDIT].fontcolor_g, MPOWA_SAVE[CUR_EDIT].fontcolor_b)
@@ -394,6 +398,7 @@ end
 function MPowa_Editbox_Name(obj)
 	local oldname = MPOWA_SAVE[CUR_EDIT].buffname
 	MPOWA_SAVE[CUR_EDIT].buffname = obj:GetText()
+
 	if oldname ~= MPOWA_SAVE[CUR_EDIT].buffname then
 		MPOWA_SAVE[CUR_EDIT].texture = "Interface\\AddOns\\ModifiedPowerAuras\\images\\dummy.tga"
 		getglobal("MPowa_ConfigFrame_Container_1_Icon_Texture"):SetTexture(MPOWA_SAVE[CUR_EDIT].texture)
@@ -436,8 +441,10 @@ function MPowa_Checkbutton(var)
 end
 
 function MPowa_Editbox_Duration(obj)
-	MPOWA_SAVE[CUR_EDIT].targetduration = tonumber(obj:GetText())
-	MPowa_Target()
+	if tonumber(obj:GetText()) ~= nil then
+		MPOWA_SAVE[CUR_EDIT].targetduration = tonumber(obj:GetText())
+		MPowa_Target()
+	end
 end
 
 function MPowa_TernarySetState(button, value)
@@ -520,9 +527,14 @@ function MPowa_OpenColorPicker()
 	ColorPickerFrame:SetColorRGB(button.r, button.g, button.b)
 	ColorPickerFrame.previousValues = {r = button.r, g = button.g, b = button.b, opacity = button.opacity}
 	ColorPickerFrame.cancelFunc = MPowa_OptionsFrame_CancelColor
-
-	ColorPickerFrame:SetPoint("TOPLEFT", MPowa_ConfigFrame_Container_2_2_Colorpicker, "TOPRIGHT", 0, 0)
-
+	
+	ColorPickerFrame:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
+	
+	ColorPickerFrame:SetMovable()
+	ColorPickerFrame:EnableMouse()
+	ColorPickerFrame:SetScript("OnMouseDown", function() ColorPickerFrame:StartMoving() end)
+	ColorPickerFrame:SetScript("OnMouseUp", function() ColorPickerFrame:StopMovingOrSizing() end)
+	
 	ColorPickerFrame:Show()
 end
 

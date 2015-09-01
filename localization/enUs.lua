@@ -74,9 +74,13 @@ MPOWA_CHECKBUTTON_BEGINSOUND = "Play sound if aura is applied"
 MPOWA_CHECKBUTTON_BEGINSOUND_TOOLTIP = "Check this to play a sound when an aura is applied."
 MPOWA_CHECKBUTTON_ENDSOUND = "Play sound if aura fades"
 MPOWA_CHECKBUTTON_ENDSOUND_TOOLTIP = "Check this to play a sound when an aura fades."
+MPOWA_CHECKBUTTON_RAIDMEMBER = "|cFF66CD00Group/Raid member|r"
+MPOWA_CHECKBUTTON_RAIDMEMBER_TOOLTIP = "Check this to specify a raid member target. If you use this option add a name. For example: (Shino)Blessing of Freedom"
 
 MPOWA_SCRIPT_MOUNT_100 = "Increases speed by 100"
 MPOWA_SCRIPT_MOUNT_60 = "Increases speed by 60"
+
+MPOWA_COLORPICKER_TOOLTIP = "Click here to change the fontcolor."
 
 MPOWA_TEXT_ABOUT_MPOWA = "Modified Power Auras is the advanced version of the AddOn Power Auras. It is a lot more powerful and provides every possible function that could be backported from cataclysm. Plus it provides some custom features that are very helpful."
 MPOWA_TEXT_CREATOR_TITLE = "Who created Modified Power Auras?"
