@@ -348,6 +348,8 @@
 				this:RegisterEvent("PLAYER_ENTERING_WORLD")
 				this:RegisterEvent("PLAYER_TARGET_CHANGED")
 				this:RegisterEvent("UNIT_AURA")
+				this:RegisterEvent("RAID_ROSTER_UPDATE")
+				this:RegisterEvent("PARTY_MEMBERS_CHANGED")
 				MPowa_OnLoad()
 				this:SetClampedToScreen(true)
 				getglobal(this:GetName().."_HEAD"):SetText(MPOWA_MAINFRAME_HEAD.." "..MPOWA_VERSION)
@@ -976,29 +978,11 @@
 									</OnClick>
 								</Scripts>
 							</CheckButton>
-							<CheckButton name="$parent_Checkbutton_Timer" inherits="MPowa_CheckTemplate">
-								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="$parent_Checkbutton_ShowCooldowns" relativePoint="BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x="0" y="8" />
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										this.tooltipText = MPOWA_CHECKBUTTON_TIMER_TOOLTIP
-										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_TIMER)
-									</OnLoad>
-									<OnClick>
-										MPowa_Checkbutton("timer")
-									</OnClick>
-								</Scripts>
-							</CheckButton>
 							<CheckButton name="$parent_Checkbutton_EnemyTarget" inherits="MPowa_CheckTemplate">
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="$parent_Checkbutton_ShowCooldowns" relativePoint="BOTTOMLEFT">
 										<Offset>
-											<AbsDimension x="0" y="-16" />
+											<AbsDimension x="0" y="0" />
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -1037,6 +1021,24 @@
 										else
 											MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Hide()
 										end
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<CheckButton name="$parent_Checkbutton_RaidMember" inherits="MPowa_CheckTemplate">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parent_Checkbutton_FriendlyTarget" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="8" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = MPOWA_CHECKBUTTON_RAIDMEMBER_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_RAIDMEMBER)
+									</OnLoad>
+									<OnClick>
+										MPowa_Checkbutton("raidgroupmember")
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -1369,6 +1371,24 @@
 									</OnLoad>
 									<OnClick>
 										MPowa_Checkbutton("hundredth")
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<CheckButton name="$parent_Checkbutton_Timer" inherits="MPowa_CheckTemplate">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parent_Checkbutton_Hundreds" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="0" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = MPOWA_CHECKBUTTON_TIMER_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_TIMER)
+									</OnLoad>
+									<OnClick>
+										MPowa_Checkbutton("timer")
 									</OnClick>
 								</Scripts>
 							</CheckButton>

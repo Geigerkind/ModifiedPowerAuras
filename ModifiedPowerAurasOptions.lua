@@ -111,7 +111,7 @@ function MPowa_Options_OnEvent(event)
 		MPOWA_CUR_MAX = MPowa_getNumUsed()
 		
 		for i=1, MPOWA_CUR_MAX  do
-			--if MPOWA_SAVE[i].raidgroupmember == nil then MPOWA_SAVE[i].raidgroupmember = false end
+			if MPOWA_SAVE[i].raidgroupmember == nil then MPOWA_SAVE[i].raidgroupmember = false end
 			MPowa_CreateIcons(i)
 		end
 		
@@ -172,7 +172,7 @@ function MPowa_CreateSave(i)
 		beginsound = 1,
 		useendsound = false,
 		endsound = 1,
-		--raidgroupmember = false,
+		raidgroupmember = false,
 	}
 end
 
@@ -339,11 +339,11 @@ function MPowa_Edit()
 		getglobal("MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration"):SetText(MPOWA_SAVE[CUR_EDIT].targetduration)
 		getglobal("MPowa_ConfigFrame_Container_1_2_Checkbutton_Debuff"):SetChecked(MPOWA_SAVE[CUR_EDIT].isdebuff)
 		getglobal("MPowa_ConfigFrame_Container_1_2_Checkbutton_ShowIfNotActive"):SetChecked(MPOWA_SAVE[CUR_EDIT].inverse)
-		getglobal("MPowa_ConfigFrame_Container_1_2_Checkbutton_Timer"):SetChecked(MPOWA_SAVE[CUR_EDIT].timer)
+		getglobal("MPowa_ConfigFrame_Container_2_2_Checkbutton_Timer"):SetChecked(MPOWA_SAVE[CUR_EDIT].timer)
 		getglobal("MPowa_ConfigFrame_Container_1_2_Checkbutton_ShowCooldowns"):SetChecked(MPOWA_SAVE[CUR_EDIT].cooldown)
 		getglobal("MPowa_ConfigFrame_Container_1_2_Checkbutton_EnemyTarget"):SetChecked(MPOWA_SAVE[CUR_EDIT].enemytarget)
 		getglobal("MPowa_ConfigFrame_Container_1_2_Checkbutton_FriendlyTarget"):SetChecked(MPOWA_SAVE[CUR_EDIT].friendlytarget)
-		--getglobal("MPowa_ConfigFrame_Container_1_2_Checkbutton_RaidMember"):SetChecked(MPOWA_SAVE[CUR_EDIT].raidgroupmember)
+		getglobal("MPowa_ConfigFrame_Container_1_2_Checkbutton_RaidMember"):SetChecked(MPOWA_SAVE[CUR_EDIT].raidgroupmember)
 		getglobal("MPowa_ConfigFrame_Container_2_2_Checkbutton_Hundreds"):SetChecked(MPOWA_SAVE[CUR_EDIT].hundredth)
 		getglobal("MPowa_ConfigFrame_Container_2_2_Checkbutton_Color"):SetChecked(MPOWA_SAVE[CUR_EDIT].usefontcolor)
 		getglobal("MPowa_ConfigFrame_Container_2_2_ColorpickerNormalTexture"):SetVertexColor(MPOWA_SAVE[CUR_EDIT].fontcolor_r, MPOWA_SAVE[CUR_EDIT].fontcolor_g, MPOWA_SAVE[CUR_EDIT].fontcolor_b)
@@ -412,6 +412,7 @@ function MPowa_Editbox_Name(obj)
 	else
 		MPowa_Update()
 		MPowa_Target()
+		MPowa_RaidGroupMember()
 	end
 end
 

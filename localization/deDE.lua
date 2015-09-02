@@ -1,6 +1,6 @@
 if (GetLocale() == "deDE") then
 	MPOWA_MAINFRAME_HEAD = "Modified Power Auras"
-	MPOWA_VERSION = "v0.4"
+	MPOWA_VERSION = "v0.6"
 
 	MPOWA_BUTTON_EDIT = "Aura bearbeiten"
 	MPOWA_BUTTON_ADD = "Aura hinzufügen"
