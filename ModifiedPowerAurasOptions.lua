@@ -475,8 +475,13 @@ function MPowa_Ternary_OnClick(obj, var)
 	end	
 
 	MPowa_TernarySetState(obj, MPOWA_SAVE[CUR_EDIT][var])
-	getglobal("TextureFrame"..CUR_EDIT):Hide()
-	getglobal("TextureFrame"..CUR_EDIT):Show()
+	if MPOWA_SAVE[CUR_EDIT].test or MPOWA_TEST_ALL then
+		getglobal("TextureFrame"..CUR_EDIT):Hide()
+		getglobal("TextureFrame"..CUR_EDIT):Show()
+	else
+		MPowa_Update()
+		MPowa_Target()
+	end
 end
 
 function MPowa_OptionsFrame_SetColor()

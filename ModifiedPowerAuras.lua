@@ -10,7 +10,9 @@ function MPowa_OnEvent(event)
 		if arg1 == "target" then
 			MPowa_Target()
 		end
-		MPowa_RaidGroupMember()
+		if strfind(arg1, "raid") or strfind(arg1, "party") then
+			MPowa_RaidGroupMemberSingle(arg1)
+		end
 	elseif event == "PLAYER_TARGET_CHANGED" then
 		MPowa_Target()
 	elseif event == "RAID_ROSTER_UPDATE" or event == "PARTY_MEMBERS_CHANGED" then
@@ -50,7 +52,7 @@ function MPowa_IsMounted()
 end
 
 function MPowa_IsInParty()
-	if GetNumPartyMembers() > 1 then
+	if GetNumPartyMembers() > 0 or UnitInRaid("player") then
 		return true
 	else
 		return false
@@ -68,12 +70,6 @@ function MPowa_IsInBattleground()
 end
 
 function MPowa_Target()
-	-- Setting up conditions
-	local enemy
-	local englishFaction, _ = UnitFactionGroup("target")
-	local penglishFaction, _ = UnitFactionGroup("player")
-	if penglishFaction == "Alliance" then enemy = "Horde" else enemy = "Alliance" end
-
 	-- Hiding Icons for enemy debuffs
 	for i=1, MPOWA_CUR_MAX do
 		if MPOWA_SAVE[i].enemytarget or MPOWA_SAVE[i].friendlytarget then
@@ -92,7 +88,7 @@ function MPowa_Target()
 		local buff = GameTooltipTextLeft1:GetText()
 		if buff then
 			for p=1, MPOWA_CUR_MAX do
-				if strfind(strlower(MPOWA_SAVE[p].buffname), strlower(buff)) and (not MPOWA_SAVE[p].isdebuff) and ((MPOWA_SAVE[button:GetID()].enemytarget and englishFaction == enemy) or (MPOWA_SAVE[button:GetID()].friendlytarget and englishFaction ~= enemy)) then
+				if strfind(strlower(MPOWA_SAVE[p].buffname), strlower(buff)) and (not MPOWA_SAVE[p].isdebuff) and (MPOWA_SAVE[p].enemytarget or MPOWA_SAVE[p].friendlytarget) then
 					if MPOWA_SAVE[p].test or MPOWA_TEST_ALL then MPOWA_SAVE[p].test = false; MPOWA_TEST_ALL = false end
 					getglobal("TextureFrame"..p).count = getglobal("TextureFrame"..p).count + 1
 					MPowa_TextureFrame_Update(i-1, getglobal("TextureFrame"..p))
@@ -109,7 +105,7 @@ function MPowa_Target()
 		local debuff = GameTooltipTextLeft1:GetText()
 		if (debuff) then
 			for p=1, MPOWA_CUR_MAX do
-				if strfind(strlower(MPOWA_SAVE[p].buffname), strlower(debuff)) and MPOWA_SAVE[p].isdebuff and ((MPOWA_SAVE[button:GetID()].enemytarget and englishFaction == enemy) or (MPOWA_SAVE[button:GetID()].friendlytarget and englishFaction ~= enemy)) then
+				if strfind(strlower(MPOWA_SAVE[p].buffname), strlower(debuff)) and MPOWA_SAVE[p].isdebuff and (MPOWA_SAVE[p].enemytarget or MPOWA_SAVE[p].friendlytarget) then
 					if MPOWA_SAVE[p].test or MPOWA_TEST_ALL then MPOWA_SAVE[p].test = false; MPOWA_TEST_ALL = false end
 					getglobal("TextureFrame"..p).count = getglobal("TextureFrame"..p).count + 1
 					MPowa_TextureFrame_Update(i-1, getglobal("TextureFrame"..p))
@@ -137,7 +133,7 @@ function MPowa_HideAllIcons()
 		else
 			button.removed = 0
 		end
-		if (not MPOWA_SAVE[i].test) then
+		if (not MPOWA_SAVE[i].test) and (not MPOWA_SAVE[i].raidgroupmember) then
 			button:Hide()
 		end
 		if button.timeLeft ~= nil then
@@ -214,11 +210,53 @@ function MPowa_SearchAuras()
 end
 
 function MPowa_GetUnitName(name)
-	return strsub(name, 2, strfind(name, ")")-1)
+	if strfind (name, ")") then
+		return strsub(name, 2, strfind(name, ")")-1)
+	else
+		return ""
+	end
 end
 
 function MPowa_GetBuffName(name)
-	return strsub(name, (strfind(name, ")")+1) or 1)
+	if strfind (name, ")") then
+		return strsub(name, (strfind(name, ")")+1) or 1)
+	else
+		return ""
+	end
+end
+
+function MPowa_RaidGroupMemberSingle(arg1)
+	for u=1, MPOWA_CUR_MAX do
+		if MPOWA_SAVE[u].raidgroupmember and UnitName(arg1) == MPowa_GetUnitName(MPOWA_SAVE[u].buffname) then
+			local button = getglobal("TextureFrame"..u)
+			button.count = 0
+			button:Hide()
+			
+			GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+			local t = 1
+			while true do
+				GameTooltip:ClearLines()
+				if MPOWA_SAVE[u].isdebuff then
+					GameTooltip:SetUnitDebuff(arg1, t)
+				else
+					GameTooltip:SetUnitBuff(arg1, t)
+				end
+				local tauraname = GameTooltipTextLeft1:GetText()
+				if (not tauraname) then break end
+				if strfind(strlower(MPowa_GetBuffName(MPOWA_SAVE[u].buffname)), strlower(tauraname)) then
+					button.rgcon = arg1
+					button.count = button.count + 1
+					MPowa_TextureFrame_Update(t, button)
+					if MPOWA_SAVE[u].inverse then
+						button:Hide()
+					end
+					break
+				end
+				t = t + 1
+			end
+			GameTooltip:Hide()
+		end
+	end
 end
 
 function MPowa_RaidGroupMember()
@@ -228,10 +266,8 @@ function MPowa_RaidGroupMember()
 			button.count = 0
 			button:Hide()
 			if UnitInRaid("player") then
-				--DEFAULT_CHAT_FRAME:AddMessage("Test 1")
 				for z=1, 40 do
 					if UnitName("raid"..z) == MPowa_GetUnitName(MPOWA_SAVE[u].buffname) then
-						--DEFAULT_CHAT_FRAME:AddMessage("Test 2")
 						GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
 						local t = 1
 						while true do
@@ -244,7 +280,6 @@ function MPowa_RaidGroupMember()
 							local tauraname = GameTooltipTextLeft1:GetText()
 							if (not tauraname) then break end
 							if strfind(strlower(MPowa_GetBuffName(MPOWA_SAVE[u].buffname)), strlower(tauraname)) then
-								--DEFAULT_CHAT_FRAME:AddMessage("Test 3")
 								button.rgcon = "raid"..z
 								button.count = button.count + 1
 								MPowa_TextureFrame_Update(t, button)
@@ -310,18 +345,15 @@ end
 
 function MPowa_TextureFrame_Update(bi, button)
 	if MPowa_TernaryReturn(button:GetID(), "alive", MPowa_ReverseBoolean(UnitIsDeadOrGhost("player"))) and MPowa_TernaryReturn(button:GetID(), "mounted", ISMOUNTED) and MPowa_TernaryReturn(button:GetID(), "incombat", UnitAffectingCombat("player")) and MPowa_TernaryReturn(button:GetID(), "inparty", MPowa_IsInParty()) and MPowa_TernaryReturn(button:GetID(), "inraid", UnitInRaid("player")) and MPowa_TernaryReturn(button:GetID(), "inbattleground", INBATTLEGROUND) then
-		local buffIndex, enemy
-		local englishFaction, _ = UnitFactionGroup("target")
-		local penglishFaction, _ = UnitFactionGroup("player")
-		if penglishFaction == "Alliance" then enemy = "Horde" else enemy = "Alliance" end
+		local buffIndex
 		if MPOWA_SAVE[button:GetID()].isdebuff then
-			if ((MPOWA_SAVE[button:GetID()].enemytarget and englishFaction == enemy) or (MPOWA_SAVE[button:GetID()].friendlytarget and englishFaction ~= enemy)) or MPOWA_SAVE[button:GetID()].raidgroupmember then
+			if ((MPOWA_SAVE[button:GetID()].enemytarget and UnitCanAttack("player", "target")) or (MPOWA_SAVE[button:GetID()].friendlytarget and (not UnitCanAttack("player", "target")))) or MPOWA_SAVE[button:GetID()].raidgroupmember then
 				buffIndex = 0
 			else
 				buffIndex = GetPlayerBuff(bi, "HARMFUL")
 			end
 		else
-			if ((MPOWA_SAVE[button:GetID()].enemytarget and englishFaction == enemy) or (MPOWA_SAVE[button:GetID()].friendlytarget and englishFaction ~= enemy)) or MPOWA_SAVE[button:GetID()].raidgroupmember then
+			if ((MPOWA_SAVE[button:GetID()].enemytarget and UnitCanAttack("player", "target")) or (MPOWA_SAVE[button:GetID()].friendlytarget and (not UnitCanAttack("player", "target")))) or MPOWA_SAVE[button:GetID()].raidgroupmember then
 				buffIndex = 0
 			else
 				buffIndex = GetPlayerBuff(bi, "HELPFUL")
