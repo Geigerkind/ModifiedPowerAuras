@@ -69,6 +69,38 @@ function MPowa_IsInBattleground()
 	end
 end
 
+function MPowa_FilterName(name, p)
+	if MPOWA_SAVE[p].exactname then
+		if MPOWA_SAVE[p].raidgroupmember then
+			if MPowa_GetBuffName(MPOWA_SAVE[p].buffname) == name then
+				return true
+			else
+				return false
+			end
+		else
+			if MPOWA_SAVE[p].buffname == name then
+				return true
+			else
+				return false
+			end
+		end
+	else
+		if MPOWA_SAVE[p].raidgroupmember then
+			if strfind(MPowa_GetBuffName(strlower(MPOWA_SAVE[p].buffname)), strlower(name)) then
+				return true
+			else
+				return false
+			end
+		else
+			if strfind(strlower(MPOWA_SAVE[p].buffname), strlower(name)) then
+				return true
+			else
+				return false
+			end
+		end
+	end
+end
+
 function MPowa_Target()
 	-- Hiding Icons for enemy debuffs
 	for i=1, MPOWA_CUR_MAX do
@@ -88,7 +120,7 @@ function MPowa_Target()
 		local buff = GameTooltipTextLeft1:GetText()
 		if buff then
 			for p=1, MPOWA_CUR_MAX do
-				if strfind(strlower(MPOWA_SAVE[p].buffname), strlower(buff)) and (not MPOWA_SAVE[p].isdebuff) and (MPOWA_SAVE[p].enemytarget or MPOWA_SAVE[p].friendlytarget) then
+				if MPowa_FilterName(buff, p) and (not MPOWA_SAVE[p].isdebuff) and (MPOWA_SAVE[p].enemytarget or MPOWA_SAVE[p].friendlytarget) then
 					if MPOWA_SAVE[p].test or MPOWA_TEST_ALL then MPOWA_SAVE[p].test = false; MPOWA_TEST_ALL = false end
 					getglobal("TextureFrame"..p).count = getglobal("TextureFrame"..p).count + 1
 					MPowa_TextureFrame_Update(i-1, getglobal("TextureFrame"..p))
@@ -105,7 +137,7 @@ function MPowa_Target()
 		local debuff = GameTooltipTextLeft1:GetText()
 		if (debuff) then
 			for p=1, MPOWA_CUR_MAX do
-				if strfind(strlower(MPOWA_SAVE[p].buffname), strlower(debuff)) and MPOWA_SAVE[p].isdebuff and (MPOWA_SAVE[p].enemytarget or MPOWA_SAVE[p].friendlytarget) then
+				if MPowa_FilterName(debuff, p) and MPOWA_SAVE[p].isdebuff and (MPOWA_SAVE[p].enemytarget or MPOWA_SAVE[p].friendlytarget) then
 					if MPOWA_SAVE[p].test or MPOWA_TEST_ALL then MPOWA_SAVE[p].test = false; MPOWA_TEST_ALL = false end
 					getglobal("TextureFrame"..p).count = getglobal("TextureFrame"..p).count + 1
 					MPowa_TextureFrame_Update(i-1, getglobal("TextureFrame"..p))
@@ -172,7 +204,7 @@ function MPowa_SearchAuras()
 		local buff = GameTooltipTextLeft1:GetText()
 		if buff then
 			for p=1, MPOWA_CUR_MAX do
-				if strfind(strlower(MPOWA_SAVE[p].buffname), strlower(buff)) and (not MPOWA_SAVE[p].isdebuff) and (not MPOWA_SAVE[p].raidgroupmember) then
+				if MPowa_FilterName(buff, p) and (not MPOWA_SAVE[p].isdebuff) and (not MPOWA_SAVE[p].raidgroupmember) then
 					if MPOWA_SAVE[p].test or MPOWA_TEST_ALL then MPOWA_SAVE[p].test = false MPOWA_TEST_ALL = false end
 					getglobal("TextureFrame"..p).count = getglobal("TextureFrame"..p).count + 1
 					MPowa_TextureFrame_Update(i, getglobal("TextureFrame"..p))
@@ -190,7 +222,7 @@ function MPowa_SearchAuras()
 		local debuff = GameTooltipTextLeft1:GetText()
 		if debuff then
 			for p=1, MPOWA_CUR_MAX do
-				if strfind(strlower(MPOWA_SAVE[p].buffname), strlower(debuff)) and MPOWA_SAVE[p].isdebuff and (not MPOWA_SAVE[p].raidgroupmember) then
+				if MPowa_FilterName(debuff, p) and MPOWA_SAVE[p].isdebuff and (not MPOWA_SAVE[p].raidgroupmember) then
 					if MPOWA_SAVE[p].test or MPOWA_TEST_ALL then MPOWA_SAVE[p].test = false MPOWA_TEST_ALL = false end
 					getglobal("TextureFrame"..p).count = getglobal("TextureFrame"..p).count + 1
 					MPowa_TextureFrame_Update(i, getglobal("TextureFrame"..p))
@@ -243,7 +275,7 @@ function MPowa_RaidGroupMemberSingle(arg1)
 				end
 				local tauraname = GameTooltipTextLeft1:GetText()
 				if (not tauraname) then break end
-				if strfind(strlower(MPowa_GetBuffName(MPOWA_SAVE[u].buffname)), strlower(tauraname)) then
+				if MPowa_FilterName(tauraname, u) then
 					button.rgcon = arg1
 					button.count = button.count + 1
 					MPowa_TextureFrame_Update(t, button)
@@ -279,7 +311,7 @@ function MPowa_RaidGroupMember()
 							end
 							local tauraname = GameTooltipTextLeft1:GetText()
 							if (not tauraname) then break end
-							if strfind(strlower(MPowa_GetBuffName(MPOWA_SAVE[u].buffname)), strlower(tauraname)) then
+							if MPowa_FilterName(tauraname, u) then
 								button.rgcon = "raid"..z
 								button.count = button.count + 1
 								MPowa_TextureFrame_Update(t, button)
@@ -306,7 +338,7 @@ function MPowa_RaidGroupMember()
 							end
 							local tauraname = GameTooltipTextLeft1:GetText()
 							if (not tauraname) then break end
-							if strfind(strlower(MPowa_GetBuffName(MPOWA_SAVE[u].buffname)), strlower(tauraname)) then
+							if MPowa_FilterName(tauraname, u) then
 								button.rgcon = "party"..z
 								button.count = button.count + 1
 								MPowa_TextureFrame_Update(t, button)

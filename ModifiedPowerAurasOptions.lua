@@ -112,6 +112,7 @@ function MPowa_Options_OnEvent(event)
 		
 		for i=1, MPOWA_CUR_MAX  do
 			if MPOWA_SAVE[i].raidgroupmember == nil then MPOWA_SAVE[i].raidgroupmember = false end
+			if MPOWA_SAVE[i].exactname == nil then MPOWA_SAVE[i].exactname = false end
 			MPowa_CreateIcons(i)
 		end
 		
@@ -173,6 +174,7 @@ function MPowa_CreateSave(i)
 		useendsound = false,
 		endsound = 1,
 		raidgroupmember = false,
+		exactname = false,
 	}
 end
 
@@ -338,6 +340,7 @@ function MPowa_Edit()
 		getglobal("MPowa_ConfigFrame_Container_1_2_Editbox_Stacks"):SetText(MPOWA_SAVE[CUR_EDIT].stacks)
 		getglobal("MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration"):SetText(MPOWA_SAVE[CUR_EDIT].targetduration)
 		getglobal("MPowa_ConfigFrame_Container_1_2_Checkbutton_Debuff"):SetChecked(MPOWA_SAVE[CUR_EDIT].isdebuff)
+		getglobal("MPowa_ConfigFrame_Container_1_2_Checkbutton_ExactName"):SetChecked(MPOWA_SAVE[CUR_EDIT].exactname)
 		getglobal("MPowa_ConfigFrame_Container_1_2_Checkbutton_ShowIfNotActive"):SetChecked(MPOWA_SAVE[CUR_EDIT].inverse)
 		getglobal("MPowa_ConfigFrame_Container_2_2_Checkbutton_Timer"):SetChecked(MPOWA_SAVE[CUR_EDIT].timer)
 		getglobal("MPowa_ConfigFrame_Container_1_2_Checkbutton_ShowCooldowns"):SetChecked(MPOWA_SAVE[CUR_EDIT].cooldown)

@@ -1,6 +1,6 @@
 if (GetLocale() == "enGB") then
 	MPOWA_MAINFRAME_HEAD = "Modified Power Auras"
-	MPOWA_VERSION = "v0.6"
+	MPOWA_VERSION = "v0.7"
 
 	MPOWA_BUTTON_EDIT = "Edit Aura"
 	MPOWA_BUTTON_ADD = "Add Aura"
@@ -75,6 +75,10 @@ if (GetLocale() == "enGB") then
 	MPOWA_CHECKBUTTON_BEGINSOUND_TOOLTIP = "Check this to play a sound when an aura is applied."
 	MPOWA_CHECKBUTTON_ENDSOUND = "Play sound if aura fades"
 	MPOWA_CHECKBUTTON_ENDSOUND_TOOLTIP = "Check this to play a sound when an aura fades."
+	MPOWA_CHECKBUTTON_RAIDMEMBER = "|cFF66CD00Group/Raid member|r"
+	MPOWA_CHECKBUTTON_RAIDMEMBER_TOOLTIP = "Check this to specify a raid member target. If you use this option add a name. For example: (Shino)Blessing of Freedom"
+	MPOWA_CHECKBUTTON_EXACTNAME = "Exact Name"
+	MPOWA_CHECKBUTTON_EXACTNAME_TOOLTIP = "Use the exact name as filter instead of a fuzzy filter."
 
 	MPOWA_SCRIPT_MOUNT_100 = "Increases speed by 100"
 	MPOWA_SCRIPT_MOUNT_60 = "Increases speed by 60"

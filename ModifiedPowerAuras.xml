@@ -582,7 +582,7 @@
 				<Frames>
 					<Frame name="$parent_1" inherits="MPowa_ContainerTemplate">
 						<Size>
-							<AbsDimension x="290" y="170" />
+							<AbsDimension x="290" y="155" />
 						</Size>
 						<Frames>
 							<Frame name="$parent_Icon">
@@ -592,7 +592,7 @@
 								<Anchors>
 									<Anchor point="TOPLEFT">
 										<Offset>
-											<AbsDimension x="40" y="-20" />
+											<AbsDimension x="40" y="-15" />
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -942,11 +942,29 @@
 									</Layer>
 								</Layers>
 							</EditBox>
-							<CheckButton name="$parent_Checkbutton_ShowIfNotActive" inherits="MPowa_CheckTemplate">
+							<CheckButton name="$parent_Checkbutton_ExactName" inherits="MPowa_CheckTemplate">
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="$parent_Editbox" relativePoint="BOTTOMLEFT">
 										<Offset>
 											<AbsDimension x="-10" y="-45" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = MPOWA_CHECKBUTTON_EXACTNAME_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_EXACTNAME)
+									</OnLoad>
+									<OnClick>
+										MPowa_Checkbutton("exactname")
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<CheckButton name="$parent_Checkbutton_ShowIfNotActive" inherits="MPowa_CheckTemplate">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parent_Checkbutton_ExactName" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="8" />
 										</Offset>
 									</Anchor>
 								</Anchors>
