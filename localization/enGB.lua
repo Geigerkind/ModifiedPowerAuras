@@ -1,6 +1,6 @@
 if (GetLocale() == "enGB") then
 	MPOWA_MAINFRAME_HEAD = "Modified Power Auras"
-	MPOWA_VERSION = "v0.7"
+	MPOWA_VERSION = "v0.8"
 
 	MPOWA_BUTTON_EDIT = "Edit Aura"
 	MPOWA_BUTTON_ADD = "Add Aura"
@@ -42,6 +42,8 @@ if (GetLocale() == "enGB") then
 	MPOWA_EDITBOX_STACKS_TOOLTIP = "Enter here the operator and the amount of stacks, required activate/deactivate the effect. Operator is required ex: '<5' '>3' '=11' '!5' '>=0' '<=6' '2-8'"
 	MPOWA_EDITBOX_DEBUFFDURATION = "Duration:"
 	MPOWA_EDITBOX_DEBUFFDURATION_TOOLTIP = "Enter here the duration of the enemy debuff."
+	MPOWA_EDITBOX_FLASHANIM = "Start:"
+	MPOWA_EDITBOX_FLASHANIM_TOOLTIP = "Enter here the value when the flash animation will fire of."
 
 	MPOWA_CHECKBUTTON_DEBUFF = "Is Debuff"
 	MPOWA_CHECKBUTTON_DEBUFF_TOOLTIP = "Check this if the aura is a debuff."
@@ -79,6 +81,8 @@ if (GetLocale() == "enGB") then
 	MPOWA_CHECKBUTTON_RAIDMEMBER_TOOLTIP = "Check this to specify a raid member target. If you use this option add a name. For example: (Shino)Blessing of Freedom"
 	MPOWA_CHECKBUTTON_EXACTNAME = "Exact Name"
 	MPOWA_CHECKBUTTON_EXACTNAME_TOOLTIP = "Use the exact name as filter instead of a fuzzy filter."
+	MPOWA_CHECKBUTTON_FLASHANIM = "Flash animation"
+	MPOWA_CHECKBUTTON_FLASHANIM_TOOLTIP = "Check this to enable a flash animation"
 
 	MPOWA_SCRIPT_MOUNT_100 = "Increases speed by 100"
 	MPOWA_SCRIPT_MOUNT_60 = "Increases speed by 60"

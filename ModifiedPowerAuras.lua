@@ -3,6 +3,10 @@ local ISMOUNTED = false
 local INBATTLEGROUND = false
 local UPDATETIME = 0.1
 local TIME_SINCE_LAST_UPDATE = 0
+local MPowa_BuffFrameUpdateTime = 0
+local MPowa_BuffFrameFlashTime = 0
+local MPowa_BuffFrameFlashState = 0
+local MPowa_BUFF_ALPHA_VALUE = 0
 
 -- Functions
 function MPowa_OnEvent(event)
@@ -38,8 +42,7 @@ end
 function MPowa_IsMounted()
 	ISMOUNTED = false
 	GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
-	local i = 0
-	while true do
+	for i=0,31 do
 		GameTooltip:ClearLines()
 		GameTooltip:SetPlayerBuff(GetPlayerBuff(i, "HELPFUL"))
 		local desc = GameTooltipTextLeft2:GetText()
@@ -47,7 +50,6 @@ function MPowa_IsMounted()
 		if strfind(desc, MPOWA_SCRIPT_MOUNT_100) or strfind(desc, MPOWA_SCRIPT_MOUNT_60) then
 			ISMOUNTED = true
 		end
-		i = i + 1
 	end
 end
 
@@ -63,7 +65,7 @@ function MPowa_IsInBattleground()
 	INBATTLEGROUND = false
 	for i=1, 4 do
 		local status, mapName, instanceID, lowestlevel, highestlevel, teamSize, registeredMatch = GetBattlefieldStatus(i)
-		if status == 3 then
+		if status == "active" then
 			INBATTLEGROUND = true
 		end
 	end
@@ -112,8 +114,7 @@ function MPowa_Target()
 	end
 	
 	-- Find enemy buffs
-	local i = 1
-	while true do 
+	for i=1, 32 do
 		GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
 		GameTooltip:ClearLines()
 		GameTooltip:SetUnitBuff("target", i)
@@ -123,7 +124,7 @@ function MPowa_Target()
 				if MPowa_FilterName(buff, p) and (not MPOWA_SAVE[p].isdebuff) and (MPOWA_SAVE[p].enemytarget or MPOWA_SAVE[p].friendlytarget) then
 					if MPOWA_SAVE[p].test or MPOWA_TEST_ALL then MPOWA_SAVE[p].test = false; MPOWA_TEST_ALL = false end
 					getglobal("TextureFrame"..p).count = getglobal("TextureFrame"..p).count + 1
-					MPowa_TextureFrame_Update(i-1, getglobal("TextureFrame"..p))
+					MPowa_TextureFrame_Update(i, getglobal("TextureFrame"..p))
 					if MPOWA_SAVE[p].inverse then
 						getglobal("TextureFrame"..p):Hide()
 					end
@@ -132,26 +133,27 @@ function MPowa_Target()
 			end
 		end
 		
-		GameTooltip:ClearLines()
-		GameTooltip:SetUnitDebuff("target", i)
-		local debuff = GameTooltipTextLeft1:GetText()
-		if (debuff) then
-			for p=1, MPOWA_CUR_MAX do
-				if MPowa_FilterName(debuff, p) and MPOWA_SAVE[p].isdebuff and (MPOWA_SAVE[p].enemytarget or MPOWA_SAVE[p].friendlytarget) then
-					if MPOWA_SAVE[p].test or MPOWA_TEST_ALL then MPOWA_SAVE[p].test = false; MPOWA_TEST_ALL = false end
-					getglobal("TextureFrame"..p).count = getglobal("TextureFrame"..p).count + 1
-					MPowa_TextureFrame_Update(i-1, getglobal("TextureFrame"..p))
-					if MPOWA_SAVE[p].inverse then
-						getglobal("TextureFrame"..p):Hide()
+		if i <= 16 then
+			GameTooltip:ClearLines()
+			GameTooltip:SetUnitDebuff("target", i)
+			local debuff = GameTooltipTextLeft1:GetText()
+			if debuff then
+				for p=1, MPOWA_CUR_MAX do
+					if MPowa_FilterName(debuff, p) and MPOWA_SAVE[p].isdebuff and (MPOWA_SAVE[p].enemytarget or MPOWA_SAVE[p].friendlytarget) then
+						if MPOWA_SAVE[p].test or MPOWA_TEST_ALL then MPOWA_SAVE[p].test = false; MPOWA_TEST_ALL = false end
+						getglobal("TextureFrame"..p).count = getglobal("TextureFrame"..p).count + 1
+						MPowa_TextureFrame_Update(i, getglobal("TextureFrame"..p))
+						if MPOWA_SAVE[p].inverse then
+							getglobal("TextureFrame"..p):Hide()
+						end
+						break
 					end
-					break
 				end
 			end
 		end
 		
 		GameTooltip:Hide()
 		if (not buff) and (not debuff) then break end
-		i = i + 1
 	end
 end
 
@@ -195,8 +197,7 @@ function MPowa_SearchAuras()
 	end
 	
 	-- Rest
-	local i = 0
-	while true do
+	for i=0, 31 do
 		-- HELPFUL
 		GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
 		GameTooltip:ClearLines()
@@ -216,27 +217,28 @@ function MPowa_SearchAuras()
 			end
 		end
 		
-		-- HARMFUL
-		GameTooltip:ClearLines()
-		GameTooltip:SetPlayerBuff(GetPlayerBuff(i, "HARMFUL"))
-		local debuff = GameTooltipTextLeft1:GetText()
-		if debuff then
-			for p=1, MPOWA_CUR_MAX do
-				if MPowa_FilterName(debuff, p) and MPOWA_SAVE[p].isdebuff and (not MPOWA_SAVE[p].raidgroupmember) then
-					if MPOWA_SAVE[p].test or MPOWA_TEST_ALL then MPOWA_SAVE[p].test = false MPOWA_TEST_ALL = false end
-					getglobal("TextureFrame"..p).count = getglobal("TextureFrame"..p).count + 1
-					MPowa_TextureFrame_Update(i, getglobal("TextureFrame"..p))
-					if MPOWA_SAVE[p].inverse then
-						getglobal("TextureFrame"..p):Hide()
+		if i <= 16 then
+			-- HARMFUL
+			GameTooltip:ClearLines()
+			GameTooltip:SetPlayerBuff(GetPlayerBuff(i, "HARMFUL"))
+			local debuff = GameTooltipTextLeft1:GetText()
+			if debuff then
+				for p=1, MPOWA_CUR_MAX do
+					if MPowa_FilterName(debuff, p) and MPOWA_SAVE[p].isdebuff and (not MPOWA_SAVE[p].raidgroupmember) then
+						if MPOWA_SAVE[p].test or MPOWA_TEST_ALL then MPOWA_SAVE[p].test = false MPOWA_TEST_ALL = false end
+						getglobal("TextureFrame"..p).count = getglobal("TextureFrame"..p).count + 1
+						MPowa_TextureFrame_Update(i, getglobal("TextureFrame"..p))
+						if MPOWA_SAVE[p].inverse then
+							getglobal("TextureFrame"..p):Hide()
+						end
+						break
 					end
-					break
 				end
 			end
 		end
 		
 		GameTooltip:Hide()
 		if (buff == nil) and (debuff == nil) then break end
-		i = i + 1
 	end
 	
 end
@@ -265,10 +267,10 @@ function MPowa_RaidGroupMemberSingle(arg1)
 			button:Hide()
 			
 			GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
-			local t = 1
-			while true do
+			for t=1, 32 do
 				GameTooltip:ClearLines()
 				if MPOWA_SAVE[u].isdebuff then
+					if t > 17 then break end
 					GameTooltip:SetUnitDebuff(arg1, t)
 				else
 					GameTooltip:SetUnitBuff(arg1, t)
@@ -284,7 +286,6 @@ function MPowa_RaidGroupMemberSingle(arg1)
 					end
 					break
 				end
-				t = t + 1
 			end
 			GameTooltip:Hide()
 		end
@@ -301,10 +302,10 @@ function MPowa_RaidGroupMember()
 				for z=1, 40 do
 					if UnitName("raid"..z) == MPowa_GetUnitName(MPOWA_SAVE[u].buffname) then
 						GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
-						local t = 1
-						while true do
+						for t=1, 32 do
 							GameTooltip:ClearLines()
 							if MPOWA_SAVE[u].isdebuff then
+								if t > 16 then break end
 								GameTooltip:SetUnitDebuff("raid"..z, t)
 							else
 								GameTooltip:SetUnitBuff("raid"..z, t)
@@ -320,7 +321,6 @@ function MPowa_RaidGroupMember()
 								end
 								break
 							end
-							t = t + 1
 						end
 					end
 				end
@@ -328,10 +328,10 @@ function MPowa_RaidGroupMember()
 				for z=1, 4 do
 					if UnitName("party"..z) == MPowa_GetUnitName(MPOWA_SAVE[u].buffname) then
 						GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
-						local t = 1
-						while true do
+						for t=1, 32 do
 							GameTooltip:ClearLines()
 							if MPOWA_SAVE[u].isdebuff then
+								if t > 16 then break end
 								GameTooltip:SetUnitDebuff("party"..z, t)
 							else
 								GameTooltip:SetUnitBuff("party"..z, t)
@@ -347,7 +347,6 @@ function MPowa_RaidGroupMember()
 								end
 								break
 							end
-							t = t + 1
 						end
 					end
 				end
@@ -398,9 +397,9 @@ function MPowa_TextureFrame_Update(bi, button)
 				if MPOWA_SAVE[button:GetID()].enemytarget or MPOWA_SAVE[button:GetID()].friendlytarget then
 					local a,b,c = nil
 					if MPOWA_SAVE[button:GetID()].isdebuff then
-						a, b, c = UnitDebuff("target", bi+1)
+						a, b, c = UnitDebuff("target", bi)
 					else
-						a, b = UnitBuff("target", bi+1)
+						a, b = UnitBuff("target", bi)
 					end
 					texture = a
 				else
@@ -493,6 +492,58 @@ function MPowa_IsStacks(count, id)
 end
 
 function MPowa_TextureFrame_OnUpdate(elapsed, button)
+	local buffIndex = 0
+	local timeLeft = 0
+	if MPOWA_SAVE[button:GetID()].flashanim then
+		if ( MPowa_BuffFrameUpdateTime > 0 ) then
+			MPowa_BuffFrameUpdateTime = MPowa_BuffFrameUpdateTime - elapsed;
+		else
+			MPowa_BuffFrameUpdateTime = MPowa_BuffFrameUpdateTime + TOOLTIP_UPDATE_TIME;
+		end
+	 
+		MPowa_BuffFrameFlashTime = MPowa_BuffFrameFlashTime - elapsed;
+		if ( MPowa_BuffFrameFlashTime < 0 ) then
+			local overtime = -BuffFrameFlashTime;
+			if ( MPowa_BuffFrameFlashState == 0 ) then
+				MPowa_BuffFrameFlashState = 1;
+				MPowa_BuffFrameFlashTime = BUFF_FLASH_TIME_ON;
+			else
+				MPowa_BuffFrameFlashState = 0;
+				MPowa_BuffFrameFlashTime = BUFF_FLASH_TIME_OFF;
+			end
+			if ( overtime < MPowa_BuffFrameFlashTime ) then
+				MPowa_BuffFrameFlashTime = MPowa_BuffFrameFlashTime - overtime;
+			end
+		end
+		if ( MPowa_BuffFrameFlashState == 1 ) then
+			MPowa_BUFF_ALPHA_VALUE = (BUFF_FLASH_TIME_ON - MPowa_BuffFrameFlashTime) / BUFF_FLASH_TIME_ON;
+		else
+			MPowa_BUFF_ALPHA_VALUE = MPowa_BuffFrameFlashTime / BUFF_FLASH_TIME_ON;
+		end
+		MPowa_BUFF_ALPHA_VALUE = (MPowa_BUFF_ALPHA_VALUE * (1 - BUFF_MIN_ALPHA)) + BUFF_MIN_ALPHA;
+		
+		if MPOWA_SAVE[button:GetID()].cooldown then
+			if (button.cdtime) then
+				timeLeft = button.cdtime
+			end
+		else
+			if MPOWA_SAVE[button:GetID()].isdebuff then
+				buffIndex = GetPlayerBuff(button.bi, "HARMFUL")
+			else
+				buffIndex = GetPlayerBuff(button.bi, "HELPFUL")
+			end
+			timeLeft = GetPlayerBuffTimeLeft(buffIndex)
+		end
+		if (not timeLeft) then timeLeft = 0 end
+		if timeLeft < MPOWA_SAVE[button:GetID()].flashanimstart then
+			button:SetAlpha(MPowa_BUFF_ALPHA_VALUE);
+		else
+			button:SetAlpha(MPOWA_SAVE[button:GetID()].alpha)
+		end
+	else
+		button:SetAlpha(MPOWA_SAVE[button:GetID()].alpha)
+	end
+
 	TIME_SINCE_LAST_UPDATE = TIME_SINCE_LAST_UPDATE + elapsed
 	if TIME_SINCE_LAST_UPDATE >= UPDATETIME then
 		local Duration = getglobal(button:GetName().."_Timer")
@@ -506,14 +557,13 @@ function MPowa_TextureFrame_OnUpdate(elapsed, button)
 						else
 							Duration:SetText(string.format("%.0f", duration-(GetTime()-start)))
 						end
+						button.cdtime = duration-(GetTime()-start)
 						Duration:Show()
 					else
 						button:Hide()
 						Duration:Hide()
 					end
 				else
-					local buffIndex
-					local timeLeft
 					if MPOWA_SAVE[button:GetID()].enemytarget or MPOWA_SAVE[button:GetID()].friendlytarget then
 						timeLeft = 0
 						if (not button.tdurationstart) then
@@ -532,12 +582,14 @@ function MPowa_TextureFrame_OnUpdate(elapsed, button)
 							button.tdurationstart = nil
 						end
 					else
-						if MPOWA_SAVE[button:GetID()].isdebuff then
-							buffIndex = GetPlayerBuff(button.bi, "HARMFUL")
-						else
-							buffIndex = GetPlayerBuff(button.bi, "HELPFUL")
+						if (not MPOWA_SAVE[button:GetID()].flashanim) then
+							if MPOWA_SAVE[button:GetID()].isdebuff then
+								buffIndex = GetPlayerBuff(button.bi, "HARMFUL")
+							else
+								buffIndex = GetPlayerBuff(button.bi, "HELPFUL")
+							end
+							timeLeft = GetPlayerBuffTimeLeft(buffIndex)
 						end
-						timeLeft = GetPlayerBuffTimeLeft(buffIndex)
 					end
 					Duration:Show()
 					if MPOWA_SAVE[button:GetID()].hundredth and timeLeft > 0 then

@@ -1,6 +1,6 @@
 if (GetLocale() == "deDE") then
 	MPOWA_MAINFRAME_HEAD = "Modified Power Auras"
-	MPOWA_VERSION = "v0.7"
+	MPOWA_VERSION = "v0.8"
 
 	MPOWA_BUTTON_EDIT = "Aura bearbeiten"
 	MPOWA_BUTTON_ADD = "Aura hinzufügen"
@@ -42,6 +42,8 @@ if (GetLocale() == "deDE") then
 	MPOWA_EDITBOX_STACKS_TOOLTIP = "Schreibe hier die Anzahl der Aufladungen rein, um die Aura aufzurufen oder verschwinden zu lassen. Folgende Operatoren sind zulässig: '<5' '>3' '=11' '!5' '>=0' '<=6' '2-8'"
 	MPOWA_EDITBOX_DEBUFFDURATION = "Dauer:"
 	MPOWA_EDITBOX_DEBUFFDURATION_TOOLTIP = "Schreibe hier die Dauer der Aura des Ziels hinein."
+	MPOWA_EDITBOX_FLASHANIM = "Start:"
+	MPOWA_EDITBOX_FLASHANIM_TOOLTIP = "Schreibe hier die Dauer rein, wenn es anfangen soll zu blinken."
 
 	MPOWA_CHECKBUTTON_DEBUFF = "Ist Debuff"
 	MPOWA_CHECKBUTTON_DEBUFF_TOOLTIP = "Kreuze das an, wenn die Aura ein Debuff ist."
@@ -79,6 +81,8 @@ if (GetLocale() == "deDE") then
 	MPOWA_CHECKBUTTON_RAIDMEMBER_TOOLTIP = "Kreuze das an, um einen Schlachtzugs- oder Gruppenmitglied zu suchen. Wenn du diese Option nutzt, füge einen Namen hinzu. Zum Beispiel: (Shino)Segen der Freiheit"
 	MPOWA_CHECKBUTTON_EXACTNAME = "Genauer Name"
 	MPOWA_CHECKBUTTON_EXACTNAME_TOOLTIP = "Nutze den exakten Namen anstatt einen groben filter."
+	MPOWA_CHECKBUTTON_FLASHANIM = "Flash Animation"
+	MPOWA_CHECKBUTTON_FLASHANIM_TOOLTIP = "Kreuze das an, um die Blinkanimation zu aktivieren."
 
 	MPOWA_SCRIPT_MOUNT_100 = "Erhöht das Bewegungstempo um 100"
 	MPOWA_SCRIPT_MOUNT_60 = "Erhöht das Bewegungstempo um 60"

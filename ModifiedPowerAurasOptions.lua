@@ -113,6 +113,8 @@ function MPowa_Options_OnEvent(event)
 		for i=1, MPOWA_CUR_MAX  do
 			if MPOWA_SAVE[i].raidgroupmember == nil then MPOWA_SAVE[i].raidgroupmember = false end
 			if MPOWA_SAVE[i].exactname == nil then MPOWA_SAVE[i].exactname = false end
+			if MPOWA_SAVE[i].flashanim == nil then MPOWA_SAVE[i].flashanim = false end
+			if MPOWA_SAVE[i].flashanimstart == nil then MPOWA_SAVE[i].flashanimstart = 5 end
 			MPowa_CreateIcons(i)
 		end
 		
@@ -175,6 +177,8 @@ function MPowa_CreateSave(i)
 		endsound = 1,
 		raidgroupmember = false,
 		exactname = false,
+		flashanim = false,
+		flashanimstart = 5,
 	}
 end
 
@@ -348,6 +352,8 @@ function MPowa_Edit()
 		getglobal("MPowa_ConfigFrame_Container_1_2_Checkbutton_FriendlyTarget"):SetChecked(MPOWA_SAVE[CUR_EDIT].friendlytarget)
 		getglobal("MPowa_ConfigFrame_Container_1_2_Checkbutton_RaidMember"):SetChecked(MPOWA_SAVE[CUR_EDIT].raidgroupmember)
 		getglobal("MPowa_ConfigFrame_Container_2_2_Checkbutton_Hundreds"):SetChecked(MPOWA_SAVE[CUR_EDIT].hundredth)
+		getglobal("MPowa_ConfigFrame_Container_2_2_Checkbutton_FlashAnim"):SetChecked(MPOWA_SAVE[CUR_EDIT].flashanim)
+		getglobal("MPowa_ConfigFrame_Container_2_2_Editbox_FlashAnim"):SetText(MPOWA_SAVE[CUR_EDIT].flashanimstart)
 		getglobal("MPowa_ConfigFrame_Container_2_2_Checkbutton_Color"):SetChecked(MPOWA_SAVE[CUR_EDIT].usefontcolor)
 		getglobal("MPowa_ConfigFrame_Container_2_2_ColorpickerNormalTexture"):SetVertexColor(MPOWA_SAVE[CUR_EDIT].fontcolor_r, MPOWA_SAVE[CUR_EDIT].fontcolor_g, MPOWA_SAVE[CUR_EDIT].fontcolor_b)
 		getglobal("MPowa_ConfigFrame_Container_2_2_Colorpicker_SwatchBg").r = MPOWA_SAVE[CUR_EDIT].fontcolor_r
@@ -363,6 +369,11 @@ function MPowa_Edit()
 			getglobal("MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration"):Show()
 		else
 			getglobal("MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration"):Hide()
+		end
+		if MPOWA_SAVE[CUR_EDIT].flashanim then
+			getglobal("MPowa_ConfigFrame_Container_2_2_Editbox_FlashAnim"):Show()
+		else
+			getglobal("MPowa_ConfigFrame_Container_2_2_Editbox_FlashAnim"):Hide()
 		end
 		MPowa_TernarySetState(getglobal("MPowa_ConfigFrame_Container_1_2_Checkbutton_Alive"), MPOWA_SAVE[CUR_EDIT].alive)
 		MPowa_TernarySetState(getglobal("MPowa_ConfigFrame_Container_1_2_Checkbutton_Mounted"), MPOWA_SAVE[CUR_EDIT].mounted)
@@ -423,6 +434,17 @@ function MPowa_Editbox_Stacks(obj)
 	local oldcon = MPOWA_SAVE[CUR_EDIT].stacks
 	MPOWA_SAVE[CUR_EDIT].stacks = obj:GetText()
 	if oldcon ~= MPOWA_SAVE[CUR_EDIT].stacks then
+		MPowa_Target()
+		MPowa_Update()
+	end
+end
+
+function MPowa_Editbox_FlashAnimStart(obj)
+	local oldcon = MPOWA_SAVE[CUR_EDIT].flashanimstart
+	if tonumber(obj:GetText()) ~= nil then
+		MPOWA_SAVE[CUR_EDIT].flashanimstart = tonumber(obj:GetText())
+	end
+	if oldcon ~= MPOWA_SAVE[CUR_EDIT].flashanimstart then
 		MPowa_Target()
 		MPowa_Update()
 	end
@@ -554,6 +576,16 @@ function MPowa_Checkbutton_USEFONTCOLOR()
 	else
 		MPOWA_SAVE[CUR_EDIT].usefontcolor = true
 		getglobal("TextureFrame"..CUR_EDIT.."_Timer"):SetTextColor(MPOWA_SAVE[CUR_EDIT].fontcolor_r,MPOWA_SAVE[CUR_EDIT].fontcolor_g,MPOWA_SAVE[CUR_EDIT].fontcolor_b,MPOWA_SAVE[CUR_EDIT].usefontcolor)
+	end
+end
+
+function MPowa_Checkbutton_FlashAnim()
+	if MPOWA_SAVE[CUR_EDIT].flashanim then
+		MPOWA_SAVE[CUR_EDIT].flashanim = false
+		getglobal("MPowa_ConfigFrame_Container_2_2_Editbox_FlashAnim"):Hide()
+	else
+		MPOWA_SAVE[CUR_EDIT].flashanim = true
+		getglobal("MPowa_ConfigFrame_Container_2_2_Editbox_FlashAnim"):Show()
 	end
 end
 

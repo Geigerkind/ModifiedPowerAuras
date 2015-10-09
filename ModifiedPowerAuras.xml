@@ -1410,6 +1410,73 @@
 									</OnClick>
 								</Scripts>
 							</CheckButton>
+							<CheckButton name="$parent_Checkbutton_FlashAnim" inherits="MPowa_CheckTemplate">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parent_Checkbutton_Timer" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="0" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = MPOWA_CHECKBUTTON_FLASHANIM_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_FLASHANIM)
+									</OnLoad>
+									<OnClick>
+										MPowa_Checkbutton_FlashAnim()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<EditBox name="$parent_Editbox_FlashAnim" autoFocus="false" inherits="InputBoxTemplate">
+								<Size>
+									<AbsDimension x="65" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="LEFT" relativeTo="$parent_Checkbutton_FlashAnim" relativePoint="RIGHT">
+										<Offset>
+											<AbsDimension x="100" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<FontString inherits="ChatFontNormal" bytes="200"/>
+								<Scripts>
+									<OnLoad>
+										this:SetMaxLetters(200)
+										this.aide = MPOWA_EDITBOX_FLASHANIM_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_EDITBOX_FLASHANIM)
+									</OnLoad>
+									<OnEnterPressed>
+										this:ClearFocus()
+									</OnEnterPressed>
+									<OnTextChanged>
+										MPowa_Editbox_FlashAnimStart(this)
+									</OnTextChanged>
+									<OnEnter>
+										GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
+										GameTooltip:SetText(this.aide, nil, nil, nil, nil, 1)
+									</OnEnter>
+									<OnLeave>
+										GameTooltip:Hide()
+									</OnLeave>
+								</Scripts>
+								<Layers>
+									<Layer level="OVERLAY">
+										<FontString name="$parentText" inherits="GameFontNormalSmall" justifyH="LEFT" text="">
+											<Size>
+												<AbsDimension x="120" y="20"/>
+											</Size>
+											<Anchors>
+												<Anchor point="BOTTOMLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+													<Offset>
+														<AbsDimension x="0" y="0"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+								</Layers>
+							</EditBox>
 							<CheckButton name="$parent_Checkbutton_Color" inherits="MPowa_CheckTemplate">
 								<Anchors>
 									<Anchor point="LEFT" relativeTo="$parent_Checkbutton_Hundreds" relativePoint="RIGHT">
