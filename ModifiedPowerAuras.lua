@@ -623,21 +623,23 @@ function MPowa_GetSpellCooldown(buff)
 		for i=1, 18 do
 			start, duration, enable = GetInventoryItemCooldown("player", i)
 			local _,_,name = string.find(GetInventoryItemLink("player",i) or "","^.*%[(.*)%].*$")
-			if strfind(strlower(buff), strlower(name)) then
-				return start, duration
-			elseif i == 18 and start == 0 and duration == 0 then
-				-- Get Container Item Cooldown
-				for p=0, 4 do
-					for u=1, GetContainerNumSlots(p) do
-						start, duration, enable = GetContainerItemCooldown(p,u)
-						_,_,name=string.find(GetContainerItemLink(p,u) or "","^.*%[(.*)%].*$")
-						if (not name) then break end
-						if strfind(strlower(buff), strlower(name)) then
-							return start, duration
-						elseif p == 4 and u == GetContainerNumSlots(p) then
-							return start, duration
-						else
-							return 0,0
+			if (name) then
+				if strfind(strlower(buff), strlower(name)) then
+					return start, duration
+				elseif i == 18 and start == 0 and duration == 0 then
+					-- Get Container Item Cooldown
+					for p=0, 4 do
+						for u=1, GetContainerNumSlots(p) do
+							start, duration, enable = GetContainerItemCooldown(p,u)
+							_,_,name=string.find(GetContainerItemLink(p,u) or "","^.*%[(.*)%].*$")
+							if (not name) then break end
+							if strfind(strlower(buff), strlower(name)) then
+								return start, duration
+							elseif p == 4 and u == GetContainerNumSlots(p) then
+								return start, duration
+							else
+								return 0,0
+							end
 						end
 					end
 				end
