@@ -2364,6 +2364,20 @@
 							</OnLoad>
 						</Scripts>
 					</Button>
+					<Button name="$parent_Button22" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button15" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-5" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\spell_holy_ashestoashes")
+							</OnLoad>
+						</Scripts>
+					</Button>
 				</Frames>
 			</Frame>
 			<Frame name="$parent_ButtonContainer_2" hidden="true">
@@ -6333,6 +6347,34 @@
 						<Scripts>
 							<OnLoad>
 								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_Wisp")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button40" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button39" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\inv_misc_rune_01")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button41" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button40" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="6" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\inv_potion_69")
 							</OnLoad>
 						</Scripts>
 					</Button>
