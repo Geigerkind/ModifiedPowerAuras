@@ -1,5 +1,5 @@
 MPOWA_MAINFRAME_HEAD = "Modified Power Auras"
-MPOWA_VERSION = "v0.8"
+MPOWA_VERSION = "v0.9"
 
 MPOWA_BUTTON_EDIT = "Edit Aura"
 MPOWA_BUTTON_ADD = "Add Aura"

@@ -81,7 +81,7 @@ ICONARRAY["MPowa_IconFrame_ButtonContainer_6_Button"] = 36
 ICONARRAY["MPowa_IconFrame_ButtonContainer_7_Button"] = 30
 ICONARRAY["MPowa_IconFrame_ButtonContainer_8_Button"] = 35
 ICONARRAY["MPowa_IconFrame_ButtonContainer_9_Button"] = 27
-ICONARRAY["MPowa_IconFrame_ButtonContainer_10_Button"] = 39
+ICONARRAY["MPowa_IconFrame_ButtonContainer_10_Button"] = 41
 
 -- Functions
 
@@ -208,6 +208,12 @@ function MPowa_CreateButton(i)
 end
 
 function MPowa_ApplyAttributesToButton(i, button)
+	-- Error fix for all configs that have been added after v0.1
+	if MPOWA_SAVE[i].raidgroupmember == nil then MPOWA_SAVE[i].raidgroupmember = false end
+	if MPOWA_SAVE[i].exactname == nil then MPOWA_SAVE[i].exactname = false end
+	if MPOWA_SAVE[i].flashanim == nil then MPOWA_SAVE[i].flashanim = false end
+	if MPOWA_SAVE[i].flashanimstart == nil then MPOWA_SAVE[i].flashanimstart = 5 end
+	
 	button:ClearAllPoints()
 	button:SetPoint("TOPLEFT",MPowa_ButtonContainer,"TOPLEFT",42*(i-1)+6 - floor((i-1)/7)*7*42,-11-floor((i-1)/7)*41)
 	button:SetID(i)

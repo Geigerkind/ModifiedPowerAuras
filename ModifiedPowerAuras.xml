@@ -22,7 +22,7 @@
 	
 	---------------------------------------------ICON TEMPLATE---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
-	<Frame name="MPowa_IconTemplate" parent="UIParent" virtual="true">
+	<Frame name="MPowa_IconTemplate" parent="UIParent" virtual="true" movable="true">
 		<Size>
 			<AbsDimension x="64" y="64" />
 		</Size>
@@ -66,6 +66,30 @@
 			<OnUpdate>
 				MPowa_TextureFrame_OnUpdate(arg1, this)
 			</OnUpdate>
+			<OnMouseDown>
+				if MPowa_ConfigFrame:IsVisible() then
+					this:StartMoving()
+				end
+			</OnMouseDown>
+			<OnMouseUp>
+				if MPowa_ConfigFrame:IsVisible() then
+					this:StopMovingOrSizing()
+					local _,_,_,x,y = this:GetPoint(0.5)
+					x = ceil(x-(GetScreenWidth()/2)-352.96)
+					y = ceil(y+(GetScreenHeight()/2)+184.5)
+					getglobal("MPowa_ConfigFrame_Container_1_Slider_PosX"):SetMinMaxValues(MPowa_GetMinValues(x),MPowa_GetMaxValues(x))
+					getglobal("MPowa_ConfigFrame_Container_1_Slider_PosX"):SetValue(x)
+					getglobal("MPowa_ConfigFrame_Container_1_Slider_PosXText"):SetText(MPOWA_SLIDER_POSX.." "..x)
+					getglobal("MPowa_ConfigFrame_Container_1_Slider_PosXLow"):SetText(MPowa_GetMinValues(x))
+					getglobal("MPowa_ConfigFrame_Container_1_Slider_PosXHigh"):SetText(MPowa_GetMaxValues(x))
+					
+					getglobal("MPowa_ConfigFrame_Container_1_Slider_PosY"):SetMinMaxValues(MPowa_GetMinValues(y),MPowa_GetMaxValues(y))
+					getglobal("MPowa_ConfigFrame_Container_1_Slider_PosY"):SetValue(y)
+					getglobal("MPowa_ConfigFrame_Container_1_Slider_PosYText"):SetText(MPOWA_SLIDER_POSY.." "..y)
+					getglobal("MPowa_ConfigFrame_Container_1_Slider_PosYLow"):SetText(MPowa_GetMinValues(y))
+					getglobal("MPowa_ConfigFrame_Container_1_Slider_PosYHigh"):SetText(MPowa_GetMaxValues(y))
+				end
+			</OnMouseUp>
 		</Scripts>
 	</Frame>
 	
@@ -667,12 +691,12 @@
 								<Scripts>
 									<OnLoad>
 										this.aide = MPOWA_SLIDER_POSX_TOOLTIP
-										this:SetMinMaxValues(-600,600)
+										this:SetMinMaxValues(-1800,1800)
 										this:SetValue(0)
 										this:SetValueStep(5)
 										getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_POSX)
-										getglobal(this:GetName().."Low"):SetText(-600)
-										getglobal(this:GetName().."High"):SetText(600)
+										getglobal(this:GetName().."Low"):SetText(-1800)
+										getglobal(this:GetName().."High"):SetText(1800)
 									</OnLoad>
 									<OnValueChanged>
 										if MPOWA_LOADED and MPowa_ConfigFrame:IsVisible() then
@@ -681,14 +705,14 @@
 											local min, max = this:GetMinMaxValues()
 											local value = this:GetValue()
 											if value == min and SLIDER_POSX_MIN then
-												if value ~= -600 then
+												if value ~= -1800 then
 													this:SetMinMaxValues(min-50,max-50)
 													getglobal(this:GetName().."Low"):SetText(min-50)
 													getglobal(this:GetName().."High"):SetText(max-50)
 													SLIDER_POSX_MIN = false
 												end
 											elseif value == max then
-												if value ~= 600 and SLIDER_POSX_MAX then
+												if value ~= 1800 and SLIDER_POSX_MAX then
 													this:SetMinMaxValues(min+50,max+50)
 													getglobal(this:GetName().."Low"):SetText(min+50)
 													getglobal(this:GetName().."High"):SetText(max+50)
@@ -719,12 +743,12 @@
 								<Scripts>
 									<OnLoad>
 										this.aide = MPOWA_SLIDER_POSY_TOOLTIP
-										this:SetMinMaxValues(-600,600)
+										this:SetMinMaxValues(-1800,1800)
 										this:SetValue(0)
 										this:SetValueStep(5)
 										getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_POSY)
-										getglobal(this:GetName().."Low"):SetText("-600")
-										getglobal(this:GetName().."High"):SetText("600")
+										getglobal(this:GetName().."Low"):SetText("-1800")
+										getglobal(this:GetName().."High"):SetText("1800")
 									</OnLoad>
 									<OnValueChanged>
 										if MPOWA_LOADED and MPowa_ConfigFrame:IsVisible() then
@@ -733,14 +757,14 @@
 											local min, max = this:GetMinMaxValues()
 											local value = this:GetValue()
 											if value == min and SLIDER_POSY_MIN then
-												if value ~= -600 then
+												if value ~= -1800 then
 													this:SetMinMaxValues(min-50,max-50)
 													getglobal(this:GetName().."Low"):SetText(min-50)
 													getglobal(this:GetName().."High"):SetText(max-50)
 													SLIDER_POSY_MIN = false
 												end
 											elseif value == max then
-												if value ~= 600 and SLIDER_POSY_MAX then
+												if value ~= 1800 and SLIDER_POSY_MAX then
 													this:SetMinMaxValues(min+50,max+50)
 													getglobal(this:GetName().."Low"):SetText(min+50)
 													getglobal(this:GetName().."High"):SetText(max+50)
