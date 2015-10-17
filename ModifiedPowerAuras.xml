@@ -95,6 +95,14 @@
 	
 	---------------------------------------------TEMPLATES AND GENERAL---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
+	<GameTooltip name="MPowa_Tooltip" frameStrata="TOOLTIP" hidden="false" parent="UIParent" inherits="GameTooltipTemplate">
+		<Scripts>
+			<Onload>
+				this:SetOwner(WorldFrame, "ANCHOR_NONE")
+			</Onload>
+	   </Scripts>
+	</GameTooltip>
+	
 	<Button name="MPowa_MainFrameButtonTemplate" virtual="true">
 		<Size>
 			<AbsDimension x="100" y="32" />

@@ -41,11 +41,11 @@ end
 
 function MPowa_IsMounted()
 	ISMOUNTED = false
-	GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+	MPowa_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
 	for i=0,31 do
-		GameTooltip:ClearLines()
-		GameTooltip:SetPlayerBuff(GetPlayerBuff(i, "HELPFUL"))
-		local desc = GameTooltipTextLeft2:GetText()
+		MPowa_Tooltip:ClearLines()
+		MPowa_Tooltip:SetPlayerBuff(GetPlayerBuff(i, "HELPFUL"))
+		local desc = MPowa_TooltipTextLeft2:GetText()
 		if (not desc) then break end
 		if strfind(desc, MPOWA_SCRIPT_MOUNT_100) or strfind(desc, MPOWA_SCRIPT_MOUNT_60) then
 			ISMOUNTED = true
@@ -115,10 +115,10 @@ function MPowa_Target()
 	
 	-- Find enemy buffs
 	for i=1, 32 do
-		GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
-		GameTooltip:ClearLines()
-		GameTooltip:SetUnitBuff("target", i)
-		local buff = GameTooltipTextLeft1:GetText()
+		MPowa_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
+		MPowa_Tooltip:ClearLines()
+		MPowa_Tooltip:SetUnitBuff("target", i)
+		local buff = MPowa_TooltipTextLeft1:GetText()
 		if buff then
 			for p=1, MPOWA_CUR_MAX do
 				if MPowa_FilterName(buff, p) and (not MPOWA_SAVE[p].isdebuff) and (MPOWA_SAVE[p].enemytarget or MPOWA_SAVE[p].friendlytarget) then
@@ -134,9 +134,9 @@ function MPowa_Target()
 		end
 		
 		if i <= 16 then
-			GameTooltip:ClearLines()
-			GameTooltip:SetUnitDebuff("target", i)
-			local debuff = GameTooltipTextLeft1:GetText()
+			MPowa_Tooltip:ClearLines()
+			MPowa_Tooltip:SetUnitDebuff("target", i)
+			local debuff = MPowa_TooltipTextLeft1:GetText()
 			if debuff then
 				for p=1, MPOWA_CUR_MAX do
 					if MPowa_FilterName(debuff, p) and MPOWA_SAVE[p].isdebuff and (MPOWA_SAVE[p].enemytarget or MPOWA_SAVE[p].friendlytarget) then
@@ -152,7 +152,7 @@ function MPowa_Target()
 			end
 		end
 		
-		GameTooltip:Hide()
+		MPowa_Tooltip:Hide()
 		if (not buff) and (not debuff) then break end
 	end
 end
@@ -199,10 +199,10 @@ function MPowa_SearchAuras()
 	-- Rest
 	for i=0, 31 do
 		-- HELPFUL
-		GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
-		GameTooltip:ClearLines()
-		GameTooltip:SetPlayerBuff(GetPlayerBuff(i, "HELPFUL"))
-		local buff = GameTooltipTextLeft1:GetText()
+		MPowa_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
+		MPowa_Tooltip:ClearLines()
+		MPowa_Tooltip:SetPlayerBuff(GetPlayerBuff(i, "HELPFUL"))
+		local buff = MPowa_TooltipTextLeft1:GetText()
 		if buff then
 			for p=1, MPOWA_CUR_MAX do
 				if MPowa_FilterName(buff, p) and (not MPOWA_SAVE[p].isdebuff) and (not MPOWA_SAVE[p].raidgroupmember) then
@@ -219,9 +219,9 @@ function MPowa_SearchAuras()
 		
 		if i <= 16 then
 			-- HARMFUL
-			GameTooltip:ClearLines()
-			GameTooltip:SetPlayerBuff(GetPlayerBuff(i, "HARMFUL"))
-			local debuff = GameTooltipTextLeft1:GetText()
+			MPowa_Tooltip:ClearLines()
+			MPowa_Tooltip:SetPlayerBuff(GetPlayerBuff(i, "HARMFUL"))
+			local debuff = MPowa_TooltipTextLeft1:GetText()
 			if debuff then
 				for p=1, MPOWA_CUR_MAX do
 					if MPowa_FilterName(debuff, p) and MPOWA_SAVE[p].isdebuff and (not MPOWA_SAVE[p].raidgroupmember) then
@@ -237,7 +237,7 @@ function MPowa_SearchAuras()
 			end
 		end
 		
-		GameTooltip:Hide()
+		MPowa_Tooltip:Hide()
 		if (buff == nil) and (debuff == nil) then break end
 	end
 	
@@ -266,16 +266,16 @@ function MPowa_RaidGroupMemberSingle(arg1)
 			button.count = 0
 			button:Hide()
 			
-			GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+			MPowa_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
 			for t=1, 32 do
-				GameTooltip:ClearLines()
+				MPowa_Tooltip:ClearLines()
 				if MPOWA_SAVE[u].isdebuff then
 					if t > 17 then break end
-					GameTooltip:SetUnitDebuff(arg1, t)
+					MPowa_Tooltip:SetUnitDebuff(arg1, t)
 				else
-					GameTooltip:SetUnitBuff(arg1, t)
+					MPowa_Tooltip:SetUnitBuff(arg1, t)
 				end
-				local tauraname = GameTooltipTextLeft1:GetText()
+				local tauraname = MPowa_TooltipTextLeft1:GetText()
 				if (not tauraname) then break end
 				if MPowa_FilterName(tauraname, u) then
 					button.rgcon = arg1
@@ -287,7 +287,7 @@ function MPowa_RaidGroupMemberSingle(arg1)
 					break
 				end
 			end
-			GameTooltip:Hide()
+			MPowa_Tooltip:Hide()
 		end
 	end
 end
@@ -301,16 +301,16 @@ function MPowa_RaidGroupMember()
 			if UnitInRaid("player") then
 				for z=1, 40 do
 					if UnitName("raid"..z) == MPowa_GetUnitName(MPOWA_SAVE[u].buffname) then
-						GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+						MPowa_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
 						for t=1, 32 do
-							GameTooltip:ClearLines()
+							MPowa_Tooltip:ClearLines()
 							if MPOWA_SAVE[u].isdebuff then
 								if t > 16 then break end
-								GameTooltip:SetUnitDebuff("raid"..z, t)
+								MPowa_Tooltip:SetUnitDebuff("raid"..z, t)
 							else
-								GameTooltip:SetUnitBuff("raid"..z, t)
+								MPowa_Tooltip:SetUnitBuff("raid"..z, t)
 							end
-							local tauraname = GameTooltipTextLeft1:GetText()
+							local tauraname = MPowa_TooltipTextLeft1:GetText()
 							if (not tauraname) then break end
 							if MPowa_FilterName(tauraname, u) then
 								button.rgcon = "raid"..z
@@ -327,16 +327,16 @@ function MPowa_RaidGroupMember()
 			elseif UnitInParty("player") then
 				for z=1, 4 do
 					if UnitName("party"..z) == MPowa_GetUnitName(MPOWA_SAVE[u].buffname) then
-						GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+						MPowa_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
 						for t=1, 32 do
-							GameTooltip:ClearLines()
+							MPowa_Tooltip:ClearLines()
 							if MPOWA_SAVE[u].isdebuff then
 								if t > 16 then break end
-								GameTooltip:SetUnitDebuff("party"..z, t)
+								MPowa_Tooltip:SetUnitDebuff("party"..z, t)
 							else
-								GameTooltip:SetUnitBuff("party"..z, t)
+								MPowa_Tooltip:SetUnitBuff("party"..z, t)
 							end
-							local tauraname = GameTooltipTextLeft1:GetText()
+							local tauraname = MPowa_TooltipTextLeft1:GetText()
 							if (not tauraname) then break end
 							if MPowa_FilterName(tauraname, u) then
 								button.rgcon = "party"..z
@@ -352,7 +352,7 @@ function MPowa_RaidGroupMember()
 				end
 			end
 		end
-		GameTooltip:Hide()
+		MPowa_Tooltip:Hide()
 	end
 end
 
