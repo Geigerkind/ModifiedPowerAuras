@@ -383,6 +383,7 @@
 				this:RegisterEvent("RAID_ROSTER_UPDATE")
 				this:RegisterEvent("PARTY_MEMBERS_CHANGED")
 				MPowa_OnLoad()
+				Mpowa_OnUpdate()
 				this:SetClampedToScreen(true)
 				getglobal(this:GetName().."_HEAD"):SetText(MPOWA_MAINFRAME_HEAD.." "..MPOWA_VERSION)
 			</OnLoad>
