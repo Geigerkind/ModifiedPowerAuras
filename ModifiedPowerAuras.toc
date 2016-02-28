@@ -1,4 +1,4 @@
-## Interface: 10900
+## Interface: 11200
 ## Title: MPOWA |cFFFF8080-Shino-|r
 ## Title-deDE: MPOWA |cFFFF8080-Shino-|r
 ## Title-enGB: MPOWA |cFFFF8080-Shino-|r
