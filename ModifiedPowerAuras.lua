@@ -652,7 +652,7 @@ function MPowa_TextureFrame_OnUpdate(elapsed, button)
 	end
 
 	TIME_SINCE_LAST_UPDATE = TIME_SINCE_LAST_UPDATE + elapsed
-	if TIME_SINCE_LAST_UPDATE >= UPDATETIME then
+	if TIME_SINCE_LAST_UPDATE >= UPDATETIME and button.bi then
 		local Duration = getglobal(button:GetName().."_Timer")
 		if MPOWA_SAVE[button:GetID()].timer then
 			if (not MPOWA_SAVE[button:GetID()].test and (not MPOWA_TEST_ALL)) then
