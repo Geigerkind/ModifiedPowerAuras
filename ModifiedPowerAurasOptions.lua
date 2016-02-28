@@ -72,8 +72,8 @@ local SELECTED = 1
 local CUR_EDIT = 1
 local SELECTEDICON = "Interface\\ICONS\\Ability_Warrior_BattleShout"
 local ICONARRAY = {}
-ICONARRAY["MPowa_IconFrame_ButtonContainer_Button"] = 21
-ICONARRAY["MPowa_IconFrame_ButtonContainer_2_Button"] = 20
+ICONARRAY["MPowa_IconFrame_ButtonContainer_Button"] = 26
+ICONARRAY["MPowa_IconFrame_ButtonContainer_2_Button"] = 22
 ICONARRAY["MPowa_IconFrame_ButtonContainer_3_Button"] = 24
 ICONARRAY["MPowa_IconFrame_ButtonContainer_4_Button"] = 21
 ICONARRAY["MPowa_IconFrame_ButtonContainer_5_Button"] = 35
@@ -92,6 +92,9 @@ function MPowa_OnLoad()
 			MPowa_MainFrame:Hide()
 		else
 			MPowa_Show()
+			for i=1, MPOWA_CUR_MAX do
+				getglobal("TextureFrame"..i):EnableMouse(1)
+			end
 		end
 	end
 end
@@ -208,6 +211,7 @@ function MPowa_CreateButton(i)
 end
 
 function MPowa_ApplyAttributesToButton(i, button)
+	if not button then return end
 	-- Error fix for all configs that have been added after v0.1
 	if MPOWA_SAVE[i].raidgroupmember == nil then MPOWA_SAVE[i].raidgroupmember = false end
 	if MPOWA_SAVE[i].exactname == nil then MPOWA_SAVE[i].exactname = false end
@@ -310,6 +314,9 @@ end
 
 function MPowa_Edit()
 	if ConfigButton1 then
+		for i=1, MPOWA_CUR_MAX do
+			getglobal("TextureFrame"..i):EnableMouse(1)
+		end
 		MPowa_ConfigFrame:Hide()
 		CUR_EDIT = SELECTED
 		getglobal("MPowa_ConfigFrame_Container_1_Icon_Texture"):SetTexture(MPOWA_SAVE[CUR_EDIT].texture)

@@ -1,4 +1,4 @@
-MPOWA_VERSION = "v1.0"
+MPOWA_VERSION = "v1.1"
 
 -- Local Variables
 local ISMOUNTED = false
@@ -11,7 +11,9 @@ local MPowa_BuffFrameUpdateTime = 0
 local MPowa_BuffFrameFlashTime = 0
 local MPowa_BuffFrameFlashState = 0
 local MPowa_BUFF_ALPHA_VALUE = 0
-
+local CD_GLOBAL_PREVENT = 2
+local f = CreateFrame("Frame", "Test", UIParent)
+f:SetScript('OnUpdate', function() Mpowa_OnUpdate(arg1) end)
 -- Functions
 function MPowa_OnEvent(event)
 	if event == "UNIT_AURA" then
@@ -31,17 +33,22 @@ function MPowa_OnEvent(event)
 end
 
 -- Performance
-function Mpowa_OnUpdate()
-	local f = CreateFrame("Frame", "Test", UIParent)
-	f:SetScript('OnUpdate', function(self, elapsed) -- Workaround cause elapsed seems to return nil
-		if (-TIME_SINCE_LAST_UPDATE_TWO+GetTime()) >= UPDATETIME_TWO then
-			TIME_SINCE_LAST_UPDATE_TWO = GetTime()
-			for i=1, MPOWA_CUR_MAX do
-				if (MPOWA_SAVE[i].inverse) and MPowa_FKNConditions(i) then
-					if (MPOWA_SAVE[i].cooldown) then
-						if (MPowa_GetSpellCooldown(MPOWA_SAVE[i].buffname) == 0) then
+function Mpowa_OnUpdate(t)
+	TIME_SINCE_LAST_UPDATE_TWO = TIME_SINCE_LAST_UPDATE_TWO + (t or 0)
+	if TIME_SINCE_LAST_UPDATE_TWO >= UPDATETIME_TWO and not MPOWA_TEST_ALL then
+		for i=1, MPOWA_CUR_MAX do
+			if MPowa_FKNConditions(i) and not MPOWA_SAVE[i].test then
+				if (MPOWA_SAVE[i].cooldown) then
+					local start, duration = MPowa_GetSpellCooldown(MPOWA_SAVE[i].buffname)
+					local cd = (duration or 0)-(GetTime()-(start or 0))
+					if (cd>CD_GLOBAL_PREVENT) then
+						if MPOWA_SAVE[i].inverse then
+							getglobal("TextureFrame"..i):Hide()
+							getglobal("TextureFrame"..i.."_Count"):Hide()
+						else
 							if (not getglobal("TextureFrame"..i):IsVisible()) then
 								getglobal("TextureFrame"..i):Show()
+								getglobal("TextureFrame"..i.."_Count"):Show()
 								if (MPOWA_SAVE[i].usebeginsound) then
 									if MPOWA_SAVE[i].beginsound < 16 then
 										PlaySound(MPOWA_SOUND[MPOWA_SAVE[i].beginsound], "master")
@@ -50,11 +57,9 @@ function Mpowa_OnUpdate()
 									end
 								end
 							end
-						else
-							getglobal("TextureFrame"..i):Hide()
 						end
 					else
-						if (not Mpowa_IsActive(i)) then
+						if MPOWA_SAVE[i].inverse then
 							if (not getglobal("TextureFrame"..i):IsVisible()) then
 								getglobal("TextureFrame"..i):Show()
 								if (MPOWA_SAVE[i].usebeginsound) then
@@ -67,12 +72,31 @@ function Mpowa_OnUpdate()
 							end
 						else
 							getglobal("TextureFrame"..i):Hide()
+							getglobal("TextureFrame"..i.."_Count"):Hide()
 						end
+					end
+				else
+					if (Mpowa_IsActive(i)) then
+						if (not getglobal("TextureFrame"..i):IsVisible()) then
+							getglobal("TextureFrame"..i):Show()
+							getglobal("TextureFrame"..i.."_Count"):Show()
+							if (MPOWA_SAVE[i].usebeginsound) then
+								if MPOWA_SAVE[i].beginsound < 16 then
+									PlaySound(MPOWA_SOUND[MPOWA_SAVE[i].beginsound], "master")
+								else
+									PlaySoundFile("Interface\\AddOns\\ModifiedPowerAuras\\Sounds\\"..MPOWA_SOUND[MPOWA_SAVE[i].beginsound], "master")
+								end
+							end
+						end
+					else
+						getglobal("TextureFrame"..i):Hide()
+						getglobal("TextureFrame"..i.."_Count"):Hide()
 					end
 				end
 			end
 		end
-	end)
+		TIME_SINCE_LAST_UPDATE_TWO = 0
+	end
 end
 
 function Mpowa_IsActive(p)
@@ -96,7 +120,7 @@ function Mpowa_IsActive(p)
 			end
 		end
 	elseif (MPOWA_SAVE[p].isdebuff) then
-		for i=0, 15 do
+		for i=0, 25 do
 			MPowa_Tooltip:ClearLines()
 			MPowa_Tooltip:SetPlayerBuff(GetPlayerBuff(i, "HARMFUL"))
 			local debuff = MPowa_TooltipTextLeft1:GetText()
@@ -104,7 +128,7 @@ function Mpowa_IsActive(p)
 			if MPowa_FilterName(debuff, p) then return true end
 		end
 	else
-		for i=0, 31 do
+		for i=0, 50 do
 			MPowa_Tooltip:ClearLines()
 			MPowa_Tooltip:SetPlayerBuff(GetPlayerBuff(i, "HELPFUL"))
 			local buff = MPowa_TooltipTextLeft1:GetText()
@@ -130,6 +154,7 @@ end
 function MPowa_CreateIcons(i)
 	local frame = CreateFrame("Frame", "TextureFrame"..i, UIParent, "MPowa_IconTemplate")
 	frame:SetID(i)
+	frame:EnableMouse(0)
 	getglobal("TextureFrame"..i.."_Icon"):SetTexture(MPOWA_SAVE[i].texture)
 	MPowa_ApplyConfig(i)
 	frame:Hide()
@@ -138,7 +163,7 @@ end
 function MPowa_IsMounted()
 	ISMOUNTED = false
 	MPowa_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
-	for i=0,31 do
+	for i=0,50 do
 		MPowa_Tooltip:ClearLines()
 		MPowa_Tooltip:SetPlayerBuff(GetPlayerBuff(i, "HELPFUL"))
 		local desc = MPowa_TooltipTextLeft2:GetText()
@@ -221,7 +246,6 @@ function MPowa_Target()
 					if MPOWA_SAVE[p].test or MPOWA_TEST_ALL then MPOWA_SAVE[p].test = false; MPOWA_TEST_ALL = false end
 					getglobal("TextureFrame"..p).count = getglobal("TextureFrame"..p).count + 1
 					MPowa_TextureFrame_Update(i, getglobal("TextureFrame"..p))
-					break
 				end
 			end
 		end
@@ -236,7 +260,6 @@ function MPowa_Target()
 						if MPOWA_SAVE[p].test or MPOWA_TEST_ALL then MPOWA_SAVE[p].test = false; MPOWA_TEST_ALL = false end
 						getglobal("TextureFrame"..p).count = getglobal("TextureFrame"..p).count + 1
 						MPowa_TextureFrame_Update(i, getglobal("TextureFrame"..p))
-						break
 					end
 				end
 			end
@@ -287,7 +310,7 @@ function MPowa_SearchAuras()
 	end
 	
 	-- Rest
-	for i=0, 31 do
+	for i=0, 50 do
 		-- HELPFUL
 		MPowa_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
 		MPowa_Tooltip:ClearLines()
@@ -307,7 +330,7 @@ function MPowa_SearchAuras()
 			end
 		end
 		
-		if i <= 16 then
+		if i <= 25 then
 			-- HARMFUL
 			MPowa_Tooltip:ClearLines()
 			MPowa_Tooltip:SetPlayerBuff(GetPlayerBuff(i, "HARMFUL"))
@@ -563,10 +586,14 @@ function MPowa_IsStacks(count, id)
 			end
 		end
 		con = string.find(MPOWA_SAVE[id].stacks, "-")
-		local amount1 = tonumber(strsub(MPOWA_SAVE[id].stacks, 1, con-1))
-		local amount2 = tonumber(strsub(MPOWA_SAVE[id].stacks, con+1))
-		if con and amount1 and amount2 and ((count >= amount1 and count <= amount2) or (count >= amount2 and count <= amount1)) then
-			return true
+		if con then
+			local amount1 = tonumber(strsub(MPOWA_SAVE[id].stacks, 1, con-1))
+			local amount2 = tonumber(strsub(MPOWA_SAVE[id].stacks, con+1))
+			if con and amount1 and amount2 and ((count >= amount1 and count <= amount2) or (count >= amount2 and count <= amount1)) then
+				return true
+			end
+		else
+			return false
 		end
 	end
 end
