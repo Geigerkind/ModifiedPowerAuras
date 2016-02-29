@@ -225,9 +225,12 @@ function MPowa_FilterName(name, p)
 end
 
 function MPowa_Target()
+	MPowa_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
+	
 	-- Hiding Icons for enemy debuffs
 	for i=1, MPOWA_CUR_MAX do
-		if MPOWA_SAVE[i].enemytarget or MPOWA_SAVE[i].friendlytarget then
+		local s = MPOWA_SAVE[i]
+		if s.enemytarget or s.friendlytarget then
 			local button = getglobal("TextureFrame"..i)
 			button:Hide()
 			button.count = 0
@@ -236,38 +239,44 @@ function MPowa_Target()
 	
 	-- Find enemy buffs
 	for i=1, 32 do
-		MPowa_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
 		MPowa_Tooltip:ClearLines()
 		MPowa_Tooltip:SetUnitBuff("target", i)
 		local buff = MPowa_TooltipTextLeft1:GetText()
 		if buff then
 			for p=1, MPOWA_CUR_MAX do
-				if MPowa_FilterName(buff, p) and (not MPOWA_SAVE[p].isdebuff) and (MPOWA_SAVE[p].enemytarget or MPOWA_SAVE[p].friendlytarget) then
-					if MPOWA_SAVE[p].test or MPOWA_TEST_ALL then MPOWA_SAVE[p].test = false; MPOWA_TEST_ALL = false end
-					getglobal("TextureFrame"..p).count = getglobal("TextureFrame"..p).count + 1
-					MPowa_TextureFrame_Update(i, getglobal("TextureFrame"..p))
+				local s = MPOWA_SAVE[p]
+				if MPowa_FilterName(buff, p) and (not s.isdebuff) and (s.enemytarget or s.friendlytarget) then
+					local b = getglobal("TextureFrame"..p)
+					if s.test or MPOWA_TEST_ALL then s.test = false; MPOWA_TEST_ALL = false end
+					b.count = b.count + 1
+					MPowa_TextureFrame_Update(i, b)
 				end
 			end
+		else
+			break
 		end
-		
-		if i <= 16 then
-			MPowa_Tooltip:ClearLines()
-			MPowa_Tooltip:SetUnitDebuff("target", i)
-			local debuff = MPowa_TooltipTextLeft1:GetText()
-			if debuff then
-				for p=1, MPOWA_CUR_MAX do
-					if MPowa_FilterName(debuff, p) and MPOWA_SAVE[p].isdebuff and (MPOWA_SAVE[p].enemytarget or MPOWA_SAVE[p].friendlytarget) then
-						if MPOWA_SAVE[p].test or MPOWA_TEST_ALL then MPOWA_SAVE[p].test = false; MPOWA_TEST_ALL = false end
-						getglobal("TextureFrame"..p).count = getglobal("TextureFrame"..p).count + 1
-						MPowa_TextureFrame_Update(i, getglobal("TextureFrame"..p))
-					end
-				end
-			end
-		end
-		
-		MPowa_Tooltip:Hide()
-		if (not buff) and (not debuff) then break end
 	end
+	
+	for i=1, 16 do
+		MPowa_Tooltip:ClearLines()
+		MPowa_Tooltip:SetUnitDebuff("target", i)
+		local debuff = MPowa_TooltipTextLeft1:GetText()
+		if debuff then
+			for p=1, MPOWA_CUR_MAX do
+				local s = MPOWA_SAVE[p]
+				if MPowa_FilterName(debuff, p) and s.isdebuff and (s.enemytarget or s.friendlytarget) then
+					local b = getglobal("TextureFrame"..p)
+					if s.test or MPOWA_TEST_ALL then s.test = false; MPOWA_TEST_ALL = false end
+					b.count = b.count + 1
+					MPowa_TextureFrame_Update(i, b)
+				end
+			end
+		else
+			break
+		end
+	end
+	
+	MPowa_Tooltip:Hide()
 end
 
 function MPowa_HideAllIcons()
@@ -479,16 +488,17 @@ function MPowa_ReverseBoolean(bool)
 end
 
 function MPowa_TextureFrame_Update(bi, button)
-	if MPowa_FKNConditions(button:GetID()) then
-		local buffIndex
-		if MPOWA_SAVE[button:GetID()].isdebuff then
-			if ((MPOWA_SAVE[button:GetID()].enemytarget and UnitCanAttack("player", "target")) or (MPOWA_SAVE[button:GetID()].friendlytarget and (not UnitCanAttack("player", "target")))) or MPOWA_SAVE[button:GetID()].raidgroupmember then
+	local butId = button:GetID()
+	if MPowa_FKNConditions(butId) then
+		local buffIndex, s = nil, MPOWA_SAVE[butId] 
+		if s.isdebuff then
+			if ((s.enemytarget and UnitCanAttack("player", "target")) or (s.friendlytarget and (not UnitCanAttack("player", "target")))) or s.raidgroupmember then
 				buffIndex = 0
 			else
 				buffIndex = GetPlayerBuff(bi, "HARMFUL")
 			end
 		else
-			if ((MPOWA_SAVE[button:GetID()].enemytarget and UnitCanAttack("player", "target")) or (MPOWA_SAVE[button:GetID()].friendlytarget and (not UnitCanAttack("player", "target")))) or MPOWA_SAVE[button:GetID()].raidgroupmember then
+			if ((s.enemytarget and UnitCanAttack("player", "target")) or (s.friendlytarget and (not UnitCanAttack("player", "target")))) or s.raidgroupmember then
 				buffIndex = 0
 			else
 				buffIndex = GetPlayerBuff(bi, "HELPFUL")
@@ -496,49 +506,18 @@ function MPowa_TextureFrame_Update(bi, button)
 		end
 		if (buffIndex > -1) or bi == 99 then
 			local buffApplications = GetPlayerBuffApplications(buffIndex)
-			if (MPowa_IsStacks(buffApplications, button:GetID()) or MPowa_IsStacks(button.count, button:GetID())) then
-				local texture
-				if MPOWA_SAVE[button:GetID()].enemytarget or MPOWA_SAVE[button:GetID()].friendlytarget then
-					local a,b,c = nil
-					if MPOWA_SAVE[button:GetID()].isdebuff then
-						a, b, c = UnitDebuff("target", bi)
-					else
-						a, b = UnitBuff("target", bi)
-					end
-					texture = a
-				else
-					if MPOWA_SAVE[button:GetID()].raidgroupmember then
-						if MPOWA_SAVE[button:GetID()].isdebuff then
-							a, b, c = UnitDebuff(button.rgcon, bi)
-						else
-							a, b = UnitBuff(button.rgcon, bi)
-						end
-						texture = a
-					else
-						texture = GetPlayerBuffTexture(buffIndex)
-					end
-				end
+			if (MPowa_IsStacks(buffApplications, butId) or MPowa_IsStacks(button.count, butId)) then
 				local Icon = getglobal(button:GetName().."_Icon")
 				local Count = getglobal(button:GetName().."_Count")
 				
-				-- Correctly saving the texture
-				if MPOWA_SAVE[button:GetID()].texture == "Interface\\AddOns\\ModifiedPowerAuras\\images\\dummy.tga" and texture then
-					MPOWA_SAVE[button:GetID()].texture = texture
-					for i=1, MPOWA_CUR_MAX do
-						MPowa_ApplyAttributesToButton(i, getglobal("ConfigButton"..i))
-					end
-					if button:GetID() == CUR_EDIT then
-						getglobal("MPowa_ConfigFrame_Container_1_Icon_Texture"):SetTexture(MPOWA_SAVE[CUR_EDIT].texture)
-					end
-				end
-				
-				Icon:SetTexture(MPOWA_SAVE[button:GetID()].texture)
+				Icon:SetTexture(MPowa_GetTexture(s, bi, button, buffIndex))
 				
 				-- Enabling Count for certain buffs and Holy Strength
 				if (button.count > 1 or buffApplications > 1) then
-					Count:SetText(buffApplications)
 					if button.count > 1 then
 						Count:SetText(button.count)
+					else
+						Count:SetText(buffApplications)
 					end
 					Count:Show()
 				else
@@ -547,11 +526,11 @@ function MPowa_TextureFrame_Update(bi, button)
 				
 				button.bi = bi
 				
-				if (button.removed+0.5 < GetTime()) and MPOWA_SAVE[button:GetID()].usebeginsound then
-					if MPOWA_SAVE[button:GetID()].beginsound < 16 then
-						PlaySound(MPOWA_SOUND[MPOWA_SAVE[button:GetID()].beginsound], "master")
+				if (button.removed+0.5 < GetTime()) and s.usebeginsound then
+					if s.beginsound < 16 then
+						PlaySound(MPOWA_SOUND[s.beginsound], "master")
 					else
-						PlaySoundFile("Interface\\AddOns\\ModifiedPowerAuras\\Sounds\\"..MPOWA_SOUND[MPOWA_SAVE[button:GetID()].beginsound], "master")
+						PlaySoundFile("Interface\\AddOns\\ModifiedPowerAuras\\Sounds\\"..MPOWA_SOUND[s.beginsound], "master")
 					end
 				end
 				
@@ -559,6 +538,35 @@ function MPowa_TextureFrame_Update(bi, button)
 			end
 		end
 	end
+end
+
+function MPowa_GetTexture(s, bi, button, buffIndex)
+	local t
+	if s.texture == "Interface\\AddOns\\ModifiedPowerAuras\\images\\dummy.tga" then
+		if s.enemytarget or s.friendlytarget then
+			local a,b,c
+			if s.isdebuff then
+				a, b, c = UnitDebuff("target", bi)
+			else
+				a, b = UnitBuff("target", bi)
+			end
+			t = a
+		else
+			if s.raidgroupmember then
+				if s.isdebuff then
+					a, b, c = UnitDebuff(button.rgcon, bi)
+				else
+					a, b = UnitBuff(button.rgcon, bi)
+				end
+				t = a
+			else
+				t = GetPlayerBuffTexture(buffIndex)
+			end
+		end
+	else
+		t = s.texture
+	end
+	return t
 end
 
 function MPowa_IsStacks(count, id)
@@ -599,9 +607,10 @@ function MPowa_IsStacks(count, id)
 end
 
 function MPowa_TextureFrame_OnUpdate(elapsed, button)
-	local buffIndex = 0
-	local timeLeft = 0
-	if MPOWA_SAVE[button:GetID()].flashanim then
+	local buffIndex, timeLeft, butId = 0, 0, button:GetID()
+	local s = MPOWA_SAVE[butId]
+	local time = GetTime()
+	if s.flashanim then
 		if ( MPowa_BuffFrameUpdateTime > 0 ) then
 			MPowa_BuffFrameUpdateTime = MPowa_BuffFrameUpdateTime - elapsed;
 		else
@@ -629,12 +638,12 @@ function MPowa_TextureFrame_OnUpdate(elapsed, button)
 		end
 		MPowa_BUFF_ALPHA_VALUE = (MPowa_BUFF_ALPHA_VALUE * (1 - BUFF_MIN_ALPHA)) + BUFF_MIN_ALPHA;
 		
-		if MPOWA_SAVE[button:GetID()].cooldown then
+		if s.cooldown then
 			if (button.cdtime) then
 				timeLeft = button.cdtime
 			end
 		else
-			if MPOWA_SAVE[button:GetID()].isdebuff then
+			if s.isdebuff then
 				buffIndex = GetPlayerBuff(button.bi, "HARMFUL")
 			else
 				buffIndex = GetPlayerBuff(button.bi, "HELPFUL")
@@ -642,37 +651,37 @@ function MPowa_TextureFrame_OnUpdate(elapsed, button)
 			timeLeft = GetPlayerBuffTimeLeft(buffIndex)
 		end
 		if (not timeLeft) then timeLeft = 0 end
-		if timeLeft < MPOWA_SAVE[button:GetID()].flashanimstart then
+		if timeLeft < s.flashanimstart then
 			button:SetAlpha(MPowa_BUFF_ALPHA_VALUE);
 		else
-			button:SetAlpha(MPOWA_SAVE[button:GetID()].alpha)
+			button:SetAlpha(s.alpha)
 		end
 	else
-		button:SetAlpha(MPOWA_SAVE[button:GetID()].alpha)
+		button:SetAlpha(s.alpha)
 	end
 
 	TIME_SINCE_LAST_UPDATE = TIME_SINCE_LAST_UPDATE + elapsed
 	if TIME_SINCE_LAST_UPDATE >= UPDATETIME and button.bi then
 		local Duration = getglobal(button:GetName().."_Timer")
-		if MPOWA_SAVE[button:GetID()].timer then
-			if (not MPOWA_SAVE[button:GetID()].test and (not MPOWA_TEST_ALL)) then
-				if MPOWA_SAVE[button:GetID()].cooldown then
-					local start, duration = MPowa_GetSpellCooldown(MPOWA_SAVE[button:GetID()].buffname)
+		if s.timer then
+			if (not s.test and (not MPOWA_TEST_ALL)) then
+				if s.cooldown then
+					local start, duration = MPowa_GetSpellCooldown(s.buffname)
 					if (not start) or (not duration) then return end -- Has to be handled in GetSpellCooldown
 					if start > 0 and duration > 0 then
-						if MPOWA_SAVE[button:GetID()].hundredth then
-							Duration:SetText(string.format("%.2f", duration-(GetTime()-start)))
+						if s.hundredth then
+							Duration:SetText(string.format("%.2f", duration-(time-start)))
 						else
-							Duration:SetText(string.format("%.0f", duration-(GetTime()-start)))
+							Duration:SetText(string.format("%.0f", duration-(time-start)))
 						end
-						button.cdtime = duration-(GetTime()-start)
-						if (MPOWA_SAVE[button:GetID()].inverse) then
+						button.cdtime = duration-(time-start)
+						if (s.inverse) then
 							button:Hide()
 						else
 							button:Show()
 						end
 					else
-						if (MPOWA_SAVE[button:GetID()].inverse) then
+						if (s.inverse) then
 							button:Show()
 						else
 							button:Hide()
@@ -680,26 +689,26 @@ function MPowa_TextureFrame_OnUpdate(elapsed, button)
 						Duration:Hide()
 					end
 				else
-					if MPOWA_SAVE[button:GetID()].enemytarget or MPOWA_SAVE[button:GetID()].friendlytarget then
+					if s.enemytarget or s.friendlytarget then
 						timeLeft = 0
 						if (not button.tdurationstart) then
-							button.tduration = MPOWA_SAVE[button:GetID()].targetduration
-							button.tdurationstart = GetTime()
+							button.tduration = s.targetduration
+							button.tdurationstart = time
 						end
-						if ((button.tdurationstart+button.tduration) >= GetTime()) and button.tduration ~= 0 then
+						if ((button.tdurationstart+button.tduration) >= time) and button.tduration ~= 0 then
 							Duration:Show()
-							if MPOWA_SAVE[button:GetID()].timer then
-								Duration:SetText(string.format("%.2f", (-GetTime()+button.tduration+button.tdurationstart)))
+							if s.timer then
+								Duration:SetText(string.format("%.2f", (-time+button.tduration+button.tdurationstart)))
 							else
-								Duration:SetText(string.format("%.0f", (-GetTime()+button.tduration+button.tdurationstart)))
+								Duration:SetText(ceil(-time+button.tduration+button.tdurationstart))
 							end
 						else
 							Duration:SetText("")
 							button.tdurationstart = nil
 						end
 					else
-						if (not MPOWA_SAVE[button:GetID()].flashanim) then
-							if MPOWA_SAVE[button:GetID()].isdebuff then
+						if (not s.flashanim) then
+							if s.isdebuff then
 								buffIndex = GetPlayerBuff(button.bi, "HARMFUL")
 							else
 								buffIndex = GetPlayerBuff(button.bi, "HELPFUL")
@@ -708,20 +717,20 @@ function MPowa_TextureFrame_OnUpdate(elapsed, button)
 						end
 					end
 					Duration:Show()
-					if MPOWA_SAVE[button:GetID()].hundredth and timeLeft > 0 then
+					if s.hundredth and timeLeft > 0 then
 						Duration:SetText(string.format("%.2f", timeLeft))
-					elseif (not MPOWA_SAVE[button:GetID()].hundredth) and timeLeft > 0 then
-						Duration:SetText(string.format("%.0f", timeLeft))
+					elseif (not s.hundredth) and timeLeft > 0 then
+						Duration:SetText(ceil(timeLeft))
 					end
-					if timeLeft == 0 and (not MPOWA_SAVE[button:GetID()].enemytarget) and (not MPOWA_SAVE[button:GetID()].friendlytarget) then Duration:SetText("") end
+					if timeLeft == 0 and (not s.enemytarget) and (not s.friendlytarget) then Duration:SetText("") end
 					button.timeLeft = timeLeft
 				end	
 			else
 				Duration:Show()
-				if MPOWA_SAVE[button:GetID()].hundredth then
+				if s.hundredth then
 					Duration:SetText(string.format("%.2f", (random(1,23)+random(1,60)/100)))
 				else
-					Duration:SetText(string.format("%.0f", (random(1,23)+random(1,60)/100)))
+					Duration:SetText(ceil(random(1,23)+random(1,60)/100))
 				end
 			end
 		else
