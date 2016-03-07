@@ -672,7 +672,7 @@ function MPowa_TextureFrame_OnUpdate(elapsed, button)
 						if s.hundredth then
 							Duration:SetText(string.format("%.2f", duration-(time-start)))
 						else
-							Duration:SetText(string.format("%.0f", duration-(time-start)))
+							Duration:SetText(ceil(duration-(time-start)))
 						end
 						button.cdtime = duration-(time-start)
 						if (s.inverse) then
@@ -697,7 +697,7 @@ function MPowa_TextureFrame_OnUpdate(elapsed, button)
 						end
 						if ((button.tdurationstart+button.tduration) >= time) and button.tduration ~= 0 then
 							Duration:Show()
-							if s.timer then
+							if s.timer and s.hundredth then
 								Duration:SetText(string.format("%.2f", (-time+button.tduration+button.tdurationstart)))
 							else
 								Duration:SetText(ceil(-time+button.tduration+button.tdurationstart))
