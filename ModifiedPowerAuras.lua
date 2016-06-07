@@ -139,7 +139,7 @@ function MPOWA:OnEvent(event, arg1)
 	elseif event == "RAID_ROSTER_UPDATE" or event == "PARTY_MEMBERS_CHANGED" then
 		self:GetGroup()
 	elseif event == "CHAT_MSG_SPELL_AURA_GONE_SELF" then
-		for a in strgfind(arg1, "(.+) fades from you%.") do
+		for a in strgfind(arg1, MPOWA_AURA_GONE_SELF) do
 			if self.auras[a] then
 				for cat, val in self.auras[a] do
 					if self.active[val] then
@@ -162,7 +162,7 @@ function MPOWA:OnEvent(event, arg1)
 			end
 		end
 	elseif event == "CHAT_MSG_SPELL_AURA_GONE_PARTY" or event == "CHAT_MSG_SPELL_AURA_GONE_OTHER" then
-		for ab, ta in strgfind(arg1, "(.+) fades from (.+)%.") do
+		for ab, ta in strgfind(arg1, MPOWA_AURA_GONE_OTHER) do
 			if self.auras[ab] then
 				for cat, val in self.auras[ab] do
 					if self.active[val] then

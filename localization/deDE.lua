@@ -102,4 +102,7 @@ if (GetLocale() == "deDE") then
 	MPOWA_CHECKBUTTON_GROWOUT_TOOLTIP = "Kreuze das an, um eine Growout-Animation zu haben, wenn die Aura verschwindet."
 	MPOWA_EDITBOX_PLAYER_NAME = "Spielername:"
 	MPOWA_EDITBOX_PLAYER_NAME_TOOLTIP = "Füge den Namen, des Raid/Gruppenmitglieds ein."
+	
+	MPOWA_AURA_GONE_SELF = "(.+) schwindet von euch%."
+	MPOWA_AURA_GONE_OTHER = "(.+) schwindet von (.+)%."
 end

@@ -103,3 +103,6 @@ MPOWA_CHECKBUTTON_GROWOUT = "Grow out"
 MPOWA_CHECKBUTTON_GROWOUT_TOOLTIP = "Check this to get an grow out animation when your aura disappears."
 MPOWA_EDITBOX_PLAYER_NAME = "Playername:"
 MPOWA_EDITBOX_PLAYER_NAME_TOOLTIP = "Insert the exact name of the designated player."
+
+MPOWA_AURA_GONE_SELF = "(.+) fades from you%."
+MPOWA_AURA_GONE_OTHER = "(.+) fades from (.+)%."
