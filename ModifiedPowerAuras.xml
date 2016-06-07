@@ -6,19 +6,7 @@
 	---------------------------------------------LOCALIZATION AND INITIALIZATION---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
 	<Script file="Interface\AddOns\ModifiedPowerAuras\localization\enUS.lua" />
-	<Script file="Interface\AddOns\ModifiedPowerAuras\localization\enGB.lua" />
 	<Script file="Interface\AddOns\ModifiedPowerAuras\localization\deDE.lua" />
-	<Script file="Interface\AddOns\ModifiedPowerAuras\localization\esES.lua" />
-	<Script file="Interface\AddOns\ModifiedPowerAuras\localization\esMX.lua" />
-	<Script file="Interface\AddOns\ModifiedPowerAuras\localization\frFR.lua" />
-	<Script file="Interface\AddOns\ModifiedPowerAuras\localization\ruRU.lua" />
-	<Script file="Interface\AddOns\ModifiedPowerAuras\localization\koKR.lua" />
-	<Script file="Interface\AddOns\ModifiedPowerAuras\localization\ptBR.lua" />
-	<Script file="Interface\AddOns\ModifiedPowerAuras\localization\zhCN.lua" />
-	<Script file="Interface\AddOns\ModifiedPowerAuras\localization\zhTW.lua" />
-	<Script file="Interface\AddOns\ModifiedPowerAuras\localization\itIT.lua" />
-	<Script file="Interface\AddOns\ModifiedPowerAuras\ModifiedPowerAurasOptions.lua" />
-	<Script file="Interface\AddOns\ModifiedPowerAuras\ModifiedPowerAuras.lua" />
 	
 	---------------------------------------------ICON TEMPLATE---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
@@ -63,9 +51,6 @@
 			</Layer>
 		</Layers>
 		<Scripts>
-			<OnUpdate>
-				MPowa_TextureFrame_OnUpdate(arg1, this)
-			</OnUpdate>
 			<OnMouseDown>
 				if MPowa_ConfigFrame:IsVisible() then
 					this:StartMoving()
@@ -74,20 +59,24 @@
 			<OnMouseUp>
 				if MPowa_ConfigFrame:IsVisible() then
 					this:StopMovingOrSizing()
-					local _,_,_,x,y = this:GetPoint(0.5)
-					x = ceil(x-(GetScreenWidth()/2)-352.96)
-					y = ceil(y+(GetScreenHeight()/2)+184.5)
-					getglobal("MPowa_ConfigFrame_Container_1_Slider_PosX"):SetMinMaxValues(MPowa_GetMinValues(x),MPowa_GetMaxValues(x))
-					getglobal("MPowa_ConfigFrame_Container_1_Slider_PosX"):SetValue(x)
-					getglobal("MPowa_ConfigFrame_Container_1_Slider_PosXText"):SetText(MPOWA_SLIDER_POSX.." "..x)
-					getglobal("MPowa_ConfigFrame_Container_1_Slider_PosXLow"):SetText(MPowa_GetMinValues(x))
-					getglobal("MPowa_ConfigFrame_Container_1_Slider_PosXHigh"):SetText(MPowa_GetMaxValues(x))
-					
-					getglobal("MPowa_ConfigFrame_Container_1_Slider_PosY"):SetMinMaxValues(MPowa_GetMinValues(y),MPowa_GetMaxValues(y))
-					getglobal("MPowa_ConfigFrame_Container_1_Slider_PosY"):SetValue(y)
-					getglobal("MPowa_ConfigFrame_Container_1_Slider_PosYText"):SetText(MPOWA_SLIDER_POSY.." "..y)
-					getglobal("MPowa_ConfigFrame_Container_1_Slider_PosYLow"):SetText(MPowa_GetMinValues(y))
-					getglobal("MPowa_ConfigFrame_Container_1_Slider_PosYHigh"):SetText(MPowa_GetMaxValues(y))
+					local index = GetCurrentResolution()
+					local res = ({GetScreenResolutions()})[index]
+					for xc,yc in string.gfind(res, "(%d+)x(%d+)") do
+						local a,b,c,x,y = this:GetPoint(0)
+						x = ceil(x-(xc/(UIParent:GetEffectiveScale()*2)))
+						y = ceil(y+(yc/(UIParent:GetEffectiveScale()*2)))
+						MPowa_ConfigFrame_Container_1_Slider_PosX:SetMinMaxValues(MPOWA:GetMinValues(x),MPOWA:GetMaxValues(x))
+						MPowa_ConfigFrame_Container_1_Slider_PosX:SetValue(x)
+						MPowa_ConfigFrame_Container_1_Slider_PosXText:SetText(MPOWA_SLIDER_POSX.." "..x)
+						MPowa_ConfigFrame_Container_1_Slider_PosXLow:SetText(MPOWA:GetMinValues(x))
+						MPowa_ConfigFrame_Container_1_Slider_PosXHigh:SetText(MPOWA:GetMaxValues(x))
+						
+						MPowa_ConfigFrame_Container_1_Slider_PosY:SetMinMaxValues(MPOWA:GetMinValues(y),MPOWA:GetMaxValues(y))
+						MPowa_ConfigFrame_Container_1_Slider_PosY:SetValue(y)
+						MPowa_ConfigFrame_Container_1_Slider_PosYText:SetText(MPOWA_SLIDER_POSY.." "..y)
+						MPowa_ConfigFrame_Container_1_Slider_PosYLow:SetText(MPOWA:GetMinValues(y))
+						MPowa_ConfigFrame_Container_1_Slider_PosYHigh:SetText(MPOWA:GetMaxValues(y))
+					end
 				end
 			</OnMouseUp>
 		</Scripts>
@@ -157,7 +146,7 @@
 		</Layers>
 		<Scripts>
 			<OnClick>
-				MPowa_SelectAura(this)
+				MPOWA:SelectAura(this)
 			</OnClick>
 		</Scripts>
 	</Button>
@@ -230,7 +219,7 @@
 	<CheckButton name="MPowaTernarySelectorTemplate" inherits="MPowa_CheckTemplate" virtual="true">
 		<Scripts>
 			<OnClick>
-				MPowa_Ternary_OnClick(this, this.var)
+				MPOWA:Ternary_OnClick(this, this.var)
 			</OnClick>
 		</Scripts>
 	</CheckButton>
@@ -307,7 +296,7 @@
 		</Layers>
 		<Scripts>
 			<OnClick>
-				MPowa_SelectIcon(this)
+				MPOWA:SelectIcon(this)
 			</OnClick>
 		</Scripts>
 	</Button>
@@ -370,22 +359,8 @@
 			<OnMouseUp>
 				this:StopMovingOrSizing()
 			</OnMouseUp>
-			<OnEvent>
-				MPowa_Options_OnEvent(event)
-				MPowa_OnEvent(event)
-			</OnEvent>
 			<OnLoad>
-				this:RegisterEvent("ADDON_LOADED")
-				this:RegisterEvent("PLAYER_AURAS_CHANGED")
-				this:RegisterEvent("PLAYER_ENTERING_WORLD")
-				this:RegisterEvent("PLAYER_TARGET_CHANGED")
-				this:RegisterEvent("UNIT_AURA")
-				this:RegisterEvent("RAID_ROSTER_UPDATE")
-				this:RegisterEvent("PARTY_MEMBERS_CHANGED")
-				MPowa_OnLoad()
-				Mpowa_OnUpdate()
-				this:SetClampedToScreen(true)
-				getglobal(this:GetName().."_HEAD"):SetText(MPOWA_MAINFRAME_HEAD.." "..MPOWA_VERSION)
+				MPowa_MainFrame_HEAD:SetText("Modified Power Auras - Build: "..MPOWA.Build)
 			</OnLoad>
 		</Scripts>
 		<Frames>
@@ -393,7 +368,7 @@
 				<Scripts>
 					<OnClick>
 						MPowa_MainFrame:Hide()
-						for i=1, MPOWA_CUR_MAX do
+						for i=1, MPOWA.NumBuffs do
 							getglobal("TextureFrame"..i):EnableMouse(0)
 						end
 						PlaySound("igMainMenuOptionCheckBoxOff")
@@ -410,7 +385,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						MPowa_AddAura()
+						MPOWA:AddAura()
 					</OnClick>
 					<OnLoad>
 						getglobal(this:GetName().."_Text"):SetText(MPOWA_BUTTON_ADD)
@@ -427,7 +402,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						MPowa_Edit()
+						MPOWA:Edit()
 					</OnClick>
 					<OnLoad>
 						getglobal(this:GetName().."_Text"):SetText(MPOWA_BUTTON_EDIT)
@@ -444,7 +419,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						MPowa_Remove()
+						MPOWA:Remove()
 					</OnClick>
 					<OnLoad>
 						getglobal(this:GetName().."_Text"):SetText(MPOWA_BUTTON_REMOVE)
@@ -464,7 +439,11 @@
 						getglobal(this:GetName().."_Text"):SetText(MPOWA_BUTTON_PROFILE)
 					</OnLoad>
 					<OnClick>
-						MPowa_EditProfile()
+						if MPowa_ProfileFrame:IsVisible() then
+							MPowa_ProfileFrame:Hide()
+						else
+							MPowa_ProfileFrame:Show()
+						end
 					</OnClick>
 				</Scripts>
 			</Button>
@@ -478,7 +457,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						MPowa_TestAll()
+						MPOWA:TestAll()
 					</OnClick>
 					<OnLoad>
 						getglobal(this:GetName().."_Text"):SetText(MPOWA_BUTTON_TESTALL)
@@ -495,7 +474,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						MPowa_Test()
+						MPOWA:Test()
 					</OnClick>
 					<OnLoad>
 						getglobal(this:GetName().."_Text"):SetText(MPOWA_BUTTON_TEST)
@@ -584,15 +563,15 @@
 			</OnLoad>
 			<OnKeyDown>
 				if IsShiftKeyDown() and IsAltKeyDown() then
-					getglobal("MPowa_ConfigFrame_Container_1_Slider_PosX"):SetValueStep(0.1)
+					MPowa_ConfigFrame_Container_1_Slider_PosX:SetValueStep(0.1)
 				elseif IsShiftKeyDown() then
-					getglobal("MPowa_ConfigFrame_Container_1_Slider_Opacity"):SetValueStep(0.01)
-					getglobal("MPowa_ConfigFrame_Container_1_Slider_PosX"):SetValueStep(1)
+					MPowa_ConfigFrame_Container_1_Slider_Opacity:SetValueStep(0.01)
+					MPowa_ConfigFrame_Container_1_Slider_PosX:SetValueStep(1)
 				end
 			</OnKeyDown>
 			<OnKeyUp>
-				getglobal("MPowa_ConfigFrame_Container_1_Slider_Opacity"):SetValueStep(0.1)
-				getglobal("MPowa_ConfigFrame_Container_1_Slider_PosX"):SetValueStep(5)
+				MPowa_ConfigFrame_Container_1_Slider_Opacity:SetValueStep(0.1)
+				MPowa_ConfigFrame_Container_1_Slider_PosX:SetValueStep(5)
 			</OnKeyUp>
 		</Scripts>
 		<Frames>
@@ -600,7 +579,7 @@
 				<Scripts>
 					<OnClick>
 						MPowa_ConfigFrame:Hide()
-						for i=1, MPOWA_CUR_MAX do
+						for i=1, MPOWA.NumBuffs do
 							getglobal("TextureFrame"..i):EnableMouse(0)
 						end
 						PlaySound("igMainMenuOptionCheckBoxOff")
@@ -670,6 +649,55 @@
 									</Button>
 								</Frames>
 							</Frame>
+							<Button name="$parent_Colorpicker">
+								<Size>
+									<AbsDimension x="16" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOPRIGHT" relativeTo="$parent_Icon" relativePoint="TOPLEFT">
+										<Offset>
+											<AbsDimension x="-10" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer level="BACKGROUND">
+										<Texture name="$parent_SwatchBg">
+											<Size>
+												<AbsDimension x="14" y="14"/>
+											</Size>
+											<Anchors>
+												<Anchor point="CENTER">
+													<Offset>
+														<AbsDimension x="0" y="0"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+											<Color r="1.0" g="1.0" b="1.0"/>
+										</Texture>
+									</Layer>
+								</Layers>
+								<Scripts>
+									<OnLoad>
+										getglobal(this:GetName().."_SwatchBg").r = 1.0
+										getglobal(this:GetName().."_SwatchBg").g = 1.0
+										getglobal(this:GetName().."_SwatchBg").b = 1.0
+									</OnLoad>
+									<OnClick>
+										MPOWA:OpenColorPicker("icon")
+									</OnClick>
+									<OnEnter>
+										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b)
+										GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
+										GameTooltip:SetText(MPOWA_COLORPICKER_TOOLTIP, nil, nil, nil, nil, 1)
+									</OnEnter>
+									<OnLeave>
+										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b)
+										GameTooltip:Hide()
+									</OnLeave>
+								</Scripts>
+								<NormalTexture name="$parentNormalTexture" file="Interface\ChatFrame\ChatFrameColorSwatch"/>
+							</Button>
 							<Slider name="$parent_Slider_Opacity" inherits="MPowa_SliderTemplate">
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="$parent_Icon" relativePoint="TOPRIGHT">
@@ -689,8 +717,8 @@
 										getglobal(this:GetName().."High"):SetText("1.0")
 									</OnLoad>
 									<OnValueChanged>
-										if MPOWA_LOADED then
-											MPowa_SliderChange("alpha", this, MPOWA_SLIDER_OPACITY)
+										if MPOWA.loaded then
+											MPOWA:SliderChange("alpha", this, MPOWA_SLIDER_OPACITY)
 										end
 									</OnValueChanged>
 								</Scripts>
@@ -714,8 +742,8 @@
 										getglobal(this:GetName().."High"):SetText(1800)
 									</OnLoad>
 									<OnValueChanged>
-										if MPOWA_LOADED and MPowa_ConfigFrame:IsVisible() then
-											MPowa_SliderChange("x", this, MPOWA_SLIDER_POSX)
+										if MPOWA.loaded and MPowa_ConfigFrame:IsVisible() then
+											MPOWA:SliderChange("x", this, MPOWA_SLIDER_POSX)
 
 											local min, max = this:GetMinMaxValues()
 											local value = this:GetValue()
@@ -766,8 +794,8 @@
 										getglobal(this:GetName().."High"):SetText("1800")
 									</OnLoad>
 									<OnValueChanged>
-										if MPOWA_LOADED and MPowa_ConfigFrame:IsVisible() then
-											MPowa_SliderChange("y", this, MPOWA_SLIDER_POSY)
+										if MPOWA.loaded and MPowa_ConfigFrame:IsVisible() then
+											MPOWA:SliderChange("y", this, MPOWA_SLIDER_POSY)
 									
 											local min, max = this:GetMinMaxValues()
 											local value = this:GetValue()
@@ -818,8 +846,8 @@
 										getglobal(this:GetName().."High"):SetText("2.0")
 									</OnLoad>
 									<OnValueChanged>
-										if MPOWA_LOADED then
-											MPowa_SliderChange("size", this, MPOWA_SLIDER_SIZE)
+										if MPOWA.loaded then
+											MPOWA:SliderChange("size", this, MPOWA_SLIDER_SIZE)
 										end
 									</OnValueChanged>
 								</Scripts>
@@ -852,11 +880,14 @@
 										this.aide = MPOWA_EDITBOX_TOOLTIP
 										getglobal(this:GetName().."Text"):SetText(MPOWA_EDITBOX_NAME)
 									</OnLoad>
+									<OnShow>
+										this:ClearFocus()
+									</OnShow>
 									<OnEnterPressed>
 										this:ClearFocus()
 									</OnEnterPressed>
 									<OnTextChanged>
-										MPowa_Editbox_Name(this)
+										MPOWA:Editbox_Name(this)
 									</OnTextChanged>
 									<OnEnter>
 										GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
@@ -870,7 +901,7 @@
 									<Layer level="OVERLAY">
 										<FontString name="$parentText" inherits="GameFontNormalSmall" justifyH="LEFT" text="">
 											<Size>
-												<AbsDimension x="120" y="20"/>
+												<AbsDimension x="200" y="20"/>
 											</Size>
 											<Anchors>
 												<Anchor point="BOTTOMLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
@@ -901,11 +932,66 @@
 										this.aide = MPOWA_EDITBOX_STACKS_TOOLTIP
 										getglobal(this:GetName().."Text"):SetText(MPOWA_EDITBOX_STACKS_NAME)
 									</OnLoad>
+									<OnShow>
+										this:ClearFocus()
+									</OnShow>
 									<OnEnterPressed>
 										this:ClearFocus()
 									</OnEnterPressed>
 									<OnEditFocusLost>
-										MPowa_Editbox_Stacks(this)
+										MPOWA:Editbox_Stacks(this)
+									</OnEditFocusLost>
+									<OnEnter>
+										GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
+										GameTooltip:SetText(this.aide, nil, nil, nil, nil, 1)
+									</OnEnter>
+									<OnLeave>
+										GameTooltip:Hide()
+									</OnLeave>
+								</Scripts>
+								<Layers>
+									<Layer level="OVERLAY">
+										<FontString name="$parentText" inherits="GameFontNormalSmall" justifyH="LEFT" text="">
+											<Size>
+												<AbsDimension x="120" y="20"/>
+											</Size>
+											<Anchors>
+												<Anchor point="BOTTOMLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+													<Offset>
+														<AbsDimension x="0" y="0"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+								</Layers>
+							</EditBox>
+							<EditBox name="$parent_Editbox_Player" autoFocus="false" inherits="InputBoxTemplate" hidden="true">
+								<Size>
+									<AbsDimension x="65" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parent_Editbox_Stacks" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-20"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<FontString inherits="ChatFontNormal" bytes="200"/>
+								<Scripts>
+									<OnLoad>
+										this:SetMaxLetters(200)
+										this.aide = MPOWA_EDITBOX_PLAYER_NAME_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_EDITBOX_PLAYER_NAME)
+									</OnLoad>
+									<OnShow>
+										this:ClearFocus()
+									</OnShow>
+									<OnEnterPressed>
+										this:ClearFocus()
+									</OnEnterPressed>
+									<OnEditFocusLost>
+										MPOWA:Editbox_Player(this)
 									</OnEditFocusLost>
 									<OnEnter>
 										GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
@@ -950,11 +1036,14 @@
 										this.aide = MPOWA_EDITBOX_DEBUFFDURATION_TOOLTIP
 										getglobal(this:GetName().."Text"):SetText(MPOWA_EDITBOX_DEBUFFDURATION)
 									</OnLoad>
+									<OnShow>
+										this:ClearFocus()
+									</OnShow>
 									<OnEnterPressed>
 										this:ClearFocus()
 									</OnEnterPressed>
 									<OnTextChanged>
-										MPowa_Editbox_Duration(this)
+										MPOWA:Editbox_Duration(this)
 									</OnTextChanged>
 									<OnEnter>
 										GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
@@ -981,47 +1070,11 @@
 									</Layer>
 								</Layers>
 							</EditBox>
-							<CheckButton name="$parent_Checkbutton_ExactName" inherits="MPowa_CheckTemplate">
+							<CheckButton name="$parent_Checkbutton_ShowCooldowns" inherits="MPowa_CheckTemplate">
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="$parent_Editbox" relativePoint="BOTTOMLEFT">
 										<Offset>
-											<AbsDimension x="-10" y="-45" />
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										this.tooltipText = MPOWA_CHECKBUTTON_EXACTNAME_TOOLTIP
-										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_EXACTNAME)
-									</OnLoad>
-									<OnClick>
-										MPowa_Checkbutton("exactname")
-									</OnClick>
-								</Scripts>
-							</CheckButton>
-							<CheckButton name="$parent_Checkbutton_ShowIfNotActive" inherits="MPowa_CheckTemplate">
-								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="$parent_Checkbutton_ExactName" relativePoint="BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x="0" y="8" />
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										this.tooltipText = MPOWA_CHECKBUTTON_SHOWIFNOTACTIVE_TOOLTIP
-										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_SHOWIFNOTACTIVE)
-									</OnLoad>
-									<OnClick>
-										MPowa_Checkbutton("inverse")
-									</OnClick>
-								</Scripts>
-							</CheckButton>
-							<CheckButton name="$parent_Checkbutton_ShowCooldowns" inherits="MPowa_CheckTemplate">
-								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="$parent_Checkbutton_ShowIfNotActive" relativePoint="BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x="0" y="8" />
+											<AbsDimension x="-10" y="-77" />
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -1031,7 +1084,15 @@
 										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_SHOWCOOLDOWN)
 									</OnLoad>
 									<OnClick>
-										MPowa_Checkbutton("cooldown")
+										if not MPOWA_SAVE[MPOWA.CurEdit]["cooldown"] then
+											MPOWA.NeedUpdate[MPOWA.CurEdit] = true
+										else
+											if not MPOWA_SAVE[MPOWA.CurEdit]["inverse"] then
+												MPOWA.NeedUpdate[MPOWA.CurEdit] = false
+											end
+											MPOWA.frames[MPOWA.CurEdit][1]:Hide()
+										end
+										MPOWA:Checkbutton("cooldown")
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -1049,9 +1110,10 @@
 										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_ENEMYTARGET)
 									</OnLoad>
 									<OnClick>
-										MPowa_Checkbutton("enemytarget")
+										MPOWA:Checkbutton("enemytarget")
 										if MPowa_ConfigFrame_Container_1_2_Checkbutton_EnemyTarget:GetChecked() or MPowa_ConfigFrame_Container_1_2_Checkbutton_FriendlyTarget:GetChecked() then
 											MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Show()
+											MPOWA_SAVE[MPOWA.CurEdit]["unit"] = "target"
 										else
 											MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Hide()
 										end
@@ -1072,9 +1134,10 @@
 										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_FRIENDLYTARGET)
 									</OnLoad>
 									<OnClick>
-										MPowa_Checkbutton("friendlytarget")
+										MPOWA:Checkbutton("friendlytarget")
 										if MPowa_ConfigFrame_Container_1_2_Checkbutton_EnemyTarget:GetChecked() or MPowa_ConfigFrame_Container_1_2_Checkbutton_FriendlyTarget:GetChecked() then
 											MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Show()
+											MPOWA_SAVE[MPOWA.CurEdit]["unit"] = "target"
 										else
 											MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Hide()
 										end
@@ -1095,15 +1158,20 @@
 										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_RAIDMEMBER)
 									</OnLoad>
 									<OnClick>
-										MPowa_Checkbutton("raidgroupmember")
+										MPOWA:Checkbutton("raidgroupmember")
+										if MPOWA_SAVE[MPOWA.CurEdit]["raidgroupmember"] then
+											MPowa_ConfigFrame_Container_1_2_Editbox_Player:Show()
+										else
+											MPowa_ConfigFrame_Container_1_2_Editbox_Player:Hide()
+										end
 									</OnClick>
 								</Scripts>
 							</CheckButton>
 							<CheckButton name="$parent_Checkbutton_Debuff" inherits="MPowa_CheckTemplate">
 								<Anchors>
-									<Anchor point="LEFT" relativeTo="$parent_Checkbutton_ShowIfNotActive" relativePoint="RIGHT">
+									<Anchor point="LEFT" relativeTo="$parent_Checkbutton_ShowCooldowns" relativePoint="RIGHT">
 										<Offset>
-											<AbsDimension x="130" y="35" />
+											<AbsDimension x="130" y="50" />
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -1113,12 +1181,38 @@
 										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_DEBUFF)
 									</OnLoad>
 									<OnClick>
-										MPowa_Checkbutton("isdebuff")
+										MPOWA:Checkbutton("isdebuff")
 										if MPowa_ConfigFrame_Container_1_2_Checkbutton_EnemyTarget:GetChecked() or MPowa_ConfigFrame_Container_1_2_Checkbutton_FriendlyTarget:GetChecked() then
 											MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Show()
 										else
 											MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Hide()
 										end
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<CheckButton name="$parent_Checkbutton_ShowIfNotActive" inherits="MPowa_CheckTemplate">
+								<Anchors>
+									<Anchor point="BOTTOM" relativeTo="$parent_Checkbutton_Debuff" relativePoint="TOP">
+										<Offset>
+											<AbsDimension x="0" y="0" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = MPOWA_CHECKBUTTON_SHOWIFNOTACTIVE_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_SHOWIFNOTACTIVE)
+									</OnLoad>
+									<OnClick>
+										if not MPOWA_SAVE[MPOWA.CurEdit]["inverse"] then
+											MPOWA.NeedUpdate[MPOWA.CurEdit] = true
+										else
+											if not MPOWA_SAVE[MPOWA.CurEdit]["cooldown"] then
+												MPOWA.NeedUpdate[MPOWA.CurEdit] = false
+											end
+											MPOWA.frames[MPOWA.CurEdit][1]:Hide()
+										end
+										MPOWA:Checkbutton("inverse")
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -1268,8 +1362,8 @@
 										getglobal(this:GetName().."High"):SetText("1.0")
 									</OnLoad>
 									<OnValueChanged>
-										if MPOWA_LOADED then
-											MPowa_SliderChange("fontalpha", this, MPOWA_SLIDER_OPACITY)
+										if MPOWA.loaded then
+											MPOWA:SliderChange("fontalpha", this, MPOWA_SLIDER_OPACITY)
 										end
 									</OnValueChanged>
 								</Scripts>
@@ -1293,8 +1387,8 @@
 										getglobal(this:GetName().."High"):SetText(600)
 									</OnLoad>
 									<OnValueChanged>
-										if MPOWA_LOADED and MPowa_ConfigFrame:IsVisible() then
-											MPowa_SliderChange("fontoffsetx", this, MPOWA_SLIDER_POSX)
+										if MPOWA.loaded and MPowa_ConfigFrame:IsVisible() then
+											MPOWA:SliderChange("fontoffsetx", this, MPOWA_SLIDER_POSX)
 
 											local min, max = this:GetMinMaxValues()
 											local value = this:GetValue()
@@ -1345,8 +1439,8 @@
 										getglobal(this:GetName().."High"):SetText("600")
 									</OnLoad>
 									<OnValueChanged>
-										if MPOWA_LOADED and MPowa_ConfigFrame:IsVisible() then
-											MPowa_SliderChange("fontoffsety", this, MPOWA_SLIDER_POSY)
+										if MPOWA.loaded and MPowa_ConfigFrame:IsVisible() then
+											MPOWA:SliderChange("fontoffsety", this, MPOWA_SLIDER_POSY)
 									
 											local min, max = this:GetMinMaxValues()
 											local value = this:GetValue()
@@ -1397,8 +1491,8 @@
 										getglobal(this:GetName().."High"):SetText("2.0")
 									</OnLoad>
 									<OnValueChanged>
-										if MPOWA_LOADED then
-											MPowa_SliderChange("fontsize", this, MPOWA_SLIDER_SIZE)
+										if MPOWA.loaded then
+											MPOWA:SliderChange("fontsize", this, MPOWA_SLIDER_SIZE)
 										end
 									</OnValueChanged>
 								</Scripts>
@@ -1427,7 +1521,7 @@
 										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_HUNDREDS)
 									</OnLoad>
 									<OnClick>
-										MPowa_Checkbutton("hundredth")
+										MPOWA:Checkbutton("hundredth")
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -1445,7 +1539,7 @@
 										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_TIMER)
 									</OnLoad>
 									<OnClick>
-										MPowa_Checkbutton("timer")
+										MPOWA:Checkbutton("timer")
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -1463,7 +1557,7 @@
 										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_FLASHANIM)
 									</OnLoad>
 									<OnClick>
-										MPowa_Checkbutton_FlashAnim()
+										MPOWA:Checkbutton_FlashAnim()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -1485,11 +1579,14 @@
 										this.aide = MPOWA_EDITBOX_FLASHANIM_TOOLTIP
 										getglobal(this:GetName().."Text"):SetText(MPOWA_EDITBOX_FLASHANIM)
 									</OnLoad>
+									<OnShow>
+										this:ClearFocus()
+									</OnShow>
 									<OnEnterPressed>
 										this:ClearFocus()
 									</OnEnterPressed>
 									<OnTextChanged>
-										MPowa_Editbox_FlashAnimStart(this)
+										MPOWA:Editbox_FlashAnimStart(this)
 									</OnTextChanged>
 									<OnEnter>
 										GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
@@ -1530,7 +1627,7 @@
 										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_COLOR)
 									</OnLoad>
 									<OnClick>
-										MPowa_Checkbutton_USEFONTCOLOR()
+										MPOWA:Checkbutton_USEFONTCOLOR()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -1569,7 +1666,7 @@
 										getglobal(this:GetName().."_SwatchBg").b = 1.0
 									</OnLoad>
 									<OnClick>
-										MPowa_OpenColorPicker()
+										MPOWA:OpenColorPicker("fontcolor")
 									</OnClick>
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b)
@@ -1604,7 +1701,7 @@
 										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_BEGINSOUND)
 									</OnLoad>
 									<OnClick>
-										MPowa_Checkbutton("usebeginsound")
+										MPOWA:Checkbutton("usebeginsound")
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -1630,8 +1727,8 @@
 										getglobal(this:GetName().."High"):SetText("56")
 									</OnLoad>
 									<OnValueChanged>
-										if MPOWA_LOADED then
-											MPowa_SoundSliderChange(this, "beginsound")
+										if MPOWA.loaded then
+											MPOWA:SoundSliderChange(this, "beginsound")
 										end
 									</OnValueChanged>
 								</Scripts>
@@ -1650,7 +1747,7 @@
 										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_ENDSOUND)
 									</OnLoad>
 									<OnClick>
-										MPowa_Checkbutton("useendsound")
+										MPOWA:Checkbutton("useendsound")
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -1676,8 +1773,8 @@
 										getglobal(this:GetName().."High"):SetText("56")
 									</OnLoad>
 									<OnValueChanged>
-										if MPOWA_LOADED then
-											MPowa_SoundSliderChange(this, "endsound")
+										if MPOWA.loaded then
+											MPOWA:SoundSliderChange(this, "endsound")
 										end
 									</OnValueChanged>
 								</Scripts>
@@ -1854,6 +1951,59 @@
 							</OnLoad>
 						</Scripts>
 					</Frame>
+					<Frame name="$parent_5" inherits="MPowa_ContainerTemplate" hidden="true">
+						<Size x="290" y="120" />
+						<Frames>
+							<CheckButton name="$parent_FadeIn" inherits="MPowa_CheckTemplate">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+										<Offset x="10" y="-5" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = MPOWA_CHECKBUTTON_FADEIN_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_FADEIN)
+									</OnLoad>
+									<OnClick>
+										MPOWA:Checkbutton("fadein")
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<CheckButton name="$parent_FadeOut" inherits="MPowa_CheckTemplate">
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parent_FadeIn" relativePoint="BOTTOM">
+										<Offset x="0" y="1" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = MPOWA_CHECKBUTTON_FADEOUT_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_FADEOUT)
+									</OnLoad>
+									<OnClick>
+										MPOWA:Checkbutton("fadeout")
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<CheckButton name="$parent_GrowOut" inherits="MPowa_CheckTemplate">
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parent_FadeOut" relativePoint="BOTTOM">
+										<Offset x="0" y="1" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = MPOWA_CHECKBUTTON_GROWOUT_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_GROWOUT)
+									</OnLoad>
+									<OnClick>
+										MPOWA:Checkbutton("growout")
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+						</Frames>
+					</Frame>
 				</Frames>
 			</Frame>
 			<Button name="$parent_Tab1" inherits="TabButtonTemplate">
@@ -1870,6 +2020,7 @@
 						PanelTemplates_DeselectTab(MPowa_ConfigFrame_Tab2)
 						PanelTemplates_DeselectTab(MPowa_ConfigFrame_Tab3)
 						PanelTemplates_DeselectTab(MPowa_ConfigFrame_Tab4)
+						PanelTemplates_DeselectTab(MPowa_ConfigFrame_Tab5)
 						MPowa_ConfigFrame_Container_2:Hide()
 						MPowa_ConfigFrame_Container_2_2:Hide()
 						MPowa_ConfigFrame_Container_3:Hide()
@@ -1879,6 +2030,7 @@
 						MPowa_ConfigFrame_Container_4_4:Hide()
 						MPowa_ConfigFrame_Container_1:Show()
 						MPowa_ConfigFrame_Container_1_2:Show()
+						MPowa_ConfigFrame_Container_5:Hide()
 					</OnClick>
 					<OnLoad>
 						getglobal(this:GetName().."Text"):SetText(MPOWA_CONFIGFRAME_EFFECT_EDITOR)
@@ -1902,6 +2054,7 @@
 						PanelTemplates_DeselectTab(MPowa_ConfigFrame_Tab1)
 						PanelTemplates_DeselectTab(MPowa_ConfigFrame_Tab3)
 						PanelTemplates_DeselectTab(MPowa_ConfigFrame_Tab4)
+						PanelTemplates_DeselectTab(MPowa_ConfigFrame_Tab5)
 						MPowa_ConfigFrame_Container_1:Hide()
 						MPowa_ConfigFrame_Container_1_2:Hide()
 						MPowa_ConfigFrame_Container_3:Hide()
@@ -1911,6 +2064,7 @@
 						MPowa_ConfigFrame_Container_4_4:Hide()
 						MPowa_ConfigFrame_Container_2:Show()
 						MPowa_ConfigFrame_Container_2_2:Show()
+						MPowa_ConfigFrame_Container_5:Hide()
 					</OnClick>
 					<OnLoad>
 						getglobal(this:GetName().."Text"):SetText(MPOWA_CONFIGFRAME_TIMER_EDITOR)
@@ -1934,6 +2088,7 @@
 						PanelTemplates_DeselectTab(MPowa_ConfigFrame_Tab4)
 						PanelTemplates_DeselectTab(MPowa_ConfigFrame_Tab1)
 						PanelTemplates_DeselectTab(MPowa_ConfigFrame_Tab2)
+						PanelTemplates_DeselectTab(MPowa_ConfigFrame_Tab5)
 						MPowa_ConfigFrame_Container_1:Hide()
 						MPowa_ConfigFrame_Container_1_2:Hide()
 						MPowa_ConfigFrame_Container_2:Hide()
@@ -1943,6 +2098,7 @@
 						MPowa_ConfigFrame_Container_4_2:Hide()
 						MPowa_ConfigFrame_Container_4_3:Hide()
 						MPowa_ConfigFrame_Container_4_4:Hide()
+						MPowa_ConfigFrame_Container_5:Hide()
 					</OnClick>
 					<OnLoad>
 						getglobal(this:GetName().."Text"):SetText(MPOWA_CONFIGFRAME_SOUND_EDITOR)
@@ -1966,6 +2122,7 @@
 						PanelTemplates_DeselectTab(MPowa_ConfigFrame_Tab1)
 						PanelTemplates_DeselectTab(MPowa_ConfigFrame_Tab2)
 						PanelTemplates_DeselectTab(MPowa_ConfigFrame_Tab3)
+						PanelTemplates_DeselectTab(MPowa_ConfigFrame_Tab5)
 						MPowa_ConfigFrame_Container_1:Hide()
 						MPowa_ConfigFrame_Container_1_2:Hide()
 						MPowa_ConfigFrame_Container_2:Hide()
@@ -1975,9 +2132,44 @@
 						MPowa_ConfigFrame_Container_4_2:Show()
 						MPowa_ConfigFrame_Container_4_3:Show()
 						MPowa_ConfigFrame_Container_4_4:Show()
+						MPowa_ConfigFrame_Container_5:Hide()
 					</OnClick>
 					<OnLoad>
 						getglobal(this:GetName().."Text"):SetText(MPOWA_CONFIGFRAME_ABOUT)
+						PanelTemplates_DeselectTab(this)
+						PanelTemplates_TabResize(0, this)
+						getglobal(this:GetName().."HighlightTexture"):SetWidth(this:GetTextWidth() + 31)
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Button name="$parent_Tab5" inherits="TabButtonTemplate">
+				<Anchors>
+					<Anchor point="BOTTOM" relativeTo="$parent_Tab1" relativePoint="TOP">
+						<Offset>
+							<AbsDimension x="13" y="-8" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						PanelTemplates_SelectTab(this)
+						PanelTemplates_DeselectTab(MPowa_ConfigFrame_Tab1)
+						PanelTemplates_DeselectTab(MPowa_ConfigFrame_Tab2)
+						PanelTemplates_DeselectTab(MPowa_ConfigFrame_Tab3)
+						PanelTemplates_DeselectTab(MPowa_ConfigFrame_Tab4)
+						MPowa_ConfigFrame_Container_1:Hide()
+						MPowa_ConfigFrame_Container_1_2:Hide()
+						MPowa_ConfigFrame_Container_2:Hide()
+						MPowa_ConfigFrame_Container_2_2:Hide()
+						MPowa_ConfigFrame_Container_3:Hide()
+						MPowa_ConfigFrame_Container_4:Hide()
+						MPowa_ConfigFrame_Container_4_2:Hide()
+						MPowa_ConfigFrame_Container_4_3:Hide()
+						MPowa_ConfigFrame_Container_4_4:Hide()
+						MPowa_ConfigFrame_Container_5:Show()
+					</OnClick>
+					<OnLoad>
+						getglobal(this:GetName().."Text"):SetText("Animation")
 						PanelTemplates_DeselectTab(this)
 						PanelTemplates_TabResize(0, this)
 						getglobal(this:GetName().."HighlightTexture"):SetWidth(this:GetTextWidth() + 31)
@@ -2060,7 +2252,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						MPowa_IconFrameOkay()
+						MPOWA:IconFrameOkay()
 					</OnClick>
 					<OnLoad>
 						getglobal(this:GetName().."_Text"):SetText(MPOWA_BUTTON_OKAY)
@@ -6545,6 +6737,3148 @@
 					</Button>
 				</Frames>
 			</Frame>
+			<Frame name="$parent_ButtonContainer_11" hidden="true">
+				<Size>
+					<AbsDimension x="300" y="300" />
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativeTo="$parent">
+						<Offset>
+							<AbsDimension x="-10" y="5" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\ButtonContainer.tga">
+							<Size>
+								<AbsDimension x="300" y="300" />
+							</Size>
+							<Anchors>
+								<Anchor point="CENTER" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Frames>
+					<Button name="$parent_Button1" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+								<Offset x="6" y="-11" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura1")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button2" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button1" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura2")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button3" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button2" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura3")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button4" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button3" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura4")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button5" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button4" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura5")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button6" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button5" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura6")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button7" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button6" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura7")
+							</OnLoad>
+						</Scripts>
+					</Button>
+	
+					<Button name="$parent_Button8" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button1" relativePoint="BOTTOM">
+								<Offset x="0" y="-5" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura8")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button9" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button8" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura9")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button10" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button9" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura10")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button11" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button10" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura11")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button12" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button11" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura12")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button13" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button12" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura13")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button14" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button13" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura14")
+							</OnLoad>
+						</Scripts>
+					</Button>
+	
+					<Button name="$parent_Button15" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button8" relativePoint="BOTTOM">
+								<Offset x="0" y="-5" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura15")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button16" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button15" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura16")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button17" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button16" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura17")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button18" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button17" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura18")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button19" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button18" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura19")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button20" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button19" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura20")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button21" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button20" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura21")
+							</OnLoad>
+						</Scripts>
+					</Button>
+	
+					<Button name="$parent_Button22" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button15" relativePoint="BOTTOM">
+								<Offset x="0" y="-5" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura22")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button23" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button22" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura23")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button24" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button23" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura24")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button25" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button24" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura25")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button26" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button25" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura26")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button27" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button26" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura27")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button28" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button27" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura28")
+							</OnLoad>
+						</Scripts>
+					</Button>
+	
+					<Button name="$parent_Button29" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button22" relativePoint="BOTTOM">
+								<Offset x="0" y="-5" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura29")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button30" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button29" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura30")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button31" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button30" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura31")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button32" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button31" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura32")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button33" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button32" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura33")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button34" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button33" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura34")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button35" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button34" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura35")
+							</OnLoad>
+						</Scripts>
+					</Button>
+	
+					<Button name="$parent_Button36" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button29" relativePoint="BOTTOM">
+								<Offset x="0" y="-5" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura36")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button37" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button36" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura37")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button38" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button37" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura38")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button39" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button38" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura39")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button40" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button39" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura40")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button41" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button40" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura41")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button42" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button41" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura42")
+							</OnLoad>
+						</Scripts>
+					</Button>
+				</Frames>
+			</Frame>
+			<Frame name="$parent_ButtonContainer_12" hidden="true">
+				<Size>
+					<AbsDimension x="300" y="300" />
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativeTo="$parent">
+						<Offset>
+							<AbsDimension x="-10" y="5" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\ButtonContainer.tga">
+							<Size>
+								<AbsDimension x="300" y="300" />
+							</Size>
+							<Anchors>
+								<Anchor point="CENTER" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Frames>
+					<Button name="$parent_Button43" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+								<Offset x="6" y="-11" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura43")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button44" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button43" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura44")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button45" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button44" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura45")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button46" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button45" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura46")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button47" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button46" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura47")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button48" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button47" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura48")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button49" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button48" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura49")
+							</OnLoad>
+						</Scripts>
+					</Button>
+	
+					<Button name="$parent_Button50" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button43" relativePoint="BOTTOM">
+								<Offset x="0" y="-5" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura50")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button51" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button50" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura51")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button52" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button51" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura52")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button53" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button52" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura53")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button54" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button53" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura54")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button55" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button54" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura55")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button56" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button55" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura56")
+							</OnLoad>
+						</Scripts>
+					</Button>
+	
+					<Button name="$parent_Button57" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button50" relativePoint="BOTTOM">
+								<Offset x="0" y="-5" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura57")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button58" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button57" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura58")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button59" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button58" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura59")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button60" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button59" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura60")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button61" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button60" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura61")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button62" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button61" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura62")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button63" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button62" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura63")
+							</OnLoad>
+						</Scripts>
+					</Button>
+	
+					<Button name="$parent_Button64" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button57" relativePoint="BOTTOM">
+								<Offset x="0" y="-5" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura64")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button65" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button64" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura65")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button66" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button65" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura66")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button67" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button66" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura67")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button68" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button67" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura68")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button69" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button68" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura69")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button70" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button69" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura70")
+							</OnLoad>
+						</Scripts>
+					</Button>
+	
+					<Button name="$parent_Button71" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button64" relativePoint="BOTTOM">
+								<Offset x="0" y="-5" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura71")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button72" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button71" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura72")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button73" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button72" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura73")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button74" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button73" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura74")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button75" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button74" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura75")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button76" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button75" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura76")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button77" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button76" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura77")
+							</OnLoad>
+						</Scripts>
+					</Button>
+	
+					<Button name="$parent_Button78" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button71" relativePoint="BOTTOM">
+								<Offset x="0" y="-5" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura78")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button79" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button78" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura79")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button80" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button79" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura80")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button81" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button80" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura81")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button82" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button81" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura82")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button83" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button82" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura83")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button84" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button83" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura84")
+							</OnLoad>
+						</Scripts>
+					</Button>
+				</Frames>
+			</Frame>
+			<Frame name="$parent_ButtonContainer_13" hidden="true">
+				<Size>
+					<AbsDimension x="300" y="300" />
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativeTo="$parent">
+						<Offset>
+							<AbsDimension x="-10" y="5" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\ButtonContainer.tga">
+							<Size>
+								<AbsDimension x="300" y="300" />
+							</Size>
+							<Anchors>
+								<Anchor point="CENTER" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Frames>
+					
+					<Button name="$parent_Button85" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+								<Offset x="6" y="-11" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura85")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button86" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button85" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura86")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button87" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button86" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura87")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button88" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button87" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura88")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button89" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button88" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura89")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button90" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button89" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura90")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button91" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button90" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura91")
+							</OnLoad>
+						</Scripts>
+					</Button>
+	
+					<Button name="$parent_Button92" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button85" relativePoint="BOTTOM">
+								<Offset x="0" y="-5" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura92")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button93" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button92" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura93")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button94" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button93" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura94")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button95" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button94" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura95")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button96" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button95" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura96")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button97" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button96" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura97")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button98" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button97" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura98")
+							</OnLoad>
+						</Scripts>
+					</Button>
+	
+					<Button name="$parent_Button99" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button92" relativePoint="BOTTOM">
+								<Offset x="0" y="-5" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura99")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button100" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button99" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura100")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button101" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button100" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura101")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button102" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button101" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura102")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button103" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button102" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura103")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button104" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button103" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura104")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button105" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button104" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura105")
+							</OnLoad>
+						</Scripts>
+					</Button>
+	
+					<Button name="$parent_Button106" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button99" relativePoint="BOTTOM">
+								<Offset x="0" y="-5" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura106")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button107" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button106" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura107")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button108" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button107" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura108")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button109" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button108" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura109")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button110" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button109" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura110")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button111" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button110" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura111")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button112" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button111" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura112")
+							</OnLoad>
+						</Scripts>
+					</Button>
+	
+					<Button name="$parent_Button113" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button106" relativePoint="BOTTOM">
+								<Offset x="0" y="-5" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura113")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button114" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button113" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura114")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button115" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button114" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura115")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button116" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button115" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura116")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button117" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button116" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura117")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button118" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button117" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura118")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button119" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button118" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura119")
+							</OnLoad>
+						</Scripts>
+					</Button>
+	
+					<Button name="$parent_Button120" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button113" relativePoint="BOTTOM">
+								<Offset x="0" y="-5" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura120")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button121" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button120" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura121")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button122" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button121" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura122")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button123" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button122" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura123")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button124" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button123" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura124")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button125" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button124" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura125")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button126" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button125" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura126")
+							</OnLoad>
+						</Scripts>
+					</Button>
+				</Frames>
+			</Frame>
+			<Frame name="$parent_ButtonContainer_14" hidden="true">
+				<Size>
+					<AbsDimension x="300" y="300" />
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativeTo="$parent">
+						<Offset>
+							<AbsDimension x="-10" y="5" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\ButtonContainer.tga">
+							<Size>
+								<AbsDimension x="300" y="300" />
+							</Size>
+							<Anchors>
+								<Anchor point="CENTER" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Frames>
+					
+					<Button name="$parent_Button127" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+								<Offset x="6" y="-11" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura127")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button128" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button127" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura128")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button129" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button128" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura129")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button130" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button129" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura130")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button131" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button130" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura131")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button132" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button131" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura132")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button133" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button132" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura133")
+							</OnLoad>
+						</Scripts>
+					</Button>
+	
+					<Button name="$parent_Button134" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button127" relativePoint="BOTTOM">
+								<Offset x="0" y="-5" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura134")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button135" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button134" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura135")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button136" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button135" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura136")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button137" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button136" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura137")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button138" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button137" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura138")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button139" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button138" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura139")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button140" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button139" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura140")
+							</OnLoad>
+						</Scripts>
+					</Button>
+	
+					<Button name="$parent_Button141" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button134" relativePoint="BOTTOM">
+								<Offset x="0" y="-5" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura141")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button142" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button141" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura142")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button143" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button142" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura143")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button144" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button143" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura144")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button145" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button144" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura145")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button146" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button145" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura146")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button147" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button146" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura147")
+							</OnLoad>
+						</Scripts>
+					</Button>
+	
+					<Button name="$parent_Button148" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button141" relativePoint="BOTTOM">
+								<Offset x="0" y="-5" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura148")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button149" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button148" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura149")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button150" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button149" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura150")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button151" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button150" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura151")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button152" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button151" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura152")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button153" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button152" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura153")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button154" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button153" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura154")
+							</OnLoad>
+						</Scripts>
+					</Button>
+	
+					<Button name="$parent_Button155" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button148" relativePoint="BOTTOM">
+								<Offset x="0" y="-5" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura155")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button156" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button155" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura156")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button157" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button156" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura157")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button158" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button157" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura158")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button159" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button158" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura159")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button160" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button159" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura160")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button161" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button160" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura161")
+							</OnLoad>
+						</Scripts>
+					</Button>
+	
+					<Button name="$parent_Button162" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button155" relativePoint="BOTTOM">
+								<Offset x="0" y="-5" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura162")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button163" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button162" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura163")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button164" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button163" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura164")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button165" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button164" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura165")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button166" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button165" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura166")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button167" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button166" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura167")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button168" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button167" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura168")
+							</OnLoad>
+						</Scripts>
+					</Button>
+				</Frames>
+			</Frame>
+			<Frame name="$parent_ButtonContainer_15" hidden="true">
+				<Size>
+					<AbsDimension x="300" y="300" />
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativeTo="$parent">
+						<Offset>
+							<AbsDimension x="-10" y="5" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\ButtonContainer.tga">
+							<Size>
+								<AbsDimension x="300" y="300" />
+							</Size>
+							<Anchors>
+								<Anchor point="CENTER" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Frames>
+					
+					<Button name="$parent_Button169" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+								<Offset x="6" y="-11" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura169")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button170" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button169" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura170")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button171" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button170" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura171")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button172" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button171" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura172")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button173" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button172" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura173")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button174" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button173" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura174")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button175" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button174" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura175")
+							</OnLoad>
+						</Scripts>
+					</Button>
+	
+					<Button name="$parent_Button176" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button169" relativePoint="BOTTOM">
+								<Offset x="0" y="-5" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura176")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button177" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button176" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura177")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button178" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button177" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura178")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button179" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button178" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura179")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button180" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button179" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura180")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button181" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button180" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura181")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button182" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button181" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura182")
+							</OnLoad>
+						</Scripts>
+					</Button>
+	
+					<Button name="$parent_Button183" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button176" relativePoint="BOTTOM">
+								<Offset x="0" y="-5" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura183")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button184" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button183" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura184")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button185" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button184" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura185")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button186" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button185" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura186")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button187" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button186" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura187")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button188" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button187" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura188")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button189" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button188" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura189")
+							</OnLoad>
+						</Scripts>
+					</Button>
+	
+					<Button name="$parent_Button190" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button183" relativePoint="BOTTOM">
+								<Offset x="0" y="-5" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura190")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button191" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button190" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura191")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button192" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button191" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura192")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button193" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button192" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura193")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button194" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button193" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura194")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button195" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button194" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura195")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button196" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button195" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura196")
+							</OnLoad>
+						</Scripts>
+					</Button>
+	
+					<Button name="$parent_Button197" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button190" relativePoint="BOTTOM">
+								<Offset x="0" y="-5" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura197")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button198" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button197" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura198")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button199" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button198" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura199")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button200" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button199" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura200")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button201" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button200" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura201")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button202" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button201" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura202")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button203" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button202" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura203")
+							</OnLoad>
+						</Scripts>
+					</Button>
+	
+					<Button name="$parent_Button204" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button197" relativePoint="BOTTOM">
+								<Offset x="0" y="-5" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura204")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button205" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button204" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura205")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button206" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button205" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura206")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button207" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button206" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura207")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button208" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button207" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura208")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button209" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button208" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura209")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button210" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button209" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura210")
+							</OnLoad>
+						</Scripts>
+					</Button>
+				</Frames>
+			</Frame>
+			<Frame name="$parent_ButtonContainer_16" hidden="true">
+				<Size>
+					<AbsDimension x="300" y="300" />
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativeTo="$parent">
+						<Offset>
+							<AbsDimension x="-10" y="5" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\ButtonContainer.tga">
+							<Size>
+								<AbsDimension x="300" y="300" />
+							</Size>
+							<Anchors>
+								<Anchor point="CENTER" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Frames>
+					
+					<Button name="$parent_Button211" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+								<Offset x="6" y="-11" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura211")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button212" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button211" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura212")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button213" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button212" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura213")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button214" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button213" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura214")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button215" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button214" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura215")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button216" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button215" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura216")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button217" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button216" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura217")
+							</OnLoad>
+						</Scripts>
+					</Button>
+	
+					<Button name="$parent_Button218" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button211" relativePoint="BOTTOM">
+								<Offset x="0" y="-5" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura218")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button219" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button218" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura219")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button220" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button219" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura220")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button221" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button220" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura221")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button222" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button221" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura222")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button223" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button222" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura223")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button224" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button223" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura224")
+							</OnLoad>
+						</Scripts>
+					</Button>
+	
+					<Button name="$parent_Button225" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button218" relativePoint="BOTTOM">
+								<Offset x="0" y="-5" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura225")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button226" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button225" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura226")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button227" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button226" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura227")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button228" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button227" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura228")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button229" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button228" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura229")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button230" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button229" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura230")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button231" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button230" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura231")
+							</OnLoad>
+						</Scripts>
+					</Button>
+	
+					<Button name="$parent_Button232" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button225" relativePoint="BOTTOM">
+								<Offset x="0" y="-5" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura232")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button233" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button232" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura233")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button234" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button233" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura234")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button235" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button234" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura235")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button236" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button235" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura236")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button237" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button236" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura237")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button238" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button237" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura238")
+							</OnLoad>
+						</Scripts>
+					</Button>
+	
+					<Button name="$parent_Button239" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button232" relativePoint="BOTTOM">
+								<Offset x="0" y="-5" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura239")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button240" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button239" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura240")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button241" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button240" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura241")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button242" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button241" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura242")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button243" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button242" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura243")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button244" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button243" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura244")
+							</OnLoad>
+						</Scripts>
+					</Button>
+					<Button name="$parent_Button245" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="$parent_Button244" relativePoint="RIGHT">
+								<Offset x="6" y="0" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura245")
+							</OnLoad>
+						</Scripts>
+					</Button>
+	
+					<Button name="$parent_Button246" inherits="MPowa_IconFrameButtonTemplate">
+						<Anchors>
+							<Anchor point="TOP" relativeTo="$parent_Button239" relativePoint="BOTTOM">
+								<Offset x="0" y="-5" />
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\AddOns\\ModifiedPowerAuras\\Auras\\Aura246")
+							</OnLoad>
+						</Scripts>
+					</Button>
+				</Frames>
+			</Frame>
 			<Button name="$parent_Tab1" inherits="TabButtonTemplate">
 				<Anchors>
 					<Anchor point="BOTTOMLEFT" relativeTo="$parent_ButtonContainer" relativePoint="TOPLEFT">
@@ -6587,6 +9921,18 @@
 						MPowa_IconFrame_ButtonContainer_8:Hide()
 						MPowa_IconFrame_ButtonContainer_9:Hide()
 						MPowa_IconFrame_ButtonContainer_10:Hide()
+						MPowa_IconFrame_ButtonContainer_11:Hide()
+						MPowa_IconFrame_ButtonContainer_12:Hide()
+						MPowa_IconFrame_ButtonContainer_13:Hide()
+						MPowa_IconFrame_ButtonContainer_14:Hide()
+						MPowa_IconFrame_ButtonContainer_15:Hide()
+						MPowa_IconFrame_ButtonContainer_16:Hide()
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab11)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab12)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab13)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab14)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab15)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab16)
 					</OnClick>
 					<OnLoad>
 						getglobal(this:GetName().."Text"):SetText("")
@@ -6638,6 +9984,18 @@
 						MPowa_IconFrame_ButtonContainer_8:Hide()
 						MPowa_IconFrame_ButtonContainer_9:Hide()
 						MPowa_IconFrame_ButtonContainer_10:Hide()
+						MPowa_IconFrame_ButtonContainer_11:Hide()
+						MPowa_IconFrame_ButtonContainer_12:Hide()
+						MPowa_IconFrame_ButtonContainer_13:Hide()
+						MPowa_IconFrame_ButtonContainer_14:Hide()
+						MPowa_IconFrame_ButtonContainer_15:Hide()
+						MPowa_IconFrame_ButtonContainer_16:Hide()
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab11)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab12)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab13)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab14)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab15)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab16)
 					</OnClick>
 					<OnLoad>
 						getglobal(this:GetName().."Text"):SetText("")
@@ -6689,6 +10047,18 @@
 						MPowa_IconFrame_ButtonContainer_8:Hide()
 						MPowa_IconFrame_ButtonContainer_9:Hide()
 						MPowa_IconFrame_ButtonContainer_10:Hide()
+						MPowa_IconFrame_ButtonContainer_11:Hide()
+						MPowa_IconFrame_ButtonContainer_12:Hide()
+						MPowa_IconFrame_ButtonContainer_13:Hide()
+						MPowa_IconFrame_ButtonContainer_14:Hide()
+						MPowa_IconFrame_ButtonContainer_15:Hide()
+						MPowa_IconFrame_ButtonContainer_16:Hide()
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab11)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab12)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab13)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab14)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab15)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab16)
 					</OnClick>
 					<OnLoad>
 						getglobal(this:GetName().."Text"):SetText("")
@@ -6740,6 +10110,18 @@
 						MPowa_IconFrame_ButtonContainer_8:Hide()
 						MPowa_IconFrame_ButtonContainer_9:Hide()
 						MPowa_IconFrame_ButtonContainer_10:Hide()
+						MPowa_IconFrame_ButtonContainer_11:Hide()
+						MPowa_IconFrame_ButtonContainer_12:Hide()
+						MPowa_IconFrame_ButtonContainer_13:Hide()
+						MPowa_IconFrame_ButtonContainer_14:Hide()
+						MPowa_IconFrame_ButtonContainer_15:Hide()
+						MPowa_IconFrame_ButtonContainer_16:Hide()
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab11)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab12)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab13)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab14)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab15)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab16)
 					</OnClick>
 					<OnLoad>
 						getglobal(this:GetName().."Text"):SetText("")
@@ -6791,6 +10173,18 @@
 						MPowa_IconFrame_ButtonContainer_8:Hide()
 						MPowa_IconFrame_ButtonContainer_9:Hide()
 						MPowa_IconFrame_ButtonContainer_10:Hide()
+						MPowa_IconFrame_ButtonContainer_11:Hide()
+						MPowa_IconFrame_ButtonContainer_12:Hide()
+						MPowa_IconFrame_ButtonContainer_13:Hide()
+						MPowa_IconFrame_ButtonContainer_14:Hide()
+						MPowa_IconFrame_ButtonContainer_15:Hide()
+						MPowa_IconFrame_ButtonContainer_16:Hide()
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab11)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab12)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab13)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab14)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab15)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab16)
 					</OnClick>
 					<OnLoad>
 						getglobal(this:GetName().."Text"):SetText("")
@@ -6842,6 +10236,18 @@
 						MPowa_IconFrame_ButtonContainer_8:Hide()
 						MPowa_IconFrame_ButtonContainer_9:Hide()
 						MPowa_IconFrame_ButtonContainer_10:Hide()
+						MPowa_IconFrame_ButtonContainer_11:Hide()
+						MPowa_IconFrame_ButtonContainer_12:Hide()
+						MPowa_IconFrame_ButtonContainer_13:Hide()
+						MPowa_IconFrame_ButtonContainer_14:Hide()
+						MPowa_IconFrame_ButtonContainer_15:Hide()
+						MPowa_IconFrame_ButtonContainer_16:Hide()
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab11)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab12)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab13)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab14)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab15)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab16)
 					</OnClick>
 					<OnLoad>
 						getglobal(this:GetName().."Text"):SetText("")
@@ -6893,6 +10299,18 @@
 						MPowa_IconFrame_ButtonContainer_8:Hide()
 						MPowa_IconFrame_ButtonContainer_9:Hide()
 						MPowa_IconFrame_ButtonContainer_10:Hide()
+						MPowa_IconFrame_ButtonContainer_11:Hide()
+						MPowa_IconFrame_ButtonContainer_12:Hide()
+						MPowa_IconFrame_ButtonContainer_13:Hide()
+						MPowa_IconFrame_ButtonContainer_14:Hide()
+						MPowa_IconFrame_ButtonContainer_15:Hide()
+						MPowa_IconFrame_ButtonContainer_16:Hide()
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab11)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab12)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab13)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab14)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab15)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab16)
 					</OnClick>
 					<OnLoad>
 						getglobal(this:GetName().."Text"):SetText("")
@@ -6944,6 +10362,18 @@
 						MPowa_IconFrame_ButtonContainer:Hide()
 						MPowa_IconFrame_ButtonContainer_9:Hide()
 						MPowa_IconFrame_ButtonContainer_10:Hide()
+						MPowa_IconFrame_ButtonContainer_11:Hide()
+						MPowa_IconFrame_ButtonContainer_12:Hide()
+						MPowa_IconFrame_ButtonContainer_13:Hide()
+						MPowa_IconFrame_ButtonContainer_14:Hide()
+						MPowa_IconFrame_ButtonContainer_15:Hide()
+						MPowa_IconFrame_ButtonContainer_16:Hide()
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab11)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab12)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab13)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab14)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab15)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab16)
 					</OnClick>
 					<OnLoad>
 						getglobal(this:GetName().."Text"):SetText("")
@@ -6995,6 +10425,18 @@
 						MPowa_IconFrame_ButtonContainer_8:Hide()
 						MPowa_IconFrame_ButtonContainer:Hide()
 						MPowa_IconFrame_ButtonContainer_10:Hide()
+						MPowa_IconFrame_ButtonContainer_11:Hide()
+						MPowa_IconFrame_ButtonContainer_12:Hide()
+						MPowa_IconFrame_ButtonContainer_13:Hide()
+						MPowa_IconFrame_ButtonContainer_14:Hide()
+						MPowa_IconFrame_ButtonContainer_15:Hide()
+						MPowa_IconFrame_ButtonContainer_16:Hide()
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab11)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab12)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab13)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab14)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab15)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab16)
 					</OnClick>
 					<OnLoad>
 						getglobal(this:GetName().."Text"):SetText("")
@@ -7046,6 +10488,396 @@
 						MPowa_IconFrame_ButtonContainer_8:Hide()
 						MPowa_IconFrame_ButtonContainer_9:Hide()
 						MPowa_IconFrame_ButtonContainer:Hide()
+						MPowa_IconFrame_ButtonContainer_11:Hide()
+						MPowa_IconFrame_ButtonContainer_12:Hide()
+						MPowa_IconFrame_ButtonContainer_13:Hide()
+						MPowa_IconFrame_ButtonContainer_14:Hide()
+						MPowa_IconFrame_ButtonContainer_15:Hide()
+						MPowa_IconFrame_ButtonContainer_16:Hide()
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab11)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab12)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab13)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab14)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab15)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab16)
+					</OnClick>
+					<OnLoad>
+						getglobal(this:GetName().."Text"):SetText("")
+						PanelTemplates_DeselectTab(this)
+						PanelTemplates_TabResize(0, this)
+						getglobal(this:GetName().."HighlightTexture"):SetWidth(this:GetTextWidth() + 31)
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Button name="$parent_Tab11" inherits="TabButtonTemplate">
+				<Anchors>
+					<Anchor point="BOTTOM" relativeTo="$parent_Tab1" relativePoint="TOP">
+						<Offset>
+							<AbsDimension x="0" y="-5" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\hearthstone">
+							<Size>
+								<AbsDimension x="18" y="18" />
+							</Size>
+							<Anchors>
+								<Anchor point="BOTTOM" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						PanelTemplates_SelectTab(this)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab2)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab3)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab4)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab5)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab6)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab7)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab8)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab9)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab1)
+						MPowa_IconFrame_ButtonContainer_10:Hide()
+						MPowa_IconFrame_ButtonContainer_2:Hide()
+						MPowa_IconFrame_ButtonContainer_3:Hide()
+						MPowa_IconFrame_ButtonContainer_4:Hide()
+						MPowa_IconFrame_ButtonContainer_5:Hide()
+						MPowa_IconFrame_ButtonContainer_6:Hide()
+						MPowa_IconFrame_ButtonContainer_7:Hide()
+						MPowa_IconFrame_ButtonContainer_8:Hide()
+						MPowa_IconFrame_ButtonContainer_9:Hide()
+						MPowa_IconFrame_ButtonContainer:Hide()
+						MPowa_IconFrame_ButtonContainer_11:Show()
+						MPowa_IconFrame_ButtonContainer_12:Hide()
+						MPowa_IconFrame_ButtonContainer_13:Hide()
+						MPowa_IconFrame_ButtonContainer_14:Hide()
+						MPowa_IconFrame_ButtonContainer_15:Hide()
+						MPowa_IconFrame_ButtonContainer_16:Hide()
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab10)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab12)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab13)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab14)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab15)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab16)
+					</OnClick>
+					<OnLoad>
+						getglobal(this:GetName().."Text"):SetText("")
+						PanelTemplates_DeselectTab(this)
+						PanelTemplates_TabResize(0, this)
+						getglobal(this:GetName().."HighlightTexture"):SetWidth(this:GetTextWidth() + 31)
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Button name="$parent_Tab12" inherits="TabButtonTemplate">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parent_Tab11" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="-3.2" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\hearthstone">
+							<Size>
+								<AbsDimension x="18" y="18" />
+							</Size>
+							<Anchors>
+								<Anchor point="BOTTOM" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						PanelTemplates_SelectTab(this)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab2)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab3)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab4)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab5)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab6)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab7)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab8)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab9)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab1)
+						MPowa_IconFrame_ButtonContainer_10:Hide()
+						MPowa_IconFrame_ButtonContainer_2:Hide()
+						MPowa_IconFrame_ButtonContainer_3:Hide()
+						MPowa_IconFrame_ButtonContainer_4:Hide()
+						MPowa_IconFrame_ButtonContainer_5:Hide()
+						MPowa_IconFrame_ButtonContainer_6:Hide()
+						MPowa_IconFrame_ButtonContainer_7:Hide()
+						MPowa_IconFrame_ButtonContainer_8:Hide()
+						MPowa_IconFrame_ButtonContainer_9:Hide()
+						MPowa_IconFrame_ButtonContainer:Hide()
+						MPowa_IconFrame_ButtonContainer_11:Hide()
+						MPowa_IconFrame_ButtonContainer_12:Show()
+						MPowa_IconFrame_ButtonContainer_13:Hide()
+						MPowa_IconFrame_ButtonContainer_14:Hide()
+						MPowa_IconFrame_ButtonContainer_15:Hide()
+						MPowa_IconFrame_ButtonContainer_16:Hide()
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab11)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab10)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab13)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab14)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab15)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab16)
+					</OnClick>
+					<OnLoad>
+						getglobal(this:GetName().."Text"):SetText("")
+						PanelTemplates_DeselectTab(this)
+						PanelTemplates_TabResize(0, this)
+						getglobal(this:GetName().."HighlightTexture"):SetWidth(this:GetTextWidth() + 31)
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Button name="$parent_Tab13" inherits="TabButtonTemplate">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parent_Tab12" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="-3.2" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\hearthstone">
+							<Size>
+								<AbsDimension x="18" y="18" />
+							</Size>
+							<Anchors>
+								<Anchor point="BOTTOM" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						PanelTemplates_SelectTab(this)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab2)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab3)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab4)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab5)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab6)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab7)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab8)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab9)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab1)
+						MPowa_IconFrame_ButtonContainer_10:Hide()
+						MPowa_IconFrame_ButtonContainer_2:Hide()
+						MPowa_IconFrame_ButtonContainer_3:Hide()
+						MPowa_IconFrame_ButtonContainer_4:Hide()
+						MPowa_IconFrame_ButtonContainer_5:Hide()
+						MPowa_IconFrame_ButtonContainer_6:Hide()
+						MPowa_IconFrame_ButtonContainer_7:Hide()
+						MPowa_IconFrame_ButtonContainer_8:Hide()
+						MPowa_IconFrame_ButtonContainer_9:Hide()
+						MPowa_IconFrame_ButtonContainer:Hide()
+						MPowa_IconFrame_ButtonContainer_11:Hide()
+						MPowa_IconFrame_ButtonContainer_12:Hide()
+						MPowa_IconFrame_ButtonContainer_13:Show()
+						MPowa_IconFrame_ButtonContainer_14:Hide()
+						MPowa_IconFrame_ButtonContainer_15:Hide()
+						MPowa_IconFrame_ButtonContainer_16:Hide()
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab11)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab12)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab10)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab14)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab15)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab16)
+					</OnClick>
+					<OnLoad>
+						getglobal(this:GetName().."Text"):SetText("")
+						PanelTemplates_DeselectTab(this)
+						PanelTemplates_TabResize(0, this)
+						getglobal(this:GetName().."HighlightTexture"):SetWidth(this:GetTextWidth() + 31)
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Button name="$parent_Tab14" inherits="TabButtonTemplate">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parent_Tab13" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="-3.2" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\hearthstone">
+							<Size>
+								<AbsDimension x="18" y="18" />
+							</Size>
+							<Anchors>
+								<Anchor point="BOTTOM" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						PanelTemplates_SelectTab(this)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab2)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab3)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab4)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab5)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab6)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab7)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab8)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab9)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab1)
+						MPowa_IconFrame_ButtonContainer_10:Hide()
+						MPowa_IconFrame_ButtonContainer_2:Hide()
+						MPowa_IconFrame_ButtonContainer_3:Hide()
+						MPowa_IconFrame_ButtonContainer_4:Hide()
+						MPowa_IconFrame_ButtonContainer_5:Hide()
+						MPowa_IconFrame_ButtonContainer_6:Hide()
+						MPowa_IconFrame_ButtonContainer_7:Hide()
+						MPowa_IconFrame_ButtonContainer_8:Hide()
+						MPowa_IconFrame_ButtonContainer_9:Hide()
+						MPowa_IconFrame_ButtonContainer:Hide()
+						MPowa_IconFrame_ButtonContainer_11:Hide()
+						MPowa_IconFrame_ButtonContainer_12:Hide()
+						MPowa_IconFrame_ButtonContainer_13:Hide()
+						MPowa_IconFrame_ButtonContainer_14:Show()
+						MPowa_IconFrame_ButtonContainer_15:Hide()
+						MPowa_IconFrame_ButtonContainer_16:Hide()
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab11)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab12)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab13)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab10)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab15)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab16)
+					</OnClick>
+					<OnLoad>
+						getglobal(this:GetName().."Text"):SetText("")
+						PanelTemplates_DeselectTab(this)
+						PanelTemplates_TabResize(0, this)
+						getglobal(this:GetName().."HighlightTexture"):SetWidth(this:GetTextWidth() + 31)
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Button name="$parent_Tab15" inherits="TabButtonTemplate">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parent_Tab14" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="-3.2" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\hearthstone">
+							<Size>
+								<AbsDimension x="18" y="18" />
+							</Size>
+							<Anchors>
+								<Anchor point="BOTTOM" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						PanelTemplates_SelectTab(this)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab2)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab3)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab4)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab5)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab6)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab7)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab8)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab9)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab1)
+						MPowa_IconFrame_ButtonContainer_10:Hide()
+						MPowa_IconFrame_ButtonContainer_2:Hide()
+						MPowa_IconFrame_ButtonContainer_3:Hide()
+						MPowa_IconFrame_ButtonContainer_4:Hide()
+						MPowa_IconFrame_ButtonContainer_5:Hide()
+						MPowa_IconFrame_ButtonContainer_6:Hide()
+						MPowa_IconFrame_ButtonContainer_7:Hide()
+						MPowa_IconFrame_ButtonContainer_8:Hide()
+						MPowa_IconFrame_ButtonContainer_9:Hide()
+						MPowa_IconFrame_ButtonContainer:Hide()
+						MPowa_IconFrame_ButtonContainer_11:Hide()
+						MPowa_IconFrame_ButtonContainer_12:Hide()
+						MPowa_IconFrame_ButtonContainer_13:Hide()
+						MPowa_IconFrame_ButtonContainer_14:Hide()
+						MPowa_IconFrame_ButtonContainer_15:Show()
+						MPowa_IconFrame_ButtonContainer_16:Hide()
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab11)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab12)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab13)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab14)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab10)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab16)
+					</OnClick>
+					<OnLoad>
+						getglobal(this:GetName().."Text"):SetText("")
+						PanelTemplates_DeselectTab(this)
+						PanelTemplates_TabResize(0, this)
+						getglobal(this:GetName().."HighlightTexture"):SetWidth(this:GetTextWidth() + 31)
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Button name="$parent_Tab16" inherits="TabButtonTemplate">
+				<Anchors>
+					<Anchor point="LEFT" relativeTo="$parent_Tab15" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="-3.2" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<Texture file="Interface\AddOns\ModifiedPowerAuras\images\hearthstone">
+							<Size>
+								<AbsDimension x="18" y="18" />
+							</Size>
+							<Anchors>
+								<Anchor point="BOTTOM" />
+							</Anchors>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnClick>
+						PanelTemplates_SelectTab(this)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab2)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab3)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab4)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab5)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab6)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab7)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab8)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab9)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab1)
+						MPowa_IconFrame_ButtonContainer_10:Hide()
+						MPowa_IconFrame_ButtonContainer_2:Hide()
+						MPowa_IconFrame_ButtonContainer_3:Hide()
+						MPowa_IconFrame_ButtonContainer_4:Hide()
+						MPowa_IconFrame_ButtonContainer_5:Hide()
+						MPowa_IconFrame_ButtonContainer_6:Hide()
+						MPowa_IconFrame_ButtonContainer_7:Hide()
+						MPowa_IconFrame_ButtonContainer_8:Hide()
+						MPowa_IconFrame_ButtonContainer_9:Hide()
+						MPowa_IconFrame_ButtonContainer:Hide()
+						MPowa_IconFrame_ButtonContainer_11:Hide()
+						MPowa_IconFrame_ButtonContainer_12:Hide()
+						MPowa_IconFrame_ButtonContainer_13:Hide()
+						MPowa_IconFrame_ButtonContainer_14:Hide()
+						MPowa_IconFrame_ButtonContainer_15:Hide()
+						MPowa_IconFrame_ButtonContainer_16:Show()
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab11)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab12)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab13)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab14)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab15)
+						PanelTemplates_DeselectTab(MPowa_IconFrame_Tab10)
 					</OnClick>
 					<OnLoad>
 						getglobal(this:GetName().."Text"):SetText("")
@@ -7112,7 +10944,7 @@
 				getglobal(this:GetName().."_HEAD"):SetText(MPOWA_PROFILEFRAME_NAME)
 			</OnLoad>
 			<OnShow>
-				MPowa_ScrollFrame_Update()
+				MPOWA:ScrollFrame_Update()
 			</OnShow>
 		</Scripts>
 		<Frames>
@@ -7134,7 +10966,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						MPowa_Import()
+						MPOWA:Import()
 					</OnClick>
 					<OnLoad>
 						getglobal(this:GetName().."_Text"):SetText(MPOWA_BUTTON_IMPORT)
@@ -7151,7 +10983,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						MPowa_ProfileSave()
+						MPOWA:ProfileSave()
 					</OnClick>
 					<OnLoad>
 						getglobal(this:GetName().."_Text"):SetText(MPOWA_BUTTON_SAVE)
@@ -7168,7 +11000,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						MPowa_ProfileRemove()
+						MPOWA:ProfileRemove()
 					</OnClick>
 					<OnLoad>
 						getglobal(this:GetName().."_Text"):SetText(MPOWA_BUTTON_REMOVE)
@@ -7188,12 +11020,12 @@
 				</Anchors>
 				<Scripts>
 					<OnVerticalScroll>
-						FauxScrollFrame_OnVerticalScroll(40, MPowa_ScrollFrame_Update) 
+						FauxScrollFrame_OnVerticalScroll(40, MPOWA.ScrollFrame_Update) 
 					</OnVerticalScroll>
 					<OnShow>
 						MPOWA_PROFILE_SELECTED = 1
 						getglobal(this:GetName().."_Button1_BG"):SetAlpha(0.5)
-						MPowa_ScrollFrame_Update()
+						MPOWA:ScrollFrame_Update()
 					</OnShow>
 				</Scripts>
 			</ScrollFrame>

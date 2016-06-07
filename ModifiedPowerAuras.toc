@@ -8,6 +8,7 @@
 ## Author: Shino <Synced> - Kronos
 ## SavedVariables: MPOWA_PROFILE
 ## SavedVariablesPerCharacter: MPOWA_SAVE
-## Version: 0.9
+## Version: 1
+ModifiedPowerAuras.lua
 ModifiedPowerAuras.xml
 

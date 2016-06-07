@@ -35,8 +35,8 @@ if (GetLocale() == "deDE") then
 	MPOWA_SLIDER_ENDSOUND = "Tondatei: "
 	MPOWA_SLIDER_ENDSOUND_TOOLTIP = "Bewege das, um den Ton zu ändern, wenn eine Aura verschwindet."
 
-	MPOWA_EDITBOX_TOOLTIP = "Schreibe hier den Auranamen hinein, womit das Icon aufgerufen wird."
-	MPOWA_EDITBOX_NAME = "Name der Aura:"
+	MPOWA_EDITBOX_TOOLTIP = "Schreibe hier den genauen Auranamen hinein, womit das Icon aufgerufen wird."
+	MPOWA_EDITBOX_NAME = "Genauer name der Aura:"
 	MPOWA_EDITBOX_STACKS_NAME = "Aufladungen:"
 	MPOWA_EDITBOX_STACKS_TOOLTIP = "Schreibe hier die Anzahl der Aufladungen rein, um die Aura aufzurufen oder verschwinden zu lassen. Folgende Operatoren sind zulässig: '<5' '>3' '=11' '!5' '>=0' '<=6' '2-8'"
 	MPOWA_EDITBOX_DEBUFFDURATION = "Dauer:"
@@ -93,4 +93,13 @@ if (GetLocale() == "deDE") then
 	MPOWA_TEXT_SPECIALTHANKS = "Sinesther - Es ist seine AddOn Idee, bloß wurde es nun für Vanilla stark verbessert."
 	MPOWA_TEXT_SUPPORTING_TITLE = "Danke für das unterstützen!"
 	MPOWA_TEXT_SUPPORTING = "Noch keiner"
+	
+	MPOWA_CHECKBUTTON_FADEIN = "Fade in"
+	MPOWA_CHECKBUTTON_FADEIN_TOOLTIP = "Kreuze das an, um eine Flashanimation zu haben, wenn die Aura erscheint."
+	MPOWA_CHECKBUTTON_FADEOUT = "Fade out"
+	MPOWA_CHECKBUTTON_FADEOUT_TOOLTIP = "Kreuze das an, um eine Flashanimation zu haben, wenn die Aura verschwindet."
+	MPOWA_CHECKBUTTON_GROWOUT = "Grow out"
+	MPOWA_CHECKBUTTON_GROWOUT_TOOLTIP = "Kreuze das an, um eine Growout-Animation zu haben, wenn die Aura verschwindet."
+	MPOWA_EDITBOX_PLAYER_NAME = "Spielername:"
+	MPOWA_EDITBOX_PLAYER_NAME_TOOLTIP = "Füge den Namen, des Raid/Gruppenmitglieds ein."
 end
