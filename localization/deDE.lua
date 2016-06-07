@@ -77,7 +77,7 @@ if (GetLocale() == "deDE") then
 	MPOWA_CHECKBUTTON_ENDSOUND = "Spiele Ton, wenn eine Aura verschwindet"
 	MPOWA_CHECKBUTTON_ENDSOUND_TOOLTIP = "Kreuze das an, um einen Ton abzuspielen, wenn eine Aura verschwindet."
 	MPOWA_CHECKBUTTON_RAIDMEMBER = "|cFF66CD00Schlachtzug/Gruppenmitglied|r"
-	MPOWA_CHECKBUTTON_RAIDMEMBER_TOOLTIP = "Kreuze das an, um einen Schlachtzugs- oder Gruppenmitglied zu suchen. Wenn du diese Option nutzt, füge einen Namen hinzu. Zum Beispiel: (Shino)Segen der Freiheit"
+	MPOWA_CHECKBUTTON_RAIDMEMBER_TOOLTIP = "Kreuze das an, um einen Schlachtzugs- oder Gruppenmitglied zu suchen."
 	MPOWA_CHECKBUTTON_EXACTNAME = "Genauer Name"
 	MPOWA_CHECKBUTTON_EXACTNAME_TOOLTIP = "Nutze den exakten Namen anstatt einen groben filter."
 	MPOWA_CHECKBUTTON_FLASHANIM = "Flash Animation"
