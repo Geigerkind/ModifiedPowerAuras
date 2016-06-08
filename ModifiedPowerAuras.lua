@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 1
+MPOWA.Build = 2
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
@@ -307,6 +307,7 @@ function MPOWA:OnUpdate(elapsed)
 					end
 					self:Flash(elapsed, cat, duration)
 				else
+					self:Print("Hiding: "..MPOWA_SAVE[cat]["buffname"])
 					self.frames[cat][1]:Hide()
 				end
 			end
@@ -440,6 +441,7 @@ function MPOWA:Iterate(unit)
 		
 		if i<17 then
 			MPowa_Tooltip:ClearLines()
+			p = i
 			if unit == "player" then
 				p = GetPlayerBuff(i-1, "HARMFUL")
 				MPowa_Tooltip:SetPlayerBuff(p)
@@ -459,7 +461,8 @@ function MPOWA:Push(aura, unit, i)
 		for cat, val in self.auras[aura] do
 			--self:Print(val)
 			local path = MPOWA_SAVE[val]
-			if not self.active[val] and self:Invert(self:TernaryReturn(val, "alive", self:Reverse(UnitIsDeadOrGhost("player"))), val) and self:Invert(self:TernaryReturn(val, "mounted", self.mounted), val) and self:Invert(self:TernaryReturn(val, "incombat", UnitAffectingCombat("player")), val) and self:Invert(self:TernaryReturn(val, "inparty", self.party), val) and self:Invert(self:TernaryReturn(val, "inraid", UnitInRaid("player")), val) and self:Invert(self:TernaryReturn(val, "inbattleground", self.bg), val) and not path["cooldown"] then
+			local bypass = self.active[val]
+			if self:Invert(self:TernaryReturn(val, "alive", self:Reverse(UnitIsDeadOrGhost("player"))), val) and self:Invert(self:TernaryReturn(val, "mounted", self.mounted), val) and self:Invert(self:TernaryReturn(val, "incombat", UnitAffectingCombat("player")), val) and self:Invert(self:TernaryReturn(val, "inparty", self.party), val) and self:Invert(self:TernaryReturn(val, "inraid", UnitInRaid("player")), val) and self:Invert(self:TernaryReturn(val, "inbattleground", self.bg), val) and not path["cooldown"] then
 				--self:Print("After con "..aura)
 				if path["enemytarget"] and unit == "target" then
 					--self:Print("after con 2 "..aura.. " "..i)
@@ -471,7 +474,7 @@ function MPOWA:Push(aura, unit, i)
 				elseif unit == "player" then
 					self.active[val] = i
 				end
-				if self.active[val] then
+				if self.active[val] and not bypass then
 					if path["usebeginsound"] then
 						if path.beginsound < 16 then
 							PlaySound(self.SOUND[path.beginsound], "master")
