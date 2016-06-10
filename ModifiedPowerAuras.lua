@@ -123,14 +123,16 @@ function MPOWA:OnEvent(event, arg1)
 		end
 	elseif event == "PLAYER_TARGET_CHANGED" then
 		for c, v in self.auras do
-			for cat, val in v do
-				if self.active[val] or self.frames[val][1]:IsVisible() then
-					local p = MPOWA_SAVE[val]
-					if p["enemytarget"] or p["friendlytarget"] then
-						self.active[val] = false
-						self:FHide(val)
-						self.frames[val][3]:Hide()
-						self.frames[val][1]:SetAlpha(p["alpha"])
+			if v then
+				for cat, val in v do
+					if self.active[val] or self.frames[val][1]:IsVisible() then
+						local p = MPOWA_SAVE[val]
+						if p["enemytarget"] or p["friendlytarget"] then
+							self.active[val] = false
+							self:FHide(val)
+							self.frames[val][3]:Hide()
+							self.frames[val][1]:SetAlpha(p["alpha"])
+						end
 					end
 				end
 			end
@@ -139,6 +141,7 @@ function MPOWA:OnEvent(event, arg1)
 	elseif event == "RAID_ROSTER_UPDATE" or event == "PARTY_MEMBERS_CHANGED" then
 		self:GetGroup()
 	elseif event == "CHAT_MSG_SPELL_AURA_GONE_SELF" then
+		--self:Print("GONE")
 		for a in strgfind(arg1, MPOWA_AURA_GONE_SELF) do
 			if self.auras[a] then
 				for cat, val in self.auras[a] do
@@ -156,6 +159,7 @@ function MPOWA:OnEvent(event, arg1)
 							self:FHide(val)
 							self.frames[val][3]:Hide()
 							self.frames[val][1]:SetAlpha(p["alpha"])
+							--self:Print("Hidden: "..p["buffname"])
 						end
 					end
 				end
@@ -191,6 +195,7 @@ function MPOWA:OnEvent(event, arg1)
 			end
 		end
 	elseif event == "PLAYER_AURAS_CHANGED" then
+		--self:Print("NEW!")
 		self:Iterate("player")
 	else
 		self:Init()
@@ -307,7 +312,7 @@ function MPOWA:OnUpdate(elapsed)
 					end
 					self:Flash(elapsed, cat, duration)
 				else
-					self:Print("Hiding: "..MPOWA_SAVE[cat]["buffname"])
+					--self:Print("Hiding: "..MPOWA_SAVE[cat]["buffname"])
 					self.frames[cat][1]:Hide()
 				end
 			end
@@ -462,6 +467,7 @@ function MPOWA:Push(aura, unit, i)
 			--self:Print(val)
 			local path = MPOWA_SAVE[val]
 			local bypass = self.active[val]
+			--self:Print("Before con "..aura)
 			if self:Invert(self:TernaryReturn(val, "alive", self:Reverse(UnitIsDeadOrGhost("player"))), val) and self:Invert(self:TernaryReturn(val, "mounted", self.mounted), val) and self:Invert(self:TernaryReturn(val, "incombat", UnitAffectingCombat("player")), val) and self:Invert(self:TernaryReturn(val, "inparty", self.party), val) and self:Invert(self:TernaryReturn(val, "inraid", UnitInRaid("player")), val) and self:Invert(self:TernaryReturn(val, "inbattleground", self.bg), val) and not path["cooldown"] then
 				--self:Print("After con "..aura)
 				if path["enemytarget"] and unit == "target" then
@@ -471,7 +477,7 @@ function MPOWA:Push(aura, unit, i)
 					self.active[val] = i
 				elseif path["raidgroupmember"] then -- have to check those vars
 					self.active[val] = i
-				elseif unit == "player" then
+				elseif not path["enemytarget"] and not path["friendlytarget"] and not path["raidgroupmember"] and unit == "player" then
 					self.active[val] = i
 				end
 				if self.active[val] and not bypass then
@@ -483,6 +489,7 @@ function MPOWA:Push(aura, unit, i)
 						end
 					end
 					self:FShow(val)
+					--self:Print("Shown: "..path["buffname"].."/"..self.active[val])
 					if path["timer"] then
 						self.frames[val][3]:Show()
 					end
@@ -1213,7 +1220,9 @@ function MPOWA:TestAll()
 		if self.testAll then
 			self.testAll = false
 			for i=1, self.NumBuffs do
-				_G("TextureFrame"..i):Hide()
+				if not self.active[i] then
+					_G("TextureFrame"..i):Hide()
+				end
 				MPOWA_SAVE[i]["test"] = false
 			end
 		else
@@ -1229,7 +1238,9 @@ function MPOWA:Test()
 	if ConfigButton1 then
 		if MPOWA_SAVE[self.selected].test then
 			MPOWA_SAVE[self.selected].test = false
-			_G("TextureFrame"..self.selected):Hide()
+			if not self.active[i] then
+				_G("TextureFrame"..self.selected):Hide()
+			end
 		else
 			MPOWA_SAVE[self.selected].test = true
 			_G("TextureFrame"..self.selected):Show()

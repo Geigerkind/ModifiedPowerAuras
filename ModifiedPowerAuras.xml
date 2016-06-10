@@ -1090,6 +1090,7 @@
 											if not MPOWA_SAVE[MPOWA.CurEdit]["inverse"] then
 												MPOWA.NeedUpdate[MPOWA.CurEdit] = false
 											end
+											MPOWA.active[MPOWA.CurEdit] = false
 											MPOWA.frames[MPOWA.CurEdit][1]:Hide()
 										end
 										MPOWA:Checkbutton("cooldown")
@@ -1210,6 +1211,7 @@
 											if not MPOWA_SAVE[MPOWA.CurEdit]["cooldown"] then
 												MPOWA.NeedUpdate[MPOWA.CurEdit] = false
 											end
+											MPOWA.active[MPOWA.CurEdit] = false
 											MPOWA.frames[MPOWA.CurEdit][1]:Hide()
 										end
 										MPOWA:Checkbutton("inverse")
