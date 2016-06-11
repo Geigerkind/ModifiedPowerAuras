@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 3
+MPOWA.Build = 4
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
@@ -147,6 +147,8 @@ function MPOWA:OnEvent(event, arg1)
 				for cat, val in self.auras[a] do
 					if self.active[val] then
 						local p = MPOWA_SAVE[val]
+						self.active[val] = false
+						self.frames[val][3]:Hide()
 						if not p["inverse"] and not p["cooldown"] then
 							if p["useendsound"] then
 								if p.endsound < 16 then
@@ -155,9 +157,7 @@ function MPOWA:OnEvent(event, arg1)
 									PlaySoundFile("Interface\\AddOns\\ModifiedPowerAuras\\Sounds\\"..self.SOUND[p.endsound], "master")
 								end
 							end
-							self.active[val] = false
 							self:FHide(val)
-							self.frames[val][3]:Hide()
 							self.frames[val][1]:SetAlpha(p["alpha"])
 							--self:Print("Hidden: "..p["buffname"])
 						end
