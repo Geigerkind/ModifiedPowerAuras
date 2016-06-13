@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 5
+MPOWA.Build = 6
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
@@ -159,7 +159,7 @@ end
 function MPOWA:GrowOut(elapsed)
 	for cat, val in self.GrowingOut do
 		if val then
-			if not val[6] then
+			if not val[6] or val[6] == 0 then
 				val[6] = (val[3]-val[4])/(val[2]/elapsed)
 			end
 			if val[1]:GetHeight()>=val[3] then
@@ -427,8 +427,8 @@ function MPOWA:Iterate(unit)
 								PlaySoundFile("Interface\\AddOns\\ModifiedPowerAuras\\Sounds\\"..self.SOUND[p.endsound], "master")
 							end
 						end
-						self:FHide(cat)
 						self.frames[cat][1]:SetAlpha(p["alpha"])
+						self:FHide(cat)
 					end
 				end
 			end
