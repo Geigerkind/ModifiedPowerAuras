@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 4
+MPOWA.Build = 5
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
@@ -15,6 +15,7 @@ MPOWA.NeedUpdate = {}
 MPOWA.RaidGroupMembers = {}
 
 MPOWA.active = {}
+MPOWA.activeTimer = {}
 MPOWA.mounted = false
 MPOWA.party = false
 MPOWA.bg = false
@@ -140,60 +141,6 @@ function MPOWA:OnEvent(event, arg1)
 		self:Iterate("target")
 	elseif event == "RAID_ROSTER_UPDATE" or event == "PARTY_MEMBERS_CHANGED" then
 		self:GetGroup()
-	elseif event == "CHAT_MSG_SPELL_AURA_GONE_SELF" then
-		--self:Print("GONE")
-		for a in strgfind(arg1, MPOWA_AURA_GONE_SELF) do
-			if self.auras[a] then
-				for cat, val in self.auras[a] do
-					if self.active[val] then
-						local p = MPOWA_SAVE[val]
-						self.active[val] = false
-						self.frames[val][3]:Hide()
-						if not p["inverse"] and not p["cooldown"] then
-							if p["useendsound"] then
-								if p.endsound < 16 then
-									PlaySound(self.SOUND[p.endsound], "master")
-								else
-									PlaySoundFile("Interface\\AddOns\\ModifiedPowerAuras\\Sounds\\"..self.SOUND[p.endsound], "master")
-								end
-							end
-							self:FHide(val)
-							self.frames[val][1]:SetAlpha(p["alpha"])
-							--self:Print("Hidden: "..p["buffname"])
-						end
-					end
-				end
-			end
-		end
-	elseif event == "CHAT_MSG_SPELL_AURA_GONE_PARTY" or event == "CHAT_MSG_SPELL_AURA_GONE_OTHER" then
-		for ab, ta in strgfind(arg1, MPOWA_AURA_GONE_OTHER) do
-			if self.auras[ab] then
-				for cat, val in self.auras[ab] do
-					if self.active[val] then
-						local p = MPOWA_SAVE[val]
-						if p["enemytarget"] or p["friendlytarget"] then
-							local tar = UN("target")
-							if tar then
-								if ta == tar then
-									self.active[val] = false
-									self:FHide(val)
-									self.frames[val][3]:Hide()
-									self.frames[val][1]:SetAlpha(p["alpha"])
-								end
-							end
-						end
-						if p["raidgroupmember"] then
-							if ta == p["rgmname"] then
-								self.active[val] = false
-								self:FHide(val)
-								self.frames[val][3]:Hide()
-								self.frames[val][1]:SetAlpha(p["alpha"])
-							end
-						end
-					end
-				end
-			end
-		end
 	elseif event == "PLAYER_AURAS_CHANGED" then
 		--self:Print("NEW!")
 		self:Iterate("player")
@@ -341,7 +288,11 @@ function MPOWA:GetDuration(index, cat)
 	local path = MPOWA_SAVE[cat]
 	if not path["raidgroupmember"] then -- check this
 		if path["friendlytarget"] or path["enemytarget"] then
-			return path["targetduration"]
+			local time = GT()
+			if (self.activeTimer[cat]+path["targetduration"]-time)<0 then
+				self.activeTimer[cat] = time
+			end
+			return (self.activeTimer[cat]+path["targetduration"]-time)
 		else
 			return GetPlayerBuffTimeLeft(index) or 0
 		end
@@ -427,7 +378,9 @@ function MPOWA:FShow(key)
 	end
 end
 
+local BuffExist = {}
 function MPOWA:Iterate(unit)
+	BuffExist = {}
 	self:IsMounted()
 	self:InParty()
 	self:InBG()
@@ -459,6 +412,28 @@ function MPOWA:Iterate(unit)
 		if not buff and not debuff then break end
 		----self:Print("Pushed: "..buff.." Index: "..i)
 	end
+	for cat, val in self.active do
+		if val then
+			if not BuffExist[cat] then
+				local p = MPOWA_SAVE[cat]
+				if ((p["friendlytarget"] or p["enemytarget"]) and unit=="target") or (not p["raidgroupmember"] and not p["friendlytarget"] and not p["enemytarget"] and unit=="player") or p["raidgroupmember"] then
+					self.active[cat] = false
+					self.frames[cat][3]:Hide()
+					if not p["inverse"] and not p["cooldown"] then
+						if p["useendsound"] then
+							if p.endsound < 16 then
+								PlaySound(self.SOUND[p.endsound], "master")
+							else
+								PlaySoundFile("Interface\\AddOns\\ModifiedPowerAuras\\Sounds\\"..self.SOUND[p.endsound], "master")
+							end
+						end
+						self:FHide(cat)
+						self.frames[cat][1]:SetAlpha(p["alpha"])
+					end
+				end
+			end
+		end
+	end
 end
 
 function MPOWA:Push(aura, unit, i)
@@ -469,6 +444,7 @@ function MPOWA:Push(aura, unit, i)
 			local bypass = self.active[val]
 			--self:Print("Before con "..aura)
 			if self:Invert(self:TernaryReturn(val, "alive", self:Reverse(UnitIsDeadOrGhost("player"))), val) and self:Invert(self:TernaryReturn(val, "mounted", self.mounted), val) and self:Invert(self:TernaryReturn(val, "incombat", UnitAffectingCombat("player")), val) and self:Invert(self:TernaryReturn(val, "inparty", self.party), val) and self:Invert(self:TernaryReturn(val, "inraid", UnitInRaid("player")), val) and self:Invert(self:TernaryReturn(val, "inbattleground", self.bg), val) and not path["cooldown"] then
+				BuffExist[val] = true
 				--self:Print("After con "..aura)
 				if path["enemytarget"] and unit == "target" then
 					--self:Print("after con 2 "..aura.. " "..i)
@@ -481,6 +457,7 @@ function MPOWA:Push(aura, unit, i)
 					self.active[val] = i
 				end
 				if self.active[val] and not bypass then
+					self.activeTimer[val] = GT()
 					if path["usebeginsound"] then
 						if path.beginsound < 16 then
 							PlaySound(self.SOUND[path.beginsound], "master")
@@ -1324,7 +1301,4 @@ MPOWA:RegisterEvent("UNIT_AURA")
 MPOWA:RegisterEvent("PLAYER_TARGET_CHANGED")
 MPOWA:RegisterEvent("RAID_ROSTER_UPDATE")
 MPOWA:RegisterEvent("PARTY_MEMBERS_CHANGED")
-MPOWA:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
-MPOWA:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
-MPOWA:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_PARTY")
 MPOWA:RegisterEvent("PLAYER_AURAS_CHANGED")
