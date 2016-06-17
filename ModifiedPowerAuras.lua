@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 6
+MPOWA.Build = 7
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
@@ -680,7 +680,9 @@ function MPOWA:Init()
 		if val["rgmname"] then
 			self.RaidGroupMembers[val["rgmname"]] = true
 		end
+		val["test"] = false
 	end
+	self.testAll = false
 end
 
 function MPOWA:Print(msg)
