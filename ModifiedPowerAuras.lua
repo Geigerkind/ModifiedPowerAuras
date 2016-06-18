@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 7
+MPOWA.Build = 8
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
@@ -311,7 +311,11 @@ function MPOWA:GetCooldown(buff)
 			local _,_,name = strfind(GetInventoryItemLink("player",i) or "","^.*%[(.*)%].*$")
 			if (name) then
 				if strfind(strlower(buff), strlower(name)) then
-					return ((start or 0)+(duration or 0))-GT()
+					if duration>2 then
+						return ((start or 0)+(duration or 0))-GT()
+					else
+						return 0
+					end
 				elseif i == 18 and start == 0 and duration == 0 then
 					-- Get Container Item Cooldown
 					for p=0, 4 do
@@ -320,9 +324,17 @@ function MPOWA:GetCooldown(buff)
 							_,_,name=string.find(GetContainerItemLink(p,u) or "","^.*%[(.*)%].*$")
 							if (not name) then break end
 							if strfind(strlower(buff), strlower(name)) then
-								return ((start or 0)+(duration or 0))-GT()
+								if duration>2 then
+									return ((start or 0)+(duration or 0))-GT()
+								else
+									return 0
+								end
 							elseif p == 4 and u == GetContainerNumSlots(p) then
-								return ((start or 0)+(duration or 0))-GT()
+								if duration>2 then
+									return ((start or 0)+(duration or 0))-GT()
+								else
+									return 0
+								end
 							else
 								return 0
 							end
@@ -332,7 +344,11 @@ function MPOWA:GetCooldown(buff)
 			end
 		end
 	else
-		return ((start or 0)+(duration or 0))-GT()
+		if duration>2 then
+			return ((start or 0)+(duration or 0))-GT()
+		else
+			return 0
+		end
 	end
 end
 
