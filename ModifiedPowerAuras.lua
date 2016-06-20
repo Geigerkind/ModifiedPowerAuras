@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 8
+MPOWA.Build = 9
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1

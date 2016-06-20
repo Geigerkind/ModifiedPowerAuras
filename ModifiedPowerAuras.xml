@@ -63,8 +63,9 @@
 					local res = ({GetScreenResolutions()})[index]
 					for xc,yc in string.gfind(res, "(%d+)x(%d+)") do
 						local a,b,c,x,y = this:GetPoint(0)
-						x = ceil(x-(xc/(UIParent:GetEffectiveScale()*2)))
-						y = ceil(y+(yc/(UIParent:GetEffectiveScale()*2)))
+						local scale = (0.7-this:GetScale())*0.92
+						x = ceil(x-(xc/((UIParent:GetEffectiveScale()-scale)*2)))
+						y = ceil(y+(yc/((UIParent:GetEffectiveScale()-scale)*2)))
 						MPowa_ConfigFrame_Container_1_Slider_PosX:SetMinMaxValues(MPOWA:GetMinValues(x),MPOWA:GetMaxValues(x))
 						MPowa_ConfigFrame_Container_1_Slider_PosX:SetValue(x)
 						MPowa_ConfigFrame_Container_1_Slider_PosXText:SetText(MPOWA_SLIDER_POSX.." "..x)
