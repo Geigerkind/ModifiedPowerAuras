@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 10
+MPOWA.Build = 11
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
@@ -400,7 +400,7 @@ function MPOWA:Iterate(unit)
 	self:IsMounted()
 	self:InParty()
 	self:InBG()
-	for i=1, 32 do
+	for i=1, 40 do
 		local p = i
 		local debuff
 		MPowa_Tooltip:ClearLines()
