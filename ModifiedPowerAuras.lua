@@ -456,7 +456,7 @@ end
 
 function MPOWA:Push(aura, unit, i)
 	if self.auras[aura] then
-		self:Print("Attempt to push: "..aura.."/"..unit)
+		--self:Print("Attempt to push: "..aura.."/"..unit)
 		for cat, val in self.auras[aura] do
 			--self:Print(val)
 			local path = MPOWA_SAVE[val]
