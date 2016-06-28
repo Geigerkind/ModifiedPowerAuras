@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 11
+MPOWA.Build = 12
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
@@ -400,9 +400,11 @@ function MPOWA:Iterate(unit)
 	self:IsMounted()
 	self:InParty()
 	self:InBG()
+	--self:Print("Iterate: "..unit)
 	for i=1, 40 do
 		local p = i
 		local debuff
+		MPowa_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
 		MPowa_Tooltip:ClearLines()
 		if unit == "player" then
 			p = GetPlayerBuff(i-1, "HELPFUL")
@@ -454,6 +456,7 @@ end
 
 function MPOWA:Push(aura, unit, i)
 	if self.auras[aura] then
+		self:Print("Attempt to push: "..aura.."/"..unit)
 		for cat, val in self.auras[aura] do
 			--self:Print(val)
 			local path = MPOWA_SAVE[val]
@@ -482,6 +485,7 @@ function MPOWA:Push(aura, unit, i)
 						end
 					end
 					self:FShow(val)
+					--self:Print("SHown")
 					--self:Print("Shown: "..path["buffname"].."/"..self.active[val])
 					if path["timer"] then
 						self.frames[val][3]:Show()
