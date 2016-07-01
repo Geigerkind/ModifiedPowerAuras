@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 12
+MPOWA.Build = 13
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
@@ -401,7 +401,7 @@ function MPOWA:Iterate(unit)
 	self:InParty()
 	self:InBG()
 	--self:Print("Iterate: "..unit)
-	for i=1, 40 do
+	for i=1, 60 do
 		local p = i
 		local debuff
 		MPowa_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
@@ -427,6 +427,7 @@ function MPOWA:Iterate(unit)
 			debuff = MPowa_TooltipTextLeft1:GetText()
 			self:Push(debuff, unit, p)
 		end
+		MPowa_Tooltip:Hide()
 		if not buff and not debuff then break end
 		----self:Print("Pushed: "..buff.." Index: "..i)
 	end
