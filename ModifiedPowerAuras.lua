@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 13
+MPOWA.Build = 14
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
@@ -674,32 +674,34 @@ function MPOWA:Init()
 	end
 	
 	for cat, val in MPOWA_SAVE do
-		if not self.frames[cat] then
-			self.frames[cat] = {}
-		end
-		
-		self:CreateIcon(cat)
-		self:ApplyConfig(cat)
-		
-		if not self.auras[val["buffname"]] then
-			self.auras[val["buffname"]] = {}
-		end
-		tinsert(self.auras[val["buffname"]], cat)
-		
-		if val["inverse"] or val["cooldown"] then
-			self.NeedUpdate[cat] = true
-		end
-		
-		if val["enemytarget"] or val["friendlytarget"] then
-			MPOWA_SAVE[cat]["unit"] = "target"
-		end
-		
 		if val["used"] then
-			self.NumBuffs = cat
-		end
-		
-		if val["rgmname"] then
-			self.RaidGroupMembers[val["rgmname"]] = true
+			if not self.frames[cat] then
+				self.frames[cat] = {}
+			end
+			
+			self:CreateIcon(cat)
+			self:ApplyConfig(cat)
+			
+			if not self.auras[val["buffname"]] then
+				self.auras[val["buffname"]] = {}
+			end
+			tinsert(self.auras[val["buffname"]], cat)
+			
+			if val["inverse"] or val["cooldown"] then
+				self.NeedUpdate[cat] = true
+			end
+			
+			if val["enemytarget"] or val["friendlytarget"] then
+				MPOWA_SAVE[cat]["unit"] = "target"
+			end
+			
+			if val["used"] then
+				self.NumBuffs = cat
+			end
+			
+			if val["rgmname"] then
+				self.RaidGroupMembers[val["rgmname"]] = true
+			end
 		end
 		val["test"] = false
 	end
