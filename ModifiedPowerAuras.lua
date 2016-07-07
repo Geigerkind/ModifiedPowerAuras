@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 14
+MPOWA.Build = 15
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
@@ -181,7 +181,7 @@ function MPOWA:OnUpdate(elapsed)
 	if LastUpdate >= UpdateTime then
 		for cat, val in self.NeedUpdate do
 			if val then
-				if not self.active[cat] and self:Invert(self:TernaryReturn(cat, "alive", self:Reverse(UnitIsDeadOrGhost("player"))), cat) and self:Invert(self:TernaryReturn(cat, "mounted", self.mounted), cat) and self:Invert(self:TernaryReturn(cat, "incombat", UnitAffectingCombat("player")), cat) and self:Invert(self:TernaryReturn(cat, "inparty", self.party), cat) and self:Invert(self:TernaryReturn(cat, "inraid", UnitInRaid("player")), cat) and self:Invert(self:TernaryReturn(cat, "inbattleground", self.bg), cat) then
+				if not self.active[cat] and self:Invert(self:TernaryReturn(cat, "alive", UnitIsDeadOrGhost("player")), cat) and self:Invert(self:TernaryReturn(cat, "mounted", self:Reverse(self.mounted)), cat) and self:Invert(self:TernaryReturn(cat, "incombat", self:Reverse(UnitAffectingCombat("player"))), cat) and self:Invert(self:TernaryReturn(cat, "inparty", self.party), cat) and self:Invert(self:TernaryReturn(cat, "inraid", UnitInRaid("player")), cat) and self:Invert(self:TernaryReturn(cat, "inbattleground", self:Reverse(self.bg)), cat) then
 					local path = MPOWA_SAVE[cat]
 					if path["cooldown"] then
 						if path["timer"] then
@@ -397,9 +397,11 @@ end
 local BuffExist = {}
 function MPOWA:Iterate(unit)
 	BuffExist = {}
-	self:IsMounted()
-	self:InParty()
-	self:InBG()
+	if unit=="player" then
+		self:IsMounted()
+		self:InParty()
+		self:InBG()
+	end
 	--self:Print("Iterate: "..unit)
 	for i=1, 60 do
 		local p = i
@@ -506,14 +508,15 @@ function MPOWA:Reverse(bool)
 end
 
 function MPOWA:IsMounted()
+	MPowa_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
 	for i=0,31 do
 		MPowa_Tooltip:ClearLines()
-		MPowa_Tooltip:SetPlayerBuff(GetPlayerBuff(i, "HELPFUL"))
+		MPowa_Tooltip:SetPlayerBuff(GetPlayerBuff(i, "HELPFUL|PASSIVE"))
 		local desc = MPowa_TooltipTextLeft2:GetText()
 		if (not desc) then break end
 		if stf(desc, MPOWA_SCRIPT_MOUNT_100) or stf(desc, MPOWA_SCRIPT_MOUNT_60) then
 			self.mounted = true
-			break
+			return
 		end
 	end
 	self.mounted = false
