@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 15
+MPOWA.Build = 16
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
@@ -226,8 +226,10 @@ function MPOWA:OnUpdate(elapsed)
 			if val then
 				local path = MPOWA_SAVE[cat]
 				local text, count = "", 0
+				--self:Print(path["unit"] or "")
 				if (path["unit"] or "player") == "player" then
 					count = GetPlayerBuffApplications(val)
+					--self:Print("Fired!! "..count)
 				else
 					if path["isdebuff"] then
 						text, count = UnitDebuff(path["unit"], val)
@@ -238,6 +240,7 @@ function MPOWA:OnUpdate(elapsed)
 				self:SetTexture(cat, text, val)
 				local duration = 0
 				if self:IsStacks(count or 0, cat) then
+					--self:Print("Showing: "..MPOWA_SAVE[cat]["buffname"])
 					if (count or 0)>1 then
 						self.frames[cat][4]:SetText(count)
 						self.frames[cat][4]:Show()
@@ -258,6 +261,7 @@ function MPOWA:OnUpdate(elapsed)
 						end
 					end
 					self:Flash(elapsed, cat, duration)
+					self.frames[cat][1]:Show()
 				else
 					--self:Print("Hiding: "..MPOWA_SAVE[cat]["buffname"])
 					self.frames[cat][1]:Hide()
@@ -580,6 +584,7 @@ function MPOWA:IsStacks(count, id)
 		local con = strsub(MPOWA_SAVE[id].stacks, 1, 2)
 		local amount = tonumber(strsub(MPOWA_SAVE[id].stacks, 3))
 		if amount ~= nil and con ~= nil then
+			--self:Print(con.."/"..amount.."/"..count)
 			if con == ">=" and count >= amount then
 				return true
 			elseif con == "<=" and count <= amount then
@@ -610,6 +615,7 @@ function MPOWA:IsStacks(count, id)
 			return false
 		end
 	end
+	return false
 end
 
 function MPOWA:Flash(elapsed, cat, timeLeft)
@@ -696,6 +702,8 @@ function MPOWA:Init()
 			
 			if val["enemytarget"] or val["friendlytarget"] then
 				MPOWA_SAVE[cat]["unit"] = "target"
+			else
+				MPOWA_SAVE[cat]["unit"] = nil
 			end
 			
 			if val["used"] then
