@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 16
+MPOWA.Build = 17
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
@@ -261,10 +261,20 @@ function MPOWA:OnUpdate(elapsed)
 						end
 					end
 					self:Flash(elapsed, cat, duration)
-					self.frames[cat][1]:Show()
+					if path["inverse"] then
+						self.frames[cat][1]:Hide()
+					else
+						self.frames[cat][1]:Show()
+					end
 				else
 					--self:Print("Hiding: "..MPOWA_SAVE[cat]["buffname"])
 					self.frames[cat][1]:Hide()
+				end
+			else
+				if not self.NeedUpdate[cat] then
+					if not self.GrowingOut[cat] then
+						self.frames[cat][1]:Hide()
+					end
 				end
 			end
 		end
