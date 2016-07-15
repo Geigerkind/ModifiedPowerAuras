@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 17
+MPOWA.Build = 18
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
@@ -109,6 +109,7 @@ local flr = floor
 local strgfind = string.gfind
 local strfind = string.find
 local GT = GetTime
+local tnbr = tonumber
 
 local UpdateTime, LastUpdate = 0.05, 0
 local SELECTEDICON = "Interface\\ICONS\\Ability_Warrior_BattleShout"
@@ -181,8 +182,8 @@ function MPOWA:OnUpdate(elapsed)
 	if LastUpdate >= UpdateTime then
 		for cat, val in self.NeedUpdate do
 			if val then
+				local path = MPOWA_SAVE[cat]
 				if not self.active[cat] and self:Invert(self:TernaryReturn(cat, "alive", UnitIsDeadOrGhost("player")), cat) and self:Invert(self:TernaryReturn(cat, "mounted", self:Reverse(self.mounted)), cat) and self:Invert(self:TernaryReturn(cat, "incombat", self:Reverse(UnitAffectingCombat("player"))), cat) and self:Invert(self:TernaryReturn(cat, "inparty", self.party), cat) and self:Invert(self:TernaryReturn(cat, "inraid", UnitInRaid("player")), cat) and self:Invert(self:TernaryReturn(cat, "inbattleground", self:Reverse(self.bg)), cat) then
-					local path = MPOWA_SAVE[cat]
 					if path["cooldown"] then
 						if path["timer"] then
 							local duration = self:GetCooldown(path["buffname"]) or 0
@@ -218,7 +219,9 @@ function MPOWA:OnUpdate(elapsed)
 						self:FShow(cat)
 					end
 				else
-					self:FHide(cat)
+					if path["inverse"] or path["cooldown"] then
+						self:FHide(cat)
+					end
 				end
 			end
 		end
@@ -379,7 +382,7 @@ end
 
 function MPOWA:FHide(key)
 	local p = MPOWA_SAVE[key]
-	if self.frames[key][1]:IsVisible() and self.frames[key][1]:GetAlpha()==p["alpha"] then
+	if self.frames[key][1]:IsVisible() and ((tnbr(self.frames[key][1]:GetAlpha())-0.01)<=tnbr(p["alpha"]) and (tnbr(self.frames[key][1]:GetAlpha())+0.01)>=tnbr(p["alpha"])) then
 		if p["growout"] then
 			if p["fadeout"] then
 				self:AddGrowOut(self.frames[key][1], 0.5, 250, 64, key)
@@ -399,7 +402,7 @@ end
 
 function MPOWA:FShow(key)
 	local p = MPOWA_SAVE[key]
-	if not self.frames[key][1]:IsVisible() and self.frames[key][1]:GetAlpha()==p["alpha"] then
+	if not self.frames[key][1]:IsVisible() and ((tnbr(self.frames[key][1]:GetAlpha())-0.01)<=tnbr(p["alpha"]) and (tnbr(self.frames[key][1]:GetAlpha())+0.01)>=tnbr(p["alpha"])) then
 		if p["fadein"] then
 			UIFrameFadeIn(self.frames[key][1], 0.5, 0.01, p["alpha"])
 		else
@@ -411,6 +414,7 @@ end
 local BuffExist = {}
 function MPOWA:Iterate(unit)
 	BuffExist = {}
+	--self:Print("New Iterate ------------------------------")
 	if unit=="player" then
 		self:IsMounted()
 		self:InParty()
@@ -481,6 +485,7 @@ function MPOWA:Push(aura, unit, i)
 			--self:Print("Before con "..aura)
 			if self:Invert(self:TernaryReturn(val, "alive", self:Reverse(UnitIsDeadOrGhost("player"))), val) and self:Invert(self:TernaryReturn(val, "mounted", self.mounted), val) and self:Invert(self:TernaryReturn(val, "incombat", UnitAffectingCombat("player")), val) and self:Invert(self:TernaryReturn(val, "inparty", self.party), val) and self:Invert(self:TernaryReturn(val, "inraid", UnitInRaid("player")), val) and self:Invert(self:TernaryReturn(val, "inbattleground", self.bg), val) and not path["cooldown"] then
 				BuffExist[val] = true
+				--self:Print("Pushed: "..aura)
 				--self:Print("After con "..aura)
 				if path["enemytarget"] and unit == "target" then
 					--self:Print("after con 2 "..aura.. " "..i)
@@ -502,6 +507,7 @@ function MPOWA:Push(aura, unit, i)
 						end
 					end
 					self:FShow(val)
+					--self:Print("Is Visible: "..aura)
 					--self:Print("SHown")
 					--self:Print("Shown: "..path["buffname"].."/"..self.active[val])
 					if path["timer"] then
