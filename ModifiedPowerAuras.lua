@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 19
+MPOWA.Build = 20
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
@@ -382,17 +382,17 @@ end
 
 function MPOWA:FHide(key)
 	local p = MPOWA_SAVE[key]
-	if self.frames[key][1]:IsVisible() and ((tnbr(self.frames[key][1]:GetAlpha())-0.01)<=tnbr(p["alpha"]) and (tnbr(self.frames[key][1]:GetAlpha())+0.01)>=tnbr(p["alpha"])) then
+	if self.frames[key][1]:IsVisible() and ((tnbr(self.frames[key][1]:GetAlpha())<=tnbr(p["alpha"]) and tnbr(self.frames[key][1]:GetAlpha())>=tnbr(p["alpha"])) or tnbr(self.frames[key][1]:GetAlpha())==0) then
 		if p["growout"] then
 			if p["fadeout"] then
 				self:AddGrowOut(self.frames[key][1], 0.5, 250, 64, key)
-				UIFrameFadeOut(self.frames[key][1], 0.5, p["alpha"], 0)
+				UIFrameFadeOut(self.frames[key][1], 0.5, tnbr(p["alpha"]), 0)
 			else
 				self:AddGrowOut(self.frames[key][1], 0.5, 250, 64, key)
 			end
 		else
 			if p["fadeout"] then
-				UIFrameFadeOut(self.frames[key][1], 0.5, p["alpha"], 0)
+				UIFrameFadeOut(self.frames[key][1], 0.5, tnbr(p["alpha"]), 0)
 			else
 				self.frames[key][1]:Hide()
 			end
@@ -402,9 +402,9 @@ end
 
 function MPOWA:FShow(key)
 	local p = MPOWA_SAVE[key]
-	if not self.frames[key][1]:IsVisible() and ((tnbr(self.frames[key][1]:GetAlpha())-0.01)<=tnbr(p["alpha"]) and (tnbr(self.frames[key][1]:GetAlpha())+0.01)>=tnbr(p["alpha"])) then
+	if not self.frames[key][1]:IsVisible() and ((tnbr(self.frames[key][1]:GetAlpha())<=tnbr(p["alpha"]) and tnbr(self.frames[key][1]:GetAlpha())>=tnbr(p["alpha"])) or tnbr(self.frames[key][1]:GetAlpha())==0) then
 		if p["fadein"] then
-			UIFrameFadeIn(self.frames[key][1], 0.5, 0.01, p["alpha"])
+			UIFrameFadeIn(self.frames[key][1], 0.5, 0.01, tnbr(p["alpha"]))
 		else
 			self.frames[key][1]:Show()
 		end
@@ -499,6 +499,9 @@ function MPOWA:Push(aura, unit, i)
 				end
 				if self.active[val] and not bypass then
 					self.activeTimer[val] = GT()
+					if tnbr(self.frames[val][1]:GetAlpha())<=0.1 then
+						self.frames[val][1]:SetAlpha(tnbr(path["alpha"]))
+					end
 					if path["usebeginsound"] then
 						if path.beginsound < 16 then
 							PlaySound(self.SOUND[path.beginsound], "master")
