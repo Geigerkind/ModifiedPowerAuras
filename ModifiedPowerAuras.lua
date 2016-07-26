@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 20
+MPOWA.Build = 21
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
@@ -183,7 +183,7 @@ function MPOWA:OnUpdate(elapsed)
 		for cat, val in self.NeedUpdate do
 			if val then
 				local path = MPOWA_SAVE[cat]
-				if not self.active[cat] and self:Invert(self:TernaryReturn(cat, "alive", UnitIsDeadOrGhost("player")), cat) and self:Invert(self:TernaryReturn(cat, "mounted", self:Reverse(self.mounted)), cat) and self:Invert(self:TernaryReturn(cat, "incombat", self:Reverse(UnitAffectingCombat("player"))), cat) and self:Invert(self:TernaryReturn(cat, "inparty", self.party), cat) and self:Invert(self:TernaryReturn(cat, "inraid", UnitInRaid("player")), cat) and self:Invert(self:TernaryReturn(cat, "inbattleground", self:Reverse(self.bg)), cat) then
+				if not self.active[cat] and self:TernaryReturn(cat, "alive", UnitIsDeadOrGhost("player")) and self:TernaryReturn(cat, "mounted", self:Reverse(self.mounted)) and self:TernaryReturn(cat, "incombat", self:Reverse(UnitAffectingCombat("player"))) and self:TernaryReturn(cat, "inparty", self.party) and self:TernaryReturn(cat, "inraid", UnitInRaid("player")) and self:TernaryReturn(cat, "inbattleground", self:Reverse(self.bg)) then
 					if path["cooldown"] then
 						if path["timer"] then
 							local duration = self:GetCooldown(path["buffname"]) or 0
@@ -216,6 +216,7 @@ function MPOWA:OnUpdate(elapsed)
 							end
 						end
 					else
+						--self:Print("Show "..path["buffname"].."//"..(self.active[cat] or "NULL"))
 						self:FShow(cat)
 					end
 				else
@@ -265,6 +266,7 @@ function MPOWA:OnUpdate(elapsed)
 					end
 					self:Flash(elapsed, cat, duration)
 					if path["inverse"] then
+						--self:Print("Hide "..path["buffname"])
 						self.frames[cat][1]:Hide()
 					else
 						self.frames[cat][1]:Show()
@@ -421,7 +423,7 @@ function MPOWA:Iterate(unit)
 		self:InBG()
 	end
 	--self:Print("Iterate: "..unit)
-	for i=1, 60 do
+	for i=1, 40 do
 		local p = i
 		local debuff
 		MPowa_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
@@ -483,7 +485,8 @@ function MPOWA:Push(aura, unit, i)
 			local path = MPOWA_SAVE[val]
 			local bypass = self.active[val]
 			--self:Print("Before con "..aura)
-			if self:Invert(self:TernaryReturn(val, "alive", self:Reverse(UnitIsDeadOrGhost("player"))), val) and self:Invert(self:TernaryReturn(val, "mounted", self.mounted), val) and self:TernaryReturn(val, "incombat", UnitAffectingCombat("player")) and self:Invert(self:TernaryReturn(val, "inparty", self.party), val) and self:Invert(self:TernaryReturn(val, "inraid", UnitInRaid("player")), val) and self:Invert(self:TernaryReturn(val, "inbattleground", self.bg), val) and not path["cooldown"] then
+
+			if self:TernaryReturn(val, "alive", self:Reverse(UnitIsDeadOrGhost("player"))) and self:TernaryReturn(val, "mounted", self.mounted) and self:TernaryReturn(val, "incombat", UnitAffectingCombat("player")) and self:TernaryReturn(val, "inparty", self.party) and self:TernaryReturn(val, "inraid", UnitInRaid("player")) and self:TernaryReturn(val, "inbattleground", self.bg) and not path["cooldown"] then
 				BuffExist[val] = true
 				--self:Print("Pushed: "..aura)
 				--self:Print("After con "..aura)
@@ -497,6 +500,7 @@ function MPOWA:Push(aura, unit, i)
 				elseif not path["enemytarget"] and not path["friendlytarget"] and not path["raidgroupmember"] and unit == "player" then
 					self.active[val] = i
 				end
+				--self:Print(path["buffname"].." is active! // "..val)
 				if self.active[val] and not bypass then
 					self.activeTimer[val] = GT()
 					if tnbr(self.frames[val][1]:GetAlpha())<=0.1 then
@@ -582,19 +586,11 @@ end
 
 function MPOWA:TernaryReturn(id, var, real)
 	if MPOWA_SAVE[id][var] == 0 then
-		return self:Invert(true, id)
+		return true
 	elseif MPOWA_SAVE[id][var] == true and real then
 		return true
 	elseif MPOWA_SAVE[id][var] == false and (not real) then
 		return true
-	end
-end
-
-function MPOWA:Invert(bool, id)
-	if MPOWA_SAVE[id]["inverse"] then
-		return self:Reverse(bool)
-	else
-		return bool
 	end
 end
 
