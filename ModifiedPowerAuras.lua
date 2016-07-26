@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 21
+MPOWA.Build = 22
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
@@ -19,6 +19,17 @@ MPOWA.activeTimer = {}
 MPOWA.mounted = false
 MPOWA.party = false
 MPOWA.bg = false
+MPOWA.instance = false
+MPOWA.Zones = {
+	[MPOWA_ZONES_MC] = true,
+	[MPOWA_ZONES_BWL] = true,
+	[MPOWA_ZONES_ONY] = true,
+	[MPOWA_ZONES_ZG] = true,
+	[MPOWA_ZONES_AQ401] = true,
+	[MPOWA_ZONES_AQ20] = true,
+	[MPOWA_ZONES_AQ402] = true,
+	[MPOWA_ZONES_NAXX] = true,
+}
 
 MPOWA.SOUND = {
 	[0] = "None",
@@ -183,10 +194,10 @@ function MPOWA:OnUpdate(elapsed)
 		for cat, val in self.NeedUpdate do
 			if val then
 				local path = MPOWA_SAVE[cat]
-				if not self.active[cat] and self:TernaryReturn(cat, "alive", UnitIsDeadOrGhost("player")) and self:TernaryReturn(cat, "mounted", self:Reverse(self.mounted)) and self:TernaryReturn(cat, "incombat", self:Reverse(UnitAffectingCombat("player"))) and self:TernaryReturn(cat, "inparty", self.party) and self:TernaryReturn(cat, "inraid", UnitInRaid("player")) and self:TernaryReturn(cat, "inbattleground", self:Reverse(self.bg)) then
+				if not self.active[cat] and self:TernaryReturn(cat, "alive", UnitIsDeadOrGhost("player")) and self:TernaryReturn(cat, "mounted", self:Reverse(self.mounted)) and self:TernaryReturn(cat, "incombat", self:Reverse(UnitAffectingCombat("player"))) and self:TernaryReturn(cat, "inparty", self.party) and self:TernaryReturn(cat, "inraid", UnitInRaid("player")) and self:TernaryReturn(cat, "inbattleground", self:Reverse(self.bg)) and self:TernaryReturn(cat, "inraidinstance", self.instance) then
 					if path["cooldown"] then
+						local duration = self:GetCooldown(path["buffname"]) or 0
 						if path["timer"] then
-							local duration = self:GetCooldown(path["buffname"]) or 0
 							if duration > 0 then
 								if path["hundredth"] then -- check it
 									self.frames[cat][3]:SetText(strform("%.2f", duration))
@@ -197,8 +208,18 @@ function MPOWA:OnUpdate(elapsed)
 									self:FHide(cat)
 									self.frames[cat][3]:Hide()
 								else
-									self:FShow(cat)
-									self.frames[cat][3]:Show()
+									if path["secsleft"] then
+										if duration<=path["secsleftdur"] then
+											self:FShow(cat)
+											self.frames[cat][3]:Show()
+										else
+											self:FHide(cat)
+											self.frames[cat][3]:Hide()
+										end
+									else
+										self:FShow(cat)
+										self.frames[cat][3]:Show()
+									end
 								end
 							else
 								if path["inverse"] then
@@ -212,7 +233,15 @@ function MPOWA:OnUpdate(elapsed)
 							if path["inverse"] then
 								self:FHide(cat)
 							else
-								self:FShow(cat)
+								if path["secsleft"] then
+									if duration<=path["secsleftdur"] then
+										self:FShow(cat)
+									else
+										self:FHide(cat)
+									end
+								else
+									self:FShow(cat)
+								end
 							end
 						end
 					else
@@ -242,8 +271,8 @@ function MPOWA:OnUpdate(elapsed)
 					end
 				end
 				self:SetTexture(cat, text, val)
-				local duration = 0
 				if self:IsStacks(count or 0, cat) then
+				local duration = self:GetDuration(val, cat)
 					--self:Print("Showing: "..MPOWA_SAVE[cat]["buffname"])
 					if (count or 0)>1 then
 						self.frames[cat][4]:SetText(count)
@@ -253,7 +282,6 @@ function MPOWA:OnUpdate(elapsed)
 					end
 					-- Duration
 					if path["timer"] then
-						duration = self:GetDuration(val, cat)
 						if duration > 0 then
 							if path["hundredth"] then -- check it
 								self.frames[cat][3]:SetText(strform("%.2f", duration))
@@ -267,18 +295,26 @@ function MPOWA:OnUpdate(elapsed)
 					self:Flash(elapsed, cat, duration)
 					if path["inverse"] then
 						--self:Print("Hide "..path["buffname"])
-						self.frames[cat][1]:Hide()
+						self:FHide(cat)
 					else
-						self.frames[cat][1]:Show()
+						if path["secsleft"] then
+							if duration<=path["secsleftdur"] then
+								self:FShow(cat)
+							else
+								self:FHide(cat)
+							end
+						else
+							self:FShow(cat)
+						end
 					end
 				else
 					--self:Print("Hiding: "..MPOWA_SAVE[cat]["buffname"])
-					self.frames[cat][1]:Hide()
+					self:FHide(cat)
 				end
 			else
 				if not self.NeedUpdate[cat] then
 					if not self.GrowingOut[cat] then
-						self.frames[cat][1]:Hide()
+						self:FHide(cat)
 					end
 				end
 			end
@@ -421,6 +457,7 @@ function MPOWA:Iterate(unit)
 		self:IsMounted()
 		self:InParty()
 		self:InBG()
+		self:InInstance()
 	end
 	--self:Print("Iterate: "..unit)
 	for i=1, 40 do
@@ -486,7 +523,7 @@ function MPOWA:Push(aura, unit, i)
 			local bypass = self.active[val]
 			--self:Print("Before con "..aura)
 
-			if self:TernaryReturn(val, "alive", self:Reverse(UnitIsDeadOrGhost("player"))) and self:TernaryReturn(val, "mounted", self.mounted) and self:TernaryReturn(val, "incombat", UnitAffectingCombat("player")) and self:TernaryReturn(val, "inparty", self.party) and self:TernaryReturn(val, "inraid", UnitInRaid("player")) and self:TernaryReturn(val, "inbattleground", self.bg) and not path["cooldown"] then
+			if self:TernaryReturn(val, "alive", self:Reverse(UnitIsDeadOrGhost("player"))) and self:TernaryReturn(val, "mounted", self.mounted) and self:TernaryReturn(val, "incombat", UnitAffectingCombat("player")) and self:TernaryReturn(val, "inparty", self.party) and self:TernaryReturn(val, "inraid", UnitInRaid("player")) and self:TernaryReturn(val, "inbattleground", self.bg) and self:TernaryReturn(val, "inraidinstance", self.instance) and not path["cooldown"] then
 				BuffExist[val] = true
 				--self:Print("Pushed: "..aura)
 				--self:Print("After con "..aura)
@@ -513,7 +550,9 @@ function MPOWA:Push(aura, unit, i)
 							PlaySoundFile("Interface\\AddOns\\ModifiedPowerAuras\\Sounds\\"..self.SOUND[path.beginsound], "master")
 						end
 					end
-					self:FShow(val)
+					if not path["secsleft"] then
+						self:FShow(val)
+					end
 					--self:Print("Is Visible: "..aura)
 					--self:Print("SHown")
 					--self:Print("Shown: "..path["buffname"].."/"..self.active[val])
@@ -567,6 +606,14 @@ function MPOWA:InBG()
 	self.bg = false
 end
 
+function MPOWA:InInstance()
+	local zone = GetRealZoneText()
+	if self.Zones[zone] then
+		self.instance = true
+	end
+	self.instance = false
+end
+
 function MPOWA:GetGroup()
 	local num, type = GetNumPartyMembers(), "party"
 	if num <= 0 then
@@ -585,7 +632,7 @@ function MPOWA:GetGroup()
 end
 
 function MPOWA:TernaryReturn(id, var, real)
-	if MPOWA_SAVE[id][var] == 0 then
+	if not MPOWA_SAVE[id][var] or MPOWA_SAVE[id][var] == 0 then
 		return true
 	elseif MPOWA_SAVE[id][var] == true and real then
 		return true
@@ -728,6 +775,14 @@ function MPOWA:Init()
 			if val["rgmname"] then
 				self.RaidGroupMembers[val["rgmname"]] = true
 			end
+			
+			if not val["secsleftdur"] or val["secsleftdur"] == "" then
+				MPOWA_SAVE[cat]["secsleftdur"] = 0
+			end
+			
+			if not val["inraidinstance"] then
+				MPOWA_SAVE[cat]["inraidinstance"] = 0
+			end
 		end
 		val["test"] = false
 	end
@@ -785,7 +840,10 @@ function MPOWA:CreateSave(i)
 		rgmname = "",
 		icon_r = 1,
 		icon_b = 1,
-		icon_g = 1
+		icon_g = 1,
+		secsleft = false,
+		secsleftdur = 0,
+		inraidinstance = 0
 	}
 end
 
@@ -959,6 +1017,7 @@ function MPOWA:Edit()
 		MPowa_ConfigFrame_Container_1_2_Editbox_Stacks:SetText(MPOWA_SAVE[self.CurEdit].stacks)
 		MPowa_ConfigFrame_Container_1_2_Editbox_Player:SetText(MPOWA_SAVE[self.CurEdit].rgmname or "")
 		MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:SetText(MPOWA_SAVE[self.CurEdit].targetduration)
+		MPowa_ConfigFrame_Container_1_2_Editbox_SECLEFT:SetText(MPOWA_SAVE[self.CurEdit].secsleftdur or "")
 		MPowa_ConfigFrame_Container_1_2_Checkbutton_Debuff:SetChecked(MPOWA_SAVE[self.CurEdit].isdebuff)
 		MPowa_ConfigFrame_Container_1_2_Checkbutton_ShowIfNotActive:SetChecked(MPOWA_SAVE[self.CurEdit].inverse)
 		MPowa_ConfigFrame_Container_2_2_Checkbutton_Timer:SetChecked(MPOWA_SAVE[self.CurEdit].timer)
@@ -966,6 +1025,7 @@ function MPOWA:Edit()
 		MPowa_ConfigFrame_Container_1_2_Checkbutton_EnemyTarget:SetChecked(MPOWA_SAVE[self.CurEdit].enemytarget)
 		MPowa_ConfigFrame_Container_1_2_Checkbutton_FriendlyTarget:SetChecked(MPOWA_SAVE[self.CurEdit].friendlytarget)
 		MPowa_ConfigFrame_Container_1_2_Checkbutton_RaidMember:SetChecked(MPOWA_SAVE[self.CurEdit].raidgroupmember)
+		MPowa_ConfigFrame_Container_1_2_Checkbutton_XSecsRemaining:SetChecked(MPOWA_SAVE[self.CurEdit].secsleft)
 		MPowa_ConfigFrame_Container_2_2_Checkbutton_Hundreds:SetChecked(MPOWA_SAVE[self.CurEdit].hundredth)
 		MPowa_ConfigFrame_Container_2_2_Checkbutton_FlashAnim:SetChecked(MPOWA_SAVE[self.CurEdit].flashanim)
 		MPowa_ConfigFrame_Container_2_2_Editbox_FlashAnim:SetText(MPOWA_SAVE[self.CurEdit].flashanimstart)
@@ -998,12 +1058,18 @@ function MPOWA:Edit()
 		else
 			MPowa_ConfigFrame_Container_1_2_Editbox_Player:Hide()
 		end
+		if MPOWA_SAVE[self.CurEdit]["secsleft"] then
+			MPowa_ConfigFrame_Container_1_2_Editbox_SECLEFT:Show()
+		else
+			MPowa_ConfigFrame_Container_1_2_Editbox_SECLEFT:Hide()
+		end
 		MPOWA:TernarySetState(MPowa_ConfigFrame_Container_1_2_Checkbutton_Alive, MPOWA_SAVE[self.CurEdit].alive)
 		MPOWA:TernarySetState(MPowa_ConfigFrame_Container_1_2_Checkbutton_Mounted, MPOWA_SAVE[self.CurEdit].mounted)
 		MPOWA:TernarySetState(MPowa_ConfigFrame_Container_1_2_Checkbutton_InCombat, MPOWA_SAVE[self.CurEdit].incombat)
 		MPOWA:TernarySetState(MPowa_ConfigFrame_Container_1_2_Checkbutton_InParty, MPOWA_SAVE[self.CurEdit].inparty)
 		MPOWA:TernarySetState(MPowa_ConfigFrame_Container_1_2_Checkbutton_InRaid, MPOWA_SAVE[self.CurEdit].inraid)
 		MPOWA:TernarySetState(MPowa_ConfigFrame_Container_1_2_Checkbutton_InBattleground, MPOWA_SAVE[self.CurEdit].inbattleground)
+		MPOWA:TernarySetState(MPowa_ConfigFrame_Container_1_2_Checkbutton_InRaidInstance, MPOWA_SAVE[self.CurEdit].inraidinstance)
 		MPowa_ConfigFrame:Show()
 	end
 end
@@ -1185,6 +1251,13 @@ function MPOWA:Editbox_Duration(obj)
 	if tonumber(obj:GetText()) ~= nil then
 		MPOWA_SAVE[self.CurEdit]["targetduration"] = tonumber(obj:GetText())
 		self:Iterate("target")
+	end
+end
+
+function MPOWA:Editbox_SECSLEFT(obj)
+	if tonumber(obj:GetText()) ~= nil then
+		MPOWA_SAVE[self.CurEdit]["secsleftdur"] = tonumber(obj:GetText())
+		self:Iterate("player")
 	end
 end
 

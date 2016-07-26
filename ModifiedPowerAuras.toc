@@ -9,6 +9,10 @@
 ## SavedVariables: MPOWA_PROFILE
 ## SavedVariablesPerCharacter: MPOWA_SAVE
 ## Version: 1
+
+localization\enUS.lua
+localization\deDE.lua
+
 ModifiedPowerAuras.lua
 ModifiedPowerAuras.xml
 

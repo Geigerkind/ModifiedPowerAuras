@@ -82,6 +82,12 @@ if (GetLocale() == "deDE") then
 	MPOWA_CHECKBUTTON_EXACTNAME_TOOLTIP = "Nutze den exakten Namen anstatt einen groben filter."
 	MPOWA_CHECKBUTTON_FLASHANIM = "Flash Animation"
 	MPOWA_CHECKBUTTON_FLASHANIM_TOOLTIP = "Kreuze das an, um die Blinkanimation zu aktivieren."
+	MPOWA_CHECKBUTTON_SECS_LEFT = "Wenn X sek. über"
+	MPOWA_CHECKBUTTON_SECS_LEFT_TOOLTIP = "Zeige es, wenn X Sekunden verbleiben, bis der cooldown abläuft oder die aura verschwindet."
+	MPOWA_CHECKBUTTON_ININSTANCE = "In Raid-Instanz"
+	MPOWA_CHECKBUTTON_ININSTANCE_TOOLTIP = "Kreuze das an, um einzustellen, wann die Aura gezeigt wird. Nichts => Ignoriere status, Angekreuzt => Zeige es, wenn du in einer Raid-Instanz bist, Kreuz => Zeige es, wenn du NICHT in einer Raid-Instanz bist."
+	MPOWA_EDITBOX_SECONDS = "Sekunden:"
+	MPOWA_EDITBOX_SECONDS_TOOLTIP = "Wieviele Sekunden, bis die Aura gezeigt wird."
 
 	MPOWA_SCRIPT_MOUNT_100 = "Erhöht das Bewegungstempo um 100"
 	MPOWA_SCRIPT_MOUNT_60 = "Erhöht das Bewegungstempo um 60"
@@ -105,4 +111,13 @@ if (GetLocale() == "deDE") then
 	
 	MPOWA_AURA_GONE_SELF = "(.+) schwindet von euch%."
 	MPOWA_AURA_GONE_OTHER = "(.+) schwindet von (.+)%."
+	
+	MPOWA_ZONES_MC = "Geschmolzener Kern"
+	MPOWA_ZONES_BWL = "Pechschwingenhort"
+	MPOWA_ZONES_ONY = "Onyxias Hort"
+	MPOWA_ZONES_ZG = "Zul'Gurub"
+	MPOWA_ZONES_AQ401 = "Ahn'Qiraj"
+	MPOWA_ZONES_AQ402 = "Tempel von Ahn'Qiraj"
+	MPOWA_ZONES_AQ20 = "Ruinen von Ahn'Qiraj"
+	MPOWA_ZONES_NAXX = "Naxxramas"
 end

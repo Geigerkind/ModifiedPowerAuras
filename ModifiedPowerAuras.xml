@@ -3,11 +3,6 @@
     xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     ..\..\..\FrameXML\UI.xsd">
 	
-	---------------------------------------------LOCALIZATION AND INITIALIZATION---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-	
-	<Script file="Interface\AddOns\ModifiedPowerAuras\localization\enUS.lua" />
-	<Script file="Interface\AddOns\ModifiedPowerAuras\localization\deDE.lua" />
-	
 	---------------------------------------------ICON TEMPLATE---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	
 	<Frame name="MPowa_IconTemplate" parent="UIParent" virtual="true" movable="true" enableMouse="false">
@@ -1071,6 +1066,58 @@
 									</Layer>
 								</Layers>
 							</EditBox>
+							<EditBox name="$parent_Editbox_SECLEFT" autoFocus="false" inherits="InputBoxTemplate">
+								<Size>
+									<AbsDimension x="65" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="LEFT" relativeTo="$parent_Editbox_Player" relativePoint="RIGHT">
+										<Offset>
+											<AbsDimension x="10" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<FontString inherits="ChatFontNormal" bytes="200"/>
+								<Scripts>
+									<OnLoad>
+										this:SetMaxLetters(200)
+										this.aide = MPOWA_EDITBOX_SECONDS_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_EDITBOX_SECONDS)
+									</OnLoad>
+									<OnShow>
+										this:ClearFocus()
+									</OnShow>
+									<OnEnterPressed>
+										this:ClearFocus()
+									</OnEnterPressed>
+									<OnTextChanged>
+										MPOWA:Editbox_SECSLEFT(this)
+									</OnTextChanged>
+									<OnEnter>
+										GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
+										GameTooltip:SetText(this.aide, nil, nil, nil, nil, 1)
+									</OnEnter>
+									<OnLeave>
+										GameTooltip:Hide()
+									</OnLeave>
+								</Scripts>
+								<Layers>
+									<Layer level="OVERLAY">
+										<FontString name="$parentText" inherits="GameFontNormalSmall" justifyH="LEFT" text="">
+											<Size>
+												<AbsDimension x="120" y="20"/>
+											</Size>
+											<Anchors>
+												<Anchor point="BOTTOMLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+													<Offset>
+														<AbsDimension x="0" y="0"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+								</Layers>
+							</EditBox>
 							<CheckButton name="$parent_Checkbutton_ShowCooldowns" inherits="MPowa_CheckTemplate">
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="$parent_Editbox" relativePoint="BOTTOMLEFT">
@@ -1102,7 +1149,7 @@
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="$parent_Checkbutton_ShowCooldowns" relativePoint="BOTTOMLEFT">
 										<Offset>
-											<AbsDimension x="0" y="0" />
+											<AbsDimension x="0" y="5" />
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -1126,7 +1173,7 @@
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="$parent_Checkbutton_EnemyTarget" relativePoint="BOTTOMLEFT">
 										<Offset>
-											<AbsDimension x="0" y="8" />
+											<AbsDimension x="0" y="11" />
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -1150,7 +1197,7 @@
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="$parent_Checkbutton_FriendlyTarget" relativePoint="BOTTOMLEFT">
 										<Offset>
-											<AbsDimension x="0" y="8" />
+											<AbsDimension x="0" y="11" />
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -1169,11 +1216,34 @@
 									</OnClick>
 								</Scripts>
 							</CheckButton>
+							<CheckButton name="$parent_Checkbutton_XSecsRemaining" inherits="MPowa_CheckTemplate">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parent_Checkbutton_RaidMember" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="11" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = MPOWA_CHECKBUTTON_SECS_LEFT_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_SECS_LEFT)
+									</OnLoad>
+									<OnClick>
+										MPOWA:Checkbutton("secsleft")
+										if MPOWA_SAVE[MPOWA.CurEdit]["secsleft"] then
+											MPowa_ConfigFrame_Container_1_2_Editbox_SECLEFT:Show()
+										else
+											MPowa_ConfigFrame_Container_1_2_Editbox_SECLEFT:Hide()
+										end
+									</OnClick>
+								</Scripts>
+							</CheckButton>
 							<CheckButton name="$parent_Checkbutton_Debuff" inherits="MPowa_CheckTemplate">
 								<Anchors>
 									<Anchor point="LEFT" relativeTo="$parent_Checkbutton_ShowCooldowns" relativePoint="RIGHT">
 										<Offset>
-											<AbsDimension x="130" y="50" />
+											<AbsDimension x="130" y="47" />
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -1223,7 +1293,7 @@
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="$parent_Checkbutton_Debuff" relativePoint="BOTTOMLEFT">
 										<Offset>
-											<AbsDimension x="0" y="8" />
+											<AbsDimension x="0" y="11" />
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -1239,7 +1309,7 @@
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="$parent_Checkbutton_Alive" relativePoint="BOTTOMLEFT">
 										<Offset>
-											<AbsDimension x="0" y="8" />
+											<AbsDimension x="0" y="11" />
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -1271,7 +1341,7 @@
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="$parent_Checkbutton_InCombat" relativePoint="BOTTOMLEFT">
 										<Offset>
-											<AbsDimension x="0" y="8" />
+											<AbsDimension x="0" y="11" />
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -1287,7 +1357,7 @@
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="$parent_Checkbutton_InParty" relativePoint="BOTTOMLEFT">
 										<Offset>
-											<AbsDimension x="0" y="8" />
+											<AbsDimension x="0" y="11" />
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -1303,7 +1373,7 @@
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="$parent_Checkbutton_InRaid" relativePoint="BOTTOMLEFT">
 										<Offset>
-											<AbsDimension x="0" y="8" />
+											<AbsDimension x="0" y="11" />
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -1312,6 +1382,22 @@
 										this.var = "inbattleground"
 										this.tooltipText = MPOWA_CHECKBUTTON_ISBATTLEGROUND_TOOLTIP
 										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_ISBATTLEGROUND)
+									</OnLoad>
+								</Scripts>
+							</CheckButton>
+							<CheckButton name="$parent_Checkbutton_InRaidInstance" inherits="MPowaTernarySelectorTemplate">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parent_Checkbutton_InBattleground" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="11" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.var = "inraidinstance"
+										this.tooltipText = MPOWA_CHECKBUTTON_ININSTANCE_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_ININSTANCE)
 									</OnLoad>
 								</Scripts>
 							</CheckButton>
