@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 22
+MPOWA.Build = 23
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
@@ -15,6 +15,7 @@ MPOWA.NeedUpdate = {}
 MPOWA.RaidGroupMembers = {}
 
 MPOWA.active = {}
+MPOWA.pushed = {}
 MPOWA.activeTimer = {}
 MPOWA.mounted = false
 MPOWA.party = false
@@ -194,7 +195,8 @@ function MPOWA:OnUpdate(elapsed)
 		for cat, val in self.NeedUpdate do
 			if val then
 				local path = MPOWA_SAVE[cat]
-				if not self.active[cat] and self:TernaryReturn(cat, "alive", UnitIsDeadOrGhost("player")) and self:TernaryReturn(cat, "mounted", self:Reverse(self.mounted)) and self:TernaryReturn(cat, "incombat", self:Reverse(UnitAffectingCombat("player"))) and self:TernaryReturn(cat, "inparty", self.party) and self:TernaryReturn(cat, "inraid", UnitInRaid("player")) and self:TernaryReturn(cat, "inbattleground", self:Reverse(self.bg)) and self:TernaryReturn(cat, "inraidinstance", self.instance) then
+				if not self.active[cat] and self:TernaryReturn(cat, "alive", self:Reverse(UnitIsDeadOrGhost("player"))) and self:TernaryReturn(cat, "mounted", self.mounted) and self:TernaryReturn(cat, "incombat", UnitAffectingCombat("player")) and self:TernaryReturn(cat, "inparty", self.party) and self:TernaryReturn(cat, "inraid", UnitInRaid("player")) and self:TernaryReturn(cat, "inbattleground", self.bg) and self:TernaryReturn(cat, "inraidinstance", self.instance) then
+					self.frames[cat][4]:Hide()
 					if path["cooldown"] then
 						local duration = self:GetCooldown(path["buffname"]) or 0
 						if path["timer"] then
@@ -271,6 +273,9 @@ function MPOWA:OnUpdate(elapsed)
 					end
 				end
 				self:SetTexture(cat, text, val)
+				if count<=1 and self.pushed[cat] and self.pushed[cat]>1 then
+					count = self.pushed[cat];
+				end
 				if self:IsStacks(count or 0, cat) then
 				local duration = self:GetDuration(val, cat)
 					--self:Print("Showing: "..MPOWA_SAVE[cat]["buffname"])
@@ -458,7 +463,13 @@ function MPOWA:Iterate(unit)
 		self:InParty()
 		self:InBG()
 		self:InInstance()
+		-- Amount for Holy Strength Hackfix
+		--self:Print("Set ZERO!")
+		for cat, val in self.active do
+			self.pushed[cat] = false;
+		end
 	end
+	
 	--self:Print("Iterate: "..unit)
 	for i=1, 40 do
 		local p = i
@@ -488,7 +499,7 @@ function MPOWA:Iterate(unit)
 		end
 		MPowa_Tooltip:Hide()
 		if not buff and not debuff then break end
-		----self:Print("Pushed: "..buff.." Index: "..i)
+		--self:Print("Pushed: "..buff.." Index: "..i.."//"..unit)
 	end
 	for cat, val in self.active do
 		if val then
@@ -525,7 +536,7 @@ function MPOWA:Push(aura, unit, i)
 
 			if self:TernaryReturn(val, "alive", self:Reverse(UnitIsDeadOrGhost("player"))) and self:TernaryReturn(val, "mounted", self.mounted) and self:TernaryReturn(val, "incombat", UnitAffectingCombat("player")) and self:TernaryReturn(val, "inparty", self.party) and self:TernaryReturn(val, "inraid", UnitInRaid("player")) and self:TernaryReturn(val, "inbattleground", self.bg) and self:TernaryReturn(val, "inraidinstance", self.instance) and not path["cooldown"] then
 				BuffExist[val] = true
-				--self:Print("Pushed: "..aura)
+				--self:Print("Pushed: "..aura.."//"..val.."//"..cat)
 				--self:Print("After con "..aura)
 				if path["enemytarget"] and unit == "target" then
 					--self:Print("after con 2 "..aura.. " "..i)
@@ -536,6 +547,11 @@ function MPOWA:Push(aura, unit, i)
 					self.active[val] = i
 				elseif not path["enemytarget"] and not path["friendlytarget"] and not path["raidgroupmember"] and unit == "player" then
 					self.active[val] = i
+				end
+				if self.pushed[val] then
+					self.pushed[val] = self.pushed[val] + 1;
+				else
+					self.pushed[val] = 1;
 				end
 				--self:Print(path["buffname"].." is active! // "..val)
 				if self.active[val] and not bypass then
@@ -632,7 +648,7 @@ function MPOWA:GetGroup()
 end
 
 function MPOWA:TernaryReturn(id, var, real)
-	if not MPOWA_SAVE[id][var] or MPOWA_SAVE[id][var] == 0 then
+	if MPOWA_SAVE[id][var] == 0 then
 		return true
 	elseif MPOWA_SAVE[id][var] == true and real then
 		return true
@@ -728,7 +744,9 @@ function MPOWA:Init()
 		else
 			self:Show()
 			for i=1, self.NumBuffs do
-				self.frames[i][1]:EnableMouse(1)
+				if self.frames[i] then
+					self.frames[i][1]:EnableMouse(1)
+				end
 			end
 		end
 	end
@@ -783,6 +801,7 @@ function MPOWA:Init()
 			if not val["inraidinstance"] then
 				MPOWA_SAVE[cat]["inraidinstance"] = 0
 			end
+			--self:Print(cat.."//"..MPOWA_SAVE[cat]["buffname"])
 		end
 		val["test"] = false
 	end
@@ -936,14 +955,38 @@ function MPOWA:DeselectAll()
 	end
 end
 
+function MPOWA:GetTablePosition(tab, value)
+	for cat, val in tab do
+		if val == value then
+			return cat
+		end
+	end
+	return false
+end
+
 function MPOWA:Remove()
 	if ConfigButton1 then
-		self:CreateSave(self.selected)
 		self.NumBuffs = self.NumBuffs - 1
 		if self.selected == self.CurEdit then
 			MPowa_ConfigFrame:Hide()
 		end
+		MPOWA_SAVE[self.selected]["used"] = false
 		self.NeedUpdate[self.selected] = false
+		if self.auras[MPOWA_SAVE[self.selected]["buffname"]] then
+			if self:GetTableLength(self.auras[MPOWA_SAVE[self.selected]["buffname"]])>1 then
+				tremove(self.auras[MPOWA_SAVE[self.selected]["buffname"]], self:GetTablePosition(self.auras[MPOWA_SAVE[self.selected]["buffname"]], self.selected))
+				if self.active[self.selected] then
+					self.active[self.selected] = false
+				end
+			else
+				for cat, val in self.auras[MPOWA_SAVE[self.selected]["buffname"]] do
+					if self.active[val] then
+						self.active[val] = false;
+					end
+				end
+			end
+		end
+		self:CreateSave(self.selected)
 		self.auras[MPOWA_SAVE[self.selected]["buffname"]] = false
 		self.frames[self.selected][1]:Hide()
 		self.selected = 1
@@ -964,13 +1007,17 @@ end
 function MPOWA:SelectAura(button)
 	self.selected = button:GetID()
 	self:DeselectAll()
-	_G("ConfigButton"..self.selected.."_Border"):Show()
+	if _G("ConfigButton"..self.selected.."_Border") then
+		_G("ConfigButton"..self.selected.."_Border"):Show()
+	end
 end
 
 function MPOWA:Edit()
 	if ConfigButton1 then
 		for i=1, self.NumBuffs do
-			self.frames[i][1]:EnableMouse(1)
+			if self.frames[i] then
+				self.frames[i][1]:EnableMouse(1)
+			end
 		end
 		MPowa_ConfigFrame:Hide()
 		self.CurEdit = self.selected
@@ -1257,7 +1304,13 @@ end
 function MPOWA:Editbox_SECSLEFT(obj)
 	if tonumber(obj:GetText()) ~= nil then
 		MPOWA_SAVE[self.CurEdit]["secsleftdur"] = tonumber(obj:GetText())
-		self:Iterate("player")
+		if MPOWA_SAVE[self.CurEdit]["test"] or self.testAll then
+			_G("TextureFrame"..self.CurEdit):Hide()
+			_G("TextureFrame"..self.CurEdit):Show()
+		else
+			self:Iterate("target")
+			self:Iterate("player")
+		end
 	end
 end
 
@@ -1275,7 +1328,9 @@ function MPOWA:Editbox_Name(obj)
 	if not self.auras[MPOWA_SAVE[self.CurEdit].buffname] then
 		self.auras[MPOWA_SAVE[self.CurEdit].buffname] = {}
 	end
-	tinsert(self.auras[MPOWA_SAVE[self.CurEdit].buffname], self.CurEdit)
+	if not self:GetTablePosition(self.auras[MPOWA_SAVE[self.CurEdit].buffname], self.CurEdit) then
+		tinsert(self.auras[MPOWA_SAVE[self.CurEdit].buffname], self.CurEdit)
+	end
 	--self:Print(self.CurEdit)
 	
 	if MPOWA_SAVE[self.CurEdit].test or self.testAll then
@@ -1291,8 +1346,13 @@ function MPOWA:Editbox_Stacks(obj)
 	local oldcon = MPOWA_SAVE[self.CurEdit].stacks
 	MPOWA_SAVE[self.CurEdit].stacks = obj:GetText()
 	if oldcon ~= MPOWA_SAVE[self.CurEdit].stacks then
-		self:Iterate("player")
-		self:Iterate("target")
+		if MPOWA_SAVE[self.CurEdit]["test"] or self.testAll then
+			_G("TextureFrame"..self.CurEdit):Hide()
+			_G("TextureFrame"..self.CurEdit):Show()
+		else
+			self:Iterate("player")
+			self:Iterate("target")
+		end
 	end
 end
 
@@ -1302,8 +1362,13 @@ function MPOWA:Editbox_FlashAnimStart(obj)
 		MPOWA_SAVE[self.CurEdit].flashanimstart = tonumber(obj:GetText())
 	end
 	if oldcon ~= MPOWA_SAVE[self.CurEdit].flashanimstart then
-		self:Iterate("player")
-		self:Iterate("target")
+		if MPOWA_SAVE[self.CurEdit]["test"] or self.testAll then
+			_G("TextureFrame"..self.CurEdit):Hide()
+			_G("TextureFrame"..self.CurEdit):Show()
+		else
+			self:Iterate("player")
+			self:Iterate("target")
+		end
 	end
 end
 

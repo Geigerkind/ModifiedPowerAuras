@@ -35,7 +35,7 @@ if (GetLocale() == "deDE") then
 	MPOWA_SLIDER_ENDSOUND = "Tondatei: "
 	MPOWA_SLIDER_ENDSOUND_TOOLTIP = "Bewege das, um den Ton zu ändern, wenn eine Aura verschwindet."
 
-	MPOWA_EDITBOX_TOOLTIP = "Schreibe hier den genauen Auranamen hinein, womit das Icon aufgerufen wird."
+	MPOWA_EDITBOX_TOOLTIP = "Schreibe hier den genauen Auranamen hinein, womit das Icon aufgerufen wird. Das Icon wird für Spielerauras automatisch gefunden."
 	MPOWA_EDITBOX_NAME = "Genauer name der Aura:"
 	MPOWA_EDITBOX_STACKS_NAME = "Aufladungen:"
 	MPOWA_EDITBOX_STACKS_TOOLTIP = "Schreibe hier die Anzahl der Aufladungen rein, um die Aura aufzurufen oder verschwinden zu lassen. Folgende Operatoren sind zulässig: '<5' '>3' '=11' '!5' '>=0' '<=6' '2-8'"

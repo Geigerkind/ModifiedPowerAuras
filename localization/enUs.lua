@@ -34,7 +34,7 @@ MPOWA_SLIDER_BEGINSOUND_TOOLTIP = "Move this to change the soundfile that will b
 MPOWA_SLIDER_ENDSOUND = "Soundfile: "
 MPOWA_SLIDER_ENDSOUND_TOOLTIP = "Move this to change the soundfile that will be played if an aura fades."
 
-MPOWA_EDITBOX_TOOLTIP = "Enter here the exact buff name to trigger the event. The name must be written correctly."
+MPOWA_EDITBOX_TOOLTIP = "Enter here the exact buff name to trigger the event. The name must be written correctly. Player auras will be found automatically."
 MPOWA_EDITBOX_NAME = "Exact name of the Buff:"
 MPOWA_EDITBOX_STACKS_NAME = "Stacks:"
 MPOWA_EDITBOX_STACKS_TOOLTIP = "Enter here the operator and the amount of stacks, required activate/deactivate the effect. Operator is required ex: '<5' '>3' '=11' '!5' '>=0' '<=6' '2-8'"
