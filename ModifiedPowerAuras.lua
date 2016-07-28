@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 23
+MPOWA.Build = 24
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
@@ -273,8 +273,12 @@ function MPOWA:OnUpdate(elapsed)
 					end
 				end
 				self:SetTexture(cat, text, val)
-				if count<=1 and self.pushed[cat] and self.pushed[cat]>1 then
-					count = self.pushed[cat];
+				if count then
+					if self.pushed[cat] then
+						if count<=1 and self.pushed[cat]>1 then
+							count = self.pushed[cat];
+						end
+					end
 				end
 				if self:IsStacks(count or 0, cat) then
 				local duration = self:GetDuration(val, cat)
@@ -465,7 +469,10 @@ function MPOWA:Iterate(unit)
 		self:InInstance()
 		-- Amount for Holy Strength Hackfix
 		--self:Print("Set ZERO!")
-		for cat, val in self.active do
+	end
+	
+	for cat, val in self.active do
+		if (not MPOWA_SAVE[cat]["unit"] and unit=="player") or (MPOWA_SAVE[cat]["unit"]==unit) then
 			self.pushed[cat] = false;
 		end
 	end
