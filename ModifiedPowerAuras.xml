@@ -346,6 +346,18 @@
 						</Anchor>
 					</Anchors>
 				</FontString>
+				<FontString name="$parent_Pages" inherits="GameFontNormalSmall">
+					<Size>
+						<AbsDimension x="225" y="0" />
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="-120" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
 			</Layer>
 		</Layers>
 		<Scripts>
@@ -357,6 +369,7 @@
 			</OnMouseUp>
 			<OnLoad>
 				MPowa_MainFrame_HEAD:SetText("Modified Power Auras - Build: "..MPOWA.Build)
+				MPowa_MainFrame_Pages:SetText("1/10")
 			</OnLoad>
 		</Scripts>
 		<Frames>
@@ -474,6 +487,42 @@
 					</OnClick>
 					<OnLoad>
 						getglobal(this:GetName().."_Text"):SetText(MPOWA_BUTTON_TEST)
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Button name="MPowa_ArrowRight" inherits="MPowa_MainFrameButtonTemplate">
+				<Size x="20" y="30" />
+				<Anchors>
+					<Anchor point="TOP" relativeTo="MPowa_TestAllButton" relativePoint="BOTTOM">
+						<Offset>
+							<AbsDimension x="65" y="19" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						MPOWA:Pager(false)
+					</OnClick>
+					<OnLoad>
+						getglobal(this:GetName().."_Text"):SetText("&gt;")
+					</OnLoad>
+				</Scripts>
+			</Button>
+			<Button name="MPowa_ArrowLeft" inherits="MPowa_MainFrameButtonTemplate">
+				<Size x="20" y="30" />
+				<Anchors>
+					<Anchor point="TOP" relativeTo="MPowa_TestButton" relativePoint="BOTTOM">
+						<Offset>
+							<AbsDimension x="-68" y="19" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						MPOWA:Pager(true)
+					</OnClick>
+					<OnLoad>
+						getglobal(this:GetName().."_Text"):SetText("&lt;")
 					</OnLoad>
 				</Scripts>
 			</Button>

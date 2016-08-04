@@ -1,9 +1,10 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 24
+MPOWA.Build = 25
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
 MPOWA.CurEdit = 1
+MPOWA.Page = 1
 
 MPOWA.frames = {}
 MPOWA.GrowingOut = {}
@@ -765,12 +766,18 @@ function MPOWA:Init()
 		end
 	end
 	
+	if MPOWA_SAVE[50] == nil then
+		for i=50, 490 do
+			self:CreateSave(i)
+		end
+	end
+	
 	if MPOWA_PROFILE == nil then
 		MPOWA_PROFILE = {}
 	end
 	
 	for cat, val in MPOWA_SAVE do
-		if val["used"] then
+		if val["used"] or (MPOWA_SAVE[cat+1] and MPOWA_SAVE[cat+1]["used"]) then
 			if not self.frames[cat] then
 				self.frames[cat] = {}
 			end
@@ -813,6 +820,29 @@ function MPOWA:Init()
 		val["test"] = false
 	end
 	self.testAll = false
+end
+
+function MPOWA:Pager(left)
+	if left then
+		if self.Page<=1 then
+			self.Page = 1
+		else
+			self.Page = self.Page - 1
+		end
+	else
+		if self.Page >= 10 then
+			self.Page = 10
+		else
+			self.Page = self.Page + 1
+		end
+	end
+	self:UpdatePage()
+end
+
+function MPOWA:UpdatePage()
+	MPowa_MainFrame_Pages:SetText(self.Page.."/10")
+	self:Show()
+	self:Reposition()
 end
 
 function MPOWA:Print(msg)
@@ -874,16 +904,34 @@ function MPOWA:CreateSave(i)
 end
 
 function MPOWA:Show()
+	local coeff = (self.Page - 1)*49
+	local bool = false
+	local p = self.NumBuffs-coeff
+	if (p<=0) then
+		p = self.NumBuffs
+		bool = true
+	end
 	if (not self.Cloaded) then
-		for i=1, self.NumBuffs do
-			MPOWA:CreateButton(i)
+		for i=1, 49 do
+			if i<=self.NumBuffs then
+				MPOWA:CreateButton(i)
+			end
 		end
 		self.Cloaded = true
 	end
-	for i=1, self.NumBuffs do
-		MPOWA:ApplyAttributesToButton(i, getglobal("ConfigButton"..i))
+	for i=1, 49 do
+		if getglobal("ConfigButton"..i) then
+			getglobal("ConfigButton"..i):Hide()
+		end
 	end
-	if self.NumBuffs > 0 then
+	local e = self.Page * 49
+	if e>self.NumBuffs then
+		e = self.NumBuffs
+	end
+	for i=(1+coeff), e do
+		MPOWA:ApplyAttributesToButton(i, getglobal("ConfigButton"..(i-coeff)))
+	end
+	if self.NumBuffs > 0 and self.NumBuffs > coeff then
 		getglobal("ConfigButton"..self.selected.."_Border"):Show()
 	end
 	MPowa_MainFrame:Show()
@@ -920,7 +968,7 @@ function MPOWA:ApplyConfig(i)
 	self.frames[i][3]:SetAlpha(val["fontalpha"])
 	self.frames[i][3]:ClearAllPoints()
 	self.frames[i][3]:SetPoint("CENTER", self.frames[i][1], "CENTER", val["fontoffsetx"], val["fontoffsety"])
-	self.frames[MPOWA.CurEdit][2]:SetVertexColor(val.icon_r or 1, val.icon_g or 1, val.icon_b or 1)
+	self.frames[i][2]:SetVertexColor(val.icon_r or 1, val.icon_g or 1, val.icon_b or 1)
 	if val["usefontcolor"] then
 		self.frames[i][3]:SetTextColor(val["fontcolor_r"],val["fontcolor_g"],val["fontcolor_b"],val["fontalpha"])
 	end
@@ -928,36 +976,60 @@ end
 
 function MPOWA:ApplyAttributesToButton(i, button)
 	if not button then return end
+	local coeff = (self.Page - 1)*49
+	local p = (i-coeff)
+	local bool = false
+	if (p<=0) then
+		p = i
+		bool = true
+	end
 	button:ClearAllPoints()
-	button:SetPoint("TOPLEFT",MPowa_ButtonContainer,"TOPLEFT",42*(i-1)+6 - floor((i-1)/7)*7*42,-11-floor((i-1)/7)*41)
+	button:SetPoint("TOPLEFT",MPowa_ButtonContainer,"TOPLEFT",42*(p-1)+6 - floor((p-1)/7)*7*42,-11-floor((p-1)/7)*41)
 	button:SetID(i)
-	_G("ConfigButton"..i.."_Icon"):SetTexture(MPOWA_SAVE[i]["texture"])
-	_G("ConfigButton"..i.."_Count"):SetText(i)
-	_G("ConfigButton"..i.."_Border"):Hide()
-	button:Show()
+	_G("ConfigButton"..p.."_Icon"):SetTexture(MPOWA_SAVE[i]["texture"])
+	_G("ConfigButton"..p.."_Count"):SetText(i)
+	_G("ConfigButton"..p.."_Border"):Hide()
+	if not bool and i<=self.Page*49 then
+		button:Show()
+	else
+		button:Hide()
+	end
 end
 
 function MPOWA:AddAura()
-	if self.NumBuffs < 49 then
+	if self.NumBuffs < 490 then
 		self.NumBuffs = self.NumBuffs + 1
-		if _G("ConfigButton"..self.NumBuffs) ~= nil then
-			self:ApplyAttributesToButton(self.NumBuffs,_G("ConfigButton"..self.NumBuffs))
+		local coeff = (self.Page - 1)*49
+		local bool = false
+		local p = self.NumBuffs-coeff
+		if (p<=0) then
+			p = self.NumBuffs
+			bool = true
+		end
+		if _G("ConfigButton"..(self.NumBuffs-coeff)) ~= nil then
+			self:ApplyAttributesToButton(self.NumBuffs,_G("ConfigButton"..(self.NumBuffs-coeff)))
+			if not self.frames[self.NumBuffs] then
+				self:CreateIcon(self.NumBuffs)
+			end
 			self:ApplyConfig(self.NumBuffs)
 		else
 			self:CreateSave(self.NumBuffs)
 			self:CreateIcon(self.NumBuffs)
 			self:ApplyConfig(self.NumBuffs)
-			self:CreateButton(self.NumBuffs)
+			self:CreateButton(p)
 		end
 		MPOWA_SAVE[self.NumBuffs]["used"] = true
 		self:DeselectAll()
-		_G("ConfigButton"..self.NumBuffs.."_Border"):Show()
-		self.selected = self.NumBuffs
+		if not bool then
+			_G("ConfigButton"..p.."_Border"):Show()
+		end
+		self.selected = p
 	end
 end
 
 function MPOWA:DeselectAll()
-	for i=1, self.NumBuffs  do
+	for i=1, 49 do
+		if not _G("ConfigButton"..i) then break end
 		_G("ConfigButton"..i.."_Border"):Hide()
 	end
 end
@@ -973,46 +1045,58 @@ end
 
 function MPOWA:Remove()
 	if ConfigButton1 then
+		local coeff = (self.Page - 1)*49
 		self.NumBuffs = self.NumBuffs - 1
-		if self.selected == self.CurEdit then
+		if (self.selected+coeff) == self.CurEdit then
 			MPowa_ConfigFrame:Hide()
 		end
-		MPOWA_SAVE[self.selected]["used"] = false
-		self.NeedUpdate[self.selected] = false
-		if self.auras[MPOWA_SAVE[self.selected]["buffname"]] then
-			if self:GetTableLength(self.auras[MPOWA_SAVE[self.selected]["buffname"]])>1 then
-				tremove(self.auras[MPOWA_SAVE[self.selected]["buffname"]], self:GetTablePosition(self.auras[MPOWA_SAVE[self.selected]["buffname"]], self.selected))
-				if self.active[self.selected] then
-					self.active[self.selected] = false
+		MPOWA_SAVE[self.selected+coeff]["used"] = false
+		self.NeedUpdate[self.selected+coeff] = false
+		if self.auras[MPOWA_SAVE[self.selected+coeff]["buffname"]] then
+			if self:GetTableLength(self.auras[MPOWA_SAVE[self.selected+coeff]["buffname"]])>1 and self:GetTablePosition(self.auras[MPOWA_SAVE[self.selected+coeff]["buffname"]], self.selected+coeff) then
+				tremove(self.auras[MPOWA_SAVE[self.selected+coeff]["buffname"]], self:GetTablePosition(self.auras[MPOWA_SAVE[self.selected+coeff]["buffname"]], self.selected+coeff))
+				if self.active[self.selected+coeff] then
+					self.active[self.selected+coeff] = false
 				end
 			else
-				for cat, val in self.auras[MPOWA_SAVE[self.selected]["buffname"]] do
+				for cat, val in self.auras[MPOWA_SAVE[self.selected+coeff]["buffname"]] do
 					if self.active[val] then
 						self.active[val] = false;
 					end
 				end
 			end
 		end
-		self:CreateSave(self.selected)
-		self.auras[MPOWA_SAVE[self.selected]["buffname"]] = false
-		self.frames[self.selected][1]:Hide()
-		self.selected = 1
+		self:CreateSave(self.selected+coeff)
+		self.auras[MPOWA_SAVE[self.selected+coeff]["buffname"]] = false
+		self.frames[self.selected+coeff][1]:Hide()
+		self.selected = self.NumBuffs-coeff
+		if self.selected == 0 then
+			self.selected = 1
+		end
 		self:Reposition()
-		ConfigButton1_Border:Show()
+		_G("ConfigButton"..self.selected.."_Border"):Show()
 	end
 end
 
 function MPOWA:Reposition()
-	for i=1, self.NumBuffs +1 do
-		_G("ConfigButton"..i):Hide()
+	local coeff = (self.Page - 1)*49
+	for i=(1+coeff), self.NumBuffs +1 do
+		if _G("ConfigButton"..(i-coeff)) then
+			_G("ConfigButton"..(i-coeff)):Hide()
+		end
 	end
-	for i=1, self.NumBuffs do
-		MPOWA:ApplyAttributesToButton(i,_G("ConfigButton"..i))
+	local e = self.Page * 49
+	if e>self.NumBuffs then
+		e = self.NumBuffs
+	end
+	for i=(1+coeff), e do
+		MPOWA:ApplyAttributesToButton(i,_G("ConfigButton"..(i-coeff)))
 	end
 end
 
 function MPOWA:SelectAura(button)
-	self.selected = button:GetID()
+	local coeff = (self.Page - 1)*49
+	self.selected = button:GetID() - coeff
 	self:DeselectAll()
 	if _G("ConfigButton"..self.selected.."_Border") then
 		_G("ConfigButton"..self.selected.."_Border"):Show()
@@ -1021,13 +1105,14 @@ end
 
 function MPOWA:Edit()
 	if ConfigButton1 then
+		local coeff = (self.Page - 1)*49
 		for i=1, self.NumBuffs do
 			if self.frames[i] then
 				self.frames[i][1]:EnableMouse(1)
 			end
 		end
 		MPowa_ConfigFrame:Hide()
-		self.CurEdit = self.selected
+		self.CurEdit = self.selected+coeff
 		MPowa_ConfigFrame_Container_1_Icon_Texture:SetTexture(MPOWA_SAVE[self.CurEdit].texture)
 		MPowa_ConfigFrame_Container_1_Slider_Opacity:SetValue(MPOWA_SAVE[self.CurEdit].alpha)
 		MPowa_ConfigFrame_Container_1_Slider_OpacityText:SetText(MPOWA_SLIDER_OPACITY.." "..MPOWA_SAVE[self.CurEdit].alpha)
