@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 25
+MPOWA.Build = 26
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
@@ -14,6 +14,7 @@ MPOWA.groupByUnit = {}
 MPOWA.NumBuffs = 0
 MPOWA.NeedUpdate = {}
 MPOWA.RaidGroupMembers = {}
+MPOWA.testall = false
 
 MPOWA.active = {}
 MPOWA.pushed = {}
@@ -178,7 +179,7 @@ function MPOWA:GrowOut(elapsed)
 			end
 			if val[1]:GetHeight()>=val[3] then
 				self.GrowingOut[cat] = false
-				val[1]:Hide()
+				self:FHide(cat)
 				val[1]:SetHeight(val[4])
 				val[1]:SetWidth(val[4])
 			else
@@ -430,7 +431,7 @@ end
 
 function MPOWA:FHide(key)
 	local p = MPOWA_SAVE[key]
-	if self.frames[key][1]:IsVisible() and ((tnbr(self.frames[key][1]:GetAlpha())<=tnbr(p["alpha"]) and tnbr(self.frames[key][1]:GetAlpha())>=tnbr(p["alpha"])) or tnbr(self.frames[key][1]:GetAlpha())==0) then
+	if self.frames[key][1]:IsVisible() and ((tnbr(self.frames[key][1]:GetAlpha())<=tnbr(p["alpha"]) and tnbr(self.frames[key][1]:GetAlpha())>=tnbr(p["alpha"])) or tnbr(self.frames[key][1]:GetAlpha())==0) and not self.testall and not p["test"] then
 		if p["growout"] then
 			if p["fadeout"] then
 				self:AddGrowOut(self.frames[key][1], 0.5, 250, 64, key)
@@ -751,11 +752,6 @@ function MPOWA:Init()
 			MPowa_MainFrame:Hide()
 		else
 			self:Show()
-			for i=1, self.NumBuffs do
-				if self.frames[i] then
-					self.frames[i][1]:EnableMouse(1)
-				end
-			end
 		end
 	end
 	
@@ -1106,13 +1102,16 @@ end
 function MPOWA:Edit()
 	if ConfigButton1 then
 		local coeff = (self.Page - 1)*49
+		self.CurEdit = self.selected+coeff
 		for i=1, self.NumBuffs do
 			if self.frames[i] then
-				self.frames[i][1]:EnableMouse(1)
+				self.frames[i][1]:EnableMouse(false)
 			end
 		end
+		if self.frames[self.CurEdit] then
+			self.frames[self.CurEdit][1]:EnableMouse(1)
+		end
 		MPowa_ConfigFrame:Hide()
-		self.CurEdit = self.selected+coeff
 		MPowa_ConfigFrame_Container_1_Icon_Texture:SetTexture(MPOWA_SAVE[self.CurEdit].texture)
 		MPowa_ConfigFrame_Container_1_Slider_Opacity:SetValue(MPOWA_SAVE[self.CurEdit].alpha)
 		MPowa_ConfigFrame_Container_1_Slider_OpacityText:SetText(MPOWA_SLIDER_OPACITY.." "..MPOWA_SAVE[self.CurEdit].alpha)
