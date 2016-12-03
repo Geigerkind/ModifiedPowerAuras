@@ -557,7 +557,7 @@
 	
 	<Frame name="MPowa_ConfigFrame" movable="true" parent="MPowa_MainFrame" frameStrata="HIGH" hidden="true" enableMouse="true" enableKeyboard="true">
 		<Size>
-			<AbsDimension x="321" y="430" />
+			<AbsDimension x="321" y="450" />
 		</Size>
 		<Anchors>
 			<Anchor point="RIGHT" relativeTo="MPowa_MainFrame" relativePoint="LEFT" />
@@ -633,7 +633,7 @@
 			</Button>
 			<Frame name="$parent_Container">
 				<Size>
-					<AbsDimension x="290" y="350" />
+					<AbsDimension x="290" y="370" />
 				</Size>
 				<Anchors>
 					<Anchor point="BOTTOM">
@@ -901,7 +901,7 @@
 					</Frame>
 					<Frame name="$parent_1_2">
 						<Size>
-							<AbsDimension x="290" y="170" />
+							<AbsDimension x="290" y="190" />
 						</Size>
 						<Anchors>
 							<Anchor point="TOP" relativeTo="$parent_1" relativePoint="BOTTOM" />
@@ -1285,6 +1285,24 @@
 										else
 											MPowa_ConfigFrame_Container_1_2_Editbox_SECLEFT:Hide()
 										end
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<CheckButton name="$parent_Checkbutton_HideStacks" inherits="MPowa_CheckTemplate">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parent_Checkbutton_XSecsRemaining" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="11" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = MPOWA_CHECKBUTTON_HIDE_STACKS_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_HIDE_STACKS)
+									</OnLoad>
+									<OnClick>
+										MPOWA:Checkbutton("hidestacks")
 									</OnClick>
 								</Scripts>
 							</CheckButton>

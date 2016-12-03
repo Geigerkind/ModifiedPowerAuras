@@ -285,7 +285,7 @@ function MPOWA:OnUpdate(elapsed)
 				if self:IsStacks(count or 0, cat) then
 				local duration = self:GetDuration(val, cat)
 					--self:Print("Showing: "..MPOWA_SAVE[cat]["buffname"])
-					if (count or 0)>1 then
+					if (count or 0)>1 and not path["hidestacks"] then
 						self.frames[cat][4]:SetText(count)
 						self.frames[cat][4]:Show()
 					else
@@ -896,7 +896,8 @@ function MPOWA:CreateSave(i)
 		icon_g = 1,
 		secsleft = false,
 		secsleftdur = 0,
-		inraidinstance = 0
+		inraidinstance = 0,
+		hidestacks = false,
 	}
 end
 
@@ -1165,6 +1166,7 @@ function MPOWA:Edit()
 		MPowa_ConfigFrame_Container_1_2_Checkbutton_FriendlyTarget:SetChecked(MPOWA_SAVE[self.CurEdit].friendlytarget)
 		MPowa_ConfigFrame_Container_1_2_Checkbutton_RaidMember:SetChecked(MPOWA_SAVE[self.CurEdit].raidgroupmember)
 		MPowa_ConfigFrame_Container_1_2_Checkbutton_XSecsRemaining:SetChecked(MPOWA_SAVE[self.CurEdit].secsleft)
+		MPowa_ConfigFrame_Container_1_2_Checkbutton_HideStacks:SetChecked(MPOWA_SAVE[self.CurEdit].hidestacks)
 		MPowa_ConfigFrame_Container_2_2_Checkbutton_Hundreds:SetChecked(MPOWA_SAVE[self.CurEdit].hundredth)
 		MPowa_ConfigFrame_Container_2_2_Checkbutton_FlashAnim:SetChecked(MPOWA_SAVE[self.CurEdit].flashanim)
 		MPowa_ConfigFrame_Container_2_2_Editbox_FlashAnim:SetText(MPOWA_SAVE[self.CurEdit].flashanimstart)

@@ -121,3 +121,6 @@ MPOWA_ZONES_AQ401 = "Ahn'Qiraj"
 MPOWA_ZONES_AQ402 = "Temple of Ahn'Qiraj"
 MPOWA_ZONES_AQ20 = "Ruins of Ahn'Qiraj"
 MPOWA_ZONES_NAXX = "Naxxramas"
+
+MPOWA_CHECKBUTTON_HIDE_STACKS_TOOLTIP = "Check this to hide stacks"
+MPOWA_CHECKBUTTON_HIDE_STACKS = "Hide stacks"
