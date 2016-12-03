@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 26
+MPOWA.Build = 27
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
@@ -492,7 +492,7 @@ function MPOWA:Iterate(unit)
 			MPowa_Tooltip:SetUnitBuff(unit, i)
 		end
 		local buff = MPowa_TooltipTextLeft1:GetText()
-		self:Push(buff, unit, p)
+		self:Push(buff, unit, p, false)
 		
 		if i<17 then
 			MPowa_Tooltip:ClearLines()
@@ -504,7 +504,7 @@ function MPOWA:Iterate(unit)
 				MPowa_Tooltip:SetUnitDebuff(unit, i)
 			end
 			debuff = MPowa_TooltipTextLeft1:GetText()
-			self:Push(debuff, unit, p)
+			self:Push(debuff, unit, p, true)
 		end
 		MPowa_Tooltip:Hide()
 		if not buff and not debuff then break end
@@ -534,7 +534,7 @@ function MPOWA:Iterate(unit)
 	end
 end
 
-function MPOWA:Push(aura, unit, i)
+function MPOWA:Push(aura, unit, i, isdebuff)
 	if self.auras[aura] then
 		--self:Print("Attempt to push: "..aura.."/"..unit)
 		for cat, val in self.auras[aura] do
@@ -542,47 +542,48 @@ function MPOWA:Push(aura, unit, i)
 			local path = MPOWA_SAVE[val]
 			local bypass = self.active[val]
 			--self:Print("Before con "..aura)
-
-			if self:TernaryReturn(val, "alive", self:Reverse(UnitIsDeadOrGhost("player"))) and self:TernaryReturn(val, "mounted", self.mounted) and self:TernaryReturn(val, "incombat", UnitAffectingCombat("player")) and self:TernaryReturn(val, "inparty", self.party) and self:TernaryReturn(val, "inraid", UnitInRaid("player")) and self:TernaryReturn(val, "inbattleground", self.bg) and self:TernaryReturn(val, "inraidinstance", self.instance) and not path["cooldown"] then
-				BuffExist[val] = true
-				--self:Print("Pushed: "..aura.."//"..val.."//"..cat)
-				--self:Print("After con "..aura)
-				if path["enemytarget"] and unit == "target" then
-					--self:Print("after con 2 "..aura.. " "..i)
-					self.active[val] = i
-				elseif path["friendlytarget"] and unit == "target" then
-					self.active[val] = i
-				elseif path["raidgroupmember"] then -- have to check those vars
-					self.active[val] = i
-				elseif not path["enemytarget"] and not path["friendlytarget"] and not path["raidgroupmember"] and unit == "player" then
-					self.active[val] = i
-				end
-				if self.pushed[val] then
-					self.pushed[val] = self.pushed[val] + 1;
-				else
-					self.pushed[val] = 1;
-				end
-				--self:Print(path["buffname"].." is active! // "..val)
-				if self.active[val] and not bypass then
-					self.activeTimer[val] = GT()
-					if tnbr(self.frames[val][1]:GetAlpha())<=0.1 then
-						self.frames[val][1]:SetAlpha(tnbr(path["alpha"]))
+			if path["isdebuff"]==isdebuff then
+				if self:TernaryReturn(val, "alive", self:Reverse(UnitIsDeadOrGhost("player"))) and self:TernaryReturn(val, "mounted", self.mounted) and self:TernaryReturn(val, "incombat", UnitAffectingCombat("player")) and self:TernaryReturn(val, "inparty", self.party) and self:TernaryReturn(val, "inraid", UnitInRaid("player")) and self:TernaryReturn(val, "inbattleground", self.bg) and self:TernaryReturn(val, "inraidinstance", self.instance) and not path["cooldown"] then
+					BuffExist[val] = true
+					--self:Print("Pushed: "..aura.."//"..val.."//"..cat)
+					--self:Print("After con "..aura)
+					if path["enemytarget"] and unit == "target" then
+						--self:Print("after con 2 "..aura.. " "..i)
+						self.active[val] = i
+					elseif path["friendlytarget"] and unit == "target" then
+						self.active[val] = i
+					elseif path["raidgroupmember"] then -- have to check those vars
+						self.active[val] = i
+					elseif not path["enemytarget"] and not path["friendlytarget"] and not path["raidgroupmember"] and unit == "player" then
+						self.active[val] = i
 					end
-					if path["usebeginsound"] then
-						if path.beginsound < 16 then
-							PlaySound(self.SOUND[path.beginsound], "master")
-						else
-							PlaySoundFile("Interface\\AddOns\\ModifiedPowerAuras\\Sounds\\"..self.SOUND[path.beginsound], "master")
+					if self.pushed[val] then
+						self.pushed[val] = self.pushed[val] + 1;
+					else
+						self.pushed[val] = 1;
+					end
+					--self:Print(path["buffname"].." is active! // "..val)
+					if self.active[val] and not bypass then
+						self.activeTimer[val] = GT()
+						if tnbr(self.frames[val][1]:GetAlpha())<=0.1 then
+							self.frames[val][1]:SetAlpha(tnbr(path["alpha"]))
 						end
-					end
-					if not path["secsleft"] then
-						self:FShow(val)
-					end
-					--self:Print("Is Visible: "..aura)
-					--self:Print("SHown")
-					--self:Print("Shown: "..path["buffname"].."/"..self.active[val])
-					if path["timer"] then
-						self.frames[val][3]:Show()
+						if path["usebeginsound"] then
+							if path.beginsound < 16 then
+								PlaySound(self.SOUND[path.beginsound], "master")
+							else
+								PlaySoundFile("Interface\\AddOns\\ModifiedPowerAuras\\Sounds\\"..self.SOUND[path.beginsound], "master")
+							end
+						end
+						if not path["secsleft"] then
+							self:FShow(val)
+						end
+						--self:Print("Is Visible: "..aura)
+						--self:Print("SHown")
+						--self:Print("Shown: "..path["buffname"].."/"..self.active[val])
+						if path["timer"] then
+							self.frames[val][3]:Show()
+						end
 					end
 				end
 			end
