@@ -132,6 +132,33 @@ local MPowa_BuffFrameFlashTime = 0
 local MPowa_BuffFrameFlashState = 0
 local MPowa_BUFF_ALPHA_VALUE = 0
 
+--[[
+local castByMe = {}
+local oldUseAction = UseAction
+UseAction = function(slot, checkCursor, onSelf)
+	MPowa_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
+	MPowa_Tooltip:ClearLines()
+	MPowa_Tooltip:SetAction(slot)
+	castByMe[MPowa_TooltipTextLeft1:GetText()] = GT()
+	oldUseAction(slot, checkCursor, onSelf)
+end
+
+local oldCastSpellByName = CastSpellByName
+CastSpellByName = function(spellName, onSelf)
+	castByMe[spellName] = GT()
+	oldCastSpellByName(spellName, onSelf)
+end
+
+local oldCastSpell = CastSpell
+CastSpell = function(spellID, spellbookType)
+	local spellName, spellRank = GetSpellName(spellID, spellbookType)
+	if MPOWA.auras[spellname] then
+		castByMe[spellName] = GT()
+	end
+	oldCastSpell(spellID, spellbookType)
+end
+--]]
+
 function MPOWA:OnEvent(event, arg1)
 	if event == "UNIT_AURA" then
 		if arg1 == "target" or self.groupByUnit[arg1] then
