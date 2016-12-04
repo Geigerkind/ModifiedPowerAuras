@@ -959,6 +959,58 @@
 									</Layer>
 								</Layers>
 							</EditBox>
+							<EditBox name="$parent_Editbox_SecondSpecifier" autoFocus="false" inherits="InputBoxTemplate" hidden="true">
+								<Size>
+									<AbsDimension x="135" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="LEFT" relativeTo="$parent_Editbox" relativePoint="RIGHT">
+										<Offset>
+											<AbsDimension x="5" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<FontString inherits="ChatFontNormal" bytes="200"/>
+								<Scripts>
+									<OnLoad>
+										this:SetMaxLetters(200)
+										this.aide = MPOWA_EDITBOX_SecondSpecifier_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_EDITBOX_SecondSpecifier)
+									</OnLoad>
+									<OnShow>
+										this:ClearFocus()
+									</OnShow>
+									<OnEnterPressed>
+										this:ClearFocus()
+									</OnEnterPressed>
+									<OnTextChanged>
+										MPOWA:Editbox_SecondSpecifier(this)
+									</OnTextChanged>
+									<OnEnter>
+										GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
+										GameTooltip:SetText(this.aide, nil, nil, nil, nil, 1)
+									</OnEnter>
+									<OnLeave>
+										GameTooltip:Hide()
+									</OnLeave>
+								</Scripts>
+								<Layers>
+									<Layer level="OVERLAY">
+										<FontString name="$parentText" inherits="GameFontNormalSmall" justifyH="LEFT" text="">
+											<Size>
+												<AbsDimension x="200" y="20"/>
+											</Size>
+											<Anchors>
+												<Anchor point="BOTTOMLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+													<Offset>
+														<AbsDimension x="0" y="0"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+								</Layers>
+							</EditBox>
 							<EditBox name="$parent_Editbox_Stacks" autoFocus="false" inherits="InputBoxTemplate">
 								<Size>
 									<AbsDimension x="65" y="16"/>
@@ -1466,6 +1518,35 @@
 										this.tooltipText = MPOWA_CHECKBUTTON_ININSTANCE_TOOLTIP
 										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_ININSTANCE)
 									</OnLoad>
+								</Scripts>
+							</CheckButton>
+							<CheckButton name="$parent_Checkbutton_SecondSpecifier" inherits="MPowa_CheckTemplate">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parent_Checkbutton_InRaidInstance" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="0" y="11" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = MPOWA_CHECKBUTTON_USE_DESCRIPTION_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_USE_DESCRIPTION)
+									</OnLoad>
+									<OnClick>
+										MPOWA:Checkbutton("secondspecifier")
+										if MPOWA_SAVE[MPOWA.CurEdit]["secondspecifier"] then
+											MPowa_ConfigFrame_Container_1_2_Editbox:SetWidth(135)
+											MPowa_ConfigFrame_Container_1_2_Editbox:ClearAllPoints()
+											MPowa_ConfigFrame_Container_1_2_Editbox:SetPoint("TOP", MPowa_ConfigFrame_Container_1_2, "TOP", -67.5, -20)
+											MPowa_ConfigFrame_Container_1_2_Editbox_SecondSpecifier:Show()
+										else
+											MPowa_ConfigFrame_Container_1_2_Editbox:SetWidth(270)
+											MPowa_ConfigFrame_Container_1_2_Editbox:ClearAllPoints()
+											MPowa_ConfigFrame_Container_1_2_Editbox:SetPoint("TOP", MPowa_ConfigFrame_Container_1_2, "TOP", 0, -20)
+											MPowa_ConfigFrame_Container_1_2_Editbox_SecondSpecifier:Hide()
+										end
+									</OnClick>
 								</Scripts>
 							</CheckButton>
 						</Frames>

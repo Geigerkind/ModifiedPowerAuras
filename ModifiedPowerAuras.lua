@@ -492,7 +492,7 @@ function MPOWA:Iterate(unit)
 			MPowa_Tooltip:SetUnitBuff(unit, i)
 		end
 		local buff = MPowa_TooltipTextLeft1:GetText()
-		self:Push(buff, unit, p, false)
+		self:Push(buff, unit, p, false, MPowa_TooltipTextLeft2:GetText())
 		
 		if i<17 then
 			MPowa_Tooltip:ClearLines()
@@ -504,7 +504,7 @@ function MPOWA:Iterate(unit)
 				MPowa_Tooltip:SetUnitDebuff(unit, i)
 			end
 			debuff = MPowa_TooltipTextLeft1:GetText()
-			self:Push(debuff, unit, p, true)
+			self:Push(debuff, unit, p, true, MPowa_TooltipTextLeft2:GetText())
 		end
 		MPowa_Tooltip:Hide()
 		if not buff and not debuff then break end
@@ -534,7 +534,7 @@ function MPOWA:Iterate(unit)
 	end
 end
 
-function MPOWA:Push(aura, unit, i, isdebuff)
+function MPOWA:Push(aura, unit, i, isdebuff, debuffdesc)
 	if self.auras[aura] then
 		--self:Print("Attempt to push: "..aura.."/"..unit)
 		for cat, val in self.auras[aura] do
@@ -542,7 +542,7 @@ function MPOWA:Push(aura, unit, i, isdebuff)
 			local path = MPOWA_SAVE[val]
 			local bypass = self.active[val]
 			--self:Print("Before con "..aura)
-			if path["isdebuff"]==isdebuff then
+			if path["isdebuff"]==isdebuff and ((path["secondspecifier"] and path["secondspecifiertext"]==debuffdesc) or not path["secondspecifier"]) then
 				if self:TernaryReturn(val, "alive", self:Reverse(UnitIsDeadOrGhost("player"))) and self:TernaryReturn(val, "mounted", self.mounted) and self:TernaryReturn(val, "incombat", UnitAffectingCombat("player")) and self:TernaryReturn(val, "inparty", self.party) and self:TernaryReturn(val, "inraid", UnitInRaid("player")) and self:TernaryReturn(val, "inbattleground", self.bg) and self:TernaryReturn(val, "inraidinstance", self.instance) and not path["cooldown"] then
 					BuffExist[val] = true
 					--self:Print("Pushed: "..aura.."//"..val.."//"..cat)
@@ -813,6 +813,10 @@ function MPOWA:Init()
 				MPOWA_SAVE[cat]["inraidinstance"] = 0
 			end
 			--self:Print(cat.."//"..MPOWA_SAVE[cat]["buffname"])
+
+			if not val["secondspecifiertext"] then
+				MPOWA_SAVE[cat]["secondspecifiertext"] = ""
+			end
 		end
 		val["test"] = false
 	end
@@ -898,6 +902,8 @@ function MPOWA:CreateSave(i)
 		secsleftdur = 0,
 		inraidinstance = 0,
 		hidestacks = false,
+		secondspecifier = false,
+		secondspecifiertext = "",
 	}
 end
 
@@ -1204,6 +1210,19 @@ function MPOWA:Edit()
 		else
 			MPowa_ConfigFrame_Container_1_2_Editbox_SECLEFT:Hide()
 		end
+		MPowa_ConfigFrame_Container_1_2_Checkbutton_SecondSpecifier:SetChecked(MPOWA_SAVE[self.CurEdit].secondspecifier)
+		MPowa_ConfigFrame_Container_1_2_Editbox_SecondSpecifier:SetText(MPOWA_SAVE[self.CurEdit].secondspecifiertext)
+		if MPOWA_SAVE[MPOWA.CurEdit]["secondspecifier"] then
+			MPowa_ConfigFrame_Container_1_2_Editbox:SetWidth(135)
+			MPowa_ConfigFrame_Container_1_2_Editbox:ClearAllPoints()
+			MPowa_ConfigFrame_Container_1_2_Editbox:SetPoint("TOP", MPowa_ConfigFrame_Container_1_2, "TOP", -67.5, -20)
+			MPowa_ConfigFrame_Container_1_2_Editbox_SecondSpecifier:Show()
+		else
+			MPowa_ConfigFrame_Container_1_2_Editbox:SetWidth(270)
+			MPowa_ConfigFrame_Container_1_2_Editbox:ClearAllPoints()
+			MPowa_ConfigFrame_Container_1_2_Editbox:SetPoint("TOP", MPowa_ConfigFrame_Container_1_2, "TOP", 0, -20)
+			MPowa_ConfigFrame_Container_1_2_Editbox_SecondSpecifier:Hide()
+		end
 		MPOWA:TernarySetState(MPowa_ConfigFrame_Container_1_2_Checkbutton_Alive, MPOWA_SAVE[self.CurEdit].alive)
 		MPOWA:TernarySetState(MPowa_ConfigFrame_Container_1_2_Checkbutton_Mounted, MPOWA_SAVE[self.CurEdit].mounted)
 		MPOWA:TernarySetState(MPowa_ConfigFrame_Container_1_2_Checkbutton_InCombat, MPOWA_SAVE[self.CurEdit].incombat)
@@ -1426,6 +1445,26 @@ function MPOWA:Editbox_Name(obj)
 		tinsert(self.auras[MPOWA_SAVE[self.CurEdit].buffname], self.CurEdit)
 	end
 	--self:Print(self.CurEdit)
+	
+	if MPOWA_SAVE[self.CurEdit].test or self.testAll then
+		_G("TextureFrame"..self.CurEdit):Hide()
+		_G("TextureFrame"..self.CurEdit):Show()
+	else
+		self:Iterate("player")
+		self:Iterate("target")
+	end
+end
+
+function MPOWA:Editbox_SecondSpecifier(obj)
+	local oldname = MPOWA_SAVE[self.CurEdit].secondspecifiertext
+	MPOWA_SAVE[self.CurEdit].secondspecifiertext = obj:GetText()
+
+	if oldname ~= MPOWA_SAVE[self.CurEdit].secondspecifiertext then
+		MPOWA_SAVE[self.CurEdit].texture = "Interface\\AddOns\\ModifiedPowerAuras\\images\\dummy.tga"
+		MPowa_ConfigFrame_Container_1_Icon_Texture:SetTexture(MPOWA_SAVE[self.CurEdit].texture)
+		_G("ConfigButton"..self.CurEdit.."_Icon"):SetTexture(MPOWA_SAVE[self.CurEdit].texture)
+		_G("TextureFrame"..self.CurEdit.."_Icon"):SetTexture(MPOWA_SAVE[self.CurEdit].texture)
+	end
 	
 	if MPOWA_SAVE[self.CurEdit].test or self.testAll then
 		_G("TextureFrame"..self.CurEdit):Hide()

@@ -124,3 +124,7 @@ MPOWA_ZONES_NAXX = "Naxxramas"
 
 MPOWA_CHECKBUTTON_HIDE_STACKS_TOOLTIP = "Check this to hide stacks"
 MPOWA_CHECKBUTTON_HIDE_STACKS = "Hide stacks"
+MPOWA_CHECKBUTTON_USE_DESCRIPTION_TOOLTIP = "Check this to use the tooltip description of a buff as well for an second indicator to get the aura."
+MPOWA_CHECKBUTTON_USE_DESCRIPTION = "Use description"
+MPOWA_EDITBOX_SecondSpecifier_TOOLTIP = "Insert the exact description of an the aura tooltip."
+MPOWA_EDITBOX_SecondSpecifier = "Exact description:"
