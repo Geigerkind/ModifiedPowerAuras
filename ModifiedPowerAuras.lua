@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 27
+MPOWA.Build = 28
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
@@ -93,6 +93,14 @@ MPOWA.SOUND = {
 	[54] = "shipswhistle.ogg", 
 	[55] = "kaching.ogg", 
 	[56] = "heartbeat.ogg",
+	[57] = "Hit1.ogg", -- Thanks to Sillywet!
+	[58] = "Hit2.ogg", -- Thanks to Sillywet!
+	[59] = "Hit3.ogg", -- Thanks to Sillywet!
+	[60] = "Hit4.ogg", -- Thanks to Sillywet!
+	[61] = "Hit5.ogg", -- Thanks to Sillywet!
+	[62] = "Hit6.ogg", -- Thanks to Sillywet!
+	[63] = "Hit7.ogg", -- Thanks to Sillywet!
+	[64] = "Hit8.ogg", -- Thanks to Sillywet!
 }
 MPOWA.ICONARRAY = {
 	["MPowa_IconFrame_ButtonContainer_Button"] = 27,

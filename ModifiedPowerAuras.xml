@@ -1956,12 +1956,12 @@
 								<Scripts>
 									<OnLoad>
 										this.aide = MPOWA_SLIDER_BEGINSOUND_TOOLTIP
-										this:SetMinMaxValues(1,56)
+										this:SetMinMaxValues(1,64)
 										this:SetValue(1)
 										this:SetValueStep(1)
 										getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_BEGINSOUND)
 										getglobal(this:GetName().."Low"):SetText("1")
-										getglobal(this:GetName().."High"):SetText("56")
+										getglobal(this:GetName().."High"):SetText("64")
 									</OnLoad>
 									<OnValueChanged>
 										if MPOWA.loaded then
