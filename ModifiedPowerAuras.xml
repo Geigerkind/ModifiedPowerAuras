@@ -2548,7 +2548,7 @@
 						<Scripts>
 							<OnLoad>
 								getglobal(this:GetName().."_Border"):Show()
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Warrior_BattleShout")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Warrior_BattleShout")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -2562,7 +2562,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Warrior_DefensiveStance")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Warrior_DefensiveStance")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -2576,7 +2576,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Warrior_Disarm")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Warrior_Disarm")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -2590,7 +2590,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Warrior_OffensiveStance")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Warrior_OffensiveStance")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -2604,7 +2604,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Warrior_PunishingBlow")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Warrior_PunishingBlow")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -2618,7 +2618,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Warrior_SavageBlow")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Warrior_SavageBlow")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -2632,7 +2632,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Warrior_Sunder")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Warrior_Sunder")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -2646,7 +2646,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Warrior_ShieldWall")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Warrior_ShieldWall")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -2660,7 +2660,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Warrior_WarCry")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Warrior_WarCry")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -2674,7 +2674,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Racial_Avatar")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Racial_Avatar")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -2688,7 +2688,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Racial_BloodRage")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Racial_BloodRage")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -2702,7 +2702,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_AncestralGuardian")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_AncestralGuardian")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -2716,7 +2716,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_ThunderClap")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_ThunderClap")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -2730,7 +2730,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Gouge")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Gouge")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -2744,7 +2744,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_ShockWave")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_ShockWave")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -2758,7 +2758,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_CriticalStrike")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_CriticalStrike")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -2772,7 +2772,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Warrior_Challange")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Warrior_Challange")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -2786,7 +2786,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_GolemThunderClap")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_GolemThunderClap")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -2800,7 +2800,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Reincarnation")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_Reincarnation")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -2814,7 +2814,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Defend")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Defend")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -2828,7 +2828,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Rogue_SliceDice")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Rogue_SliceDice")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -2842,7 +2842,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\spell_holy_ashestoashes")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\spell_holy_ashestoashes")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -2856,7 +2856,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\spell_shadow_unholyfrenzy")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\spell_shadow_unholyfrenzy")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -2870,7 +2870,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\inv_shield_05")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\inv_shield_05")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -2884,7 +2884,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\ability_thunderbolt")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\ability_thunderbolt")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -2898,7 +2898,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\ability_warrior_revenge")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\ability_warrior_revenge")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -2912,7 +2912,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\spell_nature_bloodlust")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\spell_nature_bloodlust")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -2952,7 +2952,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Sap")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Sap")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -2966,7 +2966,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Rogue_Sprint")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Rogue_Sprint")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -2980,7 +2980,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Rogue_SliceDice")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Rogue_SliceDice")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -2994,7 +2994,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Rogue_Rupture")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Rogue_Rupture")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3008,7 +3008,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Rogue_KidneyShot")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Rogue_KidneyShot")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3022,7 +3022,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Rogue_Garrote")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Rogue_Garrote")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3036,7 +3036,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Rogue_DualWeild")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Rogue_DualWeild")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3050,7 +3050,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Warrior_Riposte")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Warrior_Riposte")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3064,7 +3064,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_ShadowWard")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_ShadowWard")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3078,7 +3078,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Stealth")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Stealth")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3092,7 +3092,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Gouge")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Gouge")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3106,7 +3106,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Kick")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Kick")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3120,7 +3120,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_ShadowWordDominate")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_ShadowWordDominate")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3134,7 +3134,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Warrior_PunishingBlow")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Warrior_PunishingBlow")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3148,7 +3148,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_CheapShot")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_CheapShot")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3162,7 +3162,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Vanish")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Vanish")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3176,7 +3176,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_MindSteal")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_MindSteal")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3190,7 +3190,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Ice_Lament")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Ice_Lament")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3204,7 +3204,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\ABILITY_POISONSTING")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\ABILITY_POISONSTING")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3218,7 +3218,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_NullifyDisease")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_NullifyDisease")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3232,7 +3232,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\ability_rogue_feint")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\ability_rogue_feint")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3246,7 +3246,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\ability_rogue_distract")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\ability_rogue_distract")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3286,7 +3286,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_WordFortitude")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_WordFortitude")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3300,7 +3300,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_UnsummonBuilding")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_UnsummonBuilding")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3314,7 +3314,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_PsychicScream")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_PsychicScream")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3328,7 +3328,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_SiphonMana")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_SiphonMana")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3342,7 +3342,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_PrayerofShadowProtection")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_PrayerofShadowProtection")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3356,7 +3356,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_PrayerofSpirit")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_PrayerofSpirit")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3370,7 +3370,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_PrayerOfFortitude")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_PrayerOfFortitude")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3384,7 +3384,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_ShadowWordPain")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_ShadowWordPain")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3398,7 +3398,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_PowerWordShield")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_PowerWordShield")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3412,7 +3412,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_Renew")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_Renew")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3426,7 +3426,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Magic_LesserInvisibilty")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Magic_LesserInvisibilty")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3440,7 +3440,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_DeadofNight")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_DeadofNight")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3454,7 +3454,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_InnerFire")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_InnerFire")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3468,7 +3468,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_FingerOfDeath")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_FingerOfDeath")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3482,7 +3482,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_NullifyDisease")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_NullifyDisease")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3496,7 +3496,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_MindSooth")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_MindSooth")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3510,7 +3510,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_ElunesGrace")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_ElunesGrace")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3524,7 +3524,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_BlackPlague")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_BlackPlague")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3538,7 +3538,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_Excorcism")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_Excorcism")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3552,7 +3552,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Slow")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_Slow")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3566,7 +3566,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_MindVision")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_MindVision")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3580,7 +3580,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_RitualOfSacrifice")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_RitualOfSacrifice")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3594,7 +3594,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_NullifyDisease")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_NullifyDisease")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3608,7 +3608,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_LayOnHands")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_LayOnHands")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3622,7 +3622,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\spell_holy_powerinfusion")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\spell_holy_powerinfusion")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3662,7 +3662,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Hunter_SniperShot")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Hunter_SniperShot")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3676,7 +3676,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Hunter_RunningShot")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Hunter_RunningShot")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3690,7 +3690,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Hunter_Quickshot")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Hunter_Quickshot")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3704,7 +3704,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Hunter_MendPet")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Hunter_MendPet")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3718,7 +3718,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Hunter_CriticalShot")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Hunter_CriticalShot")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3732,7 +3732,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Hunter_AspectOfTheMonkey")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Hunter_AspectOfTheMonkey")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3746,7 +3746,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Hunter_AimedShot")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Hunter_AimedShot")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3760,7 +3760,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Spear_02")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\INV_Spear_02")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3774,7 +3774,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_RavenForm")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_RavenForm")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3788,7 +3788,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_ChainsOfIce")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Frost_ChainsOfIce")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3802,7 +3802,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_SelfDestruct")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Fire_SelfDestruct")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3816,7 +3816,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_FlameShock")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Fire_FlameShock")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3830,7 +3830,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_ProtectionformNature")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_ProtectionformNature")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3844,7 +3844,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Rogue_Trip")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Rogue_Trip")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3858,7 +3858,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Mount_WhiteTiger")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Mount_WhiteTiger")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3872,7 +3872,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Rogue_FeignDeath")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Rogue_FeignDeath")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3886,7 +3886,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_GolemStormBolt")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_GolemStormBolt")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3900,7 +3900,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_Flare")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Fire_Flare")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3914,7 +3914,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_EyeOfTheOwl")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_EyeOfTheOwl")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3928,7 +3928,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Mount_JungleTiger")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Mount_JungleTiger")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3942,7 +3942,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Web")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_Web")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3982,7 +3982,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Druid_TravelForm")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Druid_TravelForm")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -3996,7 +3996,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Druid_SupriseAttack")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Druid_SupriseAttack")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4010,7 +4010,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Druid_Mangle")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Druid_Mangle")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4024,7 +4024,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Druid_Enrage")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Druid_Enrage")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4038,7 +4038,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Druid_Dash")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Druid_Dash")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4052,7 +4052,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Druid_CatForm")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Druid_CatForm")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4066,7 +4066,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Druid_Bash")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Druid_Bash")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4080,7 +4080,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Druid_AquaticForm")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Druid_AquaticForm")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4094,7 +4094,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Regeneration")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_Regeneration")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4108,7 +4108,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_RavenForm")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_RavenForm")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4122,7 +4122,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Racial_BearForm")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Racial_BearForm")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4136,7 +4136,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Rejuvenation")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_Rejuvenation")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4150,7 +4150,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_StarFall")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_StarFall")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4164,7 +4164,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Thorns")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_Thorns")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4178,7 +4178,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_StrangleVines")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_StrangleVines")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4192,7 +4192,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\ABILITY_DRUID_DEMORALIZINGROAR")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\ABILITY_DRUID_DEMORALIZINGROAR")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4206,7 +4206,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Physical_Taunt")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Physical_Taunt")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4220,7 +4220,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_NaturesWrath")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_NaturesWrath")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4234,7 +4234,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_ResistNature")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_ResistNature")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4248,7 +4248,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_NullifyPoison")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_NullifyPoison")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4262,7 +4262,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_FaerieFire")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_FaerieFire")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4276,7 +4276,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Sleep")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_Sleep")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4290,7 +4290,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_GhoulFrenzy")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_GhoulFrenzy")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4304,7 +4304,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_InsectSwarm")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_InsectSwarm")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4318,7 +4318,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Hunter_Pet_Bear")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Hunter_Pet_Bear")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4332,7 +4332,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Tranquility")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_Tranquility")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4346,7 +4346,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Cyclone")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_Cyclone")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4360,7 +4360,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Hunter_BeastSoothe")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Hunter_BeastSoothe")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4374,7 +4374,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_RemoveCurse")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_RemoveCurse")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4388,7 +4388,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_BullRush")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_BullRush")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4402,7 +4402,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Ambush")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Ambush")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4416,7 +4416,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Druid_FerociousBite")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Druid_FerociousBite")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4430,7 +4430,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_ForceOfNature")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_ForceOfNature")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4444,7 +4444,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Lightning")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_Lightning")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4458,7 +4458,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_StoneClawTotem")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_StoneClawTotem")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4498,7 +4498,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_FlameBolt")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Fire_FlameBolt")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4512,7 +4512,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_FrostArmor02")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Frost_FrostArmor02")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4526,7 +4526,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_MagicalSentry")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_MagicalSentry")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4540,7 +4540,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_FrostBolt02")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Frost_FrostBolt02")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4554,7 +4554,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_FrostArmor")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Frost_FrostArmor")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4568,7 +4568,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_FireArmor")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Fire_FireArmor")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4582,7 +4582,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_MeteorStorm")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Fire_MeteorStorm")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4596,7 +4596,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_Incinerate")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Fire_Incinerate")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4610,7 +4610,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_FreezingBreath")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Frost_FreezingBreath")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4624,7 +4624,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_ChillingBlast")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Frost_ChillingBlast")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4638,7 +4638,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_IceStorm")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Frost_IceStorm")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4652,7 +4652,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_FrostWard")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Frost_FrostWard")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4666,7 +4666,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_Glacier")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Frost_Glacier")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4680,7 +4680,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_ManaBurn")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Frost_ManaBurn")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4694,7 +4694,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_AbolishMagic")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_AbolishMagic")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4708,7 +4708,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_DetectLesserInvisibility")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_DetectLesserInvisibility")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4722,7 +4722,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_IceShock")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Frost_IceShock")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4736,7 +4736,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Lightning")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_Lightning")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4750,7 +4750,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_EnchantArmor")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_EnchantArmor")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4764,7 +4764,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_SelfDestruct")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Fire_SelfDestruct")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4778,7 +4778,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Polymorph")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_Polymorph")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4792,7 +4792,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_SoulBurn")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Fire_SoulBurn")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4806,7 +4806,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_Frost")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Frost_Frost")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4820,7 +4820,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Magic_FeatherFall")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Magic_FeatherFall")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4834,7 +4834,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_Dizzy")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_Dizzy")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4848,7 +4848,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_FlashHeal")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_FlashHeal")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4862,7 +4862,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_Fireball02")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Fire_Fireball02")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4876,7 +4876,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Purge")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_Purge")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4890,7 +4890,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_Excorcism_02")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_Excorcism_02")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4904,7 +4904,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_MageArmor")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_MageArmor")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4918,7 +4918,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_SealOfFire")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Fire_SealOfFire")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4932,7 +4932,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Ice_Lament")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Ice_Lament")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4946,7 +4946,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_ArcaneIntellect")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_ArcaneIntellect")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4960,7 +4960,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Polymorph_Cow")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_Polymorph_Cow")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4974,7 +4974,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Magic_PolymorphPig")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Magic_PolymorphPig")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -4988,7 +4988,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Hunter_Pet_Turtle")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Hunter_Pet_Turtle")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5028,7 +5028,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_Immolation")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Fire_Immolation")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5042,7 +5042,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_ShadowBolt")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_ShadowBolt")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5056,7 +5056,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_CurseOfSargeras")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_CurseOfSargeras")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5070,7 +5070,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Misc_Orb_04")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\INV_Misc_Orb_04")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5084,7 +5084,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_AbominationExplosion")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_AbominationExplosion")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5098,7 +5098,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_CurseOfMannoroth")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_CurseOfMannoroth")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5112,7 +5112,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_BloodBoil")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_BloodBoil")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5126,7 +5126,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_Possession")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_Possession")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5140,7 +5140,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_Haunting")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_Haunting")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5154,7 +5154,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_GatherShadows")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_GatherShadows")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5168,7 +5168,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_LifeDrain")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_LifeDrain")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5182,7 +5182,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_LifeDrain02")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_LifeDrain02")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5196,7 +5196,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_AntiShadow")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_AntiShadow")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5210,7 +5210,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_ScourgeBuild")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_ScourgeBuild")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5224,7 +5224,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_SiphonMana")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_SiphonMana")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5238,7 +5238,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_FireArmor")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Fire_FireArmor")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5252,7 +5252,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_CurseOfTounges")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_CurseOfTounges")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5266,7 +5266,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_MindSteal")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_MindSteal")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5280,7 +5280,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_Cripple")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_Cripple")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5294,7 +5294,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_UnholyStrength")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_UnholyStrength")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5308,7 +5308,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_EnslaveDemon")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_EnslaveDemon")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5322,7 +5322,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_Requiem")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_Requiem")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5336,7 +5336,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_Incinerate")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Fire_Incinerate")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5350,7 +5350,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_MindRot")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_MindRot")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5364,7 +5364,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_DeathScream")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_DeathScream")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5378,7 +5378,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_AuraOfDarkness")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_AuraOfDarkness")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5392,7 +5392,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_DeathCoil")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_DeathCoil")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5406,7 +5406,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_CurseOfAchimonde")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_CurseOfAchimonde")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5420,7 +5420,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_ChillTouch")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_ChillTouch")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5434,7 +5434,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_RagingScream")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_RagingScream")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5474,7 +5474,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\SPELL_HOLY_DEVOTIONAURA")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\SPELL_HOLY_DEVOTIONAURA")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5488,7 +5488,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_ThunderBolt")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_ThunderBolt")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5502,7 +5502,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_SealOfFury")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_SealOfFury")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5516,7 +5516,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_HealingAura")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_HealingAura")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5530,7 +5530,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_GreaterBlessingofWisdom")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_GreaterBlessingofWisdom")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5544,7 +5544,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_GreaterBlessingofSanctuary")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_GreaterBlessingofSanctuary")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5558,7 +5558,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_GreaterBlessingofSalvation")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_GreaterBlessingofSalvation")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5572,7 +5572,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_GreaterBlessingofLight")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_GreaterBlessingofLight")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5586,7 +5586,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Magic_GreaterBlessingofKings")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Magic_GreaterBlessingofKings")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5600,7 +5600,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_GreaterBlessingofKings")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_GreaterBlessingofKings")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5614,7 +5614,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_FistOfJustice")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_FistOfJustice")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5628,7 +5628,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_RighteousFury")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_RighteousFury")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5642,7 +5642,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_HolySmite")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_HolySmite")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5656,7 +5656,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_SealOfMight")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_SealOfMight")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5670,7 +5670,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_LayOnHands")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_LayOnHands")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5684,7 +5684,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_SealOfProtection")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_SealOfProtection")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5698,7 +5698,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_SealOfSacrifice")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_SealOfSacrifice")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5712,7 +5712,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_SealOfValor")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_SealOfValor")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5726,7 +5726,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_SealOfSalvation")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_SealOfSalvation")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5740,7 +5740,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_SealOfWisdom")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_SealOfWisdom")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5754,7 +5754,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_AuraOfLight")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_AuraOfLight")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5768,7 +5768,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_PrayerOfHealing")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_PrayerOfHealing")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5782,7 +5782,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_LightningShield")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_LightningShield")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5796,7 +5796,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Magic_MageArmor")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Magic_MageArmor")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5810,7 +5810,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_Warrior_InnerRage")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_Warrior_InnerRage")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5824,7 +5824,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_MindSooth")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_MindSooth")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5838,7 +5838,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_SealOfWrath")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_SealOfWrath")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5852,7 +5852,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_SealOfKings")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_SealOfKings")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5866,7 +5866,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_TimeStop")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_TimeStop")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5880,7 +5880,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_BlessingOfProtection")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_BlessingOfProtection")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5894,7 +5894,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_MindVision")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_MindVision")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5908,7 +5908,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_WizardMark")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Frost_WizardMark")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5922,7 +5922,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_SealOfFire")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Fire_SealOfFire")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5936,7 +5936,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_RighteousnessAura")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_RighteousnessAura")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5950,7 +5950,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_PrayerOfHealing02")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_PrayerOfHealing02")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -5964,7 +5964,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\spell_holy_divineintervention")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\spell_holy_divineintervention")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6004,7 +6004,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_WispHeal")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_WispHeal")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6018,7 +6018,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_RavenForm")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_RavenForm")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6032,7 +6032,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_GhoulFrenzy")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_GhoulFrenzy")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6046,7 +6046,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_StoneClawTotem")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_StoneClawTotem")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6060,7 +6060,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_StoneSkinTotem")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_StoneSkinTotem")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6074,7 +6074,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_StrengthOfEarthTotem02")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_StrengthOfEarthTotem02")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6088,7 +6088,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_LightningShield")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_LightningShield")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6102,7 +6102,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_FlameShock")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Fire_FlameShock")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6116,7 +6116,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_EarthBindTotem")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_EarthBindTotem")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6130,7 +6130,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_TremorTotem")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_TremorTotem")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6144,7 +6144,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_SpiritWolf")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_SpiritWolf")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6158,7 +6158,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Spear_04")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\INV_Spear_04")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6172,7 +6172,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_PoisonCleansingTotem")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_PoisonCleansingTotem")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6186,7 +6186,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_FrostResistanceTotem_01")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_FrostResistanceTotem_01")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6200,7 +6200,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_ManaRegenTotem")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_ManaRegenTotem")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6214,7 +6214,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_FireResistanceTotem_01")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_FireResistanceTotem_01")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6228,7 +6228,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_GroundingTotem")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_GroundingTotem")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6242,7 +6242,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Cyclone")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_Cyclone")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6256,7 +6256,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_NatureResistanceTotem")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_NatureResistanceTotem")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6270,7 +6270,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Windfury")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_Windfury")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6284,7 +6284,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_RemoveCurse")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_RemoveCurse")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6298,7 +6298,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_EarthBind")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_EarthBind")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6312,7 +6312,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_DiseaseCleansingTotem")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_DiseaseCleansingTotem")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6326,7 +6326,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_SummonWaterElemental")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Frost_SummonWaterElemental")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6340,7 +6340,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_InvisibilityTotem")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_InvisibilityTotem")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6354,7 +6354,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_GuardianWard")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_GuardianWard")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6368,7 +6368,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Brilliance")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_Brilliance")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6408,7 +6408,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_AbolishMagic")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_AbolishMagic")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6422,7 +6422,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Potion_04")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\INV_Potion_04")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6436,7 +6436,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Potion_62")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\INV_Potion_62")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6450,7 +6450,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_Sleep")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_Sleep")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6464,7 +6464,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_RaiseDead")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_RaiseDead")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6478,7 +6478,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\RACIAL_ORC_BERSERKERSTRENGTH")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\RACIAL_ORC_BERSERKERSTRENGTH")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6492,7 +6492,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\RACIAL_TROLL_BERSERK")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\RACIAL_TROLL_BERSERK")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6506,7 +6506,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Ability_WarStomp")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Ability_WarStomp")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6520,7 +6520,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_FrostWard")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Frost_FrostWard")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6534,7 +6534,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_SealOfFire")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Fire_SealOfFire")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6548,7 +6548,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_AntiShadow")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_AntiShadow")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6562,7 +6562,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_MindVision")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_MindVision")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6576,7 +6576,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Misc_Gem_Pearl_04")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\INV_Misc_Gem_Pearl_04")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6590,7 +6590,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Jewelry_Talisman_06")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\INV_Jewelry_Talisman_06")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6604,7 +6604,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_WispHeal")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_WispHeal")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6618,7 +6618,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Totem_WardOfDraining")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Totem_WardOfDraining")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6632,7 +6632,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Misc_Gem_Pearl_05")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\INV_Misc_Gem_Pearl_05")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6646,7 +6646,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_SearingLight")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_SearingLight")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6660,7 +6660,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Nature_SpiritArmor")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Nature_SpiritArmor")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6674,7 +6674,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Magic_LesserInvisibilty")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Magic_LesserInvisibilty")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6688,7 +6688,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Trinket_Naxxramas04")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\INV_Trinket_Naxxramas04")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6702,7 +6702,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Trinket_Naxxramas05")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\INV_Trinket_Naxxramas05")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6716,7 +6716,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Trinket_Naxxramas01")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\INV_Trinket_Naxxramas01")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6730,7 +6730,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Trinket_Naxxramas06")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\INV_Trinket_Naxxramas06")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6744,7 +6744,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Trinket_Naxxramas03")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\INV_Trinket_Naxxramas03")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6758,7 +6758,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_WizardMark")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Frost_WizardMark")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6772,7 +6772,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Misc_AhnQirajTrinket_04")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\INV_Misc_AhnQirajTrinket_04")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6786,7 +6786,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Arcane_TeleportOrgrimmar")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Arcane_TeleportOrgrimmar")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6800,7 +6800,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Shadow_GrimWard")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Shadow_GrimWard")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6814,7 +6814,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Misc_AhnQirajTrinket_06")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\INV_Misc_AhnQirajTrinket_06")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6828,7 +6828,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Misc_EngGizmos_19")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\INV_Misc_EngGizmos_19")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6842,7 +6842,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\SPELL_HOLY_DEVOTIONAURA")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\SPELL_HOLY_DEVOTIONAURA")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6856,7 +6856,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_Incinerate")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Fire_Incinerate")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6870,7 +6870,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Fire_Fireball")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Fire_Fireball")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6884,7 +6884,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_ChargeNegative")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_ChargeNegative")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6898,7 +6898,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_ChargePositive")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_ChargePositive")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6912,7 +6912,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\INV_Misc_Head_Dragon_01")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\INV_Misc_Head_Dragon_01")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6926,7 +6926,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Holy_BlessingOfStrength")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Holy_BlessingOfStrength")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6940,7 +6940,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\Spell_Frost_Wisp")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\Spell_Frost_Wisp")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6954,7 +6954,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\inv_misc_rune_01")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\inv_misc_rune_01")
 							</OnLoad>
 						</Scripts>
 					</Button>
@@ -6968,7 +6968,7 @@
 						</Anchors>
 						<Scripts>
 							<OnLoad>
-								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\ICONS\\inv_potion_69")
+								getglobal(this:GetName().."_Icon"):SetTexture("Interface\\Icons\\inv_potion_69")
 							</OnLoad>
 						</Scripts>
 					</Button>
