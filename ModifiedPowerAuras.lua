@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 28
+MPOWA.Build = 29
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
@@ -134,7 +134,7 @@ local GT = GetTime
 local tnbr = tonumber
 
 local UpdateTime, LastUpdate = 0.05, 0
-local SELECTEDICON = "Interface\\ICONS\\Ability_Warrior_BattleShout"
+local SELECTEDICON = "Interface\\Icons\\Ability_Warrior_BattleShout"
 local MPowa_BuffFrameUpdateTime = 0
 local MPowa_BuffFrameFlashTime = 0
 local MPowa_BuffFrameFlashState = 0
@@ -270,7 +270,11 @@ function MPOWA:OnUpdate(elapsed)
 							end
 						else
 							if path["inverse"] then
-								self:FHide(cat)
+								if duration > 0 then
+									self:FHide(cat)
+								else
+									self:FShow(cat)
+								end
 							else
 								if path["secsleft"] then
 									if duration<=path["secsleftdur"] then
@@ -279,7 +283,11 @@ function MPOWA:OnUpdate(elapsed)
 										self:FHide(cat)
 									end
 								else
-									self:FShow(cat)
+									if duration > 0 then
+										self:FShow(cat)
+									else
+										self:FHide(cat)
+									end
 								end
 							end
 						end
