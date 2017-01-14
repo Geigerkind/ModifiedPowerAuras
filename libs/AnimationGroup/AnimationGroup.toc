@@ -1,0 +1,23 @@
+## Interface: 11200
+## Title: AnimationGroup
+## Notes: DEV: Library for animations
+## Author: martinjlowm
+## Version: 1.0
+
+libs\LibStub\LibStub.lua
+libs\Sol\Sol.lua
+libs\Classy-1.0\Classy-1.0.lua
+
+AnimationGroup.lua
+
+curves.lua
+
+group.lua
+animation.lua
+alpha.lua
+path.lua
+rotation.lua
+scale.lua
+translation.lua
+
+tests.lua

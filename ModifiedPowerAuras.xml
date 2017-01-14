@@ -2190,11 +2190,181 @@
 					</Frame>
 					<Frame name="$parent_5" inherits="MPowa_ContainerTemplate" hidden="true">
 						<Size x="290" y="120" />
+						<Layers>
+							<Layer>
+								<FontString name="$parent_OnStart" inherits="GameFontNormal" justifyH="LEFT">
+									<Size>
+										<AbsDimension x="270" y="20" />
+									</Size>
+									<Anchors>
+										<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+											<Offset>
+												<AbsDimension x="5" y="-125" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+							<Layer>
+								<FontString name="$parent_OnFinished" inherits="GameFontNormal" justifyH="LEFT">
+									<Size>
+										<AbsDimension x="270" y="20" />
+									</Size>
+									<Anchors>
+										<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+											<Offset>
+												<AbsDimension x="180" y="-125" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
 						<Frames>
+							<Slider name="$parent_Slider_AnimDuration" inherits="MPowa_SliderTemplate">
+								<Size>
+									<AbsDimension x="130" y="16" />
+								</Size>
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+										<Offset>
+											<AbsDimension x="10" y="-20" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = MPOWA_SLIDER_ANIMDURATION_TOOLTIP
+										this:SetMinMaxValues(0.1,3)
+										this:SetValue(0.5)
+										this:SetValueStep(0.1)
+										getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_ANIMDURATION)
+										getglobal(this:GetName().."Low"):SetText("0.1")
+										getglobal(this:GetName().."High"):SetText("3")
+									</OnLoad>
+									<OnValueChanged>
+										if MPOWA.loaded then
+											MPOWA:SliderChange("animduration", this, MPOWA_SLIDER_ANIMDURATION.." -")
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
+							<Slider name="$parent_Slider_TranslateX" inherits="MPowa_SliderTemplate">
+								<Size>
+									<AbsDimension x="130" y="16" />
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parent_Slider_AnimDuration" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-15" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = MPOWA_SLIDER_TRANSLATE_TOOLTIP
+										this:SetMinMaxValues(-100,100)
+										this:SetValue(50)
+										this:SetValueStep(5)
+										getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_TRANSLATEX)
+										getglobal(this:GetName().."Low"):SetText("-100")
+										getglobal(this:GetName().."High"):SetText("100")
+									</OnLoad>
+									<OnValueChanged>
+										if MPOWA.loaded then
+											MPOWA:SliderChange("translateoffsetx", this, MPOWA_SLIDER_TRANSLATEX.." -")
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
+							<Slider name="$parent_Slider_TranslateY" inherits="MPowa_SliderTemplate">
+								<Size>
+									<AbsDimension x="130" y="16" />
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parent_Slider_TranslateX" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-15" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = MPOWA_SLIDER_TRANSLATE_TOOLTIP
+										this:SetMinMaxValues(-100,100)
+										this:SetValue(50)
+										this:SetValueStep(5)
+										getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_TRANSLATEY)
+										getglobal(this:GetName().."Low"):SetText("-100")
+										getglobal(this:GetName().."High"):SetText("100")
+									</OnLoad>
+									<OnValueChanged>
+										if MPOWA.loaded then
+											MPOWA:SliderChange("translateoffsety", this, MPOWA_SLIDER_TRANSLATEY.." -")
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
+							<Slider name="$parent_Slider_FadeAlpha" inherits="MPowa_SliderTemplate">
+								<Size>
+									<AbsDimension x="130" y="16" />
+								</Size>
+								<Anchors>
+									<Anchor point="LEFT" relativeTo="$parent_Slider_AnimDuration" relativePoint="RIGHT">
+										<Offset>
+											<AbsDimension x="10" y="0" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = MPOWA_SLIDER_FADEALPHA_TOOLTIP
+										this:SetMinMaxValues(0,1)
+										this:SetValue(0.99)
+										this:SetValueStep(0.01)
+										getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_FADEALPHA)
+										getglobal(this:GetName().."Low"):SetText("0")
+										getglobal(this:GetName().."High"):SetText("1")
+									</OnLoad>
+									<OnValueChanged>
+										if MPOWA.loaded then
+											MPOWA:SliderChange("fadealpha", this, MPOWA_SLIDER_FADEALPHA.." -")
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
+							<Slider name="$parent_Slider_ScaleFactor" inherits="MPowa_SliderTemplate">
+								<Size>
+									<AbsDimension x="130" y="16" />
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parent_Slider_FadeAlpha" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-15" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = MPOWA_SLIDER_SCALEFACTOR_TOOLTIP
+										this:SetMinMaxValues(0.1,3)
+										this:SetValue(0.8)
+										this:SetValueStep(0.1)
+										getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_SCALEFACTOR)
+										getglobal(this:GetName().."Low"):SetText("0.1")
+										getglobal(this:GetName().."High"):SetText("3")
+									</OnLoad>
+									<OnValueChanged>
+										if MPOWA.loaded then
+											MPOWA:SliderChange("scalefactor", this, MPOWA_SLIDER_SCALEFACTOR.." -")
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
 							<CheckButton name="$parent_FadeIn" inherits="MPowa_CheckTemplate">
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
-										<Offset x="10" y="-5" />
+										<Offset x="10" y="-145" />
 									</Anchor>
 								</Anchors>
 								<Scripts>
@@ -2204,13 +2374,99 @@
 									</OnLoad>
 									<OnClick>
 										MPOWA:Checkbutton("fadein")
+										MPOWA:AddAnimFadeIn(MPOWA.CurEdit)
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<CheckButton name="$parent_GrowIn" inherits="MPowa_CheckTemplate">
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parent_FadeIn" relativePoint="BOTTOM">
+										<Offset x="0" y="1" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = MPOWA_CHECKBUTTON_GROWIN_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_GROWIN)
+									</OnLoad>
+									<OnClick>
+										MPOWA:Checkbutton("growin")
+										MPOWA:AddAnimGrowIn(MPOWA.CurEdit)
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<CheckButton name="$parent_RotateIn" inherits="MPowa_CheckTemplate">
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parent_GrowIn" relativePoint="BOTTOM">
+										<Offset x="0" y="1" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = MPOWA_CHECKBUTTON_ROTATE_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_ROTATEIN)
+									</OnLoad>
+									<OnClick>
+										MPOWA:Checkbutton("rotateanimin")
+										MPOWA:AddAnimRotateIn(MPOWA.CurEdit)
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<CheckButton name="$parent_SizeIn" inherits="MPowa_CheckTemplate">
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parent_RotateIn" relativePoint="BOTTOM">
+										<Offset x="0" y="1" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = MPOWA_CHECKBUTTON_SIZEIN_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_SIZEIN)
+									</OnLoad>
+									<OnClick>
+										MPOWA:Checkbutton("sizeanim")
+										MPOWA:AddAnimSizeIn(MPOWA.CurEdit)
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<CheckButton name="$parent_EscapeIn" inherits="MPowa_CheckTemplate">
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parent_SizeIn" relativePoint="BOTTOM">
+										<Offset x="0" y="1" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = MPOWA_CHECKBUTTON_ESCAPE_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_ESCAPEIN)
+									</OnLoad>
+									<OnClick>
+										MPOWA:Checkbutton("escapeanimin")
+										MPOWA:AddAnimEscapeIn(MPOWA.CurEdit)
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<CheckButton name="$parent_BatmanIn" inherits="MPowa_CheckTemplate">
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parent_EscapeIn" relativePoint="BOTTOM">
+										<Offset x="0" y="1" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = MPOWA_CHECKBUTTON_BATMAN_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_BATMANIN)
+									</OnLoad>
+									<OnClick>
+										MPOWA:Checkbutton("batmananimin")
+										MPOWA:AddAnimRotateShrinkFadeIn(MPOWA.CurEdit)
 									</OnClick>
 								</Scripts>
 							</CheckButton>
 							<CheckButton name="$parent_FadeOut" inherits="MPowa_CheckTemplate">
 								<Anchors>
-									<Anchor point="TOP" relativeTo="$parent_FadeIn" relativePoint="BOTTOM">
-										<Offset x="0" y="1" />
+									<Anchor point="RIGHT" relativeTo="$parent_FadeIn" relativePoint="LEFT">
+										<Offset x="200" y="0" />
 									</Anchor>
 								</Anchors>
 								<Scripts>
@@ -2220,6 +2476,7 @@
 									</OnLoad>
 									<OnClick>
 										MPOWA:Checkbutton("fadeout")
+										MPOWA:AddAnimFadeOut(MPOWA.CurEdit)
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -2236,10 +2493,102 @@
 									</OnLoad>
 									<OnClick>
 										MPOWA:Checkbutton("growout")
+										MPOWA:AddAnimGrowOut(MPOWA.CurEdit)
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<CheckButton name="$parent_RotateOut" inherits="MPowa_CheckTemplate">
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parent_GrowOut" relativePoint="BOTTOM">
+										<Offset x="0" y="1" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = MPOWA_CHECKBUTTON_ROTATE_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_ROTATEOUT)
+									</OnLoad>
+									<OnClick>
+										MPOWA:Checkbutton("rotateanimout")
+										MPOWA:AddAnimRotateOut(MPOWA.CurEdit)
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<CheckButton name="$parent_Shrink" inherits="MPowa_CheckTemplate">
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parent_RotateOut" relativePoint="BOTTOM">
+										<Offset x="0" y="1" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = MPOWA_CHECKBUTTON_SHRINK_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_SHRINK)
+									</OnLoad>
+									<OnClick>
+										MPOWA:Checkbutton("shrinkanim")
+										MPOWA:AddAnimShrink(MPOWA.CurEdit)
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<CheckButton name="$parent_EscapeOut" inherits="MPowa_CheckTemplate">
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parent_Shrink" relativePoint="BOTTOM">
+										<Offset x="0" y="1" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = MPOWA_CHECKBUTTON_ESCAPE_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_ESCAPEOUT)
+									</OnLoad>
+									<OnClick>
+										MPOWA:Checkbutton("escapeanimout")
+										MPOWA:AddAnimEscapeOut(MPOWA.CurEdit)
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<CheckButton name="$parent_BatmanOut" inherits="MPowa_CheckTemplate">
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parent_EscapeOut" relativePoint="BOTTOM">
+										<Offset x="0" y="1" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = MPOWA_CHECKBUTTON_BATMAN_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_BATMANOUT)
+									</OnLoad>
+									<OnClick>
+										MPOWA:Checkbutton("batmananimout")
+										MPOWA:AddAnimRotateShrinkFadeOut(MPOWA.CurEdit)
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<CheckButton name="$parent_Translate" inherits="MPowa_CheckTemplate">
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parent_BatmanOut" relativePoint="BOTTOM">
+										<Offset x="0" y="1" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = MPOWA_CHECKBUTTON_TRANSLATE_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_TRANSLATE)
+									</OnLoad>
+									<OnClick>
+										MPOWA:Checkbutton("translateanim")
+										MPOWA:AddAnimTranslate(MPOWA.CurEdit)
 									</OnClick>
 								</Scripts>
 							</CheckButton>
 						</Frames>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_OnStart"):SetText(MPOWA_ONSTART)
+								getglobal(this:GetName().."_OnFinished"):SetText(MPOWA_ONFINISHED)
+							</OnLoad>
+						</Scripts>
 					</Frame>
 				</Frames>
 			</Frame>

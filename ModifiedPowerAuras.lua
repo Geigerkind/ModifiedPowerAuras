@@ -7,7 +7,6 @@ MPOWA.CurEdit = 1
 MPOWA.Page = 1
 
 MPOWA.frames = {}
-MPOWA.GrowingOut = {}
 MPOWA.auras = {}
 MPOWA.groupByNames = {}
 MPOWA.groupByUnit = {}
@@ -135,12 +134,14 @@ local tnbr = tonumber
 
 local UpdateTime, LastUpdate = 0.05, 0
 local SELECTEDICON = "Interface\\Icons\\Ability_Warrior_BattleShout"
-local MPowa_BuffFrameUpdateTime = 0
-local MPowa_BuffFrameFlashTime = 0
-local MPowa_BuffFrameFlashState = 0
-local MPowa_BUFF_ALPHA_VALUE = 0
+
+local Windfury = false
+
+
 
 --[[
+-- If I just find a way to confirm that the press worked
+
 local castByMe = {}
 local oldUseAction = UseAction
 UseAction = function(slot, checkCursor, onSelf)
@@ -192,41 +193,285 @@ function MPOWA:OnEvent(event, arg1)
 	elseif event == "RAID_ROSTER_UPDATE" or event == "PARTY_MEMBERS_CHANGED" then
 		self:GetGroup()
 	elseif event == "PLAYER_AURAS_CHANGED" then
-		--self:Print("NEW!")
 		self:Iterate("player")
+	elseif event == "CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS" then
+		if arg1==MPOWA_WINDFURY_GAIN or arg1==MPOWA_WINDFURY_GAIN2 or arg1==MPOWA_WINDFURY_GAIN3 then
+			Windfury = true
+		end
+	elseif event == "CHAT_MSG_SPELL_AURA_GONE_SELF" then
+		if arg1==MPOWA_WINDFURY_GONE or arg1==MPOWA_WINDFURY_GONE2 or arg1==MPOWA_WINDFURY_GONE3 then
+			Windfury = false
+		end
 	else
 		self:Init()
 		self.loaded = true
 	end
 end
 
-function MPOWA:AddGrowOut(frame, time, toSize, fromSize, key)
-	if not self.GrowingOut[key] then
-		self.GrowingOut[key] = {frame, time, toSize, fromSize, key, false}
+
+-- ANIM START
+
+function MPOWA:AddAnimFlash(frame)
+	if not self.frames[frame][1].flash then
+		self.frames[frame][1].flash = self.frames[frame][1]:CreateAnimationGroup()
+		self.frames[frame][1].flash:SetLooping("BOUNCE")
+		local anim = self.frames[frame][1].flash:CreateAnimation("Alpha")
+		anim:SetChange(-0.99)
+		anim:SetDuration(1)
 	end
 end
 
-function MPOWA:GrowOut(elapsed)
-	for cat, val in self.GrowingOut do
-		if val then
-			if not val[6] or val[6] == 0 then
-				val[6] = (val[3]-val[4])/(val[2]/elapsed)
-			end
-			if val[1]:GetHeight()>=val[3] then
-				self.GrowingOut[cat] = false
-				self:FHide(cat)
-				val[1]:SetHeight(val[4])
-				val[1]:SetWidth(val[4])
-			else
-				val[1]:SetHeight(val[1]:GetHeight()+val[6])
-				val[1]:SetWidth(val[1]:GetHeight()+val[6])
-			end
-		end
+function MPOWA:AddAnimGrowOut(frame)
+	if not self.frames[frame][1].growout then
+		self.frames[frame][1].growout = self.frames[frame][1]:CreateAnimationGroup()
+		self.frames[frame][1].growout:SetLooping("NONE")
+		self.frames[frame][1].growout:SetScript("OnFinished", function() 
+			MPOWA.frames[frame][1].growout:Stop()
+			MPOWA.frames[frame][1]:SetWidth(64)
+			MPOWA.frames[frame][1]:SetHeight(64)
+			MPOWA.frames[frame][1]:Hide()
+		end)
+		local scale = self.frames[frame][1].growout:CreateAnimation("Scale")
+		scale:SetScale(tnbr(MPOWA_SAVE[frame]["scalefactor"]), tnbr(MPOWA_SAVE[frame]["scalefactor"]))
+		scale:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
 	end
 end
+
+function MPOWA:AddAnimFadeIn(frame)
+	if not self.frames[frame][1].fadein then
+		self.frames[frame][1].fadein = self.frames[frame][1]:CreateAnimationGroup()
+		self.frames[frame][1].fadein:SetLooping("NONE")
+		self.frames[frame][1].fadein:SetScript("OnFinished", function() 
+			MPOWA.frames[frame][1].fadein:Stop()
+			MPOWA.frames[frame][1]:SetAlpha(tnbr(MPOWA_SAVE[frame]["alpha"]))
+			MPOWA.frames[frame][1]:Show()
+		end)
+		
+		local anim = self.frames[frame][1].fadein:CreateAnimation("Alpha")
+		anim:SetChange(tnbr(MPOWA_SAVE[frame]["fadealpha"]))
+		anim:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+	end
+end
+
+function MPOWA:AddAnimFadeOut(frame)
+	if not self.frames[frame][1].fadeout then
+		self.frames[frame][1].fadeout = self.frames[frame][1]:CreateAnimationGroup()
+		self.frames[frame][1].fadeout:SetLooping("NONE")
+		self.frames[frame][1].fadeout:SetScript("OnFinished", function() 
+			MPOWA.frames[frame][1].fadeout:Stop()
+			MPOWA.frames[frame][1]:SetAlpha(tnbr(MPOWA_SAVE[frame]["alpha"]))
+			MPOWA.frames[frame][1]:Hide()
+		end)
+		
+		local anim = self.frames[frame][1].fadeout:CreateAnimation("Alpha")
+		anim:SetChange(-tnbr(MPOWA_SAVE[frame]["fadealpha"]))
+		anim:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+	end
+end
+
+function MPOWA:AddAnimRotateOut(frame)
+	if not self.frames[frame][1].rotateanimout then
+		self.frames[frame][1].rotateanimout = self.frames[frame][1]:CreateAnimationGroup()
+		self.frames[frame][1].rotateanimout:SetLooping("NONE")
+		self.frames[frame][1].rotateanimout:SetScript("OnFinished", function() 
+			MPOWA.frames[frame][1].rotateanimout:Stop()
+			MPOWA.frames[frame][1]:Hide()
+		end)
+		
+		local anim = self.frames[frame][1].rotateanimout:CreateAnimation("Rotation")
+		anim:SetDegrees(360)
+		anim:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+	end
+end
+
+function MPOWA:AddAnimTranslate(frame)
+	if not self.frames[frame][1].translateanim then
+		self.frames[frame][1].translateanim = self.frames[frame][1]:CreateAnimationGroup()
+		self.frames[frame][1].translateanim:SetLooping("NONE")
+		self.frames[frame][1].translateanim:SetScript("OnFinished", function() 
+			MPOWA.frames[frame][1].translateanim:Stop()
+			MPOWA.frames[frame][1]:Hide()
+		end)
+		
+		local anim = self.frames[frame][1].translateanim:CreateAnimation("Translation")
+		anim:SetOffset(tnbr(MPOWA_SAVE[frame]["translateoffsetx"]),tnbr(MPOWA_SAVE[frame]["translateoffsetx"]))
+		anim:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+	end
+end
+
+function MPOWA:AddAnimEscapeOut(frame)
+	if not self.frames[frame][1].escapeanimout then
+		self.frames[frame][1].escapeanimout = self.frames[frame][1]:CreateAnimationGroup()
+		self.frames[frame][1].escapeanimout:SetLooping("BOUNCE")
+		self.frames[frame][1].escapeanimout:SetScript("OnLoop", function()
+			self.frames[frame][1].escapeanimout:Finish()
+		end)
+		self.frames[frame][1].escapeanimout:SetScript("OnFinished", function() 
+			MPOWA.frames[frame][1].escapeanimout:Stop()
+			MPOWA.frames[frame][1]:SetAlpha(tnbr(MPOWA_SAVE[frame]["alpha"]))
+			MPOWA.frames[frame][1]:SetWidth(64)
+			MPOWA.frames[frame][1]:SetHeight(64)
+			MPOWA.frames[frame][1]:Hide()
+		end)
+		
+		local alpha = self.frames[frame][1].escapeanimout:CreateAnimation("Alpha")
+		alpha:SetChange(-.5)
+		alpha:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+		
+		local scale = self.frames[frame][1].escapeanimout:CreateAnimation("Scale")
+		scale:SetScale(tnbr(MPOWA_SAVE[frame]["scalefactor"]), tnbr(MPOWA_SAVE[frame]["scalefactor"]))
+		scale:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+	end
+end
+
+function MPOWA:AddAnimShrink(frame)
+	if not self.frames[frame][1].shrink then
+		self.frames[frame][1].shrink = self.frames[frame][1]:CreateAnimationGroup()
+		self.frames[frame][1].shrink:SetLooping("NONE")
+		self.frames[frame][1].shrink:SetScript("OnFinished", function() 
+			MPOWA.frames[frame][1].shrink:Stop()
+			MPOWA.frames[frame][1]:SetWidth(64)
+			MPOWA.frames[frame][1]:SetHeight(64)
+			MPOWA.frames[frame][1]:Hide()
+		end)
+		
+		local scale = self.frames[frame][1].shrink:CreateAnimation("Scale")
+		scale:SetScale(-tnbr(MPOWA_SAVE[frame]["scalefactor"]), -tnbr(MPOWA_SAVE[frame]["scalefactor"]))
+		scale:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+	end
+end
+
+function MPOWA:AddAnimRotateShrinkFadeOut(frame)
+	if not self.frames[frame][1].batmananimout then
+		self.frames[frame][1].batmananimout = self.frames[frame][1]:CreateAnimationGroup()
+		self.frames[frame][1].batmananimout:SetLooping("NONE")
+		self.frames[frame][1].batmananimout:SetScript("OnFinished", function() 
+			MPOWA.frames[frame][1].batmananimout:Stop()
+			MPOWA.frames[frame][1]:SetAlpha(tnbr(MPOWA_SAVE[frame]["alpha"]))
+			MPOWA.frames[frame][1]:SetWidth(64)
+			MPOWA.frames[frame][1]:SetHeight(64)
+			MPOWA.frames[frame][1]:Hide()
+		end)
+		
+		local scale = self.frames[frame][1].batmananimout:CreateAnimation("Scale")
+		scale:SetScale(-10, -10)
+		scale:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+		
+		local anim = self.frames[frame][1].batmananimout:CreateAnimation("Rotation")
+		anim:SetDegrees(1081)
+		anim:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+		
+		local alpha = self.frames[frame][1].batmananimout:CreateAnimation("Alpha")
+		alpha:SetChange(-tnbr(MPOWA_SAVE[frame]["fadealpha"]))
+		alpha:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+	end
+end
+
+function MPOWA:AddAnimGrowIn(frame)
+	if not self.frames[frame][1].growin then
+		self.frames[frame][1].growin = self.frames[frame][1]:CreateAnimationGroup()
+		self.frames[frame][1].growin:SetLooping("NONE")
+		self.frames[frame][1].growin:SetScript("OnFinished", function() 
+			MPOWA.frames[frame][1].growin:Stop()
+			MPOWA.frames[frame][1]:SetWidth(64)
+			MPOWA.frames[frame][1]:SetHeight(64)
+			MPOWA.frames[frame][1]:Show()
+		end)
+		
+		local scale = self.frames[frame][1].growin:CreateAnimation("Scale")
+		scale:SetScale(tnbr(MPOWA_SAVE[frame]["scalefactor"]), tnbr(MPOWA_SAVE[frame]["scalefactor"]))
+		scale:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+	end
+end
+
+function MPOWA:AddAnimRotateIn(frame)
+	if not self.frames[frame][1].rotateanimin then
+		self.frames[frame][1].rotateanimin = self.frames[frame][1]:CreateAnimationGroup()
+		self.frames[frame][1].rotateanimin:SetLooping("NONE")
+		self.frames[frame][1].rotateanimin:SetScript("OnFinished", function() 
+			MPOWA.frames[frame][1].rotateanimin:Stop()
+			MPOWA.frames[frame][1]:Show()
+		end)
+		
+		local anim = self.frames[frame][1].rotateanimin:CreateAnimation("Rotation")
+		anim:SetDegrees(-360)
+		anim:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+	end
+end
+
+function MPOWA:AddAnimRotateShrinkFadeIn(frame)
+	if not self.frames[frame][1].batmananimin then
+		self.frames[frame][1].batmananimin = self.frames[frame][1]:CreateAnimationGroup()
+		self.frames[frame][1].batmananimin:SetLooping("BOUNCE")
+		self.frames[frame][1].batmananimin:SetScript("OnLoop", function()
+			self.frames[frame][1].batmananimin:Finish()
+		end)
+		self.frames[frame][1].batmananimin:SetScript("OnFinished", function() 
+			MPOWA.frames[frame][1].batmananimin:Stop()
+			MPOWA.frames[frame][1]:SetWidth(64)
+			MPOWA.frames[frame][1]:SetHeight(64)
+			MPOWA.frames[frame][1]:Show()
+		end)
+		
+		local scale = self.frames[frame][1].batmananimin:CreateAnimation("Scale")
+		scale:SetScale(-10, -10)
+		scale:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+		
+		local anim = self.frames[frame][1].batmananimin:CreateAnimation("Rotation")
+		anim:SetDegrees(1080.5)
+		anim:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+	end
+end
+
+function MPOWA:AddAnimSizeIn(frame)
+	if not self.frames[frame][1].sizein then
+		self.frames[frame][1].sizein = self.frames[frame][1]:CreateAnimationGroup()
+		self.frames[frame][1].sizein:SetLooping("BOUNCE")
+		self.frames[frame][1].sizein:SetScript("OnLoop", function()
+			self.frames[frame][1].sizein:Finish()
+		end)
+		self.frames[frame][1].sizein:SetScript("OnFinished", function() 
+			MPOWA.frames[frame][1].sizein:Stop()
+			MPOWA.frames[frame][1]:SetWidth(64)
+			MPOWA.frames[frame][1]:SetHeight(64)
+			MPOWA.frames[frame][1]:Show()
+		end)
+		
+		local scale = self.frames[frame][1].sizein:CreateAnimation("Scale")
+		scale:SetScale(-tnbr(MPOWA_SAVE[frame]["scalefactor"]), -tnbr(MPOWA_SAVE[frame]["scalefactor"]))
+		scale:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+	end
+end
+
+function MPOWA:AddAnimEscapeIn(frame)
+	if not self.frames[frame][1].escapeanimin then
+		self.frames[frame][1].escapeanimin = self.frames[frame][1]:CreateAnimationGroup()
+		self.frames[frame][1].escapeanimin:SetLooping("BOUNCE")
+		self.frames[frame][1].escapeanimin:SetScript("OnLoop", function()
+			self.frames[frame][1].escapeanimin:Finish()
+		end)
+		self.frames[frame][1].escapeanimin:SetScript("OnFinished", function() 
+			MPOWA.frames[frame][1].escapeanimin:Stop()
+			MPOWA.frames[frame][1]:SetAlpha(tnbr(MPOWA_SAVE[frame]["alpha"]))
+			MPOWA.frames[frame][1]:SetWidth(64)
+			MPOWA.frames[frame][1]:SetHeight(64)
+			MPOWA.frames[frame][1]:Show()
+		end)
+		
+		local alpha = self.frames[frame][1].escapeanimin:CreateAnimation("Alpha")
+		alpha:SetChange(-.5)
+		alpha:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+		
+		local scale = self.frames[frame][1].escapeanimin:CreateAnimation("Scale")
+		scale:SetScale(tnbr(MPOWA_SAVE[frame]["scalefactor"]), tnbr(MPOWA_SAVE[frame]["scalefactor"]))
+		scale:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+	end
+end
+
+
+-- ANIM END
 
 function MPOWA:OnUpdate(elapsed)
-	self:GrowOut(elapsed)
 	LastUpdate = LastUpdate + elapsed
 	if LastUpdate >= UpdateTime then
 		for cat, val in self.NeedUpdate do
@@ -292,7 +537,6 @@ function MPOWA:OnUpdate(elapsed)
 							end
 						end
 					else
-						--self:Print("Show "..path["buffname"].."//"..(self.active[cat] or "NULL"))
 						self:FShow(cat)
 					end
 				else
@@ -306,10 +550,8 @@ function MPOWA:OnUpdate(elapsed)
 			if val then
 				local path = MPOWA_SAVE[cat]
 				local text, count = "", 0
-				--self:Print(path["unit"] or "")
 				if (path["unit"] or "player") == "player" then
 					count = GetPlayerBuffApplications(val)
-					--self:Print("Fired!! "..count)
 				else
 					if path["isdebuff"] then
 						text, count = UnitDebuff(path["unit"], val)
@@ -326,8 +568,7 @@ function MPOWA:OnUpdate(elapsed)
 					end
 				end
 				if self:IsStacks(count or 0, cat) then
-				local duration = self:GetDuration(val, cat)
-					--self:Print("Showing: "..MPOWA_SAVE[cat]["buffname"])
+					local duration = self:GetDuration(val, cat)
 					if (count or 0)>1 and not path["hidestacks"] then
 						self.frames[cat][4]:SetText(count)
 						self.frames[cat][4]:Show()
@@ -348,7 +589,6 @@ function MPOWA:OnUpdate(elapsed)
 					end
 					self:Flash(elapsed, cat, duration)
 					if path["inverse"] then
-						--self:Print("Hide "..path["buffname"])
 						self:FHide(cat)
 					else
 						if path["secsleft"] then
@@ -362,14 +602,11 @@ function MPOWA:OnUpdate(elapsed)
 						end
 					end
 				else
-					--self:Print("Hiding: "..MPOWA_SAVE[cat]["buffname"])
 					self:FHide(cat)
 				end
 			else
 				if not self.NeedUpdate[cat] then
-					if not self.GrowingOut[cat] then
-						self:FHide(cat)
-					end
+					self:FHide(cat)
 				end
 			end
 		end
@@ -472,21 +709,51 @@ function MPOWA:GetSpellSlot(buff)
 	end
 end
 
+function MPOWA:PlayAnim(condition, key, anim)
+	if MPOWA_SAVE[key][condition] then
+		if self.frames[key][1][anim] and not self.frames[key][1][anim]:IsPlaying() then
+			self.frames[key][1][anim]:Play()
+		end
+	end
+end
+
 function MPOWA:FHide(key)
 	local p = MPOWA_SAVE[key]
-	if self.frames[key][1]:IsVisible() and ((tnbr(self.frames[key][1]:GetAlpha())<=tnbr(p["alpha"]) and tnbr(self.frames[key][1]:GetAlpha())>=tnbr(p["alpha"])) or tnbr(self.frames[key][1]:GetAlpha())==0) and not self.testall and not p["test"] then
-		if p["growout"] then
-			if p["fadeout"] then
-				self:AddGrowOut(self.frames[key][1], 0.5, 250, 64, key)
-				UIFrameFadeOut(self.frames[key][1], 0.5, tnbr(p["alpha"]), 0)
-			else
-				self:AddGrowOut(self.frames[key][1], 0.5, 250, 64, key)
-			end
+	if self.frames[key][1]:IsVisible() and not self.testall and not p["test"] then
+		if p["batmananimout"] then
+			self:PlayAnim("batmananimout", key, "batmananimout")
+		elseif p["shrinkanim"] then
+			self:PlayAnim("translateanim", key, "translateanim")
+			self:PlayAnim("fadeout", key, "fadeout")
+			self:PlayAnim("rotateanimout", key, "rotateanimout")
+			self:PlayAnim("shrinkanim", key, "shrink")
 		else
-			if p["fadeout"] then
-				UIFrameFadeOut(self.frames[key][1], 0.5, tnbr(p["alpha"]), 0)
+			if p["growout"] then
+				self:PlayAnim("fadeout", key, "fadeout")
+				self:PlayAnim("rotateanimout", key, "rotateanimout")
+				self:PlayAnim("growout", key, "growout")
+			elseif p["escapeanimout"] then
+				self:PlayAnim("rotateanimout", key, "rotateanimout")
+				self:PlayAnim("escapeanimout", key, "escapeanimout")
 			else
-				self.frames[key][1]:Hide()
+				if p["fadeout"] then
+					self:PlayAnim("translateanim", key, "translateanim")
+					self:PlayAnim("rotateanimout", key, "rotateanimout")
+					self:PlayAnim("fadeout", key, "fadeout")
+				elseif p["translateanim"] then
+					self:PlayAnim("rotateanimout", key, "rotateanimout")
+					self:PlayAnim("translateanim", key, "translateanim")
+				else
+					if self.frames[key][1].flash and self.frames[key][1].flash:IsPlaying() then
+						self.frames[key][1].flash:Stop()
+						self.frames[key][1]:SetAlpha(tnbr(p["alpha"]))
+					end
+					if p["rotateanimout"] then
+						self:PlayAnim("rotateanimout", key, "rotateanimout")
+					else
+						self.frames[key][1]:Hide()
+					end
+				end
 			end
 		end
 	end
@@ -494,11 +761,30 @@ end
 
 function MPOWA:FShow(key)
 	local p = MPOWA_SAVE[key]
-	if not self.frames[key][1]:IsVisible() and ((tnbr(self.frames[key][1]:GetAlpha())<=tnbr(p["alpha"]) and tnbr(self.frames[key][1]:GetAlpha())>=tnbr(p["alpha"])) or tnbr(self.frames[key][1]:GetAlpha())==0) then
-		if p["fadein"] then
-			UIFrameFadeIn(self.frames[key][1], 0.5, 0.01, tnbr(p["alpha"]))
+	if not self.frames[key][1]:IsVisible() then
+		self.frames[key][1]:Show()
+		if p["batmananimin"] then
+			self:PlayAnim("batmananimin", key, "batmananimin")
+		elseif p["sizeanim"] then
+			self:PlayAnim("fadein", key, "fadein")
+			self:PlayAnim("rotateanimin", key, "rotateanimin")
+			self:PlayAnim("sizeanim", key, "sizein")
 		else
-			self.frames[key][1]:Show()
+			if p["growin"] then
+				self:PlayAnim("fadein", key, "fadein")
+				self:PlayAnim("rotateanimin", key, "rotateanimin")
+				self:PlayAnim("growin", key, "growin")
+			elseif p["escapeanimin"] then
+				self:PlayAnim("rotateanimin", key, "rotateanimin")
+				self:PlayAnim("escapeanimin", key, "escapeanimin")
+			else
+				if p["fadein"] then
+					self:PlayAnim("rotateanimin", key, "rotateanimin")
+					self:PlayAnim("fadein", key, "fadein")
+				else
+					self:PlayAnim("rotateanimin", key, "rotateanimin")
+				end
+			end
 		end
 	end
 end
@@ -506,14 +792,11 @@ end
 local BuffExist = {}
 function MPOWA:Iterate(unit)
 	BuffExist = {}
-	--self:Print("New Iterate ------------------------------")
 	if unit=="player" then
 		self:IsMounted()
 		self:InParty()
 		self:InBG()
 		self:InInstance()
-		-- Amount for Holy Strength Hackfix
-		--self:Print("Set ZERO!")
 	end
 	
 	for cat, val in self.active do
@@ -522,7 +805,11 @@ function MPOWA:Iterate(unit)
 		end
 	end
 	
-	--self:Print("Iterate: "..unit)
+	if Windfury then
+		self:Push("Windfury", "player", 42, false, "Windfury")
+		self:Push("Windfury Totem", "player", 43, false, "Windfury Totem")
+	end
+	
 	for i=1, 40 do
 		local p = i
 		local debuff
@@ -551,7 +838,6 @@ function MPOWA:Iterate(unit)
 		end
 		MPowa_Tooltip:Hide()
 		if not buff and not debuff then break end
-		--self:Print("Pushed: "..buff.." Index: "..i.."//"..unit)
 	end
 	for cat, val in self.active do
 		if val then
@@ -579,19 +865,13 @@ end
 
 function MPOWA:Push(aura, unit, i, isdebuff, debuffdesc)
 	if self.auras[aura] then
-		--self:Print("Attempt to push: "..aura.."/"..unit)
 		for cat, val in self.auras[aura] do
-			--self:Print(val)
 			local path = MPOWA_SAVE[val]
 			local bypass = self.active[val]
-			--self:Print("Before con "..aura)
 			if path["isdebuff"]==isdebuff and ((path["secondspecifier"] and path["secondspecifiertext"]==debuffdesc) or not path["secondspecifier"]) then
 				if self:TernaryReturn(val, "alive", self:Reverse(UnitIsDeadOrGhost("player"))) and self:TernaryReturn(val, "mounted", self.mounted) and self:TernaryReturn(val, "incombat", UnitAffectingCombat("player")) and self:TernaryReturn(val, "inparty", self.party) and self:TernaryReturn(val, "inraid", UnitInRaid("player")) and self:TernaryReturn(val, "inbattleground", self.bg) and self:TernaryReturn(val, "inraidinstance", self.instance) and not path["cooldown"] then
 					BuffExist[val] = true
-					--self:Print("Pushed: "..aura.."//"..val.."//"..cat)
-					--self:Print("After con "..aura)
 					if path["enemytarget"] and unit == "target" then
-						--self:Print("after con 2 "..aura.. " "..i)
 						self.active[val] = i
 					elseif path["friendlytarget"] and unit == "target" then
 						self.active[val] = i
@@ -605,7 +885,6 @@ function MPOWA:Push(aura, unit, i, isdebuff, debuffdesc)
 					else
 						self.pushed[val] = 1;
 					end
-					--self:Print(path["buffname"].." is active! // "..val)
 					if self.active[val] and not bypass then
 						self.activeTimer[val] = GT()
 						if tnbr(self.frames[val][1]:GetAlpha())<=0.1 then
@@ -621,9 +900,6 @@ function MPOWA:Push(aura, unit, i, isdebuff, debuffdesc)
 						if not path["secsleft"] then
 							self:FShow(val)
 						end
-						--self:Print("Is Visible: "..aura)
-						--self:Print("SHown")
-						--self:Print("Shown: "..path["buffname"].."/"..self.active[val])
 						if path["timer"] then
 							self.frames[val][3]:Show()
 						end
@@ -635,11 +911,7 @@ function MPOWA:Push(aura, unit, i, isdebuff, debuffdesc)
 end
 
 function MPOWA:Reverse(bool)
-	if bool then
-		return false
-	else
-		return true
-	end
+	return not bool
 end
 
 function MPOWA:IsMounted()
@@ -715,7 +987,6 @@ function MPOWA:IsStacks(count, id)
 		local con = strsub(MPOWA_SAVE[id].stacks, 1, 2)
 		local amount = tonumber(strsub(MPOWA_SAVE[id].stacks, 3))
 		if amount ~= nil and con ~= nil then
-			--self:Print(con.."/"..amount.."/"..count)
 			if con == ">=" and count >= amount then
 				return true
 			elseif con == "<=" and count <= amount then
@@ -751,36 +1022,16 @@ end
 
 function MPOWA:Flash(elapsed, cat, timeLeft)
 	local s = MPOWA_SAVE[cat]
-	if s.flashanim then
+	if s.flashanim and self.frames[cat][1].flash then
 		if timeLeft < s.flashanimstart then
-			if ( MPowa_BuffFrameUpdateTime > 0 ) then
-				MPowa_BuffFrameUpdateTime = MPowa_BuffFrameUpdateTime - elapsed;
-			else
-				MPowa_BuffFrameUpdateTime = MPowa_BuffFrameUpdateTime + TOOLTIP_UPDATE_TIME;
+			if not self.frames[cat][1].flash:IsPlaying() then
+				self.frames[cat][1].flash:Play()
 			end
-		 
-			MPowa_BuffFrameFlashTime = MPowa_BuffFrameFlashTime - elapsed;
-			if ( MPowa_BuffFrameFlashTime < 0 ) then
-				local overtime = -BuffFrameFlashTime;
-				if ( MPowa_BuffFrameFlashState == 0 ) then
-					MPowa_BuffFrameFlashState = 1;
-					MPowa_BuffFrameFlashTime = BUFF_FLASH_TIME_ON;
-				else
-					MPowa_BuffFrameFlashState = 0;
-					MPowa_BuffFrameFlashTime = BUFF_FLASH_TIME_OFF;
-				end
-				if ( overtime < MPowa_BuffFrameFlashTime ) then
-					MPowa_BuffFrameFlashTime = MPowa_BuffFrameFlashTime - overtime;
-				end
+		else
+			if self.frames[cat][1].flash:IsPlaying() then
+				self.frames[cat][1].flash:Stop()
+				self.frames[cat][1]:SetAlpha(s.alpha)
 			end
-			if ( MPowa_BuffFrameFlashState == 1 ) then
-				MPowa_BUFF_ALPHA_VALUE = (BUFF_FLASH_TIME_ON - MPowa_BuffFrameFlashTime) / BUFF_FLASH_TIME_ON;
-			else
-				MPowa_BUFF_ALPHA_VALUE = MPowa_BuffFrameFlashTime / BUFF_FLASH_TIME_ON;
-			end
-			MPowa_BUFF_ALPHA_VALUE = (MPowa_BUFF_ALPHA_VALUE * (1 - BUFF_MIN_ALPHA)) + BUFF_MIN_ALPHA;
-			
-			self.frames[cat][1]:SetAlpha(MPowa_BUFF_ALPHA_VALUE)
 		end
 	end
 end
@@ -855,10 +1106,86 @@ function MPOWA:Init()
 			if not val["inraidinstance"] then
 				MPOWA_SAVE[cat]["inraidinstance"] = 0
 			end
-			--self:Print(cat.."//"..MPOWA_SAVE[cat]["buffname"])
 
 			if not val["secondspecifiertext"] then
 				MPOWA_SAVE[cat]["secondspecifiertext"] = ""
+			end
+			
+			-- Initializing animations
+			if not val["animduration"] then
+				MPOWA_SAVE[cat]["animduration"] = 0.5
+			end
+			
+			if not val["translateoffsetx"] then
+				MPOWA_SAVE[cat]["translateoffsetx"] = 50
+			end
+			
+			if not val["translateoffsety"] then
+				MPOWA_SAVE[cat]["translateoffsety"] = 50
+ 			end
+			
+			if not val["fadealpha"] then
+				MPOWA_SAVE[cat]["fadealpha"] = 0.99
+			end
+			
+			if not val["scalefactor"] then
+				MPOWA_SAVE[cat]["scalefactor"] = 0.8
+			end
+			
+			if val["flashanim"] then
+				self:AddAnimFlash(cat)
+			end
+			
+			if val["growout"] then
+				self:AddAnimGrowOut(cat)
+			end
+			
+			if val["growin"] then
+				self:AddAnimGrowIn(cat)
+			end
+			
+			if val["fadeout"] then
+				self:AddAnimFadeOut(cat)
+			end
+			
+			if val["fadein"] then
+				self:AddAnimFadeIn(cat)
+			end
+			
+			if val["escapeanimout"] then
+				self:AddAnimEscapeOut(cat)
+			end
+			
+			if val["escapeanimin"] then
+				self:AddAnimEscapeIn(cat)
+			end
+			
+			if val["shrinkanim"] then
+				self:AddAnimShrink(cat)
+			end
+			
+			if val["sizeanim"] then
+				self:AddAnimSizeIn(cat)
+			end
+			
+			if val["translateanim"] then
+				self:AddAnimTranslate(cat)
+			end
+			
+			if val["rotateanimout"] then
+				self:AddAnimRotateOut(cat)
+			end
+			
+			if val["rotateanimin"] then
+				self:AddAnimRotateIn(cat)
+			end
+			
+			if val["batmananimout"] then
+				self:AddAnimRotateShrinkFadeOut(cat)
+			end
+			
+			if val["batmananimin"] then
+				self:AddAnimRotateShrinkFadeIn(cat)
 			end
 		end
 		val["test"] = false
@@ -947,6 +1274,11 @@ function MPOWA:CreateSave(i)
 		hidestacks = false,
 		secondspecifier = false,
 		secondspecifiertext = "",
+		animduration = 0.5,
+		translateoffsetx = 50,
+		translateoffsety = 50,
+		fadealpha = 0.99,
+		scalefactor = 0.8,
 	}
 end
 
@@ -990,7 +1322,6 @@ function MPOWA:CreateButton(i)
 end
 
 function MPOWA:CreateIcon(i)
-	--self:Print("Added: "..i)
 	if not self.frames[i] then
 		self.frames[i] = {}
 	end
@@ -1230,9 +1561,34 @@ function MPOWA:Edit()
 		MPowa_ConfigFrame_Container_3_Slider_EndSoundText:SetText(MPOWA_SLIDER_BEGINSOUND..MPOWA.SOUND[MPOWA_SAVE[self.CurEdit].endsound])
 		MPowa_ConfigFrame_Container_3_Checkbutton_BeginSound:SetChecked(MPOWA_SAVE[self.CurEdit].usebeginsound)
 		MPowa_ConfigFrame_Container_3_Checkbutton_EndSound:SetChecked(MPOWA_SAVE[self.CurEdit].useendsound)
+		
+		-- ANIM START
+		MPowa_ConfigFrame_Container_5_Slider_AnimDuration:SetValue(tonumber(MPOWA_SAVE[self.CurEdit].animduration))
+		MPowa_ConfigFrame_Container_5_Slider_AnimDurationText:SetText(MPOWA_SLIDER_ANIMDURATION.." - "..MPOWA_SAVE[self.CurEdit].animduration)
+		MPowa_ConfigFrame_Container_5_Slider_TranslateX:SetValue(tonumber(MPOWA_SAVE[self.CurEdit].translateoffsetx))
+		MPowa_ConfigFrame_Container_5_Slider_TranslateXText:SetText(MPOWA_SLIDER_TRANSLATEX.." - "..MPOWA_SAVE[self.CurEdit].translateoffsetx)
+		MPowa_ConfigFrame_Container_5_Slider_TranslateY:SetValue(tonumber(MPOWA_SAVE[self.CurEdit].translateoffsety))
+		MPowa_ConfigFrame_Container_5_Slider_TranslateYText:SetText(MPOWA_SLIDER_TRANSLATEY.." - "..MPOWA_SAVE[self.CurEdit].translateoffsety)
+		MPowa_ConfigFrame_Container_5_Slider_FadeAlpha:SetValue(tonumber(MPOWA_SAVE[self.CurEdit].fadealpha))
+		MPowa_ConfigFrame_Container_5_Slider_FadeAlphaText:SetText(MPOWA_SLIDER_FADEALPHA.." - "..MPOWA_SAVE[self.CurEdit].fadealpha)
+		MPowa_ConfigFrame_Container_5_Slider_ScaleFactor:SetValue(tonumber(MPOWA_SAVE[self.CurEdit].scalefactor))
+		MPowa_ConfigFrame_Container_5_Slider_ScaleFactorText:SetText(MPOWA_SLIDER_SCALEFACTOR.." - "..MPOWA_SAVE[self.CurEdit].scalefactor)
+		
 		MPowa_ConfigFrame_Container_5_FadeIn:SetChecked(MPOWA_SAVE[self.CurEdit].fadein)
+		MPowa_ConfigFrame_Container_5_GrowIn:SetChecked(MPOWA_SAVE[self.CurEdit].growin)
+		MPowa_ConfigFrame_Container_5_RotateIn:SetChecked(MPOWA_SAVE[self.CurEdit].rotateanimin)
+		MPowa_ConfigFrame_Container_5_SizeIn:SetChecked(MPOWA_SAVE[self.CurEdit].sizeanim)
+		MPowa_ConfigFrame_Container_5_EscapeIn:SetChecked(MPOWA_SAVE[self.CurEdit].escapeanimin)
+		MPowa_ConfigFrame_Container_5_BatmanIn:SetChecked(MPOWA_SAVE[self.CurEdit].batmananimin)
 		MPowa_ConfigFrame_Container_5_FadeOut:SetChecked(MPOWA_SAVE[self.CurEdit].fadeout)
 		MPowa_ConfigFrame_Container_5_GrowOut:SetChecked(MPOWA_SAVE[self.CurEdit].growout)
+		MPowa_ConfigFrame_Container_5_RotateOut:SetChecked(MPOWA_SAVE[self.CurEdit].rotateanimout)
+		MPowa_ConfigFrame_Container_5_Shrink:SetChecked(MPOWA_SAVE[self.CurEdit].shrinkanim)
+		MPowa_ConfigFrame_Container_5_EscapeOut:SetChecked(MPOWA_SAVE[self.CurEdit].escapeanimout)
+		MPowa_ConfigFrame_Container_5_BatmanOut:SetChecked(MPOWA_SAVE[self.CurEdit].batmananimout)
+		MPowa_ConfigFrame_Container_5_Translate:SetChecked(MPOWA_SAVE[self.CurEdit].translateanim)
+		-- ANIM END
+		
 		if MPOWA_SAVE[self.CurEdit].enemytarget or MPOWA_SAVE[self.CurEdit].friendlytarget then
 			MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Show()
 		else
@@ -1362,9 +1718,11 @@ function MPOWA:Checkbutton_FlashAnim()
 	if MPOWA_SAVE[self.CurEdit]["flashanim"] then
 		MPOWA_SAVE[self.CurEdit]["flashanim"] = false
 		MPowa_ConfigFrame_Container_2_2_Editbox_FlashAnim:Hide()
+		self.frames[self.CurEdit][1].flash = nil
 	else
 		MPOWA_SAVE[self.CurEdit]["flashanim"] = true
 		MPowa_ConfigFrame_Container_2_2_Editbox_FlashAnim:Show()
+		self:AddAnimFlash(self.CurEdit)
 	end
 end
 
@@ -1667,3 +2025,5 @@ MPOWA:RegisterEvent("PLAYER_TARGET_CHANGED")
 MPOWA:RegisterEvent("RAID_ROSTER_UPDATE")
 MPOWA:RegisterEvent("PARTY_MEMBERS_CHANGED")
 MPOWA:RegisterEvent("PLAYER_AURAS_CHANGED")
+MPOWA:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS")
+MPOWA:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")

@@ -1,0 +1,10 @@
+<Ui xmlns='http://www.blizzard.com/wow/ui/'>
+  <Script file='AnimationGroup.lua' />
+  <Script file='group.lua' />
+  <Script file='animation.lua' />
+  <Script file='alpha.lua' />
+  <Script file='path.lua' />
+  <Script file='rotation.lua' />
+  <Script file='scale.lua' />
+  <Script file='translation.lua' />
+</Ui>

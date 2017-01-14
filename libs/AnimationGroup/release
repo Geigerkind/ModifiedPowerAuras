@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+TAG=$(git describe --tags)
+export CUR_DIR="${PWD##*/}"
+OUTPUT="$CUR_DIR"-"$TAG"
+export OUT_DIR=`pwd`/"$OUTPUT"
+
+mkdir -p $OUT_DIR
+
+git archive --prefix "$CUR_DIR"/ "$TAG" | tar -x -C "$OUT_DIR"
+git submodule foreach --recursive 'git archive HEAD | tar -x -C "$OUT_DIR"/"$CUR_DIR"/"$(echo "$displaypath" | sed -e "s/\\([^[:alpha:]]*\\)\\(.*\\)/\2/g")"'
+
+cd $OUTPUT
+zip -r ../"$OUTPUT.zip" *
+cd ..
+
+rm -rf $OUT_DIR

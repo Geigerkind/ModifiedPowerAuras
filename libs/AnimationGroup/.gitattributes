@@ -1,0 +1,10 @@
+.gitattributes export-ignore
+.gitignore export-ignore
+.gitmodules export-ignore
+
+AnimationGroup.toc export-ignore
+README.org export-ignore
+release export-ignore
+tests.lua export-ignore
+
+AnimationGroup.lua export-subst

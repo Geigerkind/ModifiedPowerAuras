@@ -1,0 +1,6 @@
+.gitignore export-ignore
+.gitattributes export-ignore
+tests export-ignore
+tests/* export-ignore
+.pkgmeta export-ignore
+LibStub.toc export-ignore

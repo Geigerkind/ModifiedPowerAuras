@@ -1,0 +1,5 @@
+#+TITLE: Sol -- Reimplementations of modern Lua functions
+
+Sol reimplements common Lua functions that are only available in Lua versions
+post 5.0. Sol means ``Sun'' in Portuguese, thus this library attempts to balance
+out any shortcomings in the present Lua environment of World of Warcraft 1.12.
