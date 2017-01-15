@@ -26,6 +26,12 @@ libs\AnimationGroup\translation.lua
 localization\enUS.lua
 localization\deDE.lua
 
-ModifiedPowerAuras.lua
+Init.lua
+Util.lua
+Conditions.lua
+Animation.lua
+Auras.lua
+GUI.lua
+Start.lua
 ModifiedPowerAuras.xml
 
