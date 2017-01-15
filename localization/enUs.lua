@@ -97,7 +97,7 @@ MPOWA_TEXT_ABOUT_MPOWA = "Modified Power Auras is the advanced version of the Ad
 MPOWA_TEXT_CREATOR_TITLE = "Who created Modified Power Auras?"
 MPOWA_TEXT_CREATOR = "Modified Power Auras was created by Shino (Albea) <Synced> who developed the AddOn on Kronos (Twinstar.cz). He is formally known as Geigerkind in the Twinstar community."
 MPOWA_TEXT_SPECIALTHANKS_TITLE = "Special thanks to: "
-MPOWA_TEXT_SPECIALTHANKS = "Sinesther - Originally it is his AddOn, I just happened to backport it vanilla."
+MPOWA_TEXT_SPECIALTHANKS = "Sinesther - Originally it is his AddOn, I just happened to backport it vanilla. \nmartinjlowm - Creator of the library AnimationGroup"
 MPOWA_TEXT_SUPPORTING_TITLE = "Thanks for supporting!"
 MPOWA_TEXT_SUPPORTING = "None yet"
 

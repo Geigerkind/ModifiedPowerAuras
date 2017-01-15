@@ -2094,7 +2094,7 @@
 					</Frame>
 					<Frame name="$parent_4_3" inherits="MPowa_ContainerTemplate" hidden="true">
 						<Size>
-							<AbsDimension x="290" y="40" />
+							<AbsDimension x="290" y="70" />
 						</Size>
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="$parent_4_2" relativePoint="BOTTOMLEFT">
@@ -2121,7 +2121,7 @@
 							<Layer>
 								<FontString name="$parent_Text" inherits="GameFontDisable" justifyH="LEFT">
 									<Size>
-										<AbsDimension x="270" y="30" />
+										<AbsDimension x="270" y="60" />
 									</Size>
 									<Anchors>
 										<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
@@ -2142,7 +2142,7 @@
 					</Frame>
 					<Frame name="$parent_4_4" inherits="MPowa_ContainerTemplate" hidden="true">
 						<Size>
-							<AbsDimension x="290" y="65" />
+							<AbsDimension x="290" y="45" />
 						</Size>
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="$parent_4_3" relativePoint="BOTTOMLEFT">

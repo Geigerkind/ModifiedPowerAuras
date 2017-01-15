@@ -96,7 +96,7 @@ if (GetLocale() == "deDE") then
 	MPOWA_TEXT_CREATOR_TITLE = "Wer hat Modified Power Auras erstellt?"
 	MPOWA_TEXT_CREATOR = "VCB wurde von Shino (Albea) <Synced> entwickelt, der auf Kronos (Twinstar.cz) gearbeitet hat. In der Twinstar-Community ist er als Geigerkind bekannt."
 	MPOWA_TEXT_SPECIALTHANKS_TITLE = "Speziellen dank an "
-	MPOWA_TEXT_SPECIALTHANKS = "Sinesther - Es ist seine AddOn Idee, bloß wurde es nun für Vanilla stark verbessert."
+	MPOWA_TEXT_SPECIALTHANKS = "Sinesther - Es ist seine AddOn Idee, bloß wurde es nun für Vanilla stark verbessert. \nmartinjlowm - Entwickler der Library AnimationGroup"
 	MPOWA_TEXT_SUPPORTING_TITLE = "Danke für das unterstützen!"
 	MPOWA_TEXT_SUPPORTING = "Noch keiner"
 	

@@ -17,11 +17,13 @@ Modified Power Auras is the advanced version of the AddOn Power Auras. It is a l
 * Customize your aura and its position on the whole screen
 * Use a lot new conditions to show/hide auras
 * Play a sound if a aura is applied or fades
+* Have some nice animations  
+* Group them as they appear  
 
 
 ### Installing Instructions ###
 
-* Download the AddOn [here](https://bitbucket.org/Albea/modifiedpowerauras/downloads)
+* Download the AddOn [here](https://github.com/Geigerkind/ModifiedPowerAuras/releases)
 * Rename the unziped folder to "ModifiedPowerAuras"
 * Place the folder into your AddOn directory in your World of Warcraft folder
 * Start the game
@@ -31,15 +33,15 @@ Modified Power Auras is the advanced version of the AddOn Power Auras. It is a l
 
 
 #**Support me!**#   
-1. https://bitbucket.org/tomdy/modifiedpowerauras/issues?status=new&status=open (report) bugs that you found.
+1. [report](https://github.com/Geigerkind/ModifiedPowerAuras/issues) bugs that you found.
 2. Suggest improvements in this thread. 
-3. You can also https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=57SWBZ3B7RTTQ (donate) for my projects if you like.
+3. You can also [donate](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=57SWBZ3B7RTTQ) for my projects if you like or consider becoming an [patreon](https://www.patreon.com/legacylogs).
 
 
 ### How does it look like? ###
 
 **All frames opened (Profile/EditAura/IconFrame):**  
-![vUqDGgY.png](http://i.imgur.com/C0CABTb.jpg)
+![SG2B0jW.jpg](http://i.imgur.com/SG2B0jW.jpg)
 
 
 **Auras on testmode:**  

@@ -585,9 +585,7 @@ end
 function MPOWA:Editbox_GroupNumber(obj)
 	if tonumber(obj:GetText()) ~= nil then
 		MPOWA_SAVE[self.CurEdit]["groupnumber"] = tnbr(obj:GetText())
-		if (MPOWA_SAVE[self.CurEdit]["groupnumber"]>0 and MPOWA_SAVE[self.CurEdit]["groupnumber"]<=self.NumBuffs) then
-			MPOWA:ApplyConfig(MPOWA_SAVE[self.CurEdit]["groupnumber"])
-		end
+		MPOWA:ApplyConfig(self.CurEdit)
 		self:Iterate("player")
 	end
 end
