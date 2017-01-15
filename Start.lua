@@ -74,15 +74,7 @@ function MPOWA:Init()
 	
 	if MPOWA_SAVE == nil then
 		MPOWA_SAVE = {}
-		for i=1, 49 do
-			self:CreateSave(i)
-		end
-	end
-	
-	if MPOWA_SAVE[50] == nil then
-		for i=50, 490 do
-			self:CreateSave(i)
-		end
+		self:CreateSave(1)
 	end
 	
 	if MPOWA_PROFILE == nil then
@@ -209,8 +201,10 @@ function MPOWA:Init()
 			if val["batmananimin"] then
 				self:AddAnimRotateShrinkFadeIn(cat)
 			end
+			MPOWA_SAVE[cat]["test"] = false
+		else	
+			MPOWA_SAVE[cat] = nil
 		end
-		val["test"] = false
 	end
 	self.testAll = false
 end
