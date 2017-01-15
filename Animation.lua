@@ -52,6 +52,7 @@ function MPOWA:FHide(key)
 					if p["rotateanimout"] then
 						self:PlayAnim("rotateanimout", key, "rotateanimout")
 					else
+						self:AfterAnimationDynamicGroup(key)
 						self.frames[key][1]:Hide()
 					end
 				end
@@ -60,9 +61,23 @@ function MPOWA:FHide(key)
 	end
 end
 
+function MPOWA:AfterAnimationDynamicGroup(key)
+	local p = MPOWA_SAVE[key]
+	if p["isdynamicgroup"] then
+		self:ApplyDynamicGroup(key)
+	elseif p["groupnumber"] and tnbr(p["groupnumber"])>0 then
+		self:ApplyDynamicGroup(tnbr(p["groupnumber"]))
+	end
+end
+
 function MPOWA:FShow(key)
 	local p = MPOWA_SAVE[key]
 	if not self.frames[key][1]:IsVisible() then
+		if p["isdynamicgroup"] then
+			self:ApplyDynamicGroup(key)
+		elseif p["groupnumber"] and tnbr(p["groupnumber"])>0 then
+			self:ApplyDynamicGroup(tnbr(p["groupnumber"]))
+		end
 		self.frames[key][1]:Show()
 		if p["batmananimin"] then
 			self:PlayAnim("batmananimin", key, "batmananimin")
@@ -125,6 +140,7 @@ function MPOWA:AddAnimGrowOut(frame)
 			MPOWA.frames[frame][1]:SetWidth(64)
 			MPOWA.frames[frame][1]:SetHeight(64)
 			MPOWA.frames[frame][1]:Hide()
+			MPOWA:AfterAnimationDynamicGroup(frame)
 		end)
 		local scale = self.frames[frame][1].growout:CreateAnimation("Scale")
 		scale:SetScale(tnbr(MPOWA_SAVE[frame]["scalefactor"]), tnbr(MPOWA_SAVE[frame]["scalefactor"]))
@@ -156,6 +172,7 @@ function MPOWA:AddAnimFadeOut(frame)
 			MPOWA.frames[frame][1].fadeout:Stop()
 			MPOWA.frames[frame][1]:SetAlpha(tnbr(MPOWA_SAVE[frame]["alpha"]))
 			MPOWA.frames[frame][1]:Hide()
+			MPOWA:AfterAnimationDynamicGroup(frame)
 		end)
 		
 		local anim = self.frames[frame][1].fadeout:CreateAnimation("Alpha")
@@ -171,6 +188,7 @@ function MPOWA:AddAnimRotateOut(frame)
 		self.frames[frame][1].rotateanimout:SetScript("OnFinished", function() 
 			MPOWA.frames[frame][1].rotateanimout:Stop()
 			MPOWA.frames[frame][1]:Hide()
+			MPOWA:AfterAnimationDynamicGroup(frame)
 		end)
 		
 		local anim = self.frames[frame][1].rotateanimout:CreateAnimation("Rotation")
@@ -186,6 +204,7 @@ function MPOWA:AddAnimTranslate(frame)
 		self.frames[frame][1].translateanim:SetScript("OnFinished", function() 
 			MPOWA.frames[frame][1].translateanim:Stop()
 			MPOWA.frames[frame][1]:Hide()
+			MPOWA:AfterAnimationDynamicGroup(frame)
 		end)
 		
 		local anim = self.frames[frame][1].translateanim:CreateAnimation("Translation")
@@ -207,6 +226,7 @@ function MPOWA:AddAnimEscapeOut(frame)
 			MPOWA.frames[frame][1]:SetWidth(64)
 			MPOWA.frames[frame][1]:SetHeight(64)
 			MPOWA.frames[frame][1]:Hide()
+			MPOWA:AfterAnimationDynamicGroup(frame)
 		end)
 		
 		local alpha = self.frames[frame][1].escapeanimout:CreateAnimation("Alpha")
@@ -228,6 +248,7 @@ function MPOWA:AddAnimShrink(frame)
 			MPOWA.frames[frame][1]:SetWidth(64)
 			MPOWA.frames[frame][1]:SetHeight(64)
 			MPOWA.frames[frame][1]:Hide()
+			MPOWA:AfterAnimationDynamicGroup(frame)
 		end)
 		
 		local scale = self.frames[frame][1].shrink:CreateAnimation("Scale")
@@ -246,6 +267,7 @@ function MPOWA:AddAnimRotateShrinkFadeOut(frame)
 			MPOWA.frames[frame][1]:SetWidth(64)
 			MPOWA.frames[frame][1]:SetHeight(64)
 			MPOWA.frames[frame][1]:Hide()
+			MPOWA:AfterAnimationDynamicGroup(frame)
 		end)
 		
 		local scale = self.frames[frame][1].batmananimout:CreateAnimation("Scale")

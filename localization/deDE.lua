@@ -163,4 +163,9 @@ if (GetLocale() == "deDE") then
 	MPOWA_SLIDER_FADEALPHA = "Verschwinde"
 	MPOWA_SLIDER_SCALEFACTOR_TOOLTIP = "Verschiebe das, um den Skalierungsfaktor der Animation zu verändern."
 	MPOWA_SLIDER_SCALEFACTOR = "Skalierungsfaktor"
+	
+	MPOWA_CHECKBUTTON_ISDYNAMICGROUP_TOOLTIP = "Kreuze das an, um diese Aura als dynamische Gruppe zu definieren. Du kannst andere Auren hinzufügen, indem du rechts in das Feld die Nummer der Gruppenaura einträgst."
+	MPOWA_CHECKBUTTON_ISDYNAMICGROUP = "Ist dynamische Gruppe"
+	MPOWA_EDITBOX_GROUPNUMBER_TOOLTIP = "Trage die Nummer der dynamischen Gruppe ein, um diese Aura hinzufügen."
+	MPOWA_EDITBOX_GROUPNUMBER = "Gruppenummer"
 end

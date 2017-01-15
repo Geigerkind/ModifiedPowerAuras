@@ -113,6 +113,33 @@ function MPOWA:ApplyConfig(i)
 	if val["usefontcolor"] then
 		self.frames[i][3]:SetTextColor(val["fontcolor_r"],val["fontcolor_g"],val["fontcolor_b"],val["fontalpha"])
 	end
+	if val["isdynamicgroup"] then
+		self:ApplyDynamicGroup(i)
+	elseif val["groupnumber"] and tnbr(val["groupnumber"])>0 then
+		self:ApplyDynamicGroup(tnbr(val["groupnumber"]))
+	end
+end
+
+function MPOWA:ApplyDynamicGroup(i)
+	local val = MPOWA_SAVE[i]
+	local gnum = tnbr(val["groupnumber"])
+	if self.frames[i] and val["isdynamicgroup"] then
+		if not self.frames[i][5] then
+			self.frames[i][5] = CreateFrame("Frame")
+		end
+		local inc = 0
+		for cat, va in MPOWA_SAVE do
+			if self.frames[cat] and (tnbr(va["groupnumber"])==i or cat==i) and (self.active[cat] or va["test"] or self.testAll) then
+				self.frames[cat][1]:ClearAllPoints()
+				self.frames[cat][1]:SetPoint("TOPLEFT", self.frames[i][5], "TOPRIGHT", inc*70, 0)
+				inc = inc + 1;
+			end
+		end
+		self.frames[i][5]:SetWidth(inc*70)
+		self.frames[i][5]:SetHeight(70)
+		self.frames[i][5]:ClearAllPoints()
+		self.frames[i][5]:SetPoint("CENTER", UIParent, "CENTER", val["x"]-(inc-1)*52.5, val["y"])
+	end
 end
 
 function MPOWA:ApplyAttributesToButton(i, button)
@@ -343,6 +370,9 @@ function MPOWA:Edit()
 		MPowa_ConfigFrame_Container_5_Translate:SetChecked(MPOWA_SAVE[self.CurEdit].translateanim)
 		-- ANIM END
 		
+		MPowa_ConfigFrame_Container_6_IsDynamicGroup:SetChecked(MPOWA_SAVE[self.CurEdit].isdynamicgroup)
+		MPowa_ConfigFrame_Container_6_Editbox_GroupNumber:SetText(""..(MPOWA_SAVE[self.CurEdit].groupnumber or ""))
+		
 		if MPOWA_SAVE[self.CurEdit].enemytarget or MPOWA_SAVE[self.CurEdit].friendlytarget then
 			MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Show()
 		else
@@ -552,6 +582,16 @@ function MPOWA:OptionsFrame_CancelColor()
 	end
 end
 
+function MPOWA:Editbox_GroupNumber(obj)
+	if tonumber(obj:GetText()) ~= nil then
+		MPOWA_SAVE[self.CurEdit]["groupnumber"] = tnbr(obj:GetText())
+		if (MPOWA_SAVE[self.CurEdit]["groupnumber"]>0 and MPOWA_SAVE[self.CurEdit]["groupnumber"]<=self.NumBuffs) then
+			MPOWA:ApplyConfig(MPOWA_SAVE[self.CurEdit]["groupnumber"])
+		end
+		self:Iterate("player")
+	end
+end
+
 function MPOWA:Editbox_Duration(obj)
 	if tonumber(obj:GetText()) ~= nil then
 		MPOWA_SAVE[self.CurEdit]["targetduration"] = tonumber(obj:GetText())
@@ -665,6 +705,7 @@ function MPOWA:TestAll()
 			self.testAll = false
 			for i=1, self.NumBuffs do
 				if not self.active[i] then
+					MPOWA:ApplyConfig(i)
 					_G("TextureFrame"..i):Hide()
 				end
 				MPOWA_SAVE[i]["test"] = false
@@ -672,6 +713,7 @@ function MPOWA:TestAll()
 		else
 			self.testAll = true
 			for i=1, self.NumBuffs do
+				MPOWA:ApplyConfig(i)
 				_G("TextureFrame"..i):Show()
 			end
 		end
@@ -689,6 +731,7 @@ function MPOWA:Test()
 			MPOWA_SAVE[self.selected].test = true
 			_G("TextureFrame"..self.selected):Show()
 		end
+		MPOWA:ApplyConfig(self.selected)
 	end
 end
 

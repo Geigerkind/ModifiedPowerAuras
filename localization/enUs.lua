@@ -164,3 +164,8 @@ MPOWA_SLIDER_FADEALPHA_TOOLTIP = "Move this to change the value your aura is goi
 MPOWA_SLIDER_FADEALPHA = "Fade alpha"
 MPOWA_SLIDER_SCALEFACTOR_TOOLTIP = "Move this to change the scale factor of the your animation."
 MPOWA_SLIDER_SCALEFACTOR = "Scale factor"
+
+MPOWA_CHECKBUTTON_ISDYNAMICGROUP_TOOLTIP = "Check this to set this aura as dynamic group. You can add other auras to this group by entering the aura number in the appropriate field."
+MPOWA_CHECKBUTTON_ISDYNAMICGROUP = "Is dynamic group"
+MPOWA_EDITBOX_GROUPNUMBER_TOOLTIP = "Enter the number of the dynamic group parent aura."
+MPOWA_EDITBOX_GROUPNUMBER = "Enter group number"

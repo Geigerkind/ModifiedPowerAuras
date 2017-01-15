@@ -57,6 +57,8 @@ function MPOWA:CreateSave(i)
 		translateoffsety = 50,
 		fadealpha = 0.99,
 		scalefactor = 0.8,
+		isdynamicgroup = false,
+		groupnumber = 0,
 	}
 end
 
