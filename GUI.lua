@@ -316,6 +316,7 @@ function MPOWA:Edit()
 		MPowa_ConfigFrame_Container_2_Slider_OpacityText:SetText(MPOWA_SLIDER_OPACITY.." "..MPOWA_SAVE[self.CurEdit].fontalpha)
 		MPowa_ConfigFrame_Container_1_2_Editbox:SetText(MPOWA_SAVE[self.CurEdit].buffname)
 		MPowa_ConfigFrame_Container_1_2_Editbox_Stacks:SetText(MPOWA_SAVE[self.CurEdit].stacks)
+		MPowa_ConfigFrame_Container_1_2_Editbox_CPStacks:SetText(MPOWA_SAVE[self.CurEdit].cpstacks)
 		MPowa_ConfigFrame_Container_1_2_Editbox_Player:SetText(MPOWA_SAVE[self.CurEdit].rgmname or "")
 		MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:SetText(MPOWA_SAVE[self.CurEdit].targetduration)
 		MPowa_ConfigFrame_Container_1_2_Editbox_SECLEFT:SetText(MPOWA_SAVE[self.CurEdit].secsleftdur or "")
@@ -610,6 +611,15 @@ function MPOWA:Editbox_SECSLEFT(obj)
 	end
 end
 
+function MPOWA:Editbox_ICONPATH(obj)
+	if obj:GetText() == "" then
+		if MPOWA_SAVE[self.CurEdit].texture == "" then
+			MPOWA_SAVE[self.CurEdit].texture = "Interface\\AddOns\\ModifiedPowerAuras\\images\\dummy.tga"
+		end
+		obj:SetText(MPOWA_SAVE[self.CurEdit].texture)
+	end
+end
+
 function MPOWA:Editbox_Name(obj)
 	local oldname = MPOWA_SAVE[self.CurEdit].buffname
 	MPOWA_SAVE[self.CurEdit].buffname = obj:GetText()
@@ -662,6 +672,20 @@ function MPOWA:Editbox_Stacks(obj)
 	local oldcon = MPOWA_SAVE[self.CurEdit].stacks
 	MPOWA_SAVE[self.CurEdit].stacks = obj:GetText()
 	if oldcon ~= MPOWA_SAVE[self.CurEdit].stacks then
+		if MPOWA_SAVE[self.CurEdit]["test"] or self.testAll then
+			_G("TextureFrame"..self.CurEdit):Hide()
+			_G("TextureFrame"..self.CurEdit):Show()
+		else
+			self:Iterate("player")
+			self:Iterate("target")
+		end
+	end
+end
+
+function MPOWA:Editbox_CPStacks(obj)
+	local oldcon = MPOWA_SAVE[self.CurEdit].cpstacks
+	MPOWA_SAVE[self.CurEdit].cpstacks = obj:GetText()
+	if oldcon ~= MPOWA_SAVE[self.CurEdit].cpstacks then
 		if MPOWA_SAVE[self.CurEdit]["test"] or self.testAll then
 			_G("TextureFrame"..self.CurEdit):Hide()
 			_G("TextureFrame"..self.CurEdit):Show()
@@ -782,6 +806,7 @@ end
 
 function MPOWA:SelectIcon(obj)
 	SELECTEDICON = _G(obj:GetName().."_Icon"):GetTexture()
+	MPowa_IconFrame_Editbox:SetText(SELECTEDICON)
 	for cat, p in self.ICONARRAY do
 		for i=1,p do
 			if _G(cat..i.."_Border") then
@@ -793,6 +818,9 @@ function MPOWA:SelectIcon(obj)
 end
 
 function MPOWA:IconFrameOkay()
+	if (MPowa_IconFrame_Editbox:GetText()~="" and MPowa_IconFrame_Editbox:GetText()~=SELECTEDICON) then
+		SELECTEDICON = MPowa_IconFrame_Editbox:GetText()
+	end
 	MPowa_ConfigFrame_Container_1_Icon_Texture:SetTexture(SELECTEDICON)
 	_G("ConfigButton"..self.CurEdit.."_Icon"):SetTexture(SELECTEDICON)
 	_G("TextureFrame"..self.CurEdit.."_Icon"):SetTexture(SELECTEDICON)

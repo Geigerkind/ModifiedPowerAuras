@@ -138,7 +138,7 @@ function MPOWA:OnUpdate(elapsed)
 						end
 					end
 				end
-				if self:IsStacks(count or 0, cat) then
+				if self:IsStacks(count or 0, cat, "stacks") then
 					local duration = self:GetDuration(val, cat)
 					if (count or 0)>1 and not path["hidestacks"] then
 						self.frames[cat][4]:SetText(count)
@@ -360,7 +360,7 @@ function MPOWA:Push(aura, unit, i, isdebuff, debuffdesc)
 			local path = MPOWA_SAVE[val]
 			local bypass = self.active[val]
 			if path["isdebuff"]==isdebuff and ((path["secondspecifier"] and path["secondspecifiertext"]==debuffdesc) or not path["secondspecifier"]) then
-				if self:TernaryReturn(val, "alive", self:Reverse(UnitIsDeadOrGhost("player"))) and self:TernaryReturn(val, "mounted", self.mounted) and self:TernaryReturn(val, "incombat", UnitAffectingCombat("player")) and self:TernaryReturn(val, "inparty", self.party) and self:TernaryReturn(val, "inraid", UnitInRaid("player")) and self:TernaryReturn(val, "inbattleground", self.bg) and self:TernaryReturn(val, "inraidinstance", self.instance) and not path["cooldown"] then
+				if self:TernaryReturn(val, "alive", self:Reverse(UnitIsDeadOrGhost("player"))) and self:TernaryReturn(val, "mounted", self.mounted) and self:TernaryReturn(val, "incombat", UnitAffectingCombat("player")) and self:TernaryReturn(val, "inparty", self.party) and self:TernaryReturn(val, "inraid", UnitInRaid("player")) and self:TernaryReturn(val, "inbattleground", self.bg) and self:TernaryReturn(val, "inraidinstance", self.instance) and not path["cooldown"] and self:IsStacks(GetComboPoints("player", "target"), val, "cpstacks") then
 					BuffExist[val] = true
 					if path["enemytarget"] and unit == "target" then
 						self.active[val] = i
@@ -401,10 +401,10 @@ function MPOWA:Push(aura, unit, i, isdebuff, debuffdesc)
 	end
 end
 
-function MPOWA:IsStacks(count, id)
-	if MPOWA_SAVE[id].stacks ~= "" then
-		local con = strsub(MPOWA_SAVE[id].stacks, 1, 2)
-		local amount = tonumber(strsub(MPOWA_SAVE[id].stacks, 3))
+function MPOWA:IsStacks(count, id, kind)
+	if MPOWA_SAVE[id][kind] ~= "" then
+		local con = strsub(MPOWA_SAVE[id][kind], 1, 2)
+		local amount = tonumber(strsub(MPOWA_SAVE[id][kind], 3))
 		if amount ~= nil and con ~= nil then
 			if con == ">=" and count >= amount then
 				return true
@@ -412,8 +412,8 @@ function MPOWA:IsStacks(count, id)
 				return true
 			end
 		end
-		con = strsub(MPOWA_SAVE[id].stacks, 1, 1)
-		amount = tonumber(strsub(MPOWA_SAVE[id].stacks, 2))
+		con = strsub(MPOWA_SAVE[id][kind], 1, 1)
+		amount = tonumber(strsub(MPOWA_SAVE[id][kind], 2))
 		if amount ~= nil and con ~= nil then
 			if con == "<" and count < amount then
 				return true
@@ -425,10 +425,10 @@ function MPOWA:IsStacks(count, id)
 				return true
 			end
 		end
-		con = strfind(MPOWA_SAVE[id].stacks, "-")
+		con = strfind(MPOWA_SAVE[id][kind], "-")
 		if con then
-			local amount1 = tonumber(strsub(MPOWA_SAVE[id].stacks, 1, con-1))
-			local amount2 = tonumber(strsub(MPOWA_SAVE[id].stacks, con+1))
+			local amount1 = tonumber(strsub(MPOWA_SAVE[id][kind], 1, con-1))
+			local amount2 = tonumber(strsub(MPOWA_SAVE[id][kind], con+1))
 			if con and amount1 and amount2 and ((count >= amount1 and count <= amount2) or (count >= amount2 and count <= amount1)) then
 				return true
 			end

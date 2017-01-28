@@ -59,6 +59,7 @@ function MPOWA:CreateSave(i)
 		scalefactor = 0.8,
 		isdynamicgroup = false,
 		groupnumber = 0,
+		cpstacks = ">=0"
 	}
 end
 
@@ -203,6 +204,11 @@ function MPOWA:Init()
 			if val["batmananimin"] then
 				self:AddAnimRotateShrinkFadeIn(cat)
 			end
+			
+			if not val["cpstacks"] then
+				MPOWA_SAVE[cat]["cpstacks"] = ">=0"
+			end
+			
 			MPOWA_SAVE[cat]["test"] = false
 		else	
 			MPOWA_SAVE[cat] = nil

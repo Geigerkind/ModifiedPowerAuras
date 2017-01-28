@@ -1011,6 +1011,58 @@
 									</Layer>
 								</Layers>
 							</EditBox>
+							<EditBox name="$parent_Editbox_CPStacks" autoFocus="false" inherits="InputBoxTemplate">
+								<Size>
+									<AbsDimension x="35" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parent_Editbox" relativePoint="BOTTOMLEFT">
+										<Offset>
+											<AbsDimension x="240" y="-20"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<FontString inherits="ChatFontNormal" bytes="200"/>
+								<Scripts>
+									<OnLoad>
+										this:SetMaxLetters(200)
+										this.aide = MPOWA_EDITBOX_STACKS_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText("CP:")
+									</OnLoad>
+									<OnShow>
+										this:ClearFocus()
+									</OnShow>
+									<OnEnterPressed>
+										this:ClearFocus()
+									</OnEnterPressed>
+									<OnEditFocusLost>
+										MPOWA:Editbox_CPStacks(this)
+									</OnEditFocusLost>
+									<OnEnter>
+										GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
+										GameTooltip:SetText(this.aide, nil, nil, nil, nil, 1)
+									</OnEnter>
+									<OnLeave>
+										GameTooltip:Hide()
+									</OnLeave>
+								</Scripts>
+								<Layers>
+									<Layer level="OVERLAY">
+										<FontString name="$parentText" inherits="GameFontNormalSmall" justifyH="LEFT" text="">
+											<Size>
+												<AbsDimension x="120" y="20"/>
+											</Size>
+											<Anchors>
+												<Anchor point="BOTTOMLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+													<Offset>
+														<AbsDimension x="0" y="0"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+								</Layers>
+							</EditBox>
 							<EditBox name="$parent_Editbox_Stacks" autoFocus="false" inherits="InputBoxTemplate">
 								<Size>
 									<AbsDimension x="65" y="16"/>
@@ -2940,6 +2992,58 @@
 			</OnLoad>
 		</Scripts>
 		<Frames>
+			<EditBox name="$parent_Editbox" autoFocus="false" inherits="InputBoxTemplate">
+				<Size>
+					<AbsDimension x="250" y="16"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOP" relativeTo="$parent" relativePoint="TOP">
+						<Offset>
+							<AbsDimension x="0" y="-20"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<FontString inherits="ChatFontNormal" bytes="200"/>
+				<Scripts>
+					<OnLoad>
+						this:SetMaxLetters(200)
+						this.aide = MPOWA_EDITBOX_TOOLTIP_ICONPATH
+						getglobal(this:GetName().."Text"):SetText("")
+					</OnLoad>
+					<OnShow>
+						this:ClearFocus()
+					</OnShow>
+					<OnEnterPressed>
+						this:ClearFocus()
+					</OnEnterPressed>
+					<OnTextChanged>
+						MPOWA:Editbox_ICONPATH(this)
+					</OnTextChanged>
+					<OnEnter>
+						GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
+						GameTooltip:SetText(this.aide, nil, nil, nil, nil, 1)
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide()
+					</OnLeave>
+				</Scripts>
+				<Layers>
+					<Layer level="OVERLAY">
+						<FontString name="$parentText" inherits="GameFontNormalSmall" justifyH="LEFT" text="">
+							<Size>
+								<AbsDimension x="200" y="20"/>
+							</Size>
+							<Anchors>
+								<Anchor point="BOTTOMLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="0" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+			</EditBox>
 			<Button name="$parent_CloseButton" inherits="MPowa_CloseButtonTemplate">
 				<Scripts>
 					<OnClick>
