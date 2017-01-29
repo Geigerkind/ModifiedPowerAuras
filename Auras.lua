@@ -340,6 +340,7 @@ function MPOWA:Iterate(unit)
 				local p = MPOWA_SAVE[cat]
 				if ((p["friendlytarget"] or p["enemytarget"]) and unit=="target") or (not p["raidgroupmember"] and not p["friendlytarget"] and not p["enemytarget"] and unit=="player") or p["raidgroupmember"] then
 					self.active[cat] = false
+					self.lastCount[cat] = 0
 					self.frames[cat][3]:Hide()
 					if not p["inverse"] and not p["cooldown"] then
 						if p["useendsound"] then
