@@ -126,6 +126,10 @@ function MPOWA:OnUpdate(elapsed)
 				else
 					if path["isdebuff"] then
 						text, count = UnitDebuff(path["unit"], val)
+						if not self.lastCount[cat] or self.lastCount[cat]<count then
+							self.activeTimer[cat] = GT()
+						end
+						self.lastCount[cat] = count
 					else
 						text, count = UnitBuff(path["unit"], val)
 					end
@@ -376,8 +380,8 @@ function MPOWA:Push(aura, unit, i, isdebuff, debuffdesc)
 					else
 						self.pushed[val] = 1;
 					end
+					self.activeTimer[val] = GT()
 					if self.active[val] and not bypass then
-						self.activeTimer[val] = GT()
 						if tnbr(self.frames[val][1]:GetAlpha())<=0.1 then
 							self.frames[val][1]:SetAlpha(tnbr(path["alpha"]))
 						end
