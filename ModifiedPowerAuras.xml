@@ -883,12 +883,12 @@
 								<Scripts>
 									<OnLoad>
 										this.aide = MPOWA_SLIDER_SIZE_TOOLTIP
-										this:SetMinMaxValues(0.1,2.0)
+										this:SetMinMaxValues(0.1,5.0)
 										this:SetValue(1.0)
 										this:SetValueStep(0.1)
 										getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_SIZE)
 										getglobal(this:GetName().."Low"):SetText("0.1")
-										getglobal(this:GetName().."High"):SetText("2.0")
+										getglobal(this:GetName().."High"):SetText("5.0")
 									</OnLoad>
 									<OnValueChanged>
 										if MPOWA.loaded then
