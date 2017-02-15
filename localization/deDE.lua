@@ -123,10 +123,10 @@ if (GetLocale() == "deDE") then
 
 	MPOWA_CHECKBUTTON_HIDE_STACKS_TOOLTIP = "Kreuze das an, um die Anzahl zu verstecken"
 	MPOWA_CHECKBUTTON_HIDE_STACKS = "Verstecke Anzahl"
-	MPOWA_CHECKBUTTON_USE_DESCRIPTION_TOOLTIP = "Kreuze das an, um die Beschreibung der Aura im Tooltip als zweiten Indikator für die Erkennung zu verwenden."
-	MPOWA_CHECKBUTTON_USE_DESCRIPTION = "Nutze Beschreibung"
-	MPOWA_EDITBOX_SecondSpecifier_TOOLTIP = "Schreibe hier die genaue Beschreibung der aura hinein."
-	MPOWA_EDITBOX_SecondSpecifier = "Exakte Beschreibung:"
+	MPOWA_CHECKBUTTON_USE_DESCRIPTION_TOOLTIP = "Kreuze das an, um die Auratextur als zweiten Indikator für die Erkennung zu verwenden."
+	MPOWA_CHECKBUTTON_USE_DESCRIPTION = "Nutze Textur"
+	MPOWA_EDITBOX_SecondSpecifier_TOOLTIP = "Schreibe hier den genauen Texturnamen der aura hinein."
+	MPOWA_EDITBOX_SecondSpecifier = "Exakter Texturname:"
 	
 	MPOWA_WINDFURY_GAIN = "Ihr bekommt 'Totem des Windzorns'."
 	MPOWA_WINDFURY_GAIN2 = "Ihr bekommt 'Waffe des Windzorns'."

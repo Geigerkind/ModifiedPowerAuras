@@ -317,7 +317,7 @@ function MPOWA:Iterate(unit)
 			MPowa_Tooltip:SetUnitBuff(unit, i)
 		end
 		local buff = MPowa_TooltipTextLeft1:GetText()
-		self:Push(buff, unit, p, false, MPowa_TooltipTextLeft2:GetText())
+		self:Push(buff, unit, p, false)
 		
 		if i<17 then
 			MPowa_Tooltip:ClearLines()
@@ -329,7 +329,7 @@ function MPOWA:Iterate(unit)
 				MPowa_Tooltip:SetUnitDebuff(unit, i)
 			end
 			debuff = MPowa_TooltipTextLeft1:GetText()
-			self:Push(debuff, unit, p, true, MPowa_TooltipTextLeft2:GetText())
+			self:Push(debuff, unit, p, true)
 		end
 		MPowa_Tooltip:Hide()
 		if not buff and not debuff then break end
@@ -337,6 +337,7 @@ function MPOWA:Iterate(unit)
 	for cat, val in self.active do
 		if val then
 			if not BuffExist[cat] then
+				self.activeTimer[val] = nil
 				local p = MPOWA_SAVE[cat]
 				if ((p["friendlytarget"] or p["enemytarget"]) and unit=="target") or (not p["raidgroupmember"] and not p["friendlytarget"] and not p["enemytarget"] and unit=="player") or p["raidgroupmember"] then
 					self.active[cat] = false
@@ -359,12 +360,21 @@ function MPOWA:Iterate(unit)
 	end
 end
 
-function MPOWA:Push(aura, unit, i, isdebuff, debuffdesc)
+function MPOWA:Push(aura, unit, i, isdebuff)
 	if self.auras[aura] then
 		for cat, val in self.auras[aura] do
 			local path = MPOWA_SAVE[val]
 			local bypass = self.active[val]
-			if path["isdebuff"]==isdebuff and ((path["secondspecifier"] and path["secondspecifiertext"]==debuffdesc) or not path["secondspecifier"]) then
+			local tex = ""
+			if path["secondspecifier"] then
+				if path["isdebuff"] then
+					tex = UnitDebuff(unit, i)
+				else
+					tex = UnitBuff(unit, i)
+				end
+				tex = strlower(strsub(tex, strfind(tex, "Icons")+6))
+			end
+			if path["isdebuff"]==isdebuff and ((path["secondspecifier"] and (strlower(path["secondspecifiertext"])==tex)) or not path["secondspecifier"]) then
 				if self:TernaryReturn(val, "alive", self:Reverse(UnitIsDeadOrGhost("player"))) and self:TernaryReturn(val, "mounted", self.mounted) and self:TernaryReturn(val, "incombat", UnitAffectingCombat("player")) and self:TernaryReturn(val, "inparty", self.party) and self:TernaryReturn(val, "inraid", UnitInRaid("player")) and self:TernaryReturn(val, "inbattleground", self.bg) and self:TernaryReturn(val, "inraidinstance", self.instance) and not path["cooldown"] and self:IsStacks(GetComboPoints("player", "target"), val, "cpstacks") then
 					BuffExist[val] = true
 					if path["enemytarget"] and unit == "target" then
@@ -381,7 +391,6 @@ function MPOWA:Push(aura, unit, i, isdebuff, debuffdesc)
 					else
 						self.pushed[val] = 1;
 					end
-					self.activeTimer[val] = GT()
 					if self.active[val] and not bypass then
 						if tnbr(self.frames[val][1]:GetAlpha())<=0.1 then
 							self.frames[val][1]:SetAlpha(tnbr(path["alpha"]))
@@ -394,6 +403,7 @@ function MPOWA:Push(aura, unit, i, isdebuff, debuffdesc)
 							end
 						end
 						if not path["secsleft"] then
+							self.activeTimer[val] = GT()
 							self:FShow(val)
 						end
 						if path["timer"] then
