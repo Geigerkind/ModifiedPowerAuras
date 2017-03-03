@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 34
+MPOWA.Build = 35
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
@@ -101,24 +101,6 @@ MPOWA.SOUND = {
 	[62] = "Hit6.ogg", -- Thanks to Sillywet!
 	[63] = "Hit7.ogg", -- Thanks to Sillywet!
 	[64] = "Hit8.ogg", -- Thanks to Sillywet!
-}
-MPOWA.ICONARRAY = {
-	["MPowa_IconFrame_ButtonContainer_Button"] = 27,
-	["MPowa_IconFrame_ButtonContainer_2_Button"] = 22,
-	["MPowa_IconFrame_ButtonContainer_3_Button"] = 25,
-	["MPowa_IconFrame_ButtonContainer_4_Button"] = 21,
-	["MPowa_IconFrame_ButtonContainer_5_Button"] = 35,
-	["MPowa_IconFrame_ButtonContainer_6_Button"] = 36,
-	["MPowa_IconFrame_ButtonContainer_7_Button"] = 30,
-	["MPowa_IconFrame_ButtonContainer_8_Button"] = 36,
-	["MPowa_IconFrame_ButtonContainer_9_Button"] = 27,
-	["MPowa_IconFrame_ButtonContainer_10_Button"] = 41,
-	["MPowa_IconFrame_ButtonContainer_11_Button"] = 42,
-	["MPowa_IconFrame_ButtonContainer_12_Button"] = 42,
-	["MPowa_IconFrame_ButtonContainer_13_Button"] = 42,
-	["MPowa_IconFrame_ButtonContainer_14_Button"] = 42,
-	["MPowa_IconFrame_ButtonContainer_15_Button"] = 42,
-	["MPowa_IconFrame_ButtonContainer_16_Button"] = 36
 }
 
 MPOWA.Windfury = false
