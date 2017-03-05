@@ -1,4 +1,3 @@
-local stf = strfind
 local _G = getglobal
 local tinsert = table.insert
 local tremove = table.remove
@@ -372,7 +371,8 @@ function MPOWA:FillButtonContainer(key)
 		end
 		_G("MPowa_IconFrame_ButtonContainer_Button"..i.."_Icon"):SetTexture(cat)
 		button:ClearAllPoints()
-		button:SetPoint("TOPLEFT", MPowa_IconFrame_ButtonContainer, "TOPLEFT", 6+mod(i, 7)*42, -11-floor(i/7)*42)
+		button:SetPoint("TOPLEFT", MPowa_IconFrame_ButtonContainer, "TOPLEFT", 6+mod(i, 7)*42, -11-floor(i/7)*41)
+		button:Show()
 		i = i + 1
 	end
 end
@@ -669,16 +669,16 @@ function MPOWA:Edit()
 		MPowa_ConfigFrame_Container_2_Slider_PosYLow:SetText(MPOWA:GetMinValues(MPOWA_SAVE[self.CurEdit].fontoffsety))
 		MPowa_ConfigFrame_Container_2_Slider_PosYHigh:SetText(MPOWA:GetMaxValues(MPOWA_SAVE[self.CurEdit].fontoffsety))
 		
-		MPowa_ConfigFrame_Container_1_Slider_Size:SetValue(tonumber(MPOWA_SAVE[self.CurEdit].size))
+		MPowa_ConfigFrame_Container_1_Slider_Size:SetValue(tnbr(MPOWA_SAVE[self.CurEdit].size))
 		MPowa_ConfigFrame_Container_1_Slider_SizeText:SetText(MPOWA_SLIDER_SIZE.." "..MPOWA_SAVE[self.CurEdit].size)
 		MPowa_ConfigFrame_Container_1_ColorpickerNormalTexture:SetVertexColor(MPOWA_SAVE[self.CurEdit].icon_r or 1, MPOWA_SAVE[self.CurEdit].icon_g or 1, MPOWA_SAVE[self.CurEdit].icon_b or 1)
 		MPowa_ConfigFrame_Container_1_Colorpicker_SwatchBg.r = MPOWA_SAVE[self.CurEdit].icon_r or 1
 		MPowa_ConfigFrame_Container_1_Colorpicker_SwatchBg.g = MPOWA_SAVE[self.CurEdit].icon_g or 1
 		MPowa_ConfigFrame_Container_1_Colorpicker_SwatchBg.b = MPOWA_SAVE[self.CurEdit].icon_b or 1
 		MPowa_ConfigFrame_Container_1_Icon_Texture:SetVertexColor(MPOWA_SAVE[self.CurEdit].icon_r or 1, MPOWA_SAVE[self.CurEdit].icon_g or 1, MPOWA_SAVE[self.CurEdit].icon_b or 1)
-		MPowa_ConfigFrame_Container_2_Slider_Size:SetValue(tonumber(MPOWA_SAVE[self.CurEdit].fontsize))
+		MPowa_ConfigFrame_Container_2_Slider_Size:SetValue(tnbr(MPOWA_SAVE[self.CurEdit].fontsize))
 		MPowa_ConfigFrame_Container_2_Slider_SizeText:SetText(MPOWA_SLIDER_SIZE.." "..MPOWA_SAVE[self.CurEdit].fontsize)
-		MPowa_ConfigFrame_Container_2_Slider_Opacity:SetValue(tonumber(MPOWA_SAVE[self.CurEdit].fontalpha))
+		MPowa_ConfigFrame_Container_2_Slider_Opacity:SetValue(tnbr(MPOWA_SAVE[self.CurEdit].fontalpha))
 		MPowa_ConfigFrame_Container_2_Slider_OpacityText:SetText(MPOWA_SLIDER_OPACITY.." "..MPOWA_SAVE[self.CurEdit].fontalpha)
 		MPowa_ConfigFrame_Container_1_2_Editbox:SetText(MPOWA_SAVE[self.CurEdit].buffname)
 		MPowa_ConfigFrame_Container_1_2_Editbox_Stacks:SetText(MPOWA_SAVE[self.CurEdit].stacks)
@@ -711,15 +711,15 @@ function MPOWA:Edit()
 		MPowa_ConfigFrame_Container_3_Checkbutton_EndSound:SetChecked(MPOWA_SAVE[self.CurEdit].useendsound)
 		
 		-- ANIM START
-		MPowa_ConfigFrame_Container_5_Slider_AnimDuration:SetValue(tonumber(MPOWA_SAVE[self.CurEdit].animduration))
+		MPowa_ConfigFrame_Container_5_Slider_AnimDuration:SetValue(tnbr(MPOWA_SAVE[self.CurEdit].animduration))
 		MPowa_ConfigFrame_Container_5_Slider_AnimDurationText:SetText(MPOWA_SLIDER_ANIMDURATION.." - "..MPOWA_SAVE[self.CurEdit].animduration)
-		MPowa_ConfigFrame_Container_5_Slider_TranslateX:SetValue(tonumber(MPOWA_SAVE[self.CurEdit].translateoffsetx))
+		MPowa_ConfigFrame_Container_5_Slider_TranslateX:SetValue(tnbr(MPOWA_SAVE[self.CurEdit].translateoffsetx))
 		MPowa_ConfigFrame_Container_5_Slider_TranslateXText:SetText(MPOWA_SLIDER_TRANSLATEX.." - "..MPOWA_SAVE[self.CurEdit].translateoffsetx)
-		MPowa_ConfigFrame_Container_5_Slider_TranslateY:SetValue(tonumber(MPOWA_SAVE[self.CurEdit].translateoffsety))
+		MPowa_ConfigFrame_Container_5_Slider_TranslateY:SetValue(tnbr(MPOWA_SAVE[self.CurEdit].translateoffsety))
 		MPowa_ConfigFrame_Container_5_Slider_TranslateYText:SetText(MPOWA_SLIDER_TRANSLATEY.." - "..MPOWA_SAVE[self.CurEdit].translateoffsety)
-		MPowa_ConfigFrame_Container_5_Slider_FadeAlpha:SetValue(tonumber(MPOWA_SAVE[self.CurEdit].fadealpha))
+		MPowa_ConfigFrame_Container_5_Slider_FadeAlpha:SetValue(tnbr(MPOWA_SAVE[self.CurEdit].fadealpha))
 		MPowa_ConfigFrame_Container_5_Slider_FadeAlphaText:SetText(MPOWA_SLIDER_FADEALPHA.." - "..MPOWA_SAVE[self.CurEdit].fadealpha)
-		MPowa_ConfigFrame_Container_5_Slider_ScaleFactor:SetValue(tonumber(MPOWA_SAVE[self.CurEdit].scalefactor))
+		MPowa_ConfigFrame_Container_5_Slider_ScaleFactor:SetValue(tnbr(MPOWA_SAVE[self.CurEdit].scalefactor))
 		MPowa_ConfigFrame_Container_5_Slider_ScaleFactorText:SetText(MPOWA_SLIDER_SCALEFACTOR.." - "..MPOWA_SAVE[self.CurEdit].scalefactor)
 		
 		MPowa_ConfigFrame_Container_5_FadeIn:SetChecked(MPOWA_SAVE[self.CurEdit].fadein)
@@ -821,7 +821,7 @@ function MPOWA:Ternary_OnClick(obj, var)
 end
 
 function MPOWA:SliderChange(var, obj, text)
-	MPOWA_SAVE[self.CurEdit][var] = tonumber(strform("%.2f", obj:GetValue()))
+	MPOWA_SAVE[self.CurEdit][var] = tnbr(strform("%.2f", obj:GetValue()))
 	_G(obj:GetName().."Text"):SetText(text.." "..MPOWA_SAVE[self.CurEdit][var])
 	self:ApplyConfig(self.CurEdit)
 end
@@ -950,7 +950,7 @@ function MPOWA:OptionsFrame_CancelColor()
 end
 
 function MPOWA:Editbox_GroupNumber(obj)
-	if tonumber(obj:GetText()) ~= nil then
+	if tnbr(obj:GetText()) ~= nil then
 		MPOWA_SAVE[self.CurEdit]["groupnumber"] = tnbr(obj:GetText())
 		MPOWA:ApplyConfig(self.CurEdit)
 		self:Iterate("player")
@@ -958,15 +958,15 @@ function MPOWA:Editbox_GroupNumber(obj)
 end
 
 function MPOWA:Editbox_Duration(obj)
-	if tonumber(obj:GetText()) ~= nil then
-		MPOWA_SAVE[self.CurEdit]["targetduration"] = tonumber(obj:GetText())
+	if tnbr(obj:GetText()) ~= nil then
+		MPOWA_SAVE[self.CurEdit]["targetduration"] = tnbr(obj:GetText())
 		self:Iterate("target")
 	end
 end
 
 function MPOWA:Editbox_SECSLEFT(obj)
-	if tonumber(obj:GetText()) ~= nil then
-		MPOWA_SAVE[self.CurEdit]["secsleftdur"] = tonumber(obj:GetText())
+	if tnbr(obj:GetText()) ~= nil then
+		MPOWA_SAVE[self.CurEdit]["secsleftdur"] = tnbr(obj:GetText())
 		if MPOWA_SAVE[self.CurEdit]["test"] or self.testAll then
 			_G("TextureFrame"..self.CurEdit):Hide()
 			_G("TextureFrame"..self.CurEdit):Show()
@@ -1064,8 +1064,8 @@ end
 
 function MPOWA:Editbox_FlashAnimStart(obj)
 	local oldcon = MPOWA_SAVE[self.CurEdit].flashanimstart
-	if tonumber(obj:GetText()) ~= nil then
-		MPOWA_SAVE[self.CurEdit].flashanimstart = tonumber(obj:GetText())
+	if tnbr(obj:GetText()) ~= nil then
+		MPOWA_SAVE[self.CurEdit].flashanimstart = tnbr(obj:GetText())
 	end
 	if oldcon ~= MPOWA_SAVE[self.CurEdit].flashanimstart then
 		if MPOWA_SAVE[self.CurEdit]["test"] or self.testAll then

@@ -1,4 +1,3 @@
-local stf = strfind
 local _G = getglobal
 local tinsert = table.insert
 local tremove = table.remove
@@ -9,38 +8,22 @@ local strgfind = string.gfind
 local strfind = string.find
 local GT = GetTime
 local tnbr = tonumber
-
+local UnitIsDeadOrGhost = UnitIsDeadOrGhost
+local UnitAffectingCombat = UnitAffectingCombat
+local UnitInRaid = UnitInRaid
+local UnitBuff = UnitBuff 
+local UnitDebuff = UnitDebuff
+local strsub = strsub
+local strlower = strlower
+local GetComboPoints = GetComboPoints
+local GetSpellCooldown = GetSpellCooldown
+local GetInventoryItemCooldown = GetInventoryItemCooldown
+local GetContainerItemCooldown = GetContainerItemCooldown
+local GetContainerItemLink = GetContainerItemLink
+local GetInventoryItemLink = GetInventoryItemLink
+local GetContainerNumSlots = GetContainerNumSlots
+local GetSpellName = GetSpellName
 local UpdateTime, LastUpdate = 0.05, 0
-
---[[
--- If I just find a way to confirm that the press worked
-
-local castByMe = {}
-local oldUseAction = UseAction
-UseAction = function(slot, checkCursor, onSelf)
-	MPowa_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
-	MPowa_Tooltip:ClearLines()
-	MPowa_Tooltip:SetAction(slot)
-	castByMe[MPowa_TooltipTextLeft1:GetText()] = GT()
-	oldUseAction(slot, checkCursor, onSelf)
-end
-
-local oldCastSpellByName = CastSpellByName
-CastSpellByName = function(spellName, onSelf)
-	castByMe[spellName] = GT()
-	oldCastSpellByName(spellName, onSelf)
-end
-
-local oldCastSpell = CastSpell
-CastSpell = function(spellID, spellbookType)
-	local spellName, spellRank = GetSpellName(spellID, spellbookType)
-	if MPOWA.auras[spellname] then
-		castByMe[spellName] = GT()
-	end
-	oldCastSpell(spellID, spellbookType)
-end
---]]
-
 
 function MPOWA:OnUpdate(elapsed)
 	LastUpdate = LastUpdate + elapsed
@@ -243,7 +226,7 @@ function MPOWA:GetCooldown(buff)
 					for p=0, 4 do
 						for u=1, GetContainerNumSlots(p) do
 							start, duration, enable = GetContainerItemCooldown(p,u)
-							_,_,name=string.find(GetContainerItemLink(p,u) or "","^.*%[(.*)%].*$")
+							_,_,name=strfind(GetContainerItemLink(p,u) or "","^.*%[(.*)%].*$")
 							if (not name) then break end
 							if strfind(strlower(buff), strlower(name)) then
 								if duration>2 then
@@ -420,7 +403,7 @@ end
 function MPOWA:IsStacks(count, id, kind)
 	if MPOWA_SAVE[id][kind] ~= "" then
 		local con = strsub(MPOWA_SAVE[id][kind], 1, 2)
-		local amount = tonumber(strsub(MPOWA_SAVE[id][kind], 3))
+		local amount = tnbr(strsub(MPOWA_SAVE[id][kind], 3))
 		if amount ~= nil and con ~= nil then
 			if con == ">=" and count >= amount then
 				return true
@@ -429,7 +412,7 @@ function MPOWA:IsStacks(count, id, kind)
 			end
 		end
 		con = strsub(MPOWA_SAVE[id][kind], 1, 1)
-		amount = tonumber(strsub(MPOWA_SAVE[id][kind], 2))
+		amount = tnbr(strsub(MPOWA_SAVE[id][kind], 2))
 		if amount ~= nil and con ~= nil then
 			if con == "<" and count < amount then
 				return true
@@ -443,8 +426,8 @@ function MPOWA:IsStacks(count, id, kind)
 		end
 		con = strfind(MPOWA_SAVE[id][kind], "-")
 		if con then
-			local amount1 = tonumber(strsub(MPOWA_SAVE[id][kind], 1, con-1))
-			local amount2 = tonumber(strsub(MPOWA_SAVE[id][kind], con+1))
+			local amount1 = tnbr(strsub(MPOWA_SAVE[id][kind], 1, con-1))
+			local amount2 = tnbr(strsub(MPOWA_SAVE[id][kind], con+1))
 			if con and amount1 and amount2 and ((count >= amount1 and count <= amount2) or (count >= amount2 and count <= amount1)) then
 				return true
 			end
