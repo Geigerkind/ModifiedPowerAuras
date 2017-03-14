@@ -491,7 +491,7 @@ function MPOWA:ApplyDynamicGroup(i)
 	local gnum = tnbr(val["groupnumber"])
 	if self.frames[i] and val["isdynamicgroup"] then
 		if not self.frames[i][5] then
-			self.frames[i][5] = CreateFrame("Frame")
+			self.frames[i][5] = CreateFrame("Frame", nil, UIParent)
 		end
 		local inc = 0
 		for cat, va in MPOWA_SAVE do
@@ -950,11 +950,13 @@ function MPOWA:OptionsFrame_CancelColor()
 end
 
 function MPOWA:Editbox_GroupNumber(obj)
-	if tnbr(obj:GetText()) ~= nil then
+	if obj:GetText() then
 		MPOWA_SAVE[self.CurEdit]["groupnumber"] = tnbr(obj:GetText())
-		MPOWA:ApplyConfig(self.CurEdit)
-		self:Iterate("player")
+	else
+		MPOWA_SAVE[self.CurEdit]["groupnumber"] = ""
 	end
+	MPOWA:ApplyConfig(self.CurEdit)
+	self:Iterate("player")
 end
 
 function MPOWA:Editbox_Duration(obj)

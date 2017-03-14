@@ -11,11 +11,11 @@ local GT = GetTime
 local tnbr = tonumber
 
 function MPOWA:IsMounted()
-	MPowa_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
+	local desc
 	for i=0,31 do
 		MPowa_Tooltip:ClearLines()
 		MPowa_Tooltip:SetPlayerBuff(GetPlayerBuff(i, "HELPFUL|PASSIVE"))
-		local desc = MPowa_TooltipTextLeft2:GetText()
+		desc = MPowa_TooltipTextLeft2:GetText()
 		if (not desc) then break end
 		if stf(desc, MPOWA_SCRIPT_MOUNT_100) or stf(desc, MPOWA_SCRIPT_MOUNT_60) then
 			self.mounted = true
@@ -33,8 +33,9 @@ function MPOWA:InParty()
 end
 
 function MPOWA:InBG()
+	local status
 	for i=1, 4 do
-		local status = GetBattlefieldStatus(i)
+		status = GetBattlefieldStatus(i)
 		if status == "active" then
 			self.bg = true
 			break

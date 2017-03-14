@@ -24,17 +24,18 @@ local GetInventoryItemLink = GetInventoryItemLink
 local GetContainerNumSlots = GetContainerNumSlots
 local GetSpellName = GetSpellName
 local UpdateTime, LastUpdate = 0.05, 0
+local path, duration, text, count, time
 
 function MPOWA:OnUpdate(elapsed)
 	LastUpdate = LastUpdate + elapsed
 	if LastUpdate >= UpdateTime then
 		for cat, val in self.NeedUpdate do
 			if val then
-				local path = MPOWA_SAVE[cat]
+				path = MPOWA_SAVE[cat]
 				if not self.active[cat] and self:TernaryReturn(cat, "alive", self:Reverse(UnitIsDeadOrGhost("player"))) and self:TernaryReturn(cat, "mounted", self.mounted) and self:TernaryReturn(cat, "incombat", UnitAffectingCombat("player")) and self:TernaryReturn(cat, "inparty", self.party) and self:TernaryReturn(cat, "inraid", UnitInRaid("player")) and self:TernaryReturn(cat, "inbattleground", self.bg) and self:TernaryReturn(cat, "inraidinstance", self.instance) then
 					self.frames[cat][4]:Hide()
 					if path["cooldown"] then
-						local duration = self:GetCooldown(path["buffname"]) or 0
+						duration = self:GetCooldown(path["buffname"]) or 0
 						if path["timer"] then
 							if duration > 0 then
 								if path["hundredth"] then -- check it
@@ -102,8 +103,8 @@ function MPOWA:OnUpdate(elapsed)
 		end
 		for cat, val in self.active do
 			if val then
-				local path = MPOWA_SAVE[cat]
-				local text, count = "", 0
+				path = MPOWA_SAVE[cat]
+				text, count = "", 0
 				if (path["unit"] or "player") == "player" then
 					count = GetPlayerBuffApplications(val)
 				else
@@ -126,7 +127,7 @@ function MPOWA:OnUpdate(elapsed)
 					end
 				end
 				if self:IsStacks(count or 0, cat, "stacks") then
-					local duration = self:GetDuration(val, cat)
+					duration = self:GetDuration(val, cat)
 					if (count or 0)>1 and not path["hidestacks"] then
 						self.frames[cat][4]:SetText(count)
 						self.frames[cat][4]:Show()
@@ -192,7 +193,7 @@ function MPOWA:GetDuration(index, cat)
 	local path = MPOWA_SAVE[cat]
 	if not path["raidgroupmember"] then -- check this
 		if path["friendlytarget"] or path["enemytarget"] then
-			local time = GT()
+			time = GT()
 			self.activeTimer[cat] = self.activeTimer[cat] or GT()
 			if (self.activeTimer[cat]+path["targetduration"]-time)<0 then
 				self.activeTimer[cat] = time
@@ -318,11 +319,12 @@ function MPOWA:Iterate(unit)
 		MPowa_Tooltip:Hide()
 		if not buff and not debuff then break end
 	end
+	local p
 	for cat, val in self.active do
 		if val then
 			if not BuffExist[cat] then
 				self.activeTimer[val] = nil
-				local p = MPOWA_SAVE[cat]
+				p = MPOWA_SAVE[cat]
 				if ((p["friendlytarget"] or p["enemytarget"]) and unit=="target") or (not p["raidgroupmember"] and not p["friendlytarget"] and not p["enemytarget"] and unit=="player") or p["raidgroupmember"] then
 					self.active[cat] = false
 					self.lastCount[cat] = 0
