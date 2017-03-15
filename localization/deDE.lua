@@ -179,4 +179,7 @@ if (GetLocale() == "deDE") then
 
 	MPOWA_CHECKBUTTON_DYCNTER = "Keine Zentrierung"
 	MPOWA_CHECKBUTTON_DYCNTER_TOOLTIP = "Lasse die Gruppe nicht automatisch ihrerer Mitte zu wachsen und schrumpfen."
+
+	MPOWA_SLIDER_FONT = "Scriftart: "
+	MPOWA_SLIDER_FONT_TOOLTIP = "Verschiebe das, um die Schriftart zu ändern."
 end

@@ -342,6 +342,23 @@ local icons = {
 	["misc7"] = {}
 }
 
+local timerfont = {
+	UNIT_NAME_FONT, 
+	"Fonts\\ARIALN.TTF", 
+	"Fonts\\MORPHEUS.TTF", 
+	"Interface\\AddOns\\ModifiedPowerAuras\\fonts\\visitor2.TTF", 
+	"Interface\\AddOns\\ModifiedPowerAuras\\fonts\\Accidental_Presidency.TTF", 
+	"Interface\\AddOns\\ModifiedPowerAuras\\fonts\\Enigma__2.TTF", 
+	"Interface\\AddOns\\ModifiedPowerAuras\\fonts\\VeraSe.TTF", 
+	"Interface\\AddOns\\ModifiedPowerAuras\\fonts\\AlteHaas.TTF", 
+	"Interface\\AddOns\\ModifiedPowerAuras\\fonts\\CaviarDreams.TTF", 
+	"Interface\\AddOns\\ModifiedPowerAuras\\fonts\\Expressway.TTF", 
+	"Interface\\AddOns\\ModifiedPowerAuras\\fonts\\ExpresswayBold.TTF", 
+	"Interface\\AddOns\\ModifiedPowerAuras\\fonts\\Roboto.TTF", 
+	"Interface\\AddOns\\ModifiedPowerAuras\\fonts\\The Bad Times.TTF", 
+	"Interface\\AddOns\\ModifiedPowerAuras\\fonts\\Vegur.TTF"
+}
+
 for i=1,42 do icons["misc2"][locpath.."Aura"..i] = true; end
 for i=43,84 do icons["misc3"][locpath.."Aura"..i] = true; end
 for i=85,126 do icons["misc4"][locpath.."Aura"..i] = true; end
@@ -471,7 +488,7 @@ function MPOWA:ApplyConfig(i)
 	self.frames[i][1]:ClearAllPoints()
 	self.frames[i][1]:SetPoint("CENTER", UIParent, "CENTER", val["x"], val["y"])
 	self.frames[i][1]:SetScale(val["size"])
-	self.frames[i][3]:SetFont("Fonts\\FRIZQT__.ttf", val["fontsize"]*12, "OUTLINE")
+	self.frames[i][3]:SetFont(timerfont[val["timerfont"] or 1], val["fontsize"]*12, "OUTLINE")
 	self.frames[i][3]:SetAlpha(val["fontalpha"])
 	self.frames[i][3]:ClearAllPoints()
 	self.frames[i][3]:SetPoint("CENTER", self.frames[i][1], "CENTER", val["fontoffsetx"], val["fontoffsety"])
@@ -825,6 +842,8 @@ function MPOWA:Edit()
 		MPowa_ConfigFrame_Container_6_TrunToCenter:SetChecked(MPOWA_SAVE[self.CurEdit].dynamiccenter)
 		MPowa_ConfigFrame_Container_6_Editbox_GroupNumber:SetText(""..(MPOWA_SAVE[self.CurEdit].groupnumber or ""))
 		MPowa_ConfigFrame_Container_6_Slider_Orientation:SetValue(tnbr(MPOWA_SAVE[self.CurEdit].dynamicorientation))
+		
+		MPowa_ConfigFrame_Container_2_2_Slider_Font:SetValue(tnbr(MPOWA_SAVE[self.CurEdit].timerfont))
 		
 		if MPOWA_SAVE[self.CurEdit].enemytarget or MPOWA_SAVE[self.CurEdit].friendlytarget then
 			MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Show()

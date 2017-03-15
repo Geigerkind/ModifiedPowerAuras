@@ -62,7 +62,8 @@ function MPOWA:CreateSave(i)
 		cpstacks = ">=0",
 		dynamicsorted = false,
 		dynamiccenter = false,
-		dynamicorientation = 1
+		dynamicorientation = 1,
+		timerfont = 1
 	}
 end
 
@@ -154,6 +155,10 @@ function MPOWA:Init()
 
 			if not val["dynamicorientation"] then
 				MPOWA_SAVE[cat]["dynamicorientation"] = 1
+			end
+
+			if not val["timerfont"] then
+				MPOWA_SAVE[cat]["timerfont"] = 1
 			end
 			
 			if val["flashanim"] then

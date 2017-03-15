@@ -1714,6 +1714,36 @@
 								</Scripts>
 								<NormalTexture name="$parentNormalTexture" file="Interface\ChatFrame\ChatFrameColorSwatch" />
 							</Button>
+							<Slider name="$parent_Slider_Font" inherits="MPowa_SliderTemplate">
+								<Size x="130" y="16" />
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parent_Checkbutton_FlashAnim" relativePoint="BOTTOM">
+										<Offset x="55" y="-15" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.valuetext = {"Default", "ARIALN", "MORPHEUS", "Visitor2", "Accidental Presidency", "Enigma2", "VeraSe", "AlteHaas", "CaviarDreams", "ExpressWay", "ExpressWayBold", "Roboto", "The Bad Times", "Vegur"}
+										this.aide = MPOWA_SLIDER_FONT_TOOLTIP
+										this:SetMinMaxValues(1,14)
+										this:SetValue(1)
+										this:SetValueStep(1)
+										getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_FONT)
+										getglobal(this:GetName().."Low"):SetText("1")
+										getglobal(this:GetName().."High"):SetText("14")
+									</OnLoad>
+									<OnValueChanged>
+										if MPOWA.loaded and this:GetValue() then
+											local value = tonumber(this:GetValue())
+											if value > 0 then
+												getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_FONT..this.valuetext[value])
+												MPOWA_SAVE[MPOWA.CurEdit]["timerfont"] = value
+												MPOWA:ApplyConfig(MPOWA.CurEdit)
+											end
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
 						</Frames>
 					</Frame>
 					<Frame name="$parent_3" hidden="true" inherits="MPowa_ContainerTemplate">

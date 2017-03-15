@@ -180,3 +180,6 @@ MPOWA_SLIDER_DYNAMICORIENTATION_TOOLTIP = "Select the orientation how the group 
 
 MPOWA_CHECKBUTTON_DYCNTER = "No centering"
 MPOWA_CHECKBUTTON_DYCNTER_TOOLTIP = "Do not automatically change the offset of the group to center it."
+
+MPOWA_SLIDER_FONT = "Font: "
+MPOWA_SLIDER_FONT_TOOLTIP = "Slide to change to font of your timer."
