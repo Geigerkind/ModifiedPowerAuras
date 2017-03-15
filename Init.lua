@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 37
+MPOWA.Build = 38
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
@@ -135,7 +135,7 @@ function MPOWA:OnEvent(event, arg1)
 		if arg1==MPOWA_WINDFURY_GAIN or arg1==MPOWA_WINDFURY_GAIN2 or arg1==MPOWA_WINDFURY_GAIN3 then
 			self.Windfury = true
 		end
-	elseif event == "CHAT_MSG_SPELL_AURA_GONE_SELF" then
+	elseif event == "CHAT_MSG_SPELL_AURA_GONE_SELF" or event == "PLAYER_REGEN_DISABLED" or event == "PLAYER_REGEN_ENABLED" then
 		if arg1==MPOWA_WINDFURY_GONE or arg1==MPOWA_WINDFURY_GONE2 or arg1==MPOWA_WINDFURY_GONE3 then
 			self.Windfury = false
 		end
