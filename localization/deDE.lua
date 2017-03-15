@@ -172,7 +172,7 @@ if (GetLocale() == "deDE") then
 	MPOWA_EDITBOX_TOOLTIP_ICONPATH = "Iconpfad. Schreibe hier den Pfad rein, wenn er nicht automatisch gefunden wird oder in der Liste zu finden ist."
 
 	MPOWA_CHECKBUTTON_SORTED = "Sortiere nach Zeit"
-	MPOWA_CHECKBUTTON_SORTED_TOOLTIP = "Sortiert die Auren nach Zeit verbleibend (Absteigend)."
+	MPOWA_CHECKBUTTON_SORTED_TOOLTIP = "Sortiert die Auren nach Zeit verbleibend (Aufsteigend)."
 
 	MPOWA_SLIDER_DYNAMICORIENTATION = "Ausrichtung: "
 	MPOWA_SLIDER_DYNAMICORIENTATION_TOOLTIP = "Wähle die Wachstumsrichtung."

@@ -173,7 +173,7 @@ MPOWA_EDITBOX_GROUPNUMBER = "Enter group number"
 MPOWA_EDITBOX_TOOLTIP_ICONPATH = "Icon path. Enter the path here if it is not in the list or found by itself."
 
 MPOWA_CHECKBUTTON_SORTED = "Sort by time"
-MPOWA_CHECKBUTTON_SORTED_TOOLTIP = "Sorts the auras in the group descendent by time."
+MPOWA_CHECKBUTTON_SORTED_TOOLTIP = "Sorts the auras in the group ascendent by time."
 
 MPOWA_SLIDER_DYNAMICORIENTATION = "Orientation: "
 MPOWA_SLIDER_DYNAMICORIENTATION_TOOLTIP = "Select the orientation how the group growths."
