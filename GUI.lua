@@ -488,23 +488,105 @@ end
 
 function MPOWA:ApplyDynamicGroup(i)
 	local val = MPOWA_SAVE[i]
-	local gnum = tnbr(val["groupnumber"])
 	if self.frames[i] and val["isdynamicgroup"] then
 		if not self.frames[i][5] then
 			self.frames[i][5] = CreateFrame("Frame", nil, UIParent)
 		end
 		local inc = 0
-		for cat, va in MPOWA_SAVE do
-			if self.frames[cat] and (tnbr(va["groupnumber"])==i or cat==i) and (self.active[cat] or self.NeedUpdate[cat] or va["test"] or self.testAll) then
-				self.frames[cat][1]:ClearAllPoints()
-				self.frames[cat][1]:SetPoint("TOPLEFT", self.frames[i][5], "TOPRIGHT", inc*70, 0)
+		if val["dynamicsorted"] then
+			local grp, final, time = {}, {}
+			for cat, va in pairs(MPOWA_SAVE) do
+				if self.frames[cat] and (tnbr(va["groupnumber"])==i or cat==i) then
+					if va["test"] or self.testAll then
+						grp[cat] = 1
+					else
+						if (self.active[cat] and not self.NeedUpdate[cat]) then
+							grp[cat] = self:GetDuration(self.active[cat], cat)
+						else
+							time = self:GetCooldown(va["buffname"]) or 0
+							if (self.NeedUpdate[cat] and not self.active[cat] and time>0) then
+								grp[cat] = time
+							end
+						end 
+					end
+				end
+			end
+			local p
+			for cat, va in pairs(grp) do
+				p = 1
+				while true do
+					if not final[p] then
+						tinsert(final, p, {cat, va})
+						break
+					elseif final[p][2]<va then
+						tinsert(final, p, {cat, va})
+						break;
+					end
+					p = p +1
+				end
+			end
+			for _, va in pairs(final) do
+				self.frames[va[1]][1]:ClearAllPoints()
+				if val["dynamicorientation"] == 1 then
+					self.frames[va[1]][1]:SetPoint("TOPLEFT", self.frames[i][5], "TOPLEFT", inc*70, 0)
+				elseif val["dynamicorientation"] == 2 then
+					self.frames[va[1]][1]:SetPoint("TOPRIGHT", self.frames[i][5], "TOPRIGHT", -inc*70, 0)
+				elseif val["dynamicorientation"] == 3 then
+					self.frames[va[1]][1]:SetPoint("TOP", self.frames[i][5], "TOP", 0, -inc*70)
+				else
+					self.frames[va[1]][1]:SetPoint("BOTTOM", self.frames[i][5], "BOTTOM", 0, inc*70)
+				end
 				inc = inc + 1;
 			end
+		else
+			for cat, va in pairs(MPOWA_SAVE) do
+				if self.frames[cat] and (tnbr(va["groupnumber"])==i or cat==i) and ((self.active[cat] and not self.NeedUpdate[cat]) or (self.NeedUpdate[cat] and not self.active[cat] and (self:GetCooldown(va["buffname"]) or 0)>0) or va["test"] or self.testAll) then
+					self.frames[cat][1]:ClearAllPoints()
+					if val["dynamicorientation"] == 1 then
+						self.frames[cat][1]:SetPoint("TOPLEFT", self.frames[i][5], "TOPLEFT", inc*70, 0)
+					elseif val["dynamicorientation"] == 2 then
+						self.frames[cat][1]:SetPoint("TOPRIGHT", self.frames[i][5], "TOPRIGHT", -inc*70, 0)
+					elseif val["dynamicorientation"] == 3 then
+						self.frames[cat][1]:SetPoint("TOP", self.frames[i][5], "TOP", 0, -inc*70)
+					else
+						self.frames[cat][1]:SetPoint("BOTTOM", self.frames[i][5], "BOTTOM", 0, inc*70)
+					end
+					inc = inc + 1;
+				end
+			end
 		end
-		self.frames[i][5]:SetWidth(inc*70)
-		self.frames[i][5]:SetHeight(70)
-		self.frames[i][5]:ClearAllPoints()
-		self.frames[i][5]:SetPoint("CENTER", UIParent, "CENTER", val["x"]-(inc-1)*52.5, val["y"])
+		if val["dynamiccenter"] then
+			self.frames[i][5]:SetWidth(70)
+			self.frames[i][5]:SetHeight(70)
+			self.frames[i][5]:ClearAllPoints()
+			if val["dynamicorientation"] == 1 then
+				self.frames[i][5]:SetPoint("CENTER", UIParent, "CENTER", val["x"]-(inc-1)*49, val["y"])
+			elseif val["dynamicorientation"] == 2 then
+				self.frames[i][5]:SetPoint("CENTER", UIParent, "CENTER", val["x"]+(inc-1)*49, val["y"])
+			elseif val["dynamicorientation"] == 3 then
+				self.frames[i][5]:SetPoint("CENTER", UIParent, "CENTER", val["x"], val["y"]+(inc-1)*49)
+			else
+				self.frames[i][5]:SetPoint("CENTER", UIParent, "CENTER", val["x"], val["y"]-(inc-1)*49)
+			end
+		else
+			if val["dynamicorientation"]<3 then
+				self.frames[i][5]:SetWidth(inc*70)
+				self.frames[i][5]:SetHeight(70)
+			else
+				self.frames[i][5]:SetWidth(70)
+				self.frames[i][5]:SetHeight(inc*70)
+			end
+			self.frames[i][5]:ClearAllPoints()
+			if val["dynamicorientation"] == 1 then
+				self.frames[i][5]:SetPoint("CENTER", UIParent, "CENTER", val["x"]+(inc-1)*10, val["y"])
+			elseif val["dynamicorientation"] == 2 then
+				self.frames[i][5]:SetPoint("CENTER", UIParent, "CENTER", val["x"]-(inc-1)*10, val["y"])
+			elseif val["dynamicorientation"] == 3 then
+				self.frames[i][5]:SetPoint("CENTER", UIParent, "CENTER", val["x"], val["y"]-(inc-1)*10)
+			else
+				self.frames[i][5]:SetPoint("CENTER", UIParent, "CENTER", val["x"], val["y"]+(inc-1)*10)
+			end
+		end
 	end
 end
 
@@ -739,7 +821,10 @@ function MPOWA:Edit()
 		-- ANIM END
 		
 		MPowa_ConfigFrame_Container_6_IsDynamicGroup:SetChecked(MPOWA_SAVE[self.CurEdit].isdynamicgroup)
+		MPowa_ConfigFrame_Container_6_Sorted:SetChecked(MPOWA_SAVE[self.CurEdit].dynamicsorted)
+		MPowa_ConfigFrame_Container_6_TrunToCenter:SetChecked(MPOWA_SAVE[self.CurEdit].dynamiccenter)
 		MPowa_ConfigFrame_Container_6_Editbox_GroupNumber:SetText(""..(MPOWA_SAVE[self.CurEdit].groupnumber or ""))
+		MPowa_ConfigFrame_Container_6_Slider_Orientation:SetValue(tnbr(MPOWA_SAVE[self.CurEdit].dynamicorientation))
 		
 		if MPOWA_SAVE[self.CurEdit].enemytarget or MPOWA_SAVE[self.CurEdit].friendlytarget then
 			MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Show()
@@ -854,6 +939,7 @@ function MPOWA:Checkbutton(var)
 		self:Iterate("player")
 		self:Iterate("target")
 	end
+	self:ApplyConfig(self.CurEdit)
 end
 
 function MPOWA:Checkbutton_FlashAnim()

@@ -59,7 +59,10 @@ function MPOWA:CreateSave(i)
 		scalefactor = 0.8,
 		isdynamicgroup = false,
 		groupnumber = 0,
-		cpstacks = ">=0"
+		cpstacks = ">=0",
+		dynamicsorted = false,
+		dynamiccenter = false,
+		dynamicorientation = 1
 	}
 end
 
@@ -147,6 +150,10 @@ function MPOWA:Init()
 			
 			if not val["scalefactor"] then
 				MPOWA_SAVE[cat]["scalefactor"] = 0.8
+			end
+
+			if not val["dynamicorientation"] then
+				MPOWA_SAVE[cat]["dynamicorientation"] = 1
 			end
 			
 			if val["flashanim"] then

@@ -194,7 +194,7 @@ function MPOWA:GetDuration(index, cat)
 	if not path["raidgroupmember"] then -- check this
 		if path["friendlytarget"] or path["enemytarget"] then
 			time = GT()
-			self.activeTimer[cat] = self.activeTimer[cat] or GT()
+			self.activeTimer[cat] = self.activeTimer[cat] or time
 			if (self.activeTimer[cat]+path["targetduration"]-time)<0 then
 				self.activeTimer[cat] = time
 			end
