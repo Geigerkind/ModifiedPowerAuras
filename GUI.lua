@@ -578,13 +578,13 @@ function MPOWA:ApplyDynamicGroup(i)
 			self.frames[i][5]:SetHeight(spacing)
 			self.frames[i][5]:ClearAllPoints()
 			if val["dynamicorientation"] == 1 then
-				self.frames[i][5]:SetPoint("CENTER", UIParent, "CENTER", val["x"]-(inc-1)*49, val["y"])
+				self.frames[i][5]:SetPoint("CENTER", UIParent, "CENTER", val["x"]-(inc-1)*(val["size"]*spacing), val["y"])
 			elseif val["dynamicorientation"] == 2 then
-				self.frames[i][5]:SetPoint("CENTER", UIParent, "CENTER", val["x"]+(inc-1)*49, val["y"])
+				self.frames[i][5]:SetPoint("CENTER", UIParent, "CENTER", val["x"]+(inc-1)*(val["size"]*spacing), val["y"])
 			elseif val["dynamicorientation"] == 3 then
-				self.frames[i][5]:SetPoint("CENTER", UIParent, "CENTER", val["x"], val["y"]+(inc-1)*49)
+				self.frames[i][5]:SetPoint("CENTER", UIParent, "CENTER", val["x"], val["y"]+(inc-1)*(val["size"]*spacing))
 			else
-				self.frames[i][5]:SetPoint("CENTER", UIParent, "CENTER", val["x"], val["y"]-(inc-1)*49)
+				self.frames[i][5]:SetPoint("CENTER", UIParent, "CENTER", val["x"], val["y"]-(inc-1)*(val["size"]*spacing))
 			end
 		else
 			if val["dynamicorientation"]<3 then
