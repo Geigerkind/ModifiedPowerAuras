@@ -160,7 +160,7 @@ function MPOWA:Init()
 			end
 
 			if not val["dynamicspacing"] then
-				MPOWA_SAVE[cat]["dynamicspacing"] = 1
+				MPOWA_SAVE[cat]["dynamicspacing"] = 5
 			end
 			
 			self:CreateIcon(cat)
