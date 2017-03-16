@@ -505,7 +505,6 @@ end
 
 function MPOWA:ApplyDynamicGroup(i)
 	local val = MPOWA_SAVE[i]
-	val["dynamicorientation"] = val["dynamicorientation"] or 1
 	if self.frames[i] and val["isdynamicgroup"] then
 		if not self.frames[i][5] then
 			self.frames[i][5] = CreateFrame("Frame", nil, UIParent)
