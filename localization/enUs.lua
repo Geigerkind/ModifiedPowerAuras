@@ -183,3 +183,6 @@ MPOWA_CHECKBUTTON_DYCNTER_TOOLTIP = "Do not automatically change the offset of t
 
 MPOWA_SLIDER_FONT = "Font: "
 MPOWA_SLIDER_FONT_TOOLTIP = "Slide to change to font of your timer."
+
+MPOWA_SLIDER_SPACING = "Spacing: "
+MPOWA_SLIDER_SPACING_TOOLTIP = "Slide to change the spacing between the auras."

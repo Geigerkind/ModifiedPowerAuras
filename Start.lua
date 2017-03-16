@@ -63,7 +63,8 @@ function MPOWA:CreateSave(i)
 		dynamicsorted = false,
 		dynamiccenter = false,
 		dynamicorientation = 1,
-		timerfont = 1
+		timerfont = 1,
+		dynamicspacing = 5
 	}
 end
 
@@ -156,6 +157,10 @@ function MPOWA:Init()
 
 			if not val["timerfont"] then
 				MPOWA_SAVE[cat]["timerfont"] = 1
+			end
+
+			if not val["dynamicspacing"] then
+				MPOWA_SAVE[cat]["dynamicspacing"] = 1
 			end
 			
 			self:CreateIcon(cat)

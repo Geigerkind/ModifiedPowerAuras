@@ -2432,7 +2432,7 @@
 								</Scripts>
 							</CheckButton>
 							<Slider name="$parent_Slider_Orientation" inherits="MPowa_SliderTemplate">
-								<Size x="130" y="16" />
+								<Size x="120" y="16" />
 								<Anchors>
 									<Anchor point="TOP" relativeTo="$parent_Sorted" relativePoint="BOTTOM">
 										<Offset x="55" y="-15" />
@@ -2441,7 +2441,7 @@
 								<Scripts>
 									<OnLoad>
 										this.valuetext = {"Left", "Right", "Top", "Bottom"}
-										this.aide = MPOWA_SLIDER_TRANSLATE_TOOLTIP
+										this.aide = MPOWA_SLIDER_DYNAMICORIENTATION_TOOLTIP
 										this:SetMinMaxValues(1,4)
 										this:SetValue(1)
 										this:SetValueStep(1)
@@ -2457,6 +2457,33 @@
 												MPOWA_SAVE[MPOWA.CurEdit]["dynamicorientation"] = value
 												MPOWA:ApplyConfig(MPOWA.CurEdit)
 											end
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
+							<Slider name="$parent_Slider_Spacing" inherits="MPowa_SliderTemplate">
+								<Size x="120" y="16" />
+								<Anchors>
+									<Anchor point="LEFT" relativeTo="$parent_Slider_Orientation" relativePoint="RIGHT">
+										<Offset x="15" y="0" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = MPOWA_SLIDER_SPACING_TOOLTIP
+										this:SetMinMaxValues(-5,30)
+										this:SetValue(1)
+										this:SetValueStep(1)
+										getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_SPACING)
+										getglobal(this:GetName().."Low"):SetText("-5")
+										getglobal(this:GetName().."High"):SetText("30")
+									</OnLoad>
+									<OnValueChanged>
+										if MPOWA.loaded and this:GetValue() then
+											local value = tonumber(this:GetValue())
+											getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_SPACING..value)
+											MPOWA_SAVE[MPOWA.CurEdit]["dynamicspacing"] = value
+											MPOWA:ApplyConfig(MPOWA.CurEdit)
 										end
 									</OnValueChanged>
 								</Scripts>

@@ -182,4 +182,7 @@ if (GetLocale() == "deDE") then
 
 	MPOWA_SLIDER_FONT = "Scriftart: "
 	MPOWA_SLIDER_FONT_TOOLTIP = "Verschiebe das, um die Schriftart zu ändern."
+
+	MPOWA_SLIDER_SPACING = "Abstand: "
+	MPOWA_SLIDER_SPACING_TOOLTIP = "Verschiebe, um den Abstand zwischen den Auren zu verändern."
 end
