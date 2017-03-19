@@ -210,7 +210,8 @@ function AnimationGroup:__LoadProperties()
     self.parent:SetHeight(self.properties.height)
 
     local point = self.properties.point
-    if point and point[1] then
+    local p1 = unpack(point)
+    if point and point[1] and p1 then
         self.parent:SetPoint(unpack(point))
     end
 end
