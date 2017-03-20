@@ -659,7 +659,7 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.valuetext = {"DISABLE", "BLEND", "ALPHAKEY", "ADD", "MOD"}
+										this.valuetext = {"BLEND", "DISABLE", "ALPHAKEY", "ADD", "MOD"}
 										this.aide = MPOWA_SLIDER_BLENDMODE_TOOLTIP
 										this:SetMinMaxValues(1,5)
 										this:SetValue(1)

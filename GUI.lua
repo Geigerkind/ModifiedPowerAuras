@@ -481,7 +481,7 @@ function MPOWA:CreateIcon(i)
 	self.frames[i][1]:Hide()
 end
 
-local blendModes = {"DISABLE", "BLEND", "ALPHAKEY", "ADD", "MOD"}
+local blendModes = {"BLEND", "DISABLE", "ALPHAKEY", "ADD", "MOD"}
 function MPOWA:ApplyConfig(i)
 	local val = MPOWA_SAVE[i]
 	self.frames[i][2]:SetTexture(val["texture"])
