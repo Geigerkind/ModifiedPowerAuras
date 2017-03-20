@@ -64,7 +64,8 @@ function MPOWA:CreateSave(i)
 		dynamiccenter = false,
 		dynamicorientation = 1,
 		timerfont = 1,
-		dynamicspacing = 5
+		dynamicspacing = 5,
+		blendmode = 1
 	}
 end
 
@@ -161,6 +162,10 @@ function MPOWA:Init()
 
 			if not val["dynamicspacing"] then
 				MPOWA_SAVE[cat]["dynamicspacing"] = 5
+			end
+			
+			if not val["blendmode"] then
+				MPOWA_SAVE[cat]["blendmode"] = 1
 			end
 			
 			self:CreateIcon(cat)

@@ -629,9 +629,10 @@
 								<NormalTexture name="$parentNormalTexture" file="Interface\ChatFrame\ChatFrameColorSwatch" />
 							</Button>
 							<Slider name="$parent_Slider_Opacity" inherits="MPowa_SliderTemplate">
+								<Size x="70" y="10" />
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="$parent_Icon" relativePoint="TOPRIGHT">
-										<Offset x="30" y="-10" />
+										<Offset x="20" y="-10" />
 									</Anchor>
 								</Anchors>
 								<Scripts>
@@ -651,10 +652,38 @@
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
+							<Slider name="$parent_Slider_BlendMode" inherits="MPowa_SliderTemplate">
+								<Size x="70" y="10" />
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parent_Slider_Opacity" relativePoint="TOPRIGHT" />
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.valuetext = {"DISABLE", "BLEND", "ALPHAKEY", "ADD", "MOD"}
+										this.aide = MPOWA_SLIDER_BLENDMODE_TOOLTIP
+										this:SetMinMaxValues(1,5)
+										this:SetValue(1)
+										this:SetValueStep(1)
+										getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_BLENDMODE)
+										getglobal(this:GetName().."Low"):SetText("1")
+										getglobal(this:GetName().."High"):SetText("5")
+									</OnLoad>
+									<OnValueChanged>
+										if MPOWA.loaded then
+											if this:GetValue() then
+												MPOWA_SAVE[MPOWA.CurEdit]["blendmode"] = this:GetValue()
+												getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_BLENDMODE..this.valuetext[this:GetValue()])
+												MPowa_ConfigFrame_Container_1_Icon_Texture:SetBlendMode(this.valuetext[this:GetValue()])
+												MPOWA.frames[MPOWA.CurEdit][2]:SetBlendMode(this.valuetext[this:GetValue()])
+											end
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
 							<Slider name="$parent_Slider_PosX" inherits="MPowa_SliderTemplate">
 								<Anchors>
 									<Anchor point="TOP" relativeTo="$parent_Slider_Opacity" relativePoint="BOTTOM">
-										<Offset x="0" y="-30" />
+										<Offset x="35" y="-30" />
 									</Anchor>
 								</Anchors>
 								<Scripts>

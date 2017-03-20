@@ -185,4 +185,7 @@ if (GetLocale() == "deDE") then
 
 	MPOWA_SLIDER_SPACING = "Abstand: "
 	MPOWA_SLIDER_SPACING_TOOLTIP = "Verschiebe, um den Abstand zwischen den Auren zu verändern."
+	
+	MPOWA_SLIDER_BLENDMODE = "Render: "
+	MPOWA_SLIDER_BLENDMODE_TOOLTIP = "Verschiebe, um den alpha Modus zu ändern."
 end

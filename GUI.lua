@@ -481,9 +481,11 @@ function MPOWA:CreateIcon(i)
 	self.frames[i][1]:Hide()
 end
 
+local blendModes = {"DISABLE", "BLEND", "ALPHAKEY", "ADD", "MOD"}
 function MPOWA:ApplyConfig(i)
 	local val = MPOWA_SAVE[i]
 	self.frames[i][2]:SetTexture(val["texture"])
+	self.frames[i][2]:SetBlendMode(blendModes[val["blendmode"]])
 	self.frames[i][1]:SetAlpha(val["alpha"])
 	self.frames[i][1]:ClearAllPoints()
 	self.frames[i][1]:SetPoint("CENTER", UIParent, "CENTER", val["x"], val["y"])
@@ -847,6 +849,10 @@ function MPOWA:Edit()
 		MPowa_ConfigFrame_Container_6_Slider_Spacing:SetValue(tnbr(MPOWA_SAVE[self.CurEdit].dynamicspacing))
 		MPowa_ConfigFrame_Container_6_Slider_SpacingText:SetText(MPOWA_SLIDER_SPACING..tnbr(MPOWA_SAVE[self.CurEdit].dynamicspacing))
 		
+		MPowa_ConfigFrame_Container_1_Slider_BlendMode:SetValue(tnbr(MPOWA_SAVE[self.CurEdit].blendmode))
+		MPowa_ConfigFrame_Container_1_Slider_BlendModeText:SetText(MPOWA_SLIDER_BLENDMODE..MPowa_ConfigFrame_Container_1_Slider_BlendMode.valuetext[tnbr(MPOWA_SAVE[self.CurEdit].blendmode)])
+		MPowa_ConfigFrame_Container_1_Icon_Texture:SetBlendMode(MPowa_ConfigFrame_Container_1_Slider_BlendMode.valuetext[tnbr(MPOWA_SAVE[self.CurEdit].blendmode)])
+
 		MPowa_ConfigFrame_Container_2_2_Slider_Font:SetValue(tnbr(MPOWA_SAVE[self.CurEdit].timerfont))
 		MPowa_ConfigFrame_Container_2_2_Slider_FontText:SetText(MPOWA_SLIDER_DYNAMICORIENTATION..MPowa_ConfigFrame_Container_2_2_Slider_Font.valuetext[tnbr(MPOWA_SAVE[self.CurEdit].timerfont)])
 		

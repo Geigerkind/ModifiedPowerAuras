@@ -186,3 +186,6 @@ MPOWA_SLIDER_FONT_TOOLTIP = "Slide to change to font of your timer."
 
 MPOWA_SLIDER_SPACING = "Spacing: "
 MPOWA_SLIDER_SPACING_TOOLTIP = "Slide to change the spacing between the auras."
+
+MPOWA_SLIDER_BLENDMODE = "Render: "
+MPOWA_SLIDER_BLENDMODE_TOOLTIP = "Slide to change the blend mode of the aura."
