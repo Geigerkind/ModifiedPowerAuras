@@ -116,7 +116,7 @@ local icons = {
 		[icopath.."Ability_EyeOfTheOwl"] = true,
 		[icopath.."Ability_Mount_JungleTiger"] = true,
 		[icopath.."Spell_Nature_Web"] = true,
-		[icopoth.."Spell_Nature_Drowsy"] = true,
+		[icopath.."Spell_Nature_Drowsy"] = true,
 	},
 	["druid"] = {
 		[icopath.."Ability_Druid_TravelForm"] = true,
