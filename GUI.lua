@@ -673,7 +673,7 @@ function MPOWA:DeselectAll()
 end
 
 function MPOWA:Remove()
-	if ConfigButton1 then
+	if ConfigButton1 and ConfigButton1:IsVisible() then
 		local coeff = (self.Page - 1)*49
 		self.NumBuffs = self.NumBuffs - 1
 		if (self.selected+coeff) == self.CurEdit then
