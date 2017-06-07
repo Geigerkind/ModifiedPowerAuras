@@ -189,3 +189,6 @@ MPOWA_SLIDER_SPACING_TOOLTIP = "Slide to change the spacing between the auras."
 
 MPOWA_SLIDER_BLENDMODE = "Render: "
 MPOWA_SLIDER_BLENDMODE_TOOLTIP = "Slide to change the blend mode of the aura."
+
+MPOWA_CHECKBUTTON_MINUTES = "Show minutes >60"
+MPOWA_CHECKBUTTON_MINUTES_TOOLTIP = "Show minutes when there is more than 60 seconds left."

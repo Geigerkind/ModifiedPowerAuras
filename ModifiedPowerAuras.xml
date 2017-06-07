@@ -37,20 +37,56 @@
 		</Layers>
 		<Scripts>
 			<OnMouseDown>
-				if MPowa_ConfigFrame:IsVisible() then
+				if MPowa_ConfigFrame:IsVisible() and arg1 == "LeftButton" then
 					this:StartMoving()
 				end
 			</OnMouseDown>
 			<OnMouseUp>
-				if MPowa_ConfigFrame:IsVisible() then
+				if MPowa_ConfigFrame:IsVisible() and arg1 == "LeftButton" then
 					this:StopMovingOrSizing()
 					local index = GetCurrentResolution()
 					local res = ({GetScreenResolutions()})[index]
 					for xc,yc in string.gfind(res, "(%d+)x(%d+)") do
 						local a,b,c,x,y = this:GetPoint(0)
 						local scale = (0.7-this:GetScale())*(0.925-(0.64-UIParent:GetEffectiveScale()))
-						x = ceil(x-(xc/((UIParent:GetEffectiveScale()-scale)*2)))
-						y = ceil(y+(yc/((UIParent:GetEffectiveScale()-scale)*2)))
+						-- Somfactor
+						-- 1920x1080 = 0.99
+						-- 1024x 768 = 1.33
+						-- 800 x 600 = 1.77
+						-- 1280x 720 = 1.5
+						-- 1280x 768 = 1.4
+						-- 1280x 800 = 1.33
+						-- 1360x 768 = 1.4
+						-- 1366x 768 = 1.4
+						-- 1280x 960 = 1.11
+						-- 1440x 900 = 1.18
+						-- 1360x1024 = 1.03
+						-- 1600x 900 = 1.18
+						-- 1400x1050 = 1.0
+						-- 1680x1050 = 1.02
+						xc = tonumber(xc)
+						yc = tonumber(yc)
+
+						local somefactor = 1.0
+						if xc == 1920 and yc == 1080 then somefactor = 0.99
+						elseif xc == 1024 and yc == 768 then somefactor = 1.33
+						elseif xc == 800 and yc == 600 then somefactor = 1.77
+						elseif xc == 1280 and yc == 720 then somefactor = 1.5 
+						elseif xc == 1280 and yc == 768 then somefactor = 1.4 
+						elseif xc == 1280 and yc == 800 then somefactor = 1.33 
+						elseif xc == 1360 and yc == 768 then somefactor = 1.4
+						elseif xc == 1366 and yc == 768 then somefactor = 1.4 
+						elseif xc == 1280 and yc == 960 then somefactor = 1.11
+						elseif xc == 1440 and yc == 900 then somefactor = 1.18
+						elseif xc == 1360 and yc == 1024 then somefactor = 1.03
+						elseif xc == 1600 and yc == 900 then somefactor = 1.18
+						elseif xc == 1400 and yc == 1050 then somefactor = 1.0
+						elseif xc == 1680 and yc == 1050 then somefactor = 1.02
+						else somefactor = 1 end
+						
+
+						x = ceil(x-(somefactor*xc/((UIParent:GetEffectiveScale()-scale)*2)))
+						y = ceil(y+(somefactor*yc/((UIParent:GetEffectiveScale()-scale)*2)))
 						MPowa_ConfigFrame_Container_1_Slider_PosX:SetMinMaxValues(MPOWA:GetMinValues(x),MPOWA:GetMaxValues(x))
 						MPowa_ConfigFrame_Container_1_Slider_PosX:SetValue(x)
 						MPowa_ConfigFrame_Container_1_Slider_PosXText:SetText(MPOWA_SLIDER_POSX.." "..x)
@@ -1699,6 +1735,22 @@
 									</OnLoad>
 									<OnClick>
 										MPOWA:Checkbutton_USEFONTCOLOR()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<CheckButton name="$parent_Checkbutton_Minutes" inherits="MPowa_CheckTemplate">
+								<Anchors>
+									<Anchor point="LEFT" relativeTo="$parent_Checkbutton_Hundreds" relativePoint="RIGHT">
+										<Offset x="130" y="-26" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = MPOWA_CHECKBUTTON_MINUTES_TOOLTIP
+										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_MINUTES)
+									</OnLoad>
+									<OnClick>
+										MPOWA:Checkbutton("minutes")
 									</OnClick>
 								</Scripts>
 							</CheckButton>

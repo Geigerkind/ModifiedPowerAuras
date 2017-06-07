@@ -65,7 +65,8 @@ function MPOWA:CreateSave(i)
 		dynamicorientation = 1,
 		timerfont = 1,
 		dynamicspacing = 5,
-		blendmode = 1
+		blendmode = 1,
+		minutes = false,
 	}
 end
 

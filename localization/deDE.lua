@@ -188,4 +188,7 @@ if (GetLocale() == "deDE") then
 	
 	MPOWA_SLIDER_BLENDMODE = "Render: "
 	MPOWA_SLIDER_BLENDMODE_TOOLTIP = "Verschiebe, um den alpha Modus zu ändern."
+
+	MPOWA_CHECKBUTTON_MINUTES = "Minuten >60"
+	MPOWA_CHECKBUTTON_MINUTES_TOOLTIP = "Zeige Minuten, wenn mehr als 60 Sekunden verbleiben."
 end
