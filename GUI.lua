@@ -620,7 +620,7 @@ function MPOWA:ApplyAttributesToButton(i, button)
 		p = i
 		bool = true
 	end
-	if not _G("ConfigButton"..p) then return end
+	if not _G("ConfigButton"..p) or not MPOWA_SAVE[i] then return end
 	button:ClearAllPoints()
 	button:SetPoint("TOPLEFT",MPowa_ButtonContainer,"TOPLEFT",42*(p-1)+6 - floor((p-1)/7)*7*42,-11-floor((p-1)/7)*41)
 	button:SetID(i)
