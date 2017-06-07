@@ -1012,8 +1012,8 @@ function MPOWA:OpenColorPicker(n)
 	
 	ColorPickerFrame:SetMovable()
 	ColorPickerFrame:EnableMouse()
-	ColorPickerFrame:SetScript("OnMouseDown", function() ColorPickerFrame:StartMoving() end)
-	ColorPickerFrame:SetScript("OnMouseUp", function() ColorPickerFrame:StopMovingOrSizing() end)
+	--ColorPickerFrame:SetScript("OnMouseDown", function() ColorPickerFrame:StartMoving() end)
+	--ColorPickerFrame:SetScript("OnMouseUp", function() ColorPickerFrame:StopMovingOrSizing() end)
 	
 	ColorPickerFrame:Show()
 end
