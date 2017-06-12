@@ -891,6 +891,10 @@ function MPOWA:Edit()
 			MPowa_ConfigFrame_Container_1_2_Editbox:SetPoint("TOP", MPowa_ConfigFrame_Container_1_2, "TOP", 0, -20)
 			MPowa_ConfigFrame_Container_1_2_Editbox_SecondSpecifier:Hide()
 		end
+
+		MPowa_ConfigFrame_Container_1_Editbox_PosX:SetText(MPOWA_SAVE[self.CurEdit].x)
+		MPowa_ConfigFrame_Container_1_Editbox_PosY:SetText(MPOWA_SAVE[self.CurEdit].y)
+
 		MPOWA:TernarySetState(MPowa_ConfigFrame_Container_1_2_Checkbutton_Alive, MPOWA_SAVE[self.CurEdit].alive)
 		MPOWA:TernarySetState(MPowa_ConfigFrame_Container_1_2_Checkbutton_Mounted, MPOWA_SAVE[self.CurEdit].mounted)
 		MPOWA:TernarySetState(MPowa_ConfigFrame_Container_1_2_Checkbutton_InCombat, MPOWA_SAVE[self.CurEdit].incombat)
@@ -997,11 +1001,13 @@ function MPOWA:Checkbutton_USEFONTCOLOR()
 end
 
 local name = ""
-function MPOWA:OpenColorPicker(n)
+local name_button = ""
+function MPOWA:OpenColorPicker(n, m)
 	CloseMenus()
 	name = n
+	name_button = m
 	
-	button = MPowa_ConfigFrame_Container_2_2_Colorpicker_SwatchBg
+	button = getglobal(m.."_SwatchBg") -- MPowa_ConfigFrame_Container_2_2_Colorpicker_SwatchBg
 
 	ColorPickerFrame.func = MPOWA.OptionsFrame_SetColor -- button.swatchFunc
 	ColorPickerFrame:SetColorRGB(button.r, button.g, button.b)
@@ -1021,8 +1027,8 @@ end
 function MPOWA:OptionsFrame_SetColor()
 	local r,g,b = ColorPickerFrame:GetColorRGB()
 	local swatch,frame
-	swatch = MPowa_ConfigFrame_Container_2_2_ColorpickerNormalTexture
-	frame = MPowa_ConfigFrame_Container_2_2_Colorpicker_SwatchBg
+	swatch = getglobal(name_button.."NormalTexture") --MPowa_ConfigFrame_Container_2_2_ColorpickerNormalTexture
+	frame = getglobal(name_button.."_SwatchBg") --MPowa_ConfigFrame_Container_2_2_Colorpicker_SwatchBg
 	swatch:SetVertexColor(r,g,b)
 	frame.r = r
 	frame.g = g
@@ -1049,8 +1055,8 @@ function MPOWA:OptionsFrame_CancelColor()
 	local g = ColorPickerFrame.previousValues.g
 	local b = ColorPickerFrame.previousValues.b
 	local swatch,frame
-	swatch = MPowa_ConfigFrame_Container_2_2_ColorpickerNormalTexture
-	frame = MPowa_ConfigFrame_Container_2_2_Colorpicker_SwatchBg
+	swatch = getglobal(name_button.."NormalTexture") --MPowa_ConfigFrame_Container_2_2_ColorpickerNormalTexture
+	frame = getglobal(name_button.."_SwatchBg") --MPowa_ConfigFrame_Container_2_2_Colorpicker_SwatchBg
 	swatch:SetVertexColor(r,g,b)
 	frame.r = r
 	frame.g = g

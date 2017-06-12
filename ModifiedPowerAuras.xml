@@ -650,7 +650,7 @@
 										getglobal(this:GetName().."_SwatchBg").b = 1.0
 									</OnLoad>
 									<OnClick>
-										MPOWA:OpenColorPicker("icon")
+										MPOWA:OpenColorPicker("icon", "MPowa_ConfigFrame_Container_1_Colorpicker")
 									</OnClick>
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b)
@@ -766,6 +766,40 @@
 									</OnMouseUp>
 								</Scripts>
 							</Slider>
+							<EditBox name="$parent_Editbox_PosX" autoFocus="false" inherits="InputBoxTemplate">
+								<Size x="25" y="16" />
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parent_Slider_PosX" relativePoint="TOPLEFT">
+										<Offset x="125" y="0" />
+									</Anchor>
+								</Anchors>
+								<FontString inherits="ChatFontNormal" bytes="200" />
+								<Scripts>
+									<OnLoad>
+										this:SetMaxLetters(200)
+										this.aide = "Set x position directly."
+									</OnLoad>
+									<OnShow>
+										this:ClearFocus()
+									</OnShow>
+									<OnEnterPressed>
+										this:ClearFocus()
+									</OnEnterPressed>
+									<OnEditFocusLost>
+										if (this:GetText() ~= "" and tonumber(this:GetText()) ~= "" and MPowa_ConfigFrame:IsVisible()) then
+											MPOWA_SAVE[MPOWA.CurEdit]["x"] = tonumber(tonumber(string.format("%.2f", this:GetText())))
+											MPOWA:ApplyConfig(MPOWA.CurEdit) 
+										end
+									</OnEditFocusLost>
+									<OnEnter>
+										GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
+										GameTooltip:SetText(this.aide, nil, nil, nil, nil, 1)
+									</OnEnter>
+									<OnLeave>
+										GameTooltip:Hide()
+									</OnLeave>
+								</Scripts>
+							</EditBox>
 							<Slider name="$parent_Slider_PosY" inherits="MPowa_SliderTemplate">
 								<Anchors>
 									<Anchor point="TOP" relativeTo="$parent_Slider_PosX" relativePoint="BOTTOM">
@@ -816,6 +850,40 @@
 									</OnMouseUp>
 								</Scripts>
 							</Slider>
+							<EditBox name="$parent_Editbox_PosY" autoFocus="false" inherits="InputBoxTemplate">
+								<Size x="25" y="16" />
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="$parent_Slider_PosY" relativePoint="TOPLEFT">
+										<Offset x="125" y="0" />
+									</Anchor>
+								</Anchors>
+								<FontString inherits="ChatFontNormal" bytes="200" />
+								<Scripts>
+									<OnLoad>
+										this:SetMaxLetters(200)
+										this.aide = "Set y position directly."
+									</OnLoad>
+									<OnShow>
+										this:ClearFocus()
+									</OnShow>
+									<OnEnterPressed>
+										this:ClearFocus()
+									</OnEnterPressed>
+									<OnEditFocusLost>
+										if (this:GetText() ~= "" and tonumber(this:GetText()) ~= "" and MPowa_ConfigFrame:IsVisible()) then
+											MPOWA_SAVE[MPOWA.CurEdit]["y"] = tonumber(tonumber(string.format("%.2f", this:GetText())))
+											MPOWA:ApplyConfig(MPOWA.CurEdit) 
+										end
+									</OnEditFocusLost>
+									<OnEnter>
+										GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
+										GameTooltip:SetText(this.aide, nil, nil, nil, nil, 1)
+									</OnEnter>
+									<OnLeave>
+										GameTooltip:Hide()
+									</OnLeave>
+								</Scripts>
+							</EditBox>
 							<Slider name="$parent_Slider_Size" inherits="MPowa_SliderTemplate">
 								<Anchors>
 									<Anchor point="RIGHT" relativeTo="$parent_Slider_PosY" relativePoint="LEFT">
@@ -1781,7 +1849,7 @@
 										getglobal(this:GetName().."_SwatchBg").b = 1.0
 									</OnLoad>
 									<OnClick>
-										MPOWA:OpenColorPicker("fontcolor")
+										MPOWA:OpenColorPicker("fontcolor", "MPowa_ConfigFrame_Container_2_2_Colorpicker")
 									</OnClick>
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b)
