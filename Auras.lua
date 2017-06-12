@@ -38,7 +38,7 @@ function MPOWA:OnUpdate(elapsed)
 						duration = self:GetCooldown(path["buffname"]) or 0
 						if path["timer"] then
 							if duration > 0 then
-								self.frames[cat][3]:SetText(self:FormatDuration(duration))
+								self.frames[cat][3]:SetText(self:FormatDuration(duration, path))
 								if path["inverse"] then
 									self:FHide(cat)
 									self.frames[cat][3]:Hide()
@@ -133,7 +133,7 @@ function MPOWA:OnUpdate(elapsed)
 					-- Duration
 					if path["timer"] then
 						if duration > 0 then
-							self.frames[cat][3]:SetText(self:FormatDuration(duration))
+							self.frames[cat][3]:SetText(self:FormatDuration(duration, path))
 						else
 							self.frames[cat][3]:Hide()
 						end
@@ -181,7 +181,7 @@ function MPOWA:SetTexture(key, texture, index)
 	end
 end
 
-function MPOWA:FormatDuration(duration)
+function MPOWA:FormatDuration(duration, path)
 	if path["minutes"] and duration >60 then
 		return ceil(duration/60).."m"
 	elseif path["hundredth"] then
