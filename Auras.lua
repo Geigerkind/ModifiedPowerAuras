@@ -219,7 +219,7 @@ function MPOWA:GetCooldown(buff)
 			if (name) then
 				if strfind(strlower(buff), strlower(name)) then
 					if duration>2 then
-						return ((start or 0)+(duration or 0))-GT()
+						return ((start or 0)+(duration or 0))-GT() + 1
 					else
 						return 0
 					end
@@ -232,13 +232,13 @@ function MPOWA:GetCooldown(buff)
 							if (not name) then break end
 							if strfind(strlower(buff), strlower(name)) then
 								if duration>2 then
-									return ((start or 0)+(duration or 0))-GT()
+									return ((start or 0)+(duration or 0))-GT() + 1
 								else
 									return 0
 								end
 							elseif p == 4 and u == GetContainerNumSlots(p) then
 								if duration>2 then
-									return ((start or 0)+(duration or 0))-GT()
+									return ((start or 0)+(duration or 0))-GT() + 1
 								else
 									return 0
 								end
@@ -252,7 +252,7 @@ function MPOWA:GetCooldown(buff)
 		end
 	else
 		if duration>2 then
-			return ((start or 0)+(duration or 0))-GT()
+			return ((start or 0)+(duration or 0))-GT() + 1
 		else
 			return 0
 		end
