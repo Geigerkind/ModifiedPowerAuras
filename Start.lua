@@ -102,7 +102,7 @@ function MPOWA:Init()
 			end
 			tinsert(self.auras[val["buffname"]], cat)
 			
-			if val["inverse"] or val["cooldown"] then
+			if (val["inverse"] or val["cooldown"]) and val["buffname"] ~= "unitpower" then
 				self.NeedUpdate[cat] = true
 			end
 			
@@ -254,3 +254,6 @@ MPOWA:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS")
 MPOWA:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
 MPOWA:RegisterEvent("PLAYER_REGEN_DISABLED")
 MPOWA:RegisterEvent("PLAYER_REGEN_ENABLED")
+MPOWA:RegisterEvent("UNIT_MANA")
+MPOWA:RegisterEvent("UNIT_RAGE")
+MPOWA:RegisterEvent("UNIT_ENERGY")

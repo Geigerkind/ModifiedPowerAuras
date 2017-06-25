@@ -13,6 +13,8 @@ local UnitAffectingCombat = UnitAffectingCombat
 local UnitInRaid = UnitInRaid
 local UnitBuff = UnitBuff 
 local UnitDebuff = UnitDebuff
+local UnitMana = UnitMana
+local UnitManaMax = UnitManaMax
 local strsub = strsub
 local strlower = strlower
 local GetComboPoints = GetComboPoints
@@ -139,7 +141,7 @@ function MPOWA:OnUpdate(elapsed)
 						end
 					end
 					self:Flash(elapsed, cat, duration)
-					if path["inverse"] then
+					if path["inverse"] and (path["buffname"] ~= "unitpower" and not path["inverse"]) then
 						self:FHide(cat)
 					else
 						if path["secsleft"] then
@@ -290,6 +292,22 @@ function MPOWA:Iterate(unit)
 		self:Push("Windfury", "player", 42, false, "Windfury")
 		self:Push("Windfury Totem", "player", 43, false, "Windfury Totem")
 	end
+
+	for cat, val in pairs(MPOWA_SAVE) do
+		if (val["buffname"] == "unitpower") then
+			local tarid = 44
+			if (unit == "target") then 
+				tarid = 45
+			elseif (string.find(unit,"raid")) then
+				local a,b = string.find(unit,"raid")
+				tarid = tonumber(string.sub(unit, b+1))+45
+			elseif (string.find(unit,"party")) then
+				local a,b = string.find(unit,"party")
+				tarid = tonumber(string.sub(unit, b+1))+45
+			end
+			self:Push("unitpower", unit, tarid, false)
+		end
+	end
 	
 	for i=1, 40 do
 		local p = i
@@ -362,7 +380,8 @@ function MPOWA:Push(aura, unit, i, isdebuff)
 				tex = strlower(strsub(tex, strfind(tex, "Icons")+6))
 			end
 			if path["isdebuff"]==isdebuff and ((path["secondspecifier"] and (strlower(path["secondspecifiertext"])==tex)) or not path["secondspecifier"]) then
-				if self:TernaryReturn(val, "alive", self:Reverse(UnitIsDeadOrGhost("player"))) and self:TernaryReturn(val, "mounted", self.mounted) and self:TernaryReturn(val, "incombat", UnitAffectingCombat("player")) and self:TernaryReturn(val, "inparty", self.party) and self:TernaryReturn(val, "inraid", UnitInRaid("player")) and self:TernaryReturn(val, "inbattleground", self.bg) and self:TernaryReturn(val, "inraidinstance", self.instance) and not path["cooldown"] and self:IsStacks(GetComboPoints("player", "target"), val, "cpstacks") then
+				if self:TernaryReturn(val, "alive", self:Reverse(UnitIsDeadOrGhost("player"))) and self:TernaryReturn(val, "mounted", self.mounted) and self:TernaryReturn(val, "incombat", UnitAffectingCombat("player")) and self:TernaryReturn(val, "inparty", self.party) and self:TernaryReturn(val, "inraid", UnitInRaid("player")) and self:TernaryReturn(val, "inbattleground", self.bg) and self:TernaryReturn(val, "inraidinstance", self.instance) and not path["cooldown"] 
+					and (self:IsStacks(GetComboPoints("player", "target"), val, "cpstacks") or (path["buffname"] == "unitpower" and path["inverse"])) then
 					BuffExist[val] = true
 					if path["enemytarget"] and unit == "target" then
 						self.active[val] = i
@@ -373,7 +392,7 @@ function MPOWA:Push(aura, unit, i, isdebuff)
 					elseif not path["enemytarget"] and not path["friendlytarget"] and not path["raidgroupmember"] and unit == "player" then
 						self.active[val] = i
 					end
-					if self.pushed[val] then
+					if self.pushed[val] and aura ~= "unitpower" then
 						self.pushed[val] = self.pushed[val] + 1;
 					else
 						self.pushed[val] = 1;
@@ -407,17 +426,36 @@ function MPOWA:IsStacks(count, id, kind)
 	if MPOWA_SAVE[id][kind] ~= "" then
 		local con = strsub(MPOWA_SAVE[id][kind], 1, 2)
 		local amount = tnbr(strsub(MPOWA_SAVE[id][kind], 3))
+		if not con then
+			con = strsub(MPOWA_SAVE[id][kind], 1, 1)
+			amount = tnbr(strsub(MPOWA_SAVE[id][kind], 2))
+		end
+
+		if MPOWA_SAVE[id]["buffname"] == "unitpower" then
+			count = UnitMana(MPOWA_SAVE[id]["unit"] or "player")
+			if MPOWA_SAVE[id]["inverse"] then
+				if (con == ">=") then
+					con = "<"
+				elseif (con == "<=") then
+					con = ">"
+				elseif con == ">" then
+					con = "<="
+				elseif (con == "<") then
+					con = ">="
+				elseif (con == "=") then
+					con = "!"
+				elseif (con == "!") then
+					con = "="
+				end	
+			end
+		end
+
 		if amount ~= nil and con ~= nil then
 			if con == ">=" and count >= amount then
 				return true
 			elseif con == "<=" and count <= amount then
 				return true
-			end
-		end
-		con = strsub(MPOWA_SAVE[id][kind], 1, 1)
-		amount = tnbr(strsub(MPOWA_SAVE[id][kind], 2))
-		if amount ~= nil and con ~= nil then
-			if con == "<" and count < amount then
+			elseif con == "<" and count < amount then
 				return true
 			elseif con == ">" and count > amount then
 				return true

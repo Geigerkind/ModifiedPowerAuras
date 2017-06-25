@@ -1383,7 +1383,7 @@
 										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_SHOWIFNOTACTIVE)
 									</OnLoad>
 									<OnClick>
-										if not MPOWA_SAVE[MPOWA.CurEdit]["inverse"] then
+										if not MPOWA_SAVE[MPOWA.CurEdit]["inverse"] and MPOWA_SAVE[MPOWA.CurEdit]["buffname"] ~= "unitpower"  then
 											MPOWA.NeedUpdate[MPOWA.CurEdit] = true
 										else
 											if not MPOWA_SAVE[MPOWA.CurEdit]["cooldown"] then

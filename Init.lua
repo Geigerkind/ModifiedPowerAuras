@@ -139,6 +139,19 @@ function MPOWA:OnEvent(event, arg1)
 		if arg1==MPOWA_WINDFURY_GONE or arg1==MPOWA_WINDFURY_GONE2 or arg1==MPOWA_WINDFURY_GONE3 then
 			self.Windfury = false
 		end
+	elseif event == "UNIT_MANA" or event == "UNIT_RAGE" or event == "UNIT_ENERGY" then
+		local tarid = 44
+		local unit = arg1
+		if (unit == "target") then 
+			tarid = 45
+		elseif (string.find(unit,"raid")) then
+			local a,b = string.find(unit,"raid")
+			tarid = tonumber(string.sub(unit, b+1))+45
+		elseif (string.find(unit,"party")) then
+			local a,b = string.find(unit,"party")
+			tarid = tonumber(string.sub(unit, b+1))+45
+		end
+		self:Push("unitpower", unit, tarid, false)
 	else
 		self:Init()
 		self.loaded = true
