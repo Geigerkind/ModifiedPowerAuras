@@ -758,6 +758,7 @@
 											elseif value == (min + 25) then
 												SLIDER_POSX_MIN = true
 											end
+											MPowa_ConfigFrame_Container_1_Editbox_PosX:SetText(MPOWA_SAVE[MPOWA.CurEdit].x)
 										end
 									</OnValueChanged>
 									<OnMouseUp>
@@ -842,6 +843,7 @@
 											elseif value == (min + 25) then
 												SLIDER_POSY_MIN = true
 											end
+											MPowa_ConfigFrame_Container_1_Editbox_PosY:SetText(MPOWA_SAVE[MPOWA.CurEdit].y)
 										end
 									</OnValueChanged>
 									<OnMouseUp>
