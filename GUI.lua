@@ -493,6 +493,7 @@ function MPOWA:ApplyConfig(i)
 	self.frames[i][1]:SetScale(val["size"])
 	self.frames[i][3]:SetFont(timerfont[val["timerfont"] or 1], val["fontsize"]*12, "OUTLINE")
 	self.frames[i][3]:SetAlpha(val["fontalpha"])
+	self.frames[i][4]:SetFont(timerfont[val["timerfont"] or 1], val["timerfontsize"]*12, "OUTLINE")
 	self.frames[i][3]:ClearAllPoints()
 	self.frames[i][3]:SetPoint("CENTER", self.frames[i][1], "CENTER", val["fontoffsetx"], val["fontoffsety"])
 	self.frames[i][2]:SetVertexColor(val.icon_r or 1, val.icon_g or 1, val.icon_b or 1)
@@ -857,6 +858,8 @@ function MPOWA:Edit()
 
 		MPowa_ConfigFrame_Container_2_2_Slider_Font:SetValue(tnbr(MPOWA_SAVE[self.CurEdit].timerfont))
 		MPowa_ConfigFrame_Container_2_2_Slider_FontText:SetText(MPOWA_SLIDER_FONT..MPowa_ConfigFrame_Container_2_2_Slider_Font.valuetext[tnbr(MPOWA_SAVE[self.CurEdit].timerfont)])
+		MPowa_ConfigFrame_Container_2_2_Slider_FontSize:SetValue(tnbr(MPOWA_SAVE[self.CurEdit].timerfontsize))
+		MPowa_ConfigFrame_Container_2_2_Slider_FontSizeText:SetText(MPOWA_SLIDER_FONTSIZE..tnbr(MPOWA_SAVE[self.CurEdit].timerfontsize))
 		
 		if MPOWA_SAVE[self.CurEdit].enemytarget or MPOWA_SAVE[self.CurEdit].friendlytarget then
 			MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Show()

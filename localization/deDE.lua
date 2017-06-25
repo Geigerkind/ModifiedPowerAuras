@@ -191,4 +191,7 @@ if (GetLocale() == "deDE") then
 
 	MPOWA_CHECKBUTTON_MINUTES = "Minuten >60"
 	MPOWA_CHECKBUTTON_MINUTES_TOOLTIP = "Zeige Minuten, wenn mehr als 60 Sekunden verbleiben."
+
+	MPOWA_SLIDER_FONTSIZE_TOOLTIP = "Bewege das, um die Stack-Schriftgröße des Timers zu ändern."
+	MPOWA_SLIDER_FONTSIZE = "Stack-Schriftgröße: "
 end

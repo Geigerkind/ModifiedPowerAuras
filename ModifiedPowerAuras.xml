@@ -1895,6 +1895,35 @@
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
+							<Slider name="$parent_Slider_FontSize" inherits="MPowa_SliderTemplate">
+								<Size x="130" y="16" />
+								<Anchors>
+									<Anchor point="TOP" relativeTo="$parent_Slider_Font" relativePoint="BOTTOM">
+										<Offset x="0" y="-25" />
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = MPOWA_SLIDER_FONTSIZE_TOOLTIP
+										this:SetMinMaxValues(1,3)
+										this:SetValue(0.1)
+										this:SetValueStep(0.1)
+										getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_FONTSIZE)
+										getglobal(this:GetName().."Low"):SetText("1")
+										getglobal(this:GetName().."High"):SetText("3")
+									</OnLoad>
+									<OnValueChanged>
+										if MPOWA.loaded and this:GetValue() then
+											local value = tonumber(this:GetValue())
+											if value > 0 then
+												getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_FONTSIZE..value)
+												MPOWA_SAVE[MPOWA.CurEdit]["timerfontsize"] = value
+												MPOWA:ApplyConfig(MPOWA.CurEdit)
+											end
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
 						</Frames>
 					</Frame>
 					<Frame name="$parent_3" hidden="true" inherits="MPowa_ContainerTemplate">

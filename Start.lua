@@ -67,6 +67,7 @@ function MPOWA:CreateSave(i)
 		dynamicspacing = 5,
 		blendmode = 1,
 		minutes = false,
+		timerfontsize = 1,
 	}
 end
 
@@ -167,6 +168,10 @@ function MPOWA:Init()
 			
 			if not val["blendmode"] then
 				MPOWA_SAVE[cat]["blendmode"] = 1
+			end
+
+			if not val["timerfontsize"] then
+				MPOWA_SAVE[cat]["timerfontsize"] = 1
 			end
 			
 			self:CreateIcon(cat)
