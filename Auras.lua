@@ -141,7 +141,7 @@ function MPOWA:OnUpdate(elapsed)
 						end
 					end
 					self:Flash(elapsed, cat, duration)
-					if path["inverse"] and (path["buffname"] ~= "unitpower" and not path["inverse"]) then
+					if (path["inverse"] and path["buffname"] ~= "unitpower") then
 						self:FHide(cat)
 					else
 						if path["secsleft"] then
