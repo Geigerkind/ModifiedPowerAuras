@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 51
+MPOWA.Build = 52
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
@@ -145,11 +145,11 @@ function MPOWA:OnEvent(event, arg1)
 		if (unit == "target") then 
 			tarid = 45
 		elseif (string.find(unit,"raid")) then
-			local a,b = string.find(unit,"raid")
-			tarid = tonumber(string.sub(unit, b+1))+45
+			--local a,b = string.find(unit,"raid")
+			tarid = tonumber(string.sub(unit, 5))+45
 		elseif (string.find(unit,"party")) then
-			local a,b = string.find(unit,"party")
-			tarid = tonumber(string.sub(unit, b+1))+45
+			--local a,b = string.find(unit,"party")
+			tarid = tonumber(string.sub(unit, 6))+45
 		end
 		self:Push("unitpower", unit, tarid, false)
 	else

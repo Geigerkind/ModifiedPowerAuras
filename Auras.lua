@@ -265,7 +265,7 @@ function MPOWA:GetSpellSlot(buff)
 	local i = 1
 	while true do
 		local name, rank = GetSpellName(i, "spell")
-		if (not name) or strfind(strlower(buff), strlower(name)) then 
+		if (not name) or strfind(strlower(name), strlower(buff)) then 
 			return i
 		end
 		i = i + 1
@@ -299,11 +299,11 @@ function MPOWA:Iterate(unit)
 			if (unit == "target") then 
 				tarid = 45
 			elseif (string.find(unit,"raid")) then
-				local a,b = string.find(unit,"raid")
-				tarid = tonumber(string.sub(unit, b+1))+45
+				--local a,b = string.find(unit,"raid")
+				tarid = tonumber(string.sub(unit, 5))+45
 			elseif (string.find(unit,"party")) then
-				local a,b = string.find(unit,"party")
-				tarid = tonumber(string.sub(unit, b+1))+45
+				--local a,b = string.find(unit,"party")
+				tarid = tonumber(string.sub(unit, 6))+45
 			end
 			self:Push("unitpower", unit, tarid, false)
 		end
