@@ -1,7 +1,7 @@
 --------------- Frames and Funktionallity ---------------
 
 function MPOWA:CreateSave(i)
-	MPOWA_SAVE[i] = {
+	self.SAVE[i] = {
 		texture = "Interface\\AddOns\\ModifiedPowerAuras\\images\\dummy.tga",
 		alpha = 1,
 		size = 0.75,
@@ -72,6 +72,8 @@ function MPOWA:CreateSave(i)
 end
 
 function MPOWA:Init()
+	self.SAVE = table.copy(MPOWA_SAVE or {}, true)
+	
 	MPowa_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
 	
 	SLASH_MPOWA1 = "/mpowa"
@@ -83,8 +85,8 @@ function MPOWA:Init()
 		end
 	end
 	
-	if MPOWA_SAVE == nil then
-		MPOWA_SAVE = {}
+	if self.SAVE == nil then
+		self.SAVE = {}
 		self:CreateSave(1)
 	end
 	
@@ -92,8 +94,8 @@ function MPOWA:Init()
 		MPOWA_PROFILE = {}
 	end
 	
-	for cat, val in MPOWA_SAVE do
-		if val["used"] or (MPOWA_SAVE[cat+1] and MPOWA_SAVE[cat+1]["used"]) then
+	for cat, val in self.SAVE do
+		if val["used"] or (self.SAVE[cat+1] and self.SAVE[cat+1]["used"]) then
 			if not self.frames[cat] then
 				self.frames[cat] = {}
 			end
@@ -108,9 +110,9 @@ function MPOWA:Init()
 			end
 			
 			if val["enemytarget"] or val["friendlytarget"] then
-				MPOWA_SAVE[cat]["unit"] = "target"
+				self.SAVE[cat]["unit"] = "target"
 			else
-				MPOWA_SAVE[cat]["unit"] = nil
+				self.SAVE[cat]["unit"] = nil
 			end
 			
 			if val["used"] then
@@ -122,59 +124,59 @@ function MPOWA:Init()
 			end
 			
 			if not val["secsleftdur"] or val["secsleftdur"] == "" then
-				MPOWA_SAVE[cat]["secsleftdur"] = 0
+				self.SAVE[cat]["secsleftdur"] = 0
 			end
 			
 			if not val["inraidinstance"] then
-				MPOWA_SAVE[cat]["inraidinstance"] = 0
+				self.SAVE[cat]["inraidinstance"] = 0
 			end
 
 			if not val["secondspecifiertext"] then
-				MPOWA_SAVE[cat]["secondspecifiertext"] = ""
+				self.SAVE[cat]["secondspecifiertext"] = ""
 			end
 			
 			-- Initializing animations
 			if not val["animduration"] then
-				MPOWA_SAVE[cat]["animduration"] = 0.5
+				self.SAVE[cat]["animduration"] = 0.5
 			end
 			
 			if not val["translateoffsetx"] then
-				MPOWA_SAVE[cat]["translateoffsetx"] = 50
+				self.SAVE[cat]["translateoffsetx"] = 50
 			end
 			
 			if not val["translateoffsety"] then
-				MPOWA_SAVE[cat]["translateoffsety"] = 50
+				self.SAVE[cat]["translateoffsety"] = 50
  			end
 			
 			if not val["fadealpha"] then
-				MPOWA_SAVE[cat]["fadealpha"] = 0.99
+				self.SAVE[cat]["fadealpha"] = 0.99
 			end
 			
 			if not val["scalefactor"] then
-				MPOWA_SAVE[cat]["scalefactor"] = 0.8
+				self.SAVE[cat]["scalefactor"] = 0.8
 			end
 
 			if not val["dynamicorientation"] then
-				MPOWA_SAVE[cat]["dynamicorientation"] = 1
+				self.SAVE[cat]["dynamicorientation"] = 1
 			end
 
 			if not val["timerfont"] then
-				MPOWA_SAVE[cat]["timerfont"] = 1
+				self.SAVE[cat]["timerfont"] = 1
 			end
 
 			if not val["dynamicspacing"] then
-				MPOWA_SAVE[cat]["dynamicspacing"] = 5
+				self.SAVE[cat]["dynamicspacing"] = 5
 			end
 			
 			if not val["blendmode"] then
-				MPOWA_SAVE[cat]["blendmode"] = 1
+				self.SAVE[cat]["blendmode"] = 1
 			end
 
 			if not val["timerfontsize"] then
-				MPOWA_SAVE[cat]["timerfontsize"] = 1
+				self.SAVE[cat]["timerfontsize"] = 1
 			end
 			
-			self:CreateIcon(cat)
+			self:CreateIcon(cat, cat)
 			self:ApplyConfig(cat)
 
 			if val["flashanim"] then
@@ -234,12 +236,12 @@ function MPOWA:Init()
 			end
 			
 			if not val["cpstacks"] then
-				MPOWA_SAVE[cat]["cpstacks"] = ">=0"
+				self.SAVE[cat]["cpstacks"] = ">=0"
 			end
 
-			MPOWA_SAVE[cat]["test"] = false
+			self.SAVE[cat]["test"] = false
 		else	
-			MPOWA_SAVE[cat] = nil
+			self.SAVE[cat] = nil
 		end
 	end
 	self.testAll = false
@@ -262,3 +264,4 @@ MPOWA:RegisterEvent("PLAYER_REGEN_ENABLED")
 MPOWA:RegisterEvent("UNIT_MANA")
 MPOWA:RegisterEvent("UNIT_RAGE")
 MPOWA:RegisterEvent("UNIT_ENERGY")
+MPOWA:RegisterEvent("PLAYER_LOGOUT")

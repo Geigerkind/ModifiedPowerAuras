@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 52
+MPOWA.Build = 53
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
@@ -105,6 +105,30 @@ MPOWA.SOUND = {
 
 MPOWA.Windfury = false
 
+local function copy(t, inner)
+  if type(t) ~= "table" then
+    error("table expected, got "..type(t), 2)
+  end
+  local new = {}
+  if inner then
+    for i,s in next,t do
+      if type(s) == "table" then
+        new[i] = copy(s, true)
+      else
+        new[i] = s
+      end
+    end
+  else
+    for i,s in next,t do
+      new[i] = s
+    end
+  end
+  return new
+end
+table.copy = copy
+
+MPOWA.SAVE = table.copy(MPOWA_SAVE or {}, true)
+
 function MPOWA:OnEvent(event, arg1)
 	if event == "UNIT_AURA" then
 		if arg1 == "target" or self.groupByUnit[arg1] then
@@ -115,7 +139,7 @@ function MPOWA:OnEvent(event, arg1)
 			if v then
 				for cat, val in v do
 					if self.active[val] or self.frames[val][1]:IsVisible() then
-						local p = MPOWA_SAVE[val]
+						local p = self.SAVE[val]
 						if p["enemytarget"] or p["friendlytarget"] then
 							self.active[val] = false
 							self:FHide(val)
@@ -141,17 +165,21 @@ function MPOWA:OnEvent(event, arg1)
 		end
 	elseif event == "UNIT_MANA" or event == "UNIT_RAGE" or event == "UNIT_ENERGY" then
 		local tarid = 44
-		local unit = arg1
-		if (unit == "target") then 
-			tarid = 45
-		elseif (string.find(unit,"raid")) then
-			--local a,b = string.find(unit,"raid")
-			tarid = tonumber(string.sub(unit, 5))+45
-		elseif (string.find(unit,"party")) then
-			--local a,b = string.find(unit,"party")
-			tarid = tonumber(string.sub(unit, 6))+45
+		if arg1 then
+			local unit = arg1
+			if (unit == "target") then 
+				tarid = 45
+			elseif (string.find(unit,"raid")) then
+				--local a,b = string.find(unit,"raid")
+				tarid = tonumber(string.sub(unit, 5))+45
+			elseif (string.find(unit,"party")) then
+				--local a,b = string.find(unit,"party")
+				tarid = tonumber(string.sub(unit, 6))+45
+			end
+			self:Push("unitpower", unit, tarid, false)
 		end
-		self:Push("unitpower", unit, tarid, false)
+	elseif event == "PLAYER_LOGOUT" then
+		MPOWA_SAVE = table.copy(self.SAVE, true)
 	else
 		self:Init()
 		self.loaded = true

@@ -707,7 +707,7 @@
 									<OnValueChanged>
 										if MPOWA.loaded then
 											if this:GetValue() then
-												MPOWA_SAVE[MPOWA.CurEdit]["blendmode"] = this:GetValue()
+												MPOWA.SAVE[MPOWA.CurEdit]["blendmode"] = this:GetValue()
 												getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_BLENDMODE..this.valuetext[this:GetValue()])
 												MPowa_ConfigFrame_Container_1_Icon_Texture:SetBlendMode(this.valuetext[this:GetValue()])
 												MPOWA.frames[MPOWA.CurEdit][2]:SetBlendMode(this.valuetext[this:GetValue()])
@@ -758,7 +758,7 @@
 											elseif value == (min + 25) then
 												SLIDER_POSX_MIN = true
 											end
-											MPowa_ConfigFrame_Container_1_Editbox_PosX:SetText(MPOWA_SAVE[MPOWA.CurEdit].x)
+											MPowa_ConfigFrame_Container_1_Editbox_PosX:SetText(MPOWA.SAVE[MPOWA.CurEdit].x)
 										end
 									</OnValueChanged>
 									<OnMouseUp>
@@ -788,7 +788,7 @@
 									</OnEnterPressed>
 									<OnEditFocusLost>
 										if (this:GetText() ~= "" and tonumber(this:GetText()) ~= "" and MPowa_ConfigFrame:IsVisible()) then
-											MPOWA_SAVE[MPOWA.CurEdit]["x"] = tonumber(tonumber(string.format("%.2f", this:GetText())))
+											MPOWA.SAVE[MPOWA.CurEdit]["x"] = tonumber(tonumber(string.format("%.2f", this:GetText())))
 											MPOWA:ApplyConfig(MPOWA.CurEdit) 
 										end
 									</OnEditFocusLost>
@@ -843,7 +843,7 @@
 											elseif value == (min + 25) then
 												SLIDER_POSY_MIN = true
 											end
-											MPowa_ConfigFrame_Container_1_Editbox_PosY:SetText(MPOWA_SAVE[MPOWA.CurEdit].y)
+											MPowa_ConfigFrame_Container_1_Editbox_PosY:SetText(MPOWA.SAVE[MPOWA.CurEdit].y)
 										end
 									</OnValueChanged>
 									<OnMouseUp>
@@ -873,7 +873,7 @@
 									</OnEnterPressed>
 									<OnEditFocusLost>
 										if (this:GetText() ~= "" and tonumber(this:GetText()) ~= "" and MPowa_ConfigFrame:IsVisible()) then
-											MPOWA_SAVE[MPOWA.CurEdit]["y"] = tonumber(tonumber(string.format("%.2f", this:GetText())))
+											MPOWA.SAVE[MPOWA.CurEdit]["y"] = tonumber(tonumber(string.format("%.2f", this:GetText())))
 											MPOWA:ApplyConfig(MPOWA.CurEdit) 
 										end
 									</OnEditFocusLost>
@@ -1237,10 +1237,10 @@
 										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_SHOWCOOLDOWN)
 									</OnLoad>
 									<OnClick>
-										if not MPOWA_SAVE[MPOWA.CurEdit]["cooldown"] then
+										if not MPOWA.SAVE[MPOWA.CurEdit]["cooldown"] then
 											MPOWA.NeedUpdate[MPOWA.CurEdit] = true
 										else
-											if not MPOWA_SAVE[MPOWA.CurEdit]["inverse"] then
+											if not MPOWA.SAVE[MPOWA.CurEdit]["inverse"] then
 												MPOWA.NeedUpdate[MPOWA.CurEdit] = false
 											end
 											MPOWA.active[MPOWA.CurEdit] = false
@@ -1265,7 +1265,7 @@
 										MPOWA:Checkbutton("enemytarget")
 										if MPowa_ConfigFrame_Container_1_2_Checkbutton_EnemyTarget:GetChecked() or MPowa_ConfigFrame_Container_1_2_Checkbutton_FriendlyTarget:GetChecked() then
 											MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Show()
-											MPOWA_SAVE[MPOWA.CurEdit]["unit"] = "target"
+											MPOWA.SAVE[MPOWA.CurEdit]["unit"] = "target"
 										else
 											MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Hide()
 										end
@@ -1287,7 +1287,7 @@
 										MPOWA:Checkbutton("friendlytarget")
 										if MPowa_ConfigFrame_Container_1_2_Checkbutton_EnemyTarget:GetChecked() or MPowa_ConfigFrame_Container_1_2_Checkbutton_FriendlyTarget:GetChecked() then
 											MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Show()
-											MPOWA_SAVE[MPOWA.CurEdit]["unit"] = "target"
+											MPOWA.SAVE[MPOWA.CurEdit]["unit"] = "target"
 										else
 											MPowa_ConfigFrame_Container_1_2_Editbox_DebuffDuration:Hide()
 										end
@@ -1307,7 +1307,7 @@
 									</OnLoad>
 									<OnClick>
 										MPOWA:Checkbutton("raidgroupmember")
-										if MPOWA_SAVE[MPOWA.CurEdit]["raidgroupmember"] then
+										if MPOWA.SAVE[MPOWA.CurEdit]["raidgroupmember"] then
 											MPowa_ConfigFrame_Container_1_2_Editbox_Player:Show()
 										else
 											MPowa_ConfigFrame_Container_1_2_Editbox_Player:Hide()
@@ -1328,7 +1328,7 @@
 									</OnLoad>
 									<OnClick>
 										MPOWA:Checkbutton("secsleft")
-										if MPOWA_SAVE[MPOWA.CurEdit]["secsleft"] then
+										if MPOWA.SAVE[MPOWA.CurEdit]["secsleft"] then
 											MPowa_ConfigFrame_Container_1_2_Editbox_SECLEFT:Show()
 										else
 											MPowa_ConfigFrame_Container_1_2_Editbox_SECLEFT:Hide()
@@ -1385,10 +1385,10 @@
 										getglobal(this:GetName().."Text"):SetText(MPOWA_CHECKBUTTON_SHOWIFNOTACTIVE)
 									</OnLoad>
 									<OnClick>
-										if not MPOWA_SAVE[MPOWA.CurEdit]["inverse"] and MPOWA_SAVE[MPOWA.CurEdit]["buffname"] ~= "unitpower"  then
+										if not MPOWA.SAVE[MPOWA.CurEdit]["inverse"] and MPOWA.SAVE[MPOWA.CurEdit]["buffname"] ~= "unitpower"  then
 											MPOWA.NeedUpdate[MPOWA.CurEdit] = true
 										else
-											if not MPOWA_SAVE[MPOWA.CurEdit]["cooldown"] then
+											if not MPOWA.SAVE[MPOWA.CurEdit]["cooldown"] then
 												MPOWA.NeedUpdate[MPOWA.CurEdit] = false
 											end
 											MPOWA.active[MPOWA.CurEdit] = false
@@ -1509,7 +1509,7 @@
 									</OnLoad>
 									<OnClick>
 										MPOWA:Checkbutton("secondspecifier")
-										if MPOWA_SAVE[MPOWA.CurEdit]["secondspecifier"] then
+										if MPOWA.SAVE[MPOWA.CurEdit]["secondspecifier"] then
 											MPowa_ConfigFrame_Container_1_2_Editbox:SetWidth(135)
 											MPowa_ConfigFrame_Container_1_2_Editbox:ClearAllPoints()
 											MPowa_ConfigFrame_Container_1_2_Editbox:SetPoint("TOP", MPowa_ConfigFrame_Container_1_2, "TOP", -67.5, -20)
@@ -1888,7 +1888,7 @@
 											local value = tonumber(this:GetValue())
 											if value > 0 then
 												getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_FONT..this.valuetext[value])
-												MPOWA_SAVE[MPOWA.CurEdit]["timerfont"] = value
+												MPOWA.SAVE[MPOWA.CurEdit]["timerfont"] = value
 												MPOWA:ApplyConfig(MPOWA.CurEdit)
 											end
 										end
@@ -1917,7 +1917,7 @@
 											local value = tonumber(this:GetValue())
 											if value > 0 then
 												getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_FONTSIZE..value)
-												MPOWA_SAVE[MPOWA.CurEdit]["timerfontsize"] = value
+												MPOWA.SAVE[MPOWA.CurEdit]["timerfontsize"] = value
 												MPOWA:ApplyConfig(MPOWA.CurEdit)
 											end
 										end
@@ -2634,7 +2634,7 @@
 											local value = tonumber(this:GetValue())
 											if value > 0 then
 												getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_DYNAMICORIENTATION..this.valuetext[value])
-												MPOWA_SAVE[MPOWA.CurEdit]["dynamicorientation"] = value
+												MPOWA.SAVE[MPOWA.CurEdit]["dynamicorientation"] = value
 												MPOWA:ApplyConfig(MPOWA.CurEdit)
 											end
 										end
@@ -2662,7 +2662,7 @@
 										if MPOWA.loaded and this:GetValue() then
 											local value = tonumber(this:GetValue())
 											getglobal(this:GetName().."Text"):SetText(MPOWA_SLIDER_SPACING..value)
-											MPOWA_SAVE[MPOWA.CurEdit]["dynamicspacing"] = value
+											MPOWA.SAVE[MPOWA.CurEdit]["dynamicspacing"] = value
 											MPOWA:ApplyConfig(MPOWA.CurEdit)
 										end
 									</OnValueChanged>

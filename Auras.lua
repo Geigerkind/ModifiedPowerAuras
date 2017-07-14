@@ -25,6 +25,7 @@ local GetContainerItemLink = GetContainerItemLink
 local GetInventoryItemLink = GetInventoryItemLink
 local GetContainerNumSlots = GetContainerNumSlots
 local GetSpellName = GetSpellName
+local UnitIsFriend = UnitIsFriend
 local UpdateTime, LastUpdate = 0.05, 0
 local path, duration, text, count, time
 
@@ -33,7 +34,8 @@ function MPOWA:OnUpdate(elapsed)
 	if LastUpdate >= UpdateTime then
 		for cat, val in self.NeedUpdate do
 			if val then
-				path = MPOWA_SAVE[cat]
+				path = self.SAVE[cat]
+				if path["enemytarget"] and not UN("target") and not UnitIsFriend("player", "target") then return end
 				if not self.active[cat] and self:TernaryReturn(cat, "alive", self:Reverse(UnitIsDeadOrGhost("player"))) and self:TernaryReturn(cat, "mounted", self.mounted) and self:TernaryReturn(cat, "incombat", UnitAffectingCombat("player")) and self:TernaryReturn(cat, "inparty", self.party) and self:TernaryReturn(cat, "inraid", UnitInRaid("player")) and self:TernaryReturn(cat, "inbattleground", self.bg) and self:TernaryReturn(cat, "inraidinstance", self.instance) then
 					self.frames[cat][4]:Hide()
 					if path["cooldown"] then
@@ -101,7 +103,7 @@ function MPOWA:OnUpdate(elapsed)
 		end
 		for cat, val in self.active do
 			if val then
-				path = MPOWA_SAVE[cat]
+				path = self.SAVE[cat]
 				text, count = "", 0
 				if (path["unit"] or "player") == "player" then
 					count = GetPlayerBuffApplications(val)
@@ -168,7 +170,7 @@ function MPOWA:OnUpdate(elapsed)
 end
 
 function MPOWA:SetTexture(key, texture, index)
-	local p = MPOWA_SAVE[key]
+	local p = self.SAVE[key]
 	if p["texture"] == "Interface\\AddOns\\ModifiedPowerAuras\\images\\dummy.tga" then
 		if texture and texture ~= "" then
 			p["texture"] = texture
@@ -193,7 +195,7 @@ function MPOWA:FormatDuration(duration, path)
 end
 
 function MPOWA:GetDuration(index, cat)
-	local path = MPOWA_SAVE[cat]
+	local path = self.SAVE[cat]
 	if not path["raidgroupmember"] then -- check this
 		if path["friendlytarget"] or path["enemytarget"] then
 			time = GT()
@@ -283,7 +285,7 @@ function MPOWA:Iterate(unit)
 	end
 	
 	for cat, val in self.active do
-		if (not MPOWA_SAVE[cat]["unit"] and unit=="player") or (MPOWA_SAVE[cat]["unit"]==unit) then
+		if (not self.SAVE[cat]["unit"] and unit=="player") or (self.SAVE[cat]["unit"]==unit) then
 			self.pushed[cat] = false;
 		end
 	end
@@ -293,19 +295,21 @@ function MPOWA:Iterate(unit)
 		self:Push("Windfury Totem", "player", 43, false, "Windfury Totem")
 	end
 
-	for cat, val in pairs(MPOWA_SAVE) do
+	for cat, val in pairs(self.SAVE) do
 		if (val["buffname"] == "unitpower") then
 			local tarid = 44
-			if (unit == "target") then 
-				tarid = 45
-			elseif (string.find(unit,"raid")) then
-				--local a,b = string.find(unit,"raid")
-				tarid = tonumber(string.sub(unit, 5))+45
-			elseif (string.find(unit,"party")) then
-				--local a,b = string.find(unit,"party")
-				tarid = tonumber(string.sub(unit, 6))+45
+			if unit then
+				if (unit == "target") then 
+					tarid = 45
+				elseif (string.find(unit,"raid")) then
+					--local a,b = string.find(unit,"raid")
+					tarid = tonumber(string.sub(unit, 5))+45
+				elseif (string.find(unit,"party")) then
+					--local a,b = string.find(unit,"party")
+					tarid = tonumber(string.sub(unit, 6))+45
+				end
+				self:Push("unitpower", unit, tarid, false)
 			end
-			self:Push("unitpower", unit, tarid, false)
 		end
 	end
 	
@@ -343,7 +347,7 @@ function MPOWA:Iterate(unit)
 		if val then
 			if not BuffExist[cat] then
 				self.activeTimer[val] = nil
-				p = MPOWA_SAVE[cat]
+				p = self.SAVE[cat]
 				if ((p["friendlytarget"] or p["enemytarget"]) and unit=="target") or (not p["raidgroupmember"] and not p["friendlytarget"] and not p["enemytarget"] and unit=="player") or p["raidgroupmember"] then
 					self.active[cat] = false
 					self.lastCount[cat] = 0
@@ -368,7 +372,7 @@ end
 function MPOWA:Push(aura, unit, i, isdebuff)
 	if self.auras[aura] then
 		for cat, val in self.auras[aura] do
-			local path = MPOWA_SAVE[val]
+			local path = self.SAVE[val]
 			local bypass = self.active[val]
 			local tex = ""
 			if path["secondspecifier"] then
@@ -408,10 +412,8 @@ function MPOWA:Push(aura, unit, i, isdebuff)
 								PlaySoundFile("Interface\\AddOns\\ModifiedPowerAuras\\Sounds\\"..self.SOUND[path.beginsound], "master")
 							end
 						end
-						if not path["secsleft"] then
-							self.activeTimer[val] = GT()
-							self:FShow(val)
-						end
+						self.activeTimer[val] = GT()
+						self:FShow(val)
 						if path["timer"] then
 							self.frames[val][3]:Show()
 						end
@@ -423,17 +425,17 @@ function MPOWA:Push(aura, unit, i, isdebuff)
 end
 
 function MPOWA:IsStacks(count, id, kind)
-	if MPOWA_SAVE[id][kind] ~= "" then
-		local con = strsub(MPOWA_SAVE[id][kind], 1, 2)
-		local amount = tnbr(strsub(MPOWA_SAVE[id][kind], 3))
+	if self.SAVE[id][kind] ~= "" then
+		local con = strsub(self.SAVE[id][kind], 1, 2)
+		local amount = tnbr(strsub(self.SAVE[id][kind], 3))
 		if not con then
-			con = strsub(MPOWA_SAVE[id][kind], 1, 1)
-			amount = tnbr(strsub(MPOWA_SAVE[id][kind], 2))
+			con = strsub(self.SAVE[id][kind], 1, 1)
+			amount = tnbr(strsub(self.SAVE[id][kind], 2))
 		end
 
-		if MPOWA_SAVE[id]["buffname"] == "unitpower" then
-			count = UnitMana(MPOWA_SAVE[id]["unit"] or "player")
-			if MPOWA_SAVE[id]["inverse"] then
+		if self.SAVE[id]["buffname"] == "unitpower" then
+			count = UnitMana(self.SAVE[id]["unit"] or "player")
+			if self.SAVE[id]["inverse"] then
 				if (con == ">=") then
 					con = "<"
 				elseif (con == "<=") then
@@ -465,10 +467,10 @@ function MPOWA:IsStacks(count, id, kind)
 				return true
 			end
 		end
-		con = strfind(MPOWA_SAVE[id][kind], "-")
+		con = strfind(self.SAVE[id][kind], "-")
 		if con then
-			local amount1 = tnbr(strsub(MPOWA_SAVE[id][kind], 1, con-1))
-			local amount2 = tnbr(strsub(MPOWA_SAVE[id][kind], con+1))
+			local amount1 = tnbr(strsub(self.SAVE[id][kind], 1, con-1))
+			local amount2 = tnbr(strsub(self.SAVE[id][kind], con+1))
 			if con and amount1 and amount2 and ((count >= amount1 and count <= amount2) or (count >= amount2 and count <= amount1)) then
 				return true
 			end

@@ -7,7 +7,7 @@
 ## Notes-enGB: Modified Power Auras is an advanced version of the original Power Auras from Sinesther. 
 ## Author: Shino <Synced> - Kronos
 ## SavedVariables: MPOWA_PROFILE
-## SavedVariablesPerCharacter: MPOWA_SAVE
+## SavedVariablesPerCharacter: self.SAVE
 ## Version: 1
 
 libs\LibStub\LibStub.lua

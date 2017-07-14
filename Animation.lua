@@ -11,7 +11,7 @@ local GT = GetTime
 local tnbr = tonumber
 
 function MPOWA:PlayAnim(condition, key, anim)
-	if MPOWA_SAVE[key][condition] then
+	if self.SAVE[key][condition] then
 		if self.frames[key][1][anim] and not self.frames[key][1][anim]:IsPlaying() then
 			self.frames[key][1][anim]:Play()
 		end
@@ -19,7 +19,7 @@ function MPOWA:PlayAnim(condition, key, anim)
 end
 
 function MPOWA:FHide(key)
-	local p = MPOWA_SAVE[key]
+	local p = self.SAVE[key]
 	if self.frames[key][1]:IsVisible() and not self.testall and not p["test"] then
 		if p["batmananimout"] then
 			self:PlayAnim("batmananimout", key, "batmananimout")
@@ -62,7 +62,7 @@ function MPOWA:FHide(key)
 end
 
 function MPOWA:AfterAnimationDynamicGroup(key)
-	local p = MPOWA_SAVE[key]
+	local p = self.SAVE[key]
 	if p["isdynamicgroup"] then
 		self:ApplyDynamicGroup(key)
 	elseif p["groupnumber"] and tnbr(p["groupnumber"])>0 then
@@ -71,8 +71,8 @@ function MPOWA:AfterAnimationDynamicGroup(key)
 end
 
 function MPOWA:FShow(key)
-	local p = MPOWA_SAVE[key]
-	if not self.frames[key][1]:IsVisible() then
+	local p = self.SAVE[key]
+	if not self.frames[key][1]:IsVisible() and p["used"] then
 		if p["isdynamicgroup"] then
 			self:ApplyDynamicGroup(key)
 		elseif p["groupnumber"] and tnbr(p["groupnumber"])>0 then
@@ -106,7 +106,7 @@ function MPOWA:FShow(key)
 end
 
 function MPOWA:Flash(elapsed, cat, timeLeft)
-	local s = MPOWA_SAVE[cat]
+	local s = self.SAVE[cat]
 	if s.flashanim and self.frames[cat][1].flash then
 		if timeLeft < s.flashanimstart then
 			if not self.frames[cat][1].flash:IsPlaying() then
@@ -143,8 +143,8 @@ function MPOWA:AddAnimGrowOut(frame)
 			MPOWA:AfterAnimationDynamicGroup(frame)
 		end)
 		local scale = self.frames[frame][1].growout:CreateAnimation("Scale")
-		scale:SetScale(tnbr(MPOWA_SAVE[frame]["scalefactor"]), tnbr(MPOWA_SAVE[frame]["scalefactor"]))
-		scale:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+		scale:SetScale(tnbr(self.SAVE[frame]["scalefactor"]), tnbr(self.SAVE[frame]["scalefactor"]))
+		scale:SetDuration(tnbr(self.SAVE[frame]["animduration"]))
 	end
 end
 
@@ -154,13 +154,13 @@ function MPOWA:AddAnimFadeIn(frame)
 		self.frames[frame][1].fadein:SetLooping("NONE")
 		self.frames[frame][1].fadein:SetScript("OnFinished", function() 
 			MPOWA.frames[frame][1].fadein:Stop()
-			MPOWA.frames[frame][1]:SetAlpha(tnbr(MPOWA_SAVE[frame]["alpha"]))
+			MPOWA.frames[frame][1]:SetAlpha(tnbr(self.SAVE[frame]["alpha"]))
 			MPOWA.frames[frame][1]:Show()
 		end)
 		
 		local anim = self.frames[frame][1].fadein:CreateAnimation("Alpha")
-		anim:SetChange(tnbr(MPOWA_SAVE[frame]["fadealpha"]))
-		anim:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+		anim:SetChange(tnbr(self.SAVE[frame]["fadealpha"]))
+		anim:SetDuration(tnbr(self.SAVE[frame]["animduration"]))
 	end
 end
 
@@ -170,14 +170,14 @@ function MPOWA:AddAnimFadeOut(frame)
 		self.frames[frame][1].fadeout:SetLooping("NONE")
 		self.frames[frame][1].fadeout:SetScript("OnFinished", function() 
 			MPOWA.frames[frame][1].fadeout:Stop()
-			MPOWA.frames[frame][1]:SetAlpha(tnbr(MPOWA_SAVE[frame]["alpha"]))
+			MPOWA.frames[frame][1]:SetAlpha(tnbr(self.SAVE[frame]["alpha"]))
 			MPOWA.frames[frame][1]:Hide()
 			MPOWA:AfterAnimationDynamicGroup(frame)
 		end)
 		
 		local anim = self.frames[frame][1].fadeout:CreateAnimation("Alpha")
-		anim:SetChange(-tnbr(MPOWA_SAVE[frame]["fadealpha"]))
-		anim:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+		anim:SetChange(-tnbr(self.SAVE[frame]["fadealpha"]))
+		anim:SetDuration(tnbr(self.SAVE[frame]["animduration"]))
 	end
 end
 
@@ -193,7 +193,7 @@ function MPOWA:AddAnimRotateOut(frame)
 		
 		local anim = self.frames[frame][1].rotateanimout:CreateAnimation("Rotation")
 		anim:SetDegrees(360)
-		anim:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+		anim:SetDuration(tnbr(self.SAVE[frame]["animduration"]))
 	end
 end
 
@@ -208,8 +208,8 @@ function MPOWA:AddAnimTranslate(frame)
 		end)
 		
 		local anim = self.frames[frame][1].translateanim:CreateAnimation("Translation")
-		anim:SetOffset(tnbr(MPOWA_SAVE[frame]["translateoffsetx"]),tnbr(MPOWA_SAVE[frame]["translateoffsetx"]))
-		anim:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+		anim:SetOffset(tnbr(self.SAVE[frame]["translateoffsetx"]),tnbr(self.SAVE[frame]["translateoffsetx"]))
+		anim:SetDuration(tnbr(self.SAVE[frame]["animduration"]))
 	end
 end
 
@@ -222,7 +222,7 @@ function MPOWA:AddAnimEscapeOut(frame)
 		end)
 		self.frames[frame][1].escapeanimout:SetScript("OnFinished", function() 
 			MPOWA.frames[frame][1].escapeanimout:Stop()
-			MPOWA.frames[frame][1]:SetAlpha(tnbr(MPOWA_SAVE[frame]["alpha"]))
+			MPOWA.frames[frame][1]:SetAlpha(tnbr(self.SAVE[frame]["alpha"]))
 			MPOWA.frames[frame][1]:SetWidth(64)
 			MPOWA.frames[frame][1]:SetHeight(64)
 			MPOWA.frames[frame][1]:Hide()
@@ -231,11 +231,11 @@ function MPOWA:AddAnimEscapeOut(frame)
 		
 		local alpha = self.frames[frame][1].escapeanimout:CreateAnimation("Alpha")
 		alpha:SetChange(-.5)
-		alpha:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+		alpha:SetDuration(tnbr(self.SAVE[frame]["animduration"]))
 		
 		local scale = self.frames[frame][1].escapeanimout:CreateAnimation("Scale")
-		scale:SetScale(tnbr(MPOWA_SAVE[frame]["scalefactor"]), tnbr(MPOWA_SAVE[frame]["scalefactor"]))
-		scale:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+		scale:SetScale(tnbr(self.SAVE[frame]["scalefactor"]), tnbr(self.SAVE[frame]["scalefactor"]))
+		scale:SetDuration(tnbr(self.SAVE[frame]["animduration"]))
 	end
 end
 
@@ -252,8 +252,8 @@ function MPOWA:AddAnimShrink(frame)
 		end)
 		
 		local scale = self.frames[frame][1].shrink:CreateAnimation("Scale")
-		scale:SetScale(-tnbr(MPOWA_SAVE[frame]["scalefactor"]), -tnbr(MPOWA_SAVE[frame]["scalefactor"]))
-		scale:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+		scale:SetScale(-tnbr(self.SAVE[frame]["scalefactor"]), -tnbr(self.SAVE[frame]["scalefactor"]))
+		scale:SetDuration(tnbr(self.SAVE[frame]["animduration"]))
 	end
 end
 
@@ -263,7 +263,7 @@ function MPOWA:AddAnimRotateShrinkFadeOut(frame)
 		self.frames[frame][1].batmananimout:SetLooping("NONE")
 		self.frames[frame][1].batmananimout:SetScript("OnFinished", function() 
 			MPOWA.frames[frame][1].batmananimout:Stop()
-			MPOWA.frames[frame][1]:SetAlpha(tnbr(MPOWA_SAVE[frame]["alpha"]))
+			MPOWA.frames[frame][1]:SetAlpha(tnbr(self.SAVE[frame]["alpha"]))
 			MPOWA.frames[frame][1]:SetWidth(64)
 			MPOWA.frames[frame][1]:SetHeight(64)
 			MPOWA.frames[frame][1]:Hide()
@@ -272,15 +272,15 @@ function MPOWA:AddAnimRotateShrinkFadeOut(frame)
 		
 		local scale = self.frames[frame][1].batmananimout:CreateAnimation("Scale")
 		scale:SetScale(-10, -10)
-		scale:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+		scale:SetDuration(tnbr(self.SAVE[frame]["animduration"]))
 		
 		local anim = self.frames[frame][1].batmananimout:CreateAnimation("Rotation")
 		anim:SetDegrees(1081)
-		anim:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+		anim:SetDuration(tnbr(self.SAVE[frame]["animduration"]))
 		
 		local alpha = self.frames[frame][1].batmananimout:CreateAnimation("Alpha")
-		alpha:SetChange(-tnbr(MPOWA_SAVE[frame]["fadealpha"]))
-		alpha:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+		alpha:SetChange(-tnbr(self.SAVE[frame]["fadealpha"]))
+		alpha:SetDuration(tnbr(self.SAVE[frame]["animduration"]))
 	end
 end
 
@@ -296,8 +296,8 @@ function MPOWA:AddAnimGrowIn(frame)
 		end)
 		
 		local scale = self.frames[frame][1].growin:CreateAnimation("Scale")
-		scale:SetScale(tnbr(MPOWA_SAVE[frame]["scalefactor"]), tnbr(MPOWA_SAVE[frame]["scalefactor"]))
-		scale:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+		scale:SetScale(tnbr(self.SAVE[frame]["scalefactor"]), tnbr(self.SAVE[frame]["scalefactor"]))
+		scale:SetDuration(tnbr(self.SAVE[frame]["animduration"]))
 	end
 end
 
@@ -312,7 +312,7 @@ function MPOWA:AddAnimRotateIn(frame)
 		
 		local anim = self.frames[frame][1].rotateanimin:CreateAnimation("Rotation")
 		anim:SetDegrees(-360)
-		anim:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+		anim:SetDuration(tnbr(self.SAVE[frame]["animduration"]))
 	end
 end
 
@@ -332,11 +332,11 @@ function MPOWA:AddAnimRotateShrinkFadeIn(frame)
 		
 		local scale = self.frames[frame][1].batmananimin:CreateAnimation("Scale")
 		scale:SetScale(-10, -10)
-		scale:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+		scale:SetDuration(tnbr(self.SAVE[frame]["animduration"]))
 		
 		local anim = self.frames[frame][1].batmananimin:CreateAnimation("Rotation")
 		anim:SetDegrees(1080.5)
-		anim:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+		anim:SetDuration(tnbr(self.SAVE[frame]["animduration"]))
 	end
 end
 
@@ -355,8 +355,8 @@ function MPOWA:AddAnimSizeIn(frame)
 		end)
 		
 		local scale = self.frames[frame][1].sizein:CreateAnimation("Scale")
-		scale:SetScale(-tnbr(MPOWA_SAVE[frame]["scalefactor"]), -tnbr(MPOWA_SAVE[frame]["scalefactor"]))
-		scale:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+		scale:SetScale(-tnbr(self.SAVE[frame]["scalefactor"]), -tnbr(self.SAVE[frame]["scalefactor"]))
+		scale:SetDuration(tnbr(self.SAVE[frame]["animduration"]))
 	end
 end
 
@@ -369,7 +369,7 @@ function MPOWA:AddAnimEscapeIn(frame)
 		end)
 		self.frames[frame][1].escapeanimin:SetScript("OnFinished", function() 
 			MPOWA.frames[frame][1].escapeanimin:Stop()
-			MPOWA.frames[frame][1]:SetAlpha(tnbr(MPOWA_SAVE[frame]["alpha"]))
+			MPOWA.frames[frame][1]:SetAlpha(tnbr(self.SAVE[frame]["alpha"]))
 			MPOWA.frames[frame][1]:SetWidth(64)
 			MPOWA.frames[frame][1]:SetHeight(64)
 			MPOWA.frames[frame][1]:Show()
@@ -377,10 +377,10 @@ function MPOWA:AddAnimEscapeIn(frame)
 		
 		local alpha = self.frames[frame][1].escapeanimin:CreateAnimation("Alpha")
 		alpha:SetChange(-.5)
-		alpha:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+		alpha:SetDuration(tnbr(self.SAVE[frame]["animduration"]))
 		
 		local scale = self.frames[frame][1].escapeanimin:CreateAnimation("Scale")
-		scale:SetScale(tnbr(MPOWA_SAVE[frame]["scalefactor"]), tnbr(MPOWA_SAVE[frame]["scalefactor"]))
-		scale:SetDuration(tnbr(MPOWA_SAVE[frame]["animduration"]))
+		scale:SetScale(tnbr(self.SAVE[frame]["scalefactor"]), tnbr(self.SAVE[frame]["scalefactor"]))
+		scale:SetDuration(tnbr(self.SAVE[frame]["animduration"]))
 	end
 end
