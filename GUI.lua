@@ -738,6 +738,10 @@ end
 function MPOWA:SelectAura(button)
 	local coeff = (self.Page - 1)*49
 	self.selected = button:GetID() - coeff
+	if MPowa_ConfigFrame:IsVisible() then
+		self.CurEdit = self.selected
+		self:Edit()
+	end
 	self:DeselectAll()
 	if _G("ConfigButton"..self.selected.."_Border") then
 		_G("ConfigButton"..self.selected.."_Border"):Show()
