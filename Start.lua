@@ -72,7 +72,9 @@ function MPOWA:CreateSave(i)
 end
 
 function MPOWA:Init()
-	self.SAVE = table.copy(MPOWA_SAVE or {}, true)
+	if MPOWA_SAVE then
+		self.SAVE = table.copy(MPOWA_SAVE, true)
+	end
 	
 	MPowa_Tooltip:SetOwner(UIParent, "ANCHOR_NONE")
 	

@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 53
+MPOWA.Build = 54
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
@@ -104,30 +104,30 @@ MPOWA.SOUND = {
 }
 
 MPOWA.Windfury = false
+MPOWA.SAVE = {}
 
-local function copy(t, inner)
-  if type(t) ~= "table" then
-    error("table expected, got "..type(t), 2)
-  end
-  local new = {}
-  if inner then
-    for i,s in next,t do
-      if type(s) == "table" then
-        new[i] = copy(s, true)
-      else
-        new[i] = s
-      end
+local function deepCopy(object)
+    local lookup_table = {}
+    local function _copy(object)
+        if type(object) ~= "table" then
+            return object
+        elseif lookup_table[object] then
+            return lookup_table[object]
+        end
+        local new_table = {}
+        lookup_table[object] = new_table
+        for index, value in pairs(object) do
+            new_table[_copy(index)] = _copy(value)
+        end
+        return setmetatable(new_table, getmetatable(object))
     end
-  else
-    for i,s in next,t do
-      new[i] = s
-    end
-  end
-  return new
+    return _copy(object)
 end
-table.copy = copy
+table.copy = deepCopy
 
-MPOWA.SAVE = table.copy(MPOWA_SAVE or {}, true)
+if MPOWA_SAVE then
+	MPOWA.SAVE = table.copy(MPOWA_SAVE, true)
+end
 
 function MPOWA:OnEvent(event, arg1)
 	if event == "UNIT_AURA" then
