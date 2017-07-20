@@ -696,8 +696,8 @@ function MPOWA:Remove()
 				newFrames[count] = self.frames[i]
 			end
 		end
-		--self.SAVE = table.copy(newSave)
-		self.Save = newSave
+		self.SAVE = table.copy(newSave)
+		--self.Save = newSave
 		self.frames = table.copy(newFrames)
 		newSave = nil
 		newFrames = nil
