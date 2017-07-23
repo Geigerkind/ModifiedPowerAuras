@@ -1303,7 +1303,7 @@ function MPOWA:ScrollFrame_Update()
 	local line -- 1 through 5 of our window to scroll
 	local lineplusoffset -- an index into our data calculated from the scroll offset
 	local FRAME = MPowa_ProfileFrame_ScrollFrame
-	FauxScrollFrame_Update(FRAME,self:GetTableLength(MPOWA_PROFILE),7,40)
+	FauxScrollFrame_Update(FRAME,MPOWA:GetTableLength(MPOWA_PROFILE),7,40)
 	for line=1,7 do
 		lineplusoffset = line + FauxScrollFrame_GetOffset(FRAME)
 		if MPOWA_PROFILE[lineplusoffset] ~= nil then

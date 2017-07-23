@@ -1,5 +1,5 @@
 CreateFrame("Frame", "MPOWA", UIParent)
-MPOWA.Build = 55
+MPOWA.Build = 56
 MPOWA.Cloaded = false
 MPOWA.loaded = false
 MPOWA.selected = 1
@@ -164,19 +164,21 @@ function MPOWA:OnEvent(event, arg1)
 			self.Windfury = false
 		end
 	elseif event == "UNIT_MANA" or event == "UNIT_RAGE" or event == "UNIT_ENERGY" then
-		local tarid = 44
 		if arg1 then
 			local unit = arg1
 			if (unit == "target") then 
-				tarid = 45
+				self:Push("unitpower", unit, 45, false)
 			elseif (string.find(unit,"raid")) then
-				--local a,b = string.find(unit,"raid")
-				tarid = tonumber(string.sub(unit, 5))+45
+				local st = string.sub(unit, 5)
+				if st and tonumber(st) then
+					self:Push("unitpower", unit, (tonumber(st) or 0)+45, false)
+				end
 			elseif (string.find(unit,"party")) then
-				--local a,b = string.find(unit,"party")
-				tarid = tonumber(string.sub(unit, 6))+45
+				local st = string.sub(unit, 6)
+				if st and tonumber(st) then
+					self:Push("unitpower", unit, (tonumber(st) or 0)+45, false)
+				end
 			end
-			self:Push("unitpower", unit, tarid, false)
 		end
 	elseif event == "PLAYER_LOGOUT" then
 		MPOWA_SAVE = table.copy(self.SAVE, true)
