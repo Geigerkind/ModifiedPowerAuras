@@ -266,14 +266,21 @@ function MPOWA:GetCooldown(buff)
 end
 
 function MPOWA:GetSpellSlot(buff)
+	if not buff then 
+		return 0 
+	end
 	local i = 1
 	while true do
 		local name, rank = GetSpellName(i, "spell")
 		if (not name) or strfind(strlower(name), strlower(buff)) then 
 			return i
 		end
+		if i > 1000 then
+			return 0 -- Lets give up at this point
+		end
 		i = i + 1
 	end
+	return 0
 end
 
 local BuffExist = {}

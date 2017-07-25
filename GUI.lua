@@ -1054,15 +1054,15 @@ function MPOWA:OptionsFrame_SetColor()
 	frame.g = g
 	frame.b = b
 
-	self.SAVE[MPOWA.CurEdit][name.."_r"] = r
-	self.SAVE[MPOWA.CurEdit][name.."_g"] = g
-	self.SAVE[MPOWA.CurEdit][name.."_b"] = b
+	MPOWA.SAVE[MPOWA.CurEdit][name.."_r"] = r
+	MPOWA.SAVE[MPOWA.CurEdit][name.."_g"] = g
+	MPOWA.SAVE[MPOWA.CurEdit][name.."_b"] = b
 	
 	if name == "fontcolor" then
-		if self.SAVE[MPOWA.CurEdit].usefontcolor then
-			_G("TextureFrame"..MPOWA.CurEdit.."_Timer"):SetTextColor(r,g,b,self.SAVE[MPOWA.CurEdit].fontalpha)
+		if MPOWA.SAVE[MPOWA.CurEdit].usefontcolor then
+			_G("TextureFrame"..MPOWA.CurEdit.."_Timer"):SetTextColor(r,g,b,MPOWA.SAVE[MPOWA.CurEdit].fontalpha)
 		else
-			_G("TextureFrame"..MPOWA.CurEdit.."_Timer"):SetTextColor(1,1,1,self.SAVE[MPOWA.CurEdit].fontalpha)
+			_G("TextureFrame"..MPOWA.CurEdit.."_Timer"):SetTextColor(1,1,1,MPOWA.SAVE[MPOWA.CurEdit].fontalpha)
 		end
 	elseif name == "icon" then
 		MPowa_ConfigFrame_Container_1_Icon_Texture:SetVertexColor(r,g,b)
@@ -1083,10 +1083,10 @@ function MPOWA:OptionsFrame_CancelColor()
 	frame.b = b
 	
 	if name == "fontcolor" then
-		if self.SAVE[MPOWA.CurEdit].usefontcolor then
-			_G("TextureFrame"..MPOWA.CurEdit.."_Timer"):SetTextColor(r,g,b,self.SAVE[MPOWA.CurEdit].fontalpha)
+		if MPOWA.SAVE[MPOWA.CurEdit].usefontcolor then
+			_G("TextureFrame"..MPOWA.CurEdit.."_Timer"):SetTextColor(r,g,b,MPOWA.SAVE[MPOWA.CurEdit].fontalpha)
 		else
-			_G("TextureFrame"..MPOWA.CurEdit.."_Timer"):SetTextColor(1,1,1,self.SAVE[MPOWA.CurEdit].fontalpha)
+			_G("TextureFrame"..MPOWA.CurEdit.."_Timer"):SetTextColor(1,1,1,MPOWA.SAVE[MPOWA.CurEdit].fontalpha)
 		end
 	elseif name == "icon" then
 		MPowa_ConfigFrame_Container_1_Icon_Texture:SetVertexColor(r,g,b)
