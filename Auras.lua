@@ -393,7 +393,6 @@ function MPOWA:Push(aura, unit, i, isdebuff)
 			end
 			BuffExist[val] = true -- May cause issues elsewhere :/
 			if path["isdebuff"]==isdebuff and ((path["secondspecifier"] and (strlower(path["secondspecifiertext"])==tex)) or not path["secondspecifier"]) then
-				self:InParty()
 				local p1, p2 = self:TernaryReturn(val, "inparty", self:InParty()), self:TernaryReturn(val, "inraid", UnitInRaid("player"))
 				if self:TernaryReturn(val, "alive", self:Reverse(UnitIsDeadOrGhost("player"))) and self:TernaryReturn(val, "mounted", self.mounted) 
 					and self:TernaryReturn(val, "incombat", UnitAffectingCombat("player")) 
