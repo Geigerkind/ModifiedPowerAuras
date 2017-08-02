@@ -25,11 +25,9 @@ function MPOWA:IsMounted()
 	self.mounted = false
 end
 
+local UnitInParty = UnitInParty
 function MPOWA:InParty()
-	if GetNumPartyMembers() > 0 or UnitInRaid("player") then
-		self.party = true
-	end
-	self.party = false
+	return GetNumPartyMembers() > 0 or UnitInRaid("player") or UnitInParty("player")
 end
 
 function MPOWA:InBG()

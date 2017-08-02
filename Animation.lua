@@ -21,6 +21,13 @@ end
 function MPOWA:FHide(key)
 	local p = self.SAVE[key]
 	if p and self.frames[key] and self.frames[key][1]:IsVisible() and not self.testall and not p["test"] then
+		if p["useendsound"] then
+			if p.endsound < 16 then
+				PlaySound(self.SOUND[p.endsound], "master")
+			else
+				PlaySoundFile("Interface\\AddOns\\ModifiedPowerAuras\\Sounds\\"..self.SOUND[p.endsound], "master")
+			end
+		end
 		if p["batmananimout"] then
 			self:PlayAnim("batmananimout", key, "batmananimout")
 		elseif p["shrinkanim"] then
@@ -73,6 +80,13 @@ end
 function MPOWA:FShow(key)
 	local p = self.SAVE[key]
 	if not self.frames[key][1]:IsVisible() and p["used"] then
+		if p["usebeginsound"] then
+			if p.beginsound < 16 then
+				PlaySound(self.SOUND[p.beginsound], "master")
+			else
+				PlaySoundFile("Interface\\AddOns\\ModifiedPowerAuras\\Sounds\\"..self.SOUND[path.beginsound], "master")
+			end
+		end
 		if p["isdynamicgroup"] then
 			self:ApplyDynamicGroup(key)
 		elseif p["groupnumber"] and tnbr(p["groupnumber"])>0 then
