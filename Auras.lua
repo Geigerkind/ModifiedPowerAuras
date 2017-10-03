@@ -277,7 +277,7 @@ function MPOWA:GetSpellSlot(buff)
 	local i = 1
 	while true do
 		local name, rank = GetSpellName(i, "spell")
-		if (not name) or strfind(strlower(name), strlower(buff)) then 
+		if (not name) or strfind(strlower(name), strlower(buff)) or name==buff then 
 			return i
 		end
 		if i > 1000 then
