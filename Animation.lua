@@ -28,27 +28,31 @@ function MPOWA:FHide(key)
 				PlaySoundFile("Interface\\AddOns\\ModifiedPowerAuras\\Sounds\\"..self.SOUND[p.endsound], "master")
 			end
 		end
-		if p["batmananimout"] then
+		if p["batmananimout"] and not self.frames[key][1].batmananimout:IsPlaying() then
 			self:PlayAnim("batmananimout", key, "batmananimout")
-		elseif p["shrinkanim"] then
+		elseif p["shrinkanim"] and not self.frames[key][1].translateanim:IsPlaying() 
+				and not self.frames[key][1].fadeout:IsPlaying() and not self.frames[key][1].rotateanimout:IsPlaying() 
+				and not self.frames[key][1].shrink:IsPlaying() then
 			self:PlayAnim("translateanim", key, "translateanim")
 			self:PlayAnim("fadeout", key, "fadeout")
 			self:PlayAnim("rotateanimout", key, "rotateanimout")
 			self:PlayAnim("shrinkanim", key, "shrink")
 		else
-			if p["growout"] then
+			if p["growout"] and not self.frames[key][1].fadout:IsPlaying() and not self.frames[key][1].rotateanimout:IsPlaying() 
+				and not self.frames[key][1].growout:IsPlaying() then
 				self:PlayAnim("fadeout", key, "fadeout")
 				self:PlayAnim("rotateanimout", key, "rotateanimout")
 				self:PlayAnim("growout", key, "growout")
-			elseif p["escapeanimout"] then
+			elseif p["escapeanimout"] and not self.frames[key][1].rotateanimout:IsPlaying() and not self.frames[key][1].escapeanimout:IsPlaying() then
 				self:PlayAnim("rotateanimout", key, "rotateanimout")
 				self:PlayAnim("escapeanimout", key, "escapeanimout")
 			else
-				if p["fadeout"] then
+				if p["fadeout"] and not self.frames[key][1].translateanim:IsPlaying() and not self.frames[key][1].rotateanimout:IsPlaying() 
+					and not self.frames[key][1].fadeout:IsPlaying() then
 					self:PlayAnim("translateanim", key, "translateanim")
 					self:PlayAnim("rotateanimout", key, "rotateanimout")
 					self:PlayAnim("fadeout", key, "fadeout")
-				elseif p["translateanim"] then
+				elseif p["translateanim"] and not self.frames[key][1].rotateanimout:IsPlaying() and not self.frames[key][1].translateanim:IsPlaying() then
 					self:PlayAnim("rotateanimout", key, "rotateanimout")
 					self:PlayAnim("translateanim", key, "translateanim")
 				else
@@ -56,7 +60,7 @@ function MPOWA:FHide(key)
 						self.frames[key][1].flash:Stop()
 						self.frames[key][1]:SetAlpha(tnbr(p["alpha"]))
 					end
-					if p["rotateanimout"] then
+					if p["rotateanimout"] and not self.frames[key][1].rotateanimout:IsPlaying() then
 						self:PlayAnim("rotateanimout", key, "rotateanimout")
 					else
 						self:AfterAnimationDynamicGroup(key)
@@ -93,25 +97,27 @@ function MPOWA:FShow(key)
 			self:ApplyDynamicGroup(tnbr(p["groupnumber"]))
 		end
 		self.frames[key][1]:Show()
-		if p["batmananimin"] then
+		if p["batmananimin"] and not self.frames[key][1].batmananimin:IsPlaying() then
 			self:PlayAnim("batmananimin", key, "batmananimin")
-		elseif p["sizeanim"] then
+		elseif p["sizeanim"] and not self.frames[key][1].fadein:IsPlaying() and not self.frames[key][1].rotateanimin:IsPlaying()
+			and not self.frames[key][1].sizein:IsPlaying() then
 			self:PlayAnim("fadein", key, "fadein")
 			self:PlayAnim("rotateanimin", key, "rotateanimin")
 			self:PlayAnim("sizeanim", key, "sizein")
 		else
-			if p["growin"] then
+			if p["growin"] and not self.frames[key][1].fadein:IsPlaying() and not self.frames[key][1].rotateanimin:IsPlaying()
+				and not self.frames[key][1].growin:IsPlaying() then
 				self:PlayAnim("fadein", key, "fadein")
 				self:PlayAnim("rotateanimin", key, "rotateanimin")
 				self:PlayAnim("growin", key, "growin")
-			elseif p["escapeanimin"] then
+			elseif p["escapeanimin"] and not self.frames[key][1].rotateanimin:IsPlaying() and not self.frames[key][1].escapeanimin:IsPlaying() then
 				self:PlayAnim("rotateanimin", key, "rotateanimin")
 				self:PlayAnim("escapeanimin", key, "escapeanimin")
 			else
-				if p["fadein"] then
+				if p["fadein"] and not self.frames[key][1].rotateanimin:IsPlaying() and not self.frames[key][1].fadein:IsPlaying() then
 					self:PlayAnim("rotateanimin", key, "rotateanimin")
 					self:PlayAnim("fadein", key, "fadein")
-				else
+				elseif p["rotateanimin"] and not self.frames[key][1].rotateanimin:IsPlaying() then
 					self:PlayAnim("rotateanimin", key, "rotateanimin")
 				end
 			end
