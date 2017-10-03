@@ -88,7 +88,7 @@ function MPOWA:FShow(key)
 			if p.beginsound < 16 then
 				PlaySound(self.SOUND[p.beginsound], "master")
 			else
-				PlaySoundFile("Interface\\AddOns\\ModifiedPowerAuras\\Sounds\\"..self.SOUND[path.beginsound], "master")
+				PlaySoundFile("Interface\\AddOns\\ModifiedPowerAuras\\Sounds\\"..self.SOUND[p.beginsound], "master")
 			end
 		end
 		if p["isdynamicgroup"] then
