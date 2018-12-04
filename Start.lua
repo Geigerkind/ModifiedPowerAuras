@@ -69,6 +69,68 @@ function MPOWA:CreateSave(i)
 		minutes = false,
 		timerfontsize = 1,
 	}
+
+	local cat = i;
+
+	if self.SAVE[i]["flashanim"] then
+		self:AddAnimFlash(cat)
+	end
+	
+	if self.SAVE[i]["growout"] then
+		self:AddAnimGrowOut(cat)
+	end
+	
+	if self.SAVE[i]["growin"] then
+		self:AddAnimGrowIn(cat)
+	end
+	
+	if self.SAVE[i]["fadeout"] then
+		self:AddAnimFadeOut(cat)
+	end
+	
+	if self.SAVE[i]["fadein"] then
+		self:AddAnimFadeIn(cat)
+	end
+	
+	if self.SAVE[i]["escapeanimout"] then
+		self:AddAnimEscapeOut(cat)
+	end
+	
+	if self.SAVE[i]["escapeanimin"] then
+		self:AddAnimEscapeIn(cat)
+	end
+	
+	if self.SAVE[i]["shrinkanim"] then
+		self:AddAnimShrink(cat)
+	end
+	
+	if self.SAVE[i]["sizeanim"] then
+		self:AddAnimSizeIn(cat)
+	end
+	
+	if self.SAVE[i]["translateanim"] then
+		self:AddAnimTranslate(cat)
+	end
+	
+	if vaself.SAVE[i]l["rotateanimout"] then
+		self:AddAnimRotateOut(cat)
+	end
+	
+	if self.SAVE[i]["rotateanimin"] then
+		self:AddAnimRotateIn(cat)
+	end
+	
+	if self.SAVE[i]["batmananimout"] then
+		self:AddAnimRotateShrinkFadeOut(cat)
+	end
+	
+	if self.SAVE[i]["batmananimin"] then
+		self:AddAnimRotateShrinkFadeIn(cat)
+	end
+	
+	if not self.SAVE[i]["cpstacks"] then
+		self.SAVE[cat]["cpstacks"] = ">=0"
+	end
 end
 
 function MPOWA:Init()

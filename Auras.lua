@@ -37,7 +37,10 @@ function MPOWA:OnUpdate(elapsed)
 			if val then
 				path = self.SAVE[cat]
 				if not path then return end
-				if path["enemytarget"] and not UN("target") and not UnitIsFriend("player", "target") then return end
+				if path["enemytarget"] and (not UN("target") or not UnitIsFriend("player", "target")) then return end
+				if path["inparty"] == true and not self:InParty() then return end
+				if path["inraid"] == true and not UnitInRaid("player") then return end
+
 				p1, p2 = self:TernaryReturn(cat, "inparty", self:InParty()), self:TernaryReturn(cat, "inraid", UnitInRaid("player"))
 				if not self.active[cat] and self:TernaryReturn(cat, "alive", self:Reverse(UnitIsDeadOrGhost("player"))) 
 				and self:TernaryReturn(cat, "mounted", self.mounted) and self:TernaryReturn(cat, "incombat", UnitAffectingCombat("player")) 
@@ -98,7 +101,18 @@ function MPOWA:OnUpdate(elapsed)
 							end
 						end
 					else
-						self:FShow(cat)
+						if path["secsleft"] then
+							if duration<=path["secsleftdur"] then
+								self:FShow(cat)
+								self.frames[cat][3]:Show()
+							else
+								self:FHide(cat)
+								self.frames[cat][3]:Hide()
+							end
+						else
+							self:FShow(cat)
+							self.frames[cat][3]:Show()
+						end
 					end
 				else
 					if path["inverse"] or path["cooldown"] then
