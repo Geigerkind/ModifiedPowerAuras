@@ -112,7 +112,7 @@ function MPOWA:CreateSave(i)
 		self:AddAnimTranslate(cat)
 	end
 	
-	if vaself.SAVE[i]l["rotateanimout"] then
+	if self.SAVE[i]["rotateanimout"] then
 		self:AddAnimRotateOut(cat)
 	end
 	
