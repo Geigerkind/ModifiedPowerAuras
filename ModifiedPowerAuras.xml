@@ -2835,7 +2835,7 @@
 						MPowa_ConfigFrame_Container_6:Hide()
 					</OnClick>
 					<OnLoad>
-						getglobal(this:GetName().."Text"):SetText("Animation")
+						getglobal(this:GetName().."Text"):SetText(MPOWA_CONFIGFRAME_ANIMATION)
 						PanelTemplates_DeselectTab(this)
 						PanelTemplates_TabResize(0, this)
 						getglobal(this:GetName().."HighlightTexture"):SetWidth(this:GetTextWidth() + 31)
@@ -2869,7 +2869,7 @@
 						MPowa_ConfigFrame_Container_6:Show()
 					</OnClick>
 					<OnLoad>
-						getglobal(this:GetName().."Text"):SetText("Group")
+						getglobal(this:GetName().."Text"):SetText(MPOWA_CONFIGFRAME_GROUP)
 						PanelTemplates_DeselectTab(this)
 						PanelTemplates_TabResize(0, this)
 						getglobal(this:GetName().."HighlightTexture"):SetWidth(this:GetTextWidth() + 31)
