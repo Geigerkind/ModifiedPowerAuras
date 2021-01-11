@@ -93,6 +93,8 @@ if (GetLocale() == "deDE") then
 
 	MPOWA_SCRIPT_MOUNT_100 = "Erhöht das Bewegungstempo um 100"
 	MPOWA_SCRIPT_MOUNT_60 = "Erhöht das Bewegungstempo um 60"
+	
+	MPOWA_COLORPICKER_TOOLTIP = "Click here to change the fontcolor." --
 
 	MPOWA_TEXT_ABOUT_MPOWA = "Modified Power Auras ist die erweiterte Version von Power Auras. Es verfügt über eine vielzahl von Funktionen, die erst mit späteren Versionen hinzukomen. Zusätzlich verfügt es über eigene Funktion, die das AddOn einmalig machen."
 	MPOWA_TEXT_CREATOR_TITLE = "Wer hat Modified Power Auras erstellt?"
