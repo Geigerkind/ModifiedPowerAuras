@@ -8,7 +8,7 @@
 ## Author: Shino <Synced> - Kronos
 ## SavedVariables: MPOWA_PROFILE
 ## SavedVariablesPerCharacter: MPOWA_SAVE
-## Version: 1
+## Version: 1.5
 
 libs\LibStub\LibStub.lua
 libs\Classy-1.0\Classy-1.0.lua

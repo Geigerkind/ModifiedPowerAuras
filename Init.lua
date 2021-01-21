@@ -126,6 +126,11 @@ end
 table.copy = deepCopy
 
 if MPOWA_SAVE then
+	for j=1,table.getn(MPOWA_SAVE) do
+		if not MPOWA_SAVE[j].funct then
+			MPOWA_SAVE[j].funct = nil
+		end
+	end
 	MPOWA.SAVE = table.copy(MPOWA_SAVE, true)
 end
 

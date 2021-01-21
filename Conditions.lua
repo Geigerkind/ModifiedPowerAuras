@@ -27,7 +27,7 @@ end
 
 local UnitInParty = UnitInParty
 function MPOWA:InParty()
-	return GetNumPartyMembers() > 0 or UnitInRaid("player") or UnitInParty("player")
+	return GetNumPartyMembers() > 0
 end
 
 function MPOWA:InBG()

@@ -169,6 +169,7 @@ MPOWA_CHECKBUTTON_ISDYNAMICGROUP_TOOLTIP = "Check this to set this aura as dynam
 MPOWA_CHECKBUTTON_ISDYNAMICGROUP = "Is dynamic group"
 MPOWA_EDITBOX_GROUPNUMBER_TOOLTIP = "Enter the number of the dynamic group parent aura."
 MPOWA_EDITBOX_GROUPNUMBER = "Enter group number"
+MPOWA_EDITBOX_FUNCTION_TOOLTIP = "Enter a custom function. Return true to show the aura, false to hide it."
 
 MPOWA_EDITBOX_TOOLTIP_ICONPATH = "Icon path. Enter the path here if it is not in the list or found by itself."
 
