@@ -279,21 +279,22 @@ function MPOWA:GetCooldown(buff)
 						for u=1, GetContainerNumSlots(p) do
 							start, duration, enable = GetContainerItemCooldown(p,u)
 							_,_,name=strfind(GetContainerItemLink(p,u) or "","^.*%[(.*)%].*$")
-							if (not name) then break end
-							if strfind(strlower(buff), strlower(name)) then
-								if duration>2 then
-									return ((start or 0)+(duration or 0))-GT() + 1
-								else
-									return 0
+							if (name) then 
+								if strfind(strlower(buff), strlower(name)) then
+									if duration>2 then
+										return ((start or 0)+(duration or 0))-GT() + 1
+									else
+										return 0
+									end
+								elseif p == 4 and u == GetContainerNumSlots(p) then
+									if duration>2 then
+										return ((start or 0)+(duration or 0))-GT() + 1
+									else
+										return 0
+									end
+							--	else
+							--		return 0
 								end
-							elseif p == 4 and u == GetContainerNumSlots(p) then
-								if duration>2 then
-									return ((start or 0)+(duration or 0))-GT() + 1
-								else
-									return 0
-								end
-							--else
-							--	return 0
 							end
 						end
 					end

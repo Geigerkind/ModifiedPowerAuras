@@ -1158,11 +1158,11 @@ end
 function MPOWA:Editbox_Name(obj)
 	local oldname = self.SAVE[self.CurEdit].buffname
 	self.SAVE[self.CurEdit].buffname = obj:GetText()
-
+ 
 	if oldname ~= self.SAVE[self.CurEdit].buffname then
 		self.SAVE[self.CurEdit].texture = "Interface\\AddOns\\ModifiedPowerAuras\\images\\dummy.tga"
 		MPowa_ConfigFrame_Container_1_Icon_Texture:SetTexture(self.SAVE[self.CurEdit].texture)
-		_G("ConfigButton"..self.CurEdit.."_Icon"):SetTexture(self.SAVE[self.CurEdit].texture)
+		_G("ConfigButton"..self.selected.."_Icon"):SetTexture(self.SAVE[self.CurEdit].texture)
 		_G("TextureFrame"..self.CurEdit.."_Icon"):SetTexture(self.SAVE[self.CurEdit].texture)
 	end
 	
@@ -1294,16 +1294,18 @@ end
 
 function MPOWA:Test()
 	if ConfigButton1 then
-		if self.SAVE[self.selected].test then
-			self.SAVE[self.selected].test = false
+		local coeff = (self.Page - 1)*49
+		local tested = self.selected+coeff
+		if self.SAVE[tested].test then
+			self.SAVE[tested].test = false
 			if not self.active[i] then
-				_G("TextureFrame"..self.selected):Hide()
+				_G("TextureFrame"..tested):Hide()
 			end
 		else
-			self.SAVE[self.selected].test = true
-			_G("TextureFrame"..self.selected):Show()
+			self.SAVE[tested].test = true
+			_G("TextureFrame"..tested):Show()
 		end
-		MPOWA:ApplyConfig(self.selected)
+		MPOWA:ApplyConfig(tested)
 	end
 end
 
@@ -1370,7 +1372,7 @@ function MPOWA:IconFrameOkay()
 		SELECTEDICON = MPowa_IconFrame_Editbox:GetText()
 	end
 	MPowa_ConfigFrame_Container_1_Icon_Texture:SetTexture(SELECTEDICON)
-	_G("ConfigButton"..self.CurEdit.."_Icon"):SetTexture(SELECTEDICON)
+	_G("ConfigButton"..self.selected.."_Icon"):SetTexture(SELECTEDICON)
 	_G("TextureFrame"..self.CurEdit.."_Icon"):SetTexture(SELECTEDICON)
 	self.SAVE[self.CurEdit].texture = SELECTEDICON
 	MPowa_IconFrame:Hide()
