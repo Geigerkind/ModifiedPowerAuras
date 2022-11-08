@@ -26,6 +26,7 @@ libs\AnimationGroup\translation.lua
 
 localization\enUS.lua
 localization\deDE.lua
+localization\ruRU.lua
 
 Init.lua
 Util.lua
