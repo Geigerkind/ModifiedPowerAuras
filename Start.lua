@@ -68,6 +68,7 @@ function MPOWA:CreateSave(i)
 		blendmode = 1,
 		minutes = false,
 		timerfontsize = 1,
+		funct = nil
 	}
 
 	local cat = i;

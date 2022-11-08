@@ -19,6 +19,7 @@ Modified Power Auras is the advanced version of the AddOn Power Auras. It is a l
 * Play a sound if a aura is applied or fades
 * Have some nice animations  
 * Group them as they appear  
+* Set up custom functions to show or hide the aura
 
 
 ### Installing Instructions ###

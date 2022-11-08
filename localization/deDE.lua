@@ -172,6 +172,7 @@ if (GetLocale() == "deDE") then
 	MPOWA_CHECKBUTTON_ISDYNAMICGROUP = "Ist dynamische Gruppe"
 	MPOWA_EDITBOX_GROUPNUMBER_TOOLTIP = "Trage die Nummer der dynamischen Gruppe ein, um diese Aura hinzufügen."
 	MPOWA_EDITBOX_GROUPNUMBER = "Gruppenummer"
+	MPOWA_EDITBOX_FUNCTION_TOOLTIP = "Enter a custom function. Return true to show the aura, false to hide it."
 	
 	MPOWA_EDITBOX_TOOLTIP_ICONPATH = "Iconpfad. Schreibe hier den Pfad rein, wenn er nicht automatisch gefunden wird oder in der Liste zu finden ist."
 

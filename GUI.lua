@@ -636,11 +636,13 @@ function MPOWA:ApplyAttributesToButton(i, button)
 	_G("ConfigButton"..p.."_Icon"):SetTexture(self.SAVE[i]["texture"])
 	_G("ConfigButton"..p.."_Count"):SetText(i)
 	_G("ConfigButton"..p.."_Border"):Hide()
+	
 	if not bool and i<=self.Page*49 then
 		button:Show()
 	else
 		button:Hide()
 	end
+	
 end
 
 function MPOWA:AddAura()
@@ -658,12 +660,13 @@ function MPOWA:AddAura()
 		self:CreateSave(actualLength)
 		self:CreateIcon(self.NumBuffs, actualLength)
 		self:ApplyConfig(actualLength)
-		self:CreateButton(p)
+		self:CreateButton(actualLength)
 
 		self.SAVE[actualLength]["used"] = true
 		self:DeselectAll()
-		if not bool then
-			_G("ConfigButton"..p.."_Border"):Show()
+		if not bool and actualLength<coeff then
+			_G("ConfigButton"..p.."_Border"):Show();
+			_G("ConfigButton"..p):Show();
 		end
 		self.selected = p
 	end
@@ -671,8 +674,9 @@ end
 
 function MPOWA:DeselectAll()
 	for i=1, 49 do
-		if not _G("ConfigButton"..i) then break end
-		_G("ConfigButton"..i.."_Border"):Hide()
+		if _G("ConfigButton"..i.."_Border") then 
+			_G("ConfigButton"..i.."_Border"):Hide()
+		end
 	end
 end
 
@@ -687,6 +691,8 @@ function MPOWA:Remove()
 		self:CreateSave(self.selected+coeff)
 		self.SAVE[self.selected+coeff]["used"] = false
 		self.frames[self.selected+coeff][1]:Hide()
+		_G("ConfigButton"..self.selected):Hide();
+		_G("ConfigButton"..self.selected.."_Border"):Hide();
 		local newSave = {}
 		local newFrames = {}
 		local count = 0
@@ -834,7 +840,21 @@ function MPOWA:Edit()
 		MPowa_ConfigFrame_Container_3_Slider_EndSoundText:SetText(MPOWA_SLIDER_BEGINSOUND..MPOWA.SOUND[self.SAVE[self.CurEdit].endsound])
 		MPowa_ConfigFrame_Container_3_Checkbutton_BeginSound:SetChecked(self.SAVE[self.CurEdit].usebeginsound)
 		MPowa_ConfigFrame_Container_3_Checkbutton_EndSound:SetChecked(self.SAVE[self.CurEdit].useendsound)
-		
+		if (self.SAVE[self.CurEdit].funct ~= nil) then
+			MPowa_ConfigFrame_Container_7_Funct_Editbox:SetText(self.SAVE[self.CurEdit].funct)
+		else
+			self.SAVE[self.CurEdit].funct = nil
+			MPowa_ConfigFrame_Container_7_Funct_Editbox:SetText("")
+		end
+
+		MPowa_ConfigFrame_Container_7_Funct_Editbox:SetBackdrop({
+			bgFile = [[Interface\Buttons\WHITE8x8]],
+			edgeFile = [[Interface\Tooltips\UI-Tooltip-Border]],
+			edgeSize = 0,
+			insets = {left = 3, right = 3, top = 3, bottom = 3},
+		})
+		MPowa_ConfigFrame_Container_7_Funct_Editbox:SetBackdropColor(0, 0, 0, 0)
+		MPowa_ConfigFrame_Container_7_Funct_Editbox:SetBackdropBorderColor(0, 0, 0, 0)
 		-- ANIM START
 		MPowa_ConfigFrame_Container_5_Slider_AnimDuration:SetValue(tnbr(self.SAVE[self.CurEdit].animduration))
 		MPowa_ConfigFrame_Container_5_Slider_AnimDurationText:SetText(MPOWA_SLIDER_ANIMDURATION.." - "..self.SAVE[self.CurEdit].animduration)
@@ -1138,11 +1158,11 @@ end
 function MPOWA:Editbox_Name(obj)
 	local oldname = self.SAVE[self.CurEdit].buffname
 	self.SAVE[self.CurEdit].buffname = obj:GetText()
-
+ 
 	if oldname ~= self.SAVE[self.CurEdit].buffname then
 		self.SAVE[self.CurEdit].texture = "Interface\\AddOns\\ModifiedPowerAuras\\images\\dummy.tga"
 		MPowa_ConfigFrame_Container_1_Icon_Texture:SetTexture(self.SAVE[self.CurEdit].texture)
-		_G("ConfigButton"..self.CurEdit.."_Icon"):SetTexture(self.SAVE[self.CurEdit].texture)
+		_G("ConfigButton"..self.selected.."_Icon"):SetTexture(self.SAVE[self.CurEdit].texture)
 		_G("TextureFrame"..self.CurEdit.."_Icon"):SetTexture(self.SAVE[self.CurEdit].texture)
 	end
 	
@@ -1160,6 +1180,17 @@ function MPOWA:Editbox_Name(obj)
 	else
 		self:Iterate("player")
 		self:Iterate("target")
+	end
+end
+
+function MPOWA:Editbox_Function(obj)
+	if (obj:GetText() ~= nil) then
+		local f = string.gsub(obj:GetText(), "\n", "");
+		if (f ~= "") then
+			self.SAVE[self.CurEdit].funct = f;
+		elseif (f == "") then
+			self.SAVE[self.CurEdit].funct = nil;
+		end
 	end
 end
 
@@ -1263,16 +1294,18 @@ end
 
 function MPOWA:Test()
 	if ConfigButton1 then
-		if self.SAVE[self.selected].test then
-			self.SAVE[self.selected].test = false
+		local coeff = (self.Page - 1)*49
+		local tested = self.selected+coeff
+		if self.SAVE[tested].test then
+			self.SAVE[tested].test = false
 			if not self.active[i] then
-				_G("TextureFrame"..self.selected):Hide()
+				_G("TextureFrame"..tested):Hide()
 			end
 		else
-			self.SAVE[self.selected].test = true
-			_G("TextureFrame"..self.selected):Show()
+			self.SAVE[tested].test = true
+			_G("TextureFrame"..tested):Show()
 		end
-		MPOWA:ApplyConfig(self.selected)
+		MPOWA:ApplyConfig(tested)
 	end
 end
 
@@ -1339,7 +1372,7 @@ function MPOWA:IconFrameOkay()
 		SELECTEDICON = MPowa_IconFrame_Editbox:GetText()
 	end
 	MPowa_ConfigFrame_Container_1_Icon_Texture:SetTexture(SELECTEDICON)
-	_G("ConfigButton"..self.CurEdit.."_Icon"):SetTexture(SELECTEDICON)
+	_G("ConfigButton"..self.selected.."_Icon"):SetTexture(SELECTEDICON)
 	_G("TextureFrame"..self.CurEdit.."_Icon"):SetTexture(SELECTEDICON)
 	self.SAVE[self.CurEdit].texture = SELECTEDICON
 	MPowa_IconFrame:Hide()

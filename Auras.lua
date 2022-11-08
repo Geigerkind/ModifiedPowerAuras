@@ -37,9 +37,6 @@ function MPOWA:OnUpdate(elapsed)
 			if val then
 				path = self.SAVE[cat]
 				if not path then return end
-				if path["enemytarget"] and (not UN("target") or not UnitIsFriend("player", "target")) then return end
-				if path["inparty"] == true and not self:InParty() then return end
-				if path["inraid"] == true and not UnitInRaid("player") then return end
 
 				p1, p2 = self:TernaryReturn(cat, "inparty", self:InParty()), self:TernaryReturn(cat, "inraid", UnitInRaid("player"))
 				if not self.active[cat] and self:TernaryReturn(cat, "alive", self:Reverse(UnitIsDeadOrGhost("player"))) 
@@ -114,6 +111,24 @@ function MPOWA:OnUpdate(elapsed)
 							self.frames[cat][3]:Show()
 						end
 					end
+
+					if (self.SAVE[cat]["enemytarget"] == true and UnitIsFriend("player", "target"))
+						or (self.SAVE[cat]["inparty"] == true and not self:InParty())
+						or (self.SAVE[cat]["inraid"] == true and not UnitInRaid("player"))
+							then
+						self:FHide(cat)
+					end
+
+					if (path["funct"]) then
+						local f = loadstring(path["funct"])
+						if f ~= nil then
+							if f() and self.frames[cat][1]:IsVisible() then
+								self:FShow(cat)
+							else
+								self:FHide(cat)
+							end
+						end
+					end
 				else
 					if path["inverse"] or path["cooldown"] then
 						self:FHide(cat)
@@ -179,6 +194,16 @@ function MPOWA:OnUpdate(elapsed)
 					end
 				else
 					self:FHide(cat)
+				end
+				if (path["funct"]) then
+					local f = loadstring(path["funct"])
+					if f ~= nil then
+						if f() and self.frames[cat][1]:IsVisible() then
+							self:FShow(cat)
+						else
+							self:FHide(cat)
+						end
+					end
 				end
 			else
 				if not self.NeedUpdate[cat] then
@@ -254,21 +279,22 @@ function MPOWA:GetCooldown(buff)
 						for u=1, GetContainerNumSlots(p) do
 							start, duration, enable = GetContainerItemCooldown(p,u)
 							_,_,name=strfind(GetContainerItemLink(p,u) or "","^.*%[(.*)%].*$")
-							if (not name) then break end
-							if strfind(strlower(buff), strlower(name)) then
-								if duration>2 then
-									return ((start or 0)+(duration or 0))-GT() + 1
-								else
-									return 0
+							if (name) then 
+								if strfind(strlower(buff), strlower(name)) then
+									if duration>2 then
+										return ((start or 0)+(duration or 0))-GT() + 1
+									else
+										return 0
+									end
+								elseif p == 4 and u == GetContainerNumSlots(p) then
+									if duration>2 then
+										return ((start or 0)+(duration or 0))-GT() + 1
+									else
+										return 0
+									end
+							--	else
+							--		return 0
 								end
-							elseif p == 4 and u == GetContainerNumSlots(p) then
-								if duration>2 then
-									return ((start or 0)+(duration or 0))-GT() + 1
-								else
-									return 0
-								end
-							else
-								return 0
 							end
 						end
 					end
@@ -446,13 +472,16 @@ end
 
 function MPOWA:IsStacks(count, id, kind)
 	if self.SAVE[id][kind] ~= "" then
-		local con = strsub(self.SAVE[id][kind], 1, 2)
-		local amount = tnbr(strsub(self.SAVE[id][kind], 3))
+		local a,b = strfind(self.SAVE[id][kind], '[>|=|<|!]*')
+		local con = strsub(self.SAVE[id][kind], a, b)
+		local _,_,nbr = strfind(self.SAVE[id][kind],"(%d+)")
+		local amount = tonumber(nbr)
 		if not con then
-			con = strsub(self.SAVE[id][kind], 1, 1)
-			amount = tnbr(strsub(self.SAVE[id][kind], 2))
+			local a,b = strfind(self.SAVE[id][kind], '[>|=|<|!]*')
+			local con = strsub(self.SAVE[id][kind], a, b)
+			local _,_,nbr = strfind(self.SAVE[id][kind],"(%d+)")
+			local amount = tonumber(nbr)
 		end
-
 		if self.SAVE[id]["buffname"] == "unitpower" then
 			count = UnitMana(self.SAVE[id]["unit"] or "player")
 			if self.SAVE[id]["inverse"] then
