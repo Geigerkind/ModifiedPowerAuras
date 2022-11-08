@@ -14,15 +14,7 @@
 libs\LibStub\LibStub.lua
 libs\Classy-1.0\Classy-1.0.lua
 libs\Sol\Sol.lua
-libs\AnimationGroup\AnimationGroup.lua
-libs\AnimationGroup\curves.lua
-libs\AnimationGroup\group.lua
-libs\AnimationGroup\animation.lua
-libs\AnimationGroup\alpha.lua
-libs\AnimationGroup\path.lua
-libs\AnimationGroup\rotation.lua
-libs\AnimationGroup\scale.lua
-libs\AnimationGroup\translation.lua
+libs\AnimationGroup\AnimationGroup.xml
 
 localization\enUS.lua
 localization\deDE.lua

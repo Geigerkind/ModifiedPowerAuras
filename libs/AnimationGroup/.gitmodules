@@ -1,6 +1,0 @@
-[submodule "libs/Sol"]
-	path = libs/Sol
-	url = https://github.com/martinjlowm/Sol.git
-[submodule "libs/LibStub"]
-	path = libs/LibStub
-	url = https://github.com/martinjlowm/LibStub.git
