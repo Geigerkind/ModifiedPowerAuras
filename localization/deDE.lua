@@ -15,6 +15,8 @@ if (GetLocale() == "deDE") then
 	MPOWA_BUTTON_OKAY = "Okay"
 
 	MPOWA_CONFIGFRAME_NAME = "Configurations-Frame"
+	MPOWA_CONFIGFRAME_ANIMATION = "Animation"
+	MPOWA_CONFIGFRAME_GROUP = "Group"
 	MPOWA_CONFIGFRAME_EFFECT_EDITOR = "Effekt"
 	MPOWA_CONFIGFRAME_TIMER_EDITOR = "Timer"
 	MPOWA_CONFIGFRAME_SOUND_EDITOR = "Ton"
@@ -91,6 +93,8 @@ if (GetLocale() == "deDE") then
 
 	MPOWA_SCRIPT_MOUNT_100 = "Erhöht das Bewegungstempo um 100"
 	MPOWA_SCRIPT_MOUNT_60 = "Erhöht das Bewegungstempo um 60"
+	
+	MPOWA_COLORPICKER_TOOLTIP = "Click here to change the fontcolor." --
 
 	MPOWA_TEXT_ABOUT_MPOWA = "Modified Power Auras ist die erweiterte Version von Power Auras. Es verfügt über eine vielzahl von Funktionen, die erst mit späteren Versionen hinzukomen. Zusätzlich verfügt es über eigene Funktion, die das AddOn einmalig machen."
 	MPOWA_TEXT_CREATOR_TITLE = "Wer hat Modified Power Auras erstellt?"
